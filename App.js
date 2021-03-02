@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import {StatusBar} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {Main} from 'navigation';
 
