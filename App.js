@@ -9,8 +9,8 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
-import {Main} from 'navigation';
 
+import {Main} from 'navigation';
 import theme from 'constants/theme/default';
 
 const App = () => {
