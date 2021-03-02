@@ -1,12 +1,10 @@
 import React from 'react';
-import {View, Text} from 'components';
+import {Box, Text} from 'components';
 
-const LoginScreen = () => {
+export const Login = () => {
   return (
-    <View>
-      <Text>omo</Text>
-    </View>
+    <Box>
+      <Text color="primary">omosdsldkdlskdlsdkl</Text>
+    </Box>
   );
 };
-
-export default LoginScreen;

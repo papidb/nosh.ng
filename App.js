@@ -8,18 +8,17 @@
 
 import React from 'react';
 import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
+import {ThemeProvider} from '@shopify/restyle';
 import {Main} from 'navigation';
+
+import theme from 'constants/theme/default';
 
 const App = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView>
-          <Main />
-        </ScrollView>
-      </SafeAreaView>
-    </>
+      <Main />
+    </ThemeProvider>
   );
 };
 
