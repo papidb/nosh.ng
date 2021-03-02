@@ -10,8 +10,22 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@shopify/react-i18n": "^5.0.2",
+    "@shopify/restyle": "^1.1.0",
+    "axios": "^0.19.2",
+    "date-fns": "^2.16.1",
+    "form-data": "^3.0.0",
+    "formik": "^2.1.5",
+    "lodash": "^4.17.20",
+    "phone": "^2.4.15",
+    "qrcode": "^1.4.4",
     "react": "16.13.1",
-    "react-native": "0.63.4"
+    "react-native": "0.63.4",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "shortid": "^2.2.15",
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
