@@ -20,6 +20,8 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		E38506F0EC33AF238F178AED /* libPods-Nosh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81487390F39376D4B479EA08 /* libPods-Nosh.a */; };
 		EA82F064F9B136E1376CC68C /* libPods-Nosh-NoshTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FB53143F53A4E99DD7FC7FED /* libPods-Nosh-NoshTests.a */; };
+		734AC52349EE49A084F09AD5 /* HurmeGeometricSans.otf in Resources */ = {isa = PBXBuildFile; fileRef = 33EE56F8E27040B2AB162C14 /* HurmeGeometricSans.otf */; };
+		33B0A37158294E2095E63425 /* HurmeGeometricSansOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 803B0C320D554FCAA37AE4A3 /* HurmeGeometricSansOblique.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FB53143F53A4E99DD7FC7FED /* libPods-Nosh-NoshTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nosh-NoshTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33EE56F8E27040B2AB162C14 /* HurmeGeometricSans.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSans.otf"; path = "../src/assets/fonts/HurmeGeometricSans.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		803B0C320D554FCAA37AE4A3 /* HurmeGeometricSansOblique.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSansOblique.otf"; path = "../src/assets/fonts/HurmeGeometricSansOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				96DF72077A75DDDE21CCFFF1 /* Pods */,
+				5CE00BC4DBE944A3BFB4F38E /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -197,6 +202,16 @@
 			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		5CE00BC4DBE944A3BFB4F38E /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				33EE56F8E27040B2AB162C14 /* HurmeGeometricSans.otf */,
+				803B0C320D554FCAA37AE4A3 /* HurmeGeometricSansOblique.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -342,6 +357,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				734AC52349EE49A084F09AD5 /* HurmeGeometricSans.otf in Resources */,
+				33B0A37158294E2095E63425 /* HurmeGeometricSansOblique.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
