@@ -12,5 +12,5 @@ export const Text = createText(_Text);
 
 Text.defaultProps = {
   //   variant: 'bodyText',
-  //   fontFamily: 'BwModelica-Medium',
+  fontFamily: 'Hurme Geometric Sans 1',
 };
