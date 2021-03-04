@@ -6,6 +6,7 @@ import {Box, Text} from 'components';
 export const Login = () => {
   return (
     <Box>
+      <Text>omo</Text>
       <Svg height="100" width="100">
         <Rect x="0" y="0" width="100" height="100" fill="black" />
         <Circle cx="50" cy="50" r="30" fill="yellow" />

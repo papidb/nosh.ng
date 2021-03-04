@@ -18,7 +18,6 @@ const theme = createTheme({
     ...palette,
   },
   spacing: {
-    /* eslint-disable id-length */
     xxs: 3,
     xs: 6,
     s: 8,
@@ -33,7 +32,6 @@ const theme = createTheme({
     '-xl': -32,
     '-xxl': -43,
     none: 0,
-    /* eslint-enable id-length */
   },
   breakpoints: {
     phone: 0,

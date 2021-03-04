@@ -1,4 +1,5 @@
 import React from 'react';
+import {StyleProp} from 'react-native';
 import {createText} from '@shopify/restyle';
 import {Text as RNText} from 'react-native';
 
@@ -9,7 +10,9 @@ const _Text = ({style, ...rest}) => {
 };
 
 export const Text = createText(_Text);
-
+_Text.propTypes = {
+  style: StyleProp,
+};
 Text.defaultProps = {
   //   variant: 'bodyText',
   fontFamily: 'Hurme Geometric Sans 1',
