@@ -9,16 +9,25 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
 
 import {Main} from 'navigation';
+import configureStore from './store';
 import theme from 'constants/theme/default';
+
+const {store, persistor} = configureStore();
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <StatusBar barStyle="dark-content" />
-      <Main />
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <StatusBar barStyle="dark-content" />
+          <Main />
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 
