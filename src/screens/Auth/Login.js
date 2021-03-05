@@ -1,12 +1,18 @@
 import React from 'react';
+import {connect, useStore} from 'react-redux';
 import {Svg, Rect, Circle, Path} from 'react-native-svg';
 
 import {Box, Text} from 'components';
 
-export const Login = () => {
+const LoginScreen = () => {
+  // redux works
+  // let store = useStore().getState();
+  // console.log({store});
   return (
     <Box>
-      <Text>omo</Text>
+      <Box margin="s">
+        <Text color="primary">omo</Text>
+      </Box>
       <Svg height="100" width="100">
         <Rect x="0" y="0" width="100" height="100" fill="black" />
         <Circle cx="50" cy="50" r="30" fill="yellow" />
@@ -17,3 +23,6 @@ export const Login = () => {
     </Box>
   );
 };
+
+// export const Login = () => connect()(LoginScreen);
+export const Login = LoginScreen;

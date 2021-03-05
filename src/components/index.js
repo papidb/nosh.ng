@@ -1,1 +1,1 @@
-export * from './pureComponents';
+export * from './pure';
