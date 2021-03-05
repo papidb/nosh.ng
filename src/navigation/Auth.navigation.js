@@ -7,7 +7,12 @@ const AppStack = createStackNavigator();
 
 export const AppNav = () => {
   return (
-    <AppStack.Navigator>
+    <AppStack.Navigator
+      screenOptions={{
+        header: () => null,
+        // TODO: need to import background Color from theme file
+        cardStyle: {backgroundColor: '#E5E5E5'},
+      }}>
       <AppStack.Screen name="Login" component={Login} />
     </AppStack.Navigator>
   );
