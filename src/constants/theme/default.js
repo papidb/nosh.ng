@@ -38,19 +38,9 @@ const theme = createTheme({
     bigScreen: 400,
   },
   textVariants: {
-    button: {
-      fontSize: 18,
-      disabled: {},
-    },
-    bodyText: {},
-    header: {
-      color: 'deepOrange',
-      fontWeight: 'bold',
-      fontSize: 18,
-    },
-    label: {
-      fontSize: 14,
-      color: 'orange',
+    defaults: {
+      fontSize: 16,
+      fontFamily: 'Hurme Geometric Sans 1',
     },
     small_light: {
       fontSize: 12,
@@ -75,7 +65,7 @@ const theme = createTheme({
     },
   },
   buttonVariants: {
-    default: {
+    defaults: {
       color: palette.blueish,
       height: BUTTON_HEIGHT,
       textColor: palette.white,

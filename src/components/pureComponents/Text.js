@@ -1,19 +1,14 @@
-import React from 'react';
-import {StyleProp} from 'react-native';
-import {createText} from '@shopify/restyle';
+import React, {forwardRef} from 'react';
+import {ViewPropTypes} from 'react-native';
+import {createText, useRestyle, textRestyleFunctions} from '@shopify/restyle';
 import {Text as RNText} from 'react-native';
 
-// Wrap text to set the correct font family based on weight on Android
-const _Text = ({style, ...rest}) => {
-  // const {fontFamily, fontWeight} = StyleSheet.flatten(style);
-  return <RNText style={[style]} {...rest} />;
+const BaseText = (props, ref) => {
+  const styledProps = useRestyle(textRestyleFunctions, props);
+  return <RNText {...styledProps} ref={ref} />;
 };
+export const Text = forwardRef(BaseText);
 
-export const Text = createText(_Text);
-_Text.propTypes = {
-  style: StyleProp,
-};
-Text.defaultProps = {
-  //   variant: 'bodyText',
-  fontFamily: 'Hurme Geometric Sans 1',
+BaseText.propTypes = {
+  style: ViewPropTypes.style,
 };
