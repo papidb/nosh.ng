@@ -4,9 +4,9 @@ const BUTTON_HEIGHT = 52;
 
 export const palette = {
   // main colors
-  primary: '#30bced',
-  secondary: '#282356',
-  accent: '#ff4000',
+  blue: '#30bced',
+  lightBlue: '#282356',
+  orange: '#ff4000',
 
   // black and white
   white: '#FFF',
@@ -15,7 +15,9 @@ export const palette = {
 
 const theme = createTheme({
   colors: {
-    ...palette,
+    primary: palette.blue,
+    secondary: palette.lightBlue,
+    accent: '#ff4000',
   },
   spacing: {
     xxs: 3,
