@@ -121,3 +121,17 @@ const stylePropsType = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.object),
   PropTypes.object,
 ]);
+Input.propTypes = {
+  inputStyle: stylePropsType,
+  containerStyle: stylePropsType,
+  innerContainerProps: stylePropsType,
+  ErrorTextStyles: stylePropsType,
+  touched: PropTypes.bool,
+  error: PropTypes.string,
+  passwordIcon: PropTypes.bool,
+  variant: PropTypes.string,
+  labelVariant: PropTypes.string,
+  LeftIcon: PropTypes.bool,
+  RightIcon: PropTypes.func,
+  nospace: PropTypes.bool,
+};
