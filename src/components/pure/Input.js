@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 // import Feather from 'react-native-vector-icons/Feather';
 import {useTheme} from '@shopify/restyle';
 import {Box} from './Box';
+import {Icon as SvgIcon} from './Icon';
 import {palette} from 'constants/theme';
 // import {ErrorText} from './ErrorText';
 /**
@@ -31,7 +32,7 @@ export const Input = ({
   const [focused, setFocus] = useState(false);
 
   const [state, setState] = useState({
-    icon: 'eye-off',
+    icon: 'eye_off',
     password: !!Icon,
   });
 
@@ -41,7 +42,7 @@ export const Input = ({
     ...variantProps?.innerContainerProps,
     ...innerContainerProps,
   };
-  const ICON_SIZE = 20;
+  const ICON_SIZE = 27;
 
   // extract props you need in the container
   const {borderWidth, height, ...realInputStyle} = StyleSheet.flatten([
@@ -50,7 +51,7 @@ export const Input = ({
   ]);
   const changeIcon = () => {
     setState((prevState) => ({
-      icon: prevState.icon === 'eye' ? 'eye-off' : 'eye',
+      icon: prevState.icon === 'eye' ? 'eye_off' : 'eye',
       password: !prevState.password,
     }));
   };
@@ -64,6 +65,7 @@ export const Input = ({
   //       console.log(inputRef?.current);
   //     }, 2000);
   //   }, []);
+  const paddingRight = Icon ? {paddingRight: 'm'} : {};
   return (
     <Box marginVertical={nospace ? 'none' : 's'}>
       <Box
@@ -73,6 +75,7 @@ export const Input = ({
         paddingHorizontal="xl"
         borderRadius={30}
         {...{borderWidth, borderColor, height}}
+        {...paddingRight}
         {...innerContainerProps}>
         {LeftIcon}
         <Box flex={1}>
@@ -83,12 +86,12 @@ export const Input = ({
             placeholderTextColor={palette.inputColor}
             onFocus={() => {
               // make border color change
-              console.log(`[onfocus]`);
+              console.log('[onfocus]');
               setFocus(true);
             }}
             onBlur={() => {
               // make border color on blur
-              console.log(`[onBlur]`);
+              console.log('[onBlur]');
               setFocus(false);
             }}
             {...props}
@@ -98,10 +101,13 @@ export const Input = ({
         {Icon && (
           <TouchableOpacity onPress={() => changeIcon()}>
             <Box
-              marginHorizontal="m"
+              height={43}
+              width={43}
+              borderRadius={43}
+              backgroundColor="eyeBackground"
               alignItems="center"
               justifyContent="center">
-              {/* <Feather size={ICON_SIZE} name={state.icon} /> */}
+              <SvgIcon size={ICON_SIZE} name={state.icon} />
             </Box>
           </TouchableOpacity>
         )}
