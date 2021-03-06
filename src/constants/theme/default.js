@@ -1,17 +1,25 @@
 import {createTheme} from '@shopify/restyle';
 
 const BUTTON_HEIGHT = 52;
+const INPUT_HEIGHT = 62;
 
 export const palette = {
   // main colors
   blue: '#30bced',
   fadedBlue: 'rgba(48,188,237,0.1)',
+  greyBlue: 'rgba(48,188,237,0.2)',
   lightBlue: '#282356',
   orange: '#ff4000',
 
   // black and white
   white: '#FFF',
   black: '#000',
+
+  // red
+  red: '#FF4000',
+
+  // confused
+  inputColor: 'rgba(40,35,86,0.5)',
 };
 
 const theme = createTheme({
@@ -19,8 +27,13 @@ const theme = createTheme({
     primary: palette.blue,
     secondary: palette.lightBlue,
 
+    // specifics
+    inputColor: palette.inputColor,
     authHeaderBackground: palette.fadedBlue,
+
     accent: '#ff4000',
+    inactiveInputBorder: palette.greyBlue,
+    error: palette.red,
   },
   spacing: {
     xxs: 3,
@@ -83,7 +96,14 @@ const theme = createTheme({
     },
   },
   inputVariants: {
-    default: {},
+    defaults: {
+      height: INPUT_HEIGHT,
+      fontFamily: 'Hurme Geometric Sans 1',
+      fontSize: 16,
+      borderWidth: 2,
+      color: palette.inputColor,
+      // placeholderTextColor: palette.inputColor,
+    },
   },
   selectVariants: {
     default: {},
