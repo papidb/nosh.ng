@@ -1,6 +1,6 @@
 import {createTheme} from '@shopify/restyle';
 
-const BUTTON_HEIGHT = 52;
+const BUTTON_HEIGHT = 62;
 const INPUT_HEIGHT = 62;
 
 export const palette = {
@@ -20,17 +20,20 @@ export const palette = {
 
   // confused
   inputColor: 'rgba(40,35,86,0.5)',
+  darkBlueButton: '#023248',
 };
 
 const theme = createTheme({
   colors: {
     primary: palette.blue,
     secondary: palette.lightBlue,
+    white: palette.white,
 
     // specifics
     inputColor: palette.inputColor,
     authHeaderBackground: palette.fadedBlue,
     eyeBackground: palette.fadedBlue,
+    buttonColor: palette.darkBlueButton,
 
     accent: '#ff4000',
     inactiveInputBorder: palette.greyBlue,
@@ -82,17 +85,30 @@ const theme = createTheme({
     blarge: {
       fontSize: 16,
     },
+
+    // specifics
+    button: {
+      color: 'white',
+      fontWeight: '600',
+      fontSize: 16,
+    },
+    buttonDisabled: {
+      color: 'primary',
+      fontWeight: '600',
+      fontSize: 16,
+    },
   },
   buttonVariants: {
     defaults: {
-      color: palette.blueish,
+      color: palette.darkBlueButton,
       height: BUTTON_HEIGHT,
-      textColor: palette.white,
+      // color: palette.white,
       fontWeight: 'bold',
       fontSize: 14,
       borderWidth: undefined,
       disabled: {
-        // color: palette.ash,
+        fontSize: 16,
+        color: palette.fadedBlue,
       },
     },
   },
