@@ -30,6 +30,7 @@ const theme = createTheme({
     // specifics
     inputColor: palette.inputColor,
     authHeaderBackground: palette.fadedBlue,
+    eyeBackground: palette.fadedBlue,
 
     accent: '#ff4000',
     inactiveInputBorder: palette.greyBlue,
