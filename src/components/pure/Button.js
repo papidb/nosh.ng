@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  ActivityIndicator,
-  StyleSheet,
-  Platform,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {TouchableOpacity, ActivityIndicator, StyleSheet} from 'react-native';
 import {useTheme} from '@shopify/restyle';
+import PropTypes from 'prop-types';
 
 import {Text} from './Text';
 import {Box} from './Box';
@@ -33,9 +27,9 @@ export const Button = ({
   //   const disabledTextProps = disabled ? variantProps.disabled || {} : {};
   const themedStyles = {...variantProps, ...disabledProps};
   const {
-    fontSize,
-    fontWeight,
-    fontFamily,
+    // fontSize,
+    // fontWeight,
+    // fontFamily,
     color,
     borderWidth,
     height,
@@ -115,3 +109,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+const stylePropsType = PropTypes.oneOfType([
+  PropTypes.arrayOf(PropTypes.object),
+  PropTypes.object,
+]);
+
+Button.propTypes = {
+  disabled: PropTypes.bool,
+  loading: PropTypes.bool,
+  variant: PropTypes.string,
+  text: PropTypes.string,
+  onPress: PropTypes.func,
+  color: PropTypes.string,
+  textVariant: PropTypes.string,
+  disabledTextVariant: PropTypes.string,
+  style: stylePropsType,
+  containerProps: stylePropsType,
+};

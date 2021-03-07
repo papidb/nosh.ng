@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   TextInput,
   StyleSheet,
@@ -80,7 +80,6 @@ export const Input = ({
           try {
             //   TODO: test onfocus on android
             inputRef?.current?.focus();
-            // eslint-disable-next-line no-catch-shadow
           } catch (err) {
             //   log error
           }

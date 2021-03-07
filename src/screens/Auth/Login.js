@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
@@ -54,12 +54,11 @@ const LoginScreen = ({}) => {
     touched,
     errors,
     isSubmitting,
-    setSubmitting,
     isValid,
   } = useFormik({
     initialValues: initailValues,
-    onSubmit: async (values) => {
-      console.log({values});
+    onSubmit: async (submitValues) => {
+      console.log({submitValues});
       await waait(2000);
       toEmailVerification();
     },

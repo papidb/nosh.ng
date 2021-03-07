@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, ScrollView} from 'react-native';
+import {ScrollView} from 'react-native';
+import PropTypes from 'prop-types';
 
 import {Box, Text, Icon} from './pure';
 
@@ -21,6 +22,9 @@ export const AuthHeader = ({header = null}) => {
       </Box>
     </Box>
   );
+};
+AuthHeader.propTypes = {
+  header: PropTypes.string,
 };
 
 export const AuthContainer = ({header = null, bottom, children}) => {
@@ -45,4 +49,10 @@ export const AuthContainer = ({header = null, bottom, children}) => {
       <Box>{bottom}</Box>
     </ScrollView>
   );
+};
+
+AuthContainer.propTypes = {
+  header: PropTypes.string,
+  bottom: PropTypes.object,
+  children: PropTypes.func,
 };

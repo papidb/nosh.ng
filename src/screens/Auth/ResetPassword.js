@@ -1,20 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useFormik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import * as Yup from 'yup';
 
-import {
-  Box,
-  Icon,
-  Button,
-  Text,
-  Input,
-  AuthAvatar,
-  AuthContainer,
-  AuthHeader,
-} from 'components';
+import {Box, Icon, Button, Text, Input, AuthHeader} from 'components';
 import {waait} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
@@ -30,7 +21,7 @@ const initailValues = __DEV__
 export const ResetPasswordScreen = () => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
-  const [text, setText] = useState('Please Enter a valid Email address');
+  const [text /** ,setText */] = useState('Please Enter a valid Email address');
 
   const headerHeight = 72;
 
@@ -42,12 +33,11 @@ export const ResetPasswordScreen = () => {
     touched,
     errors,
     isSubmitting,
-    setSubmitting,
     isValid,
   } = useFormik({
     initialValues: initailValues,
-    onSubmit: async (values) => {
-      console.log({values});
+    onSubmit: async (submitValues) => {
+      console.log({submitValues});
       await waait(2000);
       toLogin();
     },

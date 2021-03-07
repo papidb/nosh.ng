@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
 import {ViewPropTypes} from 'react-native';
-import {createText, useRestyle, textRestyleFunctions} from '@shopify/restyle';
+import {useRestyle, textRestyleFunctions} from '@shopify/restyle';
 import {Text as RNText} from 'react-native';
 
 const BaseText = (props, ref) => {

@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import {Box, Button, Text, Input, AuthContainer} from 'components';
 
-import {uuid, waait} from 'shared/utils';
+import {waait} from 'shared/utils';
 
 Yup.addMethod(Yup.string, 'validatePhone', function () {
   return this.test({
@@ -51,12 +51,11 @@ const RegisterScreen = ({}) => {
     touched,
     errors,
     isSubmitting,
-    setSubmitting,
     isValid,
   } = useFormik({
     initialValues: initailValues,
-    onSubmit: async (values) => {
-      console.log({values});
+    onSubmit: async (submitValues) => {
+      console.log({submitValues});
       await waait(2000);
       //   toLogin();
     },
