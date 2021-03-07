@@ -42,7 +42,7 @@ const initailValues = __DEV__
 
 const LoginScreen = ({}) => {
   const navigation = useNavigation();
-  const toLogin = () => navigation.navigate('Login');
+  const toResetPassword = () => navigation.navigate('ResetPassword');
   const toEmailVerification = () => navigation.navigate('EmailVerification');
   const toRegister = () => navigation.navigate('Register');
 
@@ -110,9 +110,11 @@ const LoginScreen = ({}) => {
           />
           {/* Agreement */}
           <Box marginBottom="xl" marginTop="xs">
-            <Text fontSize={14} textAlign="right" style={styles.tandc}>
-              Forgot Password?
-            </Text>
+            <TouchableOpacity onPress={() => toResetPassword()}>
+              <Text fontSize={14} textAlign="right" style={styles.tandc}>
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
           </Box>
         </Box>
       </KeyboardAwareScrollView>

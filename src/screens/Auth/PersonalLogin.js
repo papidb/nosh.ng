@@ -33,6 +33,7 @@ const initailValues = __DEV__
 export const PersonalLoginScreen = () => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
+  const toResetPassword = () => navigation.navigate('ResetPassword');
 
   const {
     handleChange,
@@ -64,7 +65,7 @@ export const PersonalLoginScreen = () => {
           onPress={handleSubmit}
         />
       </Box>
-      <TouchableOpacity onPress={() => toLogin()}>
+      <TouchableOpacity onPress={() => toResetPassword()}>
         <Text fontSize={14} textAlign="center">
           <Text color="primary">Forgot Password? </Text>
           {/* Register */}
