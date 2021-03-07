@@ -1,8 +1,7 @@
 import React from 'react';
 import {Image, ScrollView} from 'react-native';
 
-import {Box, Text} from './pure';
-import images from 'constants/images';
+import {Box, Text, Icon} from './pure';
 
 export const AuthContainer = ({header = null, children}) => {
   const headerHeight = 72;
@@ -12,7 +11,7 @@ export const AuthContainer = ({header = null, children}) => {
         alignItems="center"
         marginBottom="l"
         style={{marginTop: headerHeight}}>
-        <Image source={images.auth_logo} />
+        <Icon name="icon-auth_logo" size={63} />
       </Box>
 
       {/* Header */}
