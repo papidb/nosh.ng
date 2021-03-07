@@ -3,7 +3,7 @@ import {Image, ScrollView} from 'react-native';
 
 import {Box, Text, Icon} from './pure';
 
-export const AuthContainer = ({header = null, children}) => {
+export const AuthContainer = ({header = null, bottom, children}) => {
   const headerHeight = 72;
   return (
     <ScrollView>
@@ -42,6 +42,7 @@ export const AuthContainer = ({header = null, children}) => {
 
       {/* bottom padding */}
       <Box height={60} />
+      <Box>{bottom}</Box>
     </ScrollView>
   );
 };
