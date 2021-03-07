@@ -71,7 +71,7 @@ const LoginScreen = ({}) => {
       {/* Button */}
       <Box marginBottom="m">
         <Button
-          text="Register"
+          text="Sign-In"
           loading={isSubmitting}
           disabled={isSubmitting || !isValid}
           onPress={handleSubmit}
