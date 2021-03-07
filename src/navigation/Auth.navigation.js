@@ -11,7 +11,7 @@ import {
 
 const AppStack = createStackNavigator();
 
-export const AppNav = () => {
+export const AuthNav = () => {
   return (
     <AppStack.Navigator
       screenOptions={{

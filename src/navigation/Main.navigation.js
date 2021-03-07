@@ -1,12 +1,14 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
-import {AppNav} from './Auth.navigation';
+import {AuthNav} from './Auth.navigation';
+import {useStore} from 'react-redux';
 
 export const Main = () => {
+  const {authenticated} = useStore().getState();
   return (
     <NavigationContainer>
-      <AppNav />
+      {authenticated ? <AuthNav /> : <AuthNav />}
     </NavigationContainer>
   );
 };
