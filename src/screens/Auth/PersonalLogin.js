@@ -5,7 +5,15 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import * as Yup from 'yup';
 
-import {Box, Button, Text, Input, AuthAvatar, AuthContainer} from 'components';
+import {
+  Box,
+  Icon,
+  Button,
+  Text,
+  Input,
+  AuthAvatar,
+  AuthContainer,
+} from 'components';
 import {waait} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
@@ -87,6 +95,17 @@ export const PersonalLoginScreen = () => {
             value={values.password}
             passwordIcon
           />
+          <Box
+            marginTop={'xl'}
+            alignSelf="center"
+            height={85}
+            width={85}
+            borderRadius={85}
+            alignItems="center"
+            justifyContent="center"
+            backgroundColor="eyeBackground">
+            <Icon name="icon-fingerprint" size={43} />
+          </Box>
         </Box>
       </KeyboardAwareScrollView>
     </AuthContainer>
@@ -95,7 +114,7 @@ export const PersonalLoginScreen = () => {
 export const PersonalLogin = PersonalLoginScreen;
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
-  bottom: {marginTop: 125},
+  bottom: {marginTop: 50},
   tandc: {
     color: '#525C6B',
   },
