@@ -44,6 +44,7 @@ const initailValues = __DEV__
 const LoginScreen = ({}) => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
+  const toEmailVerification = () => navigation.navigate('EmailVerification');
   const toRegister = () => navigation.navigate('Register');
 
   const {
@@ -61,7 +62,7 @@ const LoginScreen = ({}) => {
     onSubmit: async (values) => {
       console.log({values});
       await waait(2000);
-      toLogin();
+      toEmailVerification();
     },
     validationSchema: RegisterSchema,
   });

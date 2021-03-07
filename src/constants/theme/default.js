@@ -104,12 +104,20 @@ const theme = createTheme({
       height: BUTTON_HEIGHT,
       // color: palette.white,
       fontWeight: 'bold',
-      fontSize: 14,
+      fontSize: 16,
       borderWidth: undefined,
       disabled: {
         fontSize: 16,
         color: palette.fadedBlue,
       },
+    },
+    faded: {
+      height: BUTTON_HEIGHT,
+      fontWeight: 'bold',
+      fontSize: 16,
+      borderWidth: undefined,
+      color: palette.fadedBlue,
+      disabled: {},
     },
   },
   inputVariants: {

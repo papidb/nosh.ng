@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Login, Register} from '../screens/Auth';
+import {Login, Register, EmailVerification} from '../screens/Auth';
 
 const AppStack = createStackNavigator();
 
@@ -15,6 +15,7 @@ export const AppNav = () => {
       }}>
       <AppStack.Screen name="Login" component={Login} />
       <AppStack.Screen name="Register" component={Register} />
+      <AppStack.Screen name="EmailVerification" component={EmailVerification} />
     </AppStack.Navigator>
   );
 };
