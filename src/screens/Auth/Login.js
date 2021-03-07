@@ -6,10 +6,9 @@ import {useNavigation} from '@react-navigation/native';
 import phone from 'phone';
 import * as Yup from 'yup';
 
-import {Box, Button, Text, Input, AuthContainer} from 'components';
+import {Box, Button, Text, Input, AuthContainer, AuthAvatar} from 'components';
 
-import images from 'constants/images';
-import {uuid, waait} from 'shared/utils';
+import {waait} from 'shared/utils';
 
 Yup.addMethod(Yup.string, 'validatePhone', function () {
   return this.test({
@@ -91,20 +90,7 @@ const LoginScreen = ({}) => {
       <KeyboardAwareScrollView>
         <Box margin="s" marginTop="none" style={styles.container}>
           {/* Image */}
-          <Box
-            // margin
-            marginTop="xl"
-            marginBottom="l"
-            alignSelf="center"
-            alignItems="center"
-            justifyContent="flex-end"
-            height={167}
-            width={167}
-            borderRadius={167}
-            overflow="hidden"
-            backgroundColor="primary">
-            <Image source={images.auth_face} />
-          </Box>
+          <AuthAvatar />
           <Input
             placeholder="Email"
             onChangeText={handleChange('email')}
