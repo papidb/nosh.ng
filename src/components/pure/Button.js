@@ -29,6 +29,7 @@ export const Button = ({
   const theme = useTheme();
   const variantProps = theme.buttonVariants[variant];
   const disabledProps = disabled ? variantProps.disabled || {} : {};
+  const realDisabled = disabled || loading;
   //   const disabledTextProps = disabled ? variantProps.disabled || {} : {};
   const themedStyles = {...variantProps, ...disabledProps};
   const {
@@ -97,8 +98,7 @@ export const Button = ({
     <TouchableOpacity
       onPress={onPressHandler}
       style={[styles.stretch]}
-      disabled={loading}
-      {...{disabled}}>
+      disabled={realDisabled}>
       {content}
     </TouchableOpacity>
   );
