@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Login} from '../screens/Auth/Login';
+import {Login, Register} from '../screens/Auth';
 
 const AppStack = createStackNavigator();
 
@@ -14,6 +14,7 @@ export const AppNav = () => {
         cardStyle: {backgroundColor: '#E5E5E5'},
       }}>
       <AppStack.Screen name="Login" component={Login} />
+      <AppStack.Screen name="Register" component={Register} />
     </AppStack.Navigator>
   );
 };
