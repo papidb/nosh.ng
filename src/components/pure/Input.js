@@ -103,7 +103,6 @@ export const Input = ({
               placeholderTextColor={palette.inputColor}
               onFocus={(event) => {
                 // make border color change
-                console.log('[onfocus]');
                 setFocus(true);
                 if (componentOnFocus) {
                   componentOnFocus?.(event);
@@ -111,7 +110,6 @@ export const Input = ({
               }}
               onBlur={(event) => {
                 // make border color on blur
-                console.log('[onBlur]');
                 setFocus(false);
                 if (componentOnBlur) {
                   componentOnBlur?.(event);
