@@ -1,5 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {TextInput, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import PropTypes from 'prop-types';
 // import Feather from 'react-native-vector-icons/Feather';
 import {useTheme} from '@shopify/restyle';
@@ -26,6 +31,8 @@ export const Input = ({
   RightIcon,
   ErrorTextStyles,
   nospace,
+  onBlur: componentOnBlur,
+  onFocus: componentOnFocus,
   ...props
 }) => {
   const inputRef = useRef(null);
@@ -68,51 +75,68 @@ export const Input = ({
   const paddingRight = Icon ? {paddingRight: 'm'} : {};
   return (
     <Box marginVertical={nospace ? 'none' : 's'}>
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        padding="l"
-        paddingHorizontal="xl"
-        borderRadius={30}
-        {...{borderWidth, borderColor, height}}
-        {...paddingRight}
-        {...innerContainerProps}>
-        {LeftIcon}
-        <Box flex={1}>
-          <TextInput
-            ref={inputRef}
-            style={realInputStyle}
-            secureTextEntry={state.password}
-            placeholderTextColor={palette.inputColor}
-            onFocus={() => {
-              // make border color change
-              console.log('[onfocus]');
-              setFocus(true);
-            }}
-            onBlur={() => {
-              // make border color on blur
-              console.log('[onBlur]');
-              setFocus(false);
-            }}
-            {...props}
-          />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          try {
+            //   TODO: test onfocus on android
+            inputRef?.current?.focus();
+            // eslint-disable-next-line no-catch-shadow
+          } catch (err) {
+            //   log error
+          }
+        }}>
+        <Box
+          flexDirection="row"
+          alignItems="center"
+          padding="l"
+          paddingHorizontal="xl"
+          borderRadius={30}
+          {...{borderWidth, borderColor, height}}
+          {...paddingRight}
+          {...innerContainerProps}>
+          {LeftIcon}
+          <Box flex={1}>
+            <TextInput
+              ref={inputRef}
+              style={realInputStyle}
+              secureTextEntry={state.password}
+              placeholderTextColor={palette.inputColor}
+              onFocus={(event) => {
+                // make border color change
+                console.log('[onfocus]');
+                setFocus(true);
+                if (componentOnFocus) {
+                  componentOnFocus?.(event);
+                }
+              }}
+              onBlur={(event) => {
+                // make border color on blur
+                console.log('[onBlur]');
+                setFocus(false);
+                if (componentOnBlur) {
+                  componentOnBlur?.(event);
+                }
+              }}
+              {...props}
+            />
+          </Box>
+          {RightIcon}
+          {Icon && (
+            <TouchableOpacity onPress={() => changeIcon()}>
+              <Box
+                height={43}
+                width={43}
+                borderRadius={43}
+                backgroundColor="eyeBackground"
+                alignItems="center"
+                justifyContent="center">
+                <SvgIcon size={ICON_SIZE} name={state.icon} />
+              </Box>
+            </TouchableOpacity>
+          )}
         </Box>
-        {RightIcon}
-        {Icon && (
-          <TouchableOpacity onPress={() => changeIcon()}>
-            <Box
-              height={43}
-              width={43}
-              borderRadius={43}
-              backgroundColor="eyeBackground"
-              alignItems="center"
-              justifyContent="center">
-              <SvgIcon size={ICON_SIZE} name={state.icon} />
-            </Box>
-          </TouchableOpacity>
-        )}
-      </Box>
-      {/* <ErrorText {...{touched, error, ErrorTextStyles}} /> */}
+        {/* <ErrorText {...{touched, error, ErrorTextStyles}} /> */}
+      </TouchableWithoutFeedback>
     </Box>
   );
 };
@@ -134,4 +158,6 @@ Input.propTypes = {
   LeftIcon: PropTypes.bool,
   RightIcon: PropTypes.func,
   nospace: PropTypes.bool,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
 };
