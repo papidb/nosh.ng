@@ -3,6 +3,26 @@ import {Image, ScrollView} from 'react-native';
 
 import {Box, Text, Icon} from './pure';
 
+export const AuthHeader = ({header = null}) => {
+  return (
+    <Box>
+      <Box
+        width={200}
+        alignSelf="flex-end"
+        alignItems="center"
+        paddingVertical="m"
+        paddingHorizontal="xl"
+        backgroundColor="authHeaderBackground"
+        right={-32}
+        borderRadius={100}>
+        <Text color="primary" fontWeight="600" fontSize={20} lineHeight={25.44}>
+          {header}
+        </Text>
+      </Box>
+    </Box>
+  );
+};
+
 export const AuthContainer = ({header = null, bottom, children}) => {
   const headerHeight = 72;
   return (
@@ -15,27 +35,7 @@ export const AuthContainer = ({header = null, bottom, children}) => {
       </Box>
 
       {/* Header */}
-      {header && (
-        <Box>
-          <Box
-            width={200}
-            alignSelf="flex-end"
-            alignItems="center"
-            paddingVertical="m"
-            paddingHorizontal="xl"
-            backgroundColor="authHeaderBackground"
-            right={-32}
-            borderRadius={100}>
-            <Text
-              color="primary"
-              fontWeight="600"
-              fontSize={20}
-              lineHeight={25.44}>
-              {header}
-            </Text>
-          </Box>
-        </Box>
-      )}
+      {header && <AuthHeader header={header} />}
 
       {/* children */}
       <>{children}</>

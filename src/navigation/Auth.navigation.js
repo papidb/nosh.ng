@@ -6,6 +6,7 @@ import {
   Register,
   EmailVerification,
   PersonalLogin,
+  ResetPassword,
 } from '../screens/Auth';
 
 const AppStack = createStackNavigator();
@@ -20,6 +21,7 @@ export const AppNav = () => {
       }}>
       <AppStack.Screen name="PersonalLogin" component={PersonalLogin} />
       <AppStack.Screen name="Login" component={Login} />
+      <AppStack.Screen name="ResetPassword" component={ResetPassword} />
       <AppStack.Screen name="Register" component={Register} />
       <AppStack.Screen name="EmailVerification" component={EmailVerification} />
     </AppStack.Navigator>
