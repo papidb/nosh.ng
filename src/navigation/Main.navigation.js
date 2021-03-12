@@ -9,7 +9,7 @@ export const Main = () => {
   const {authenticated} = useStore().getState();
   return (
     <NavigationContainer>
-      {authenticated ? <AppNav /> : <AuthNav />}
+      {!authenticated ? <AppNav /> : <AuthNav />}
     </NavigationContainer>
   );
 };

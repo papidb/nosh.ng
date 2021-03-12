@@ -7,6 +7,7 @@ export const palette = {
   // main colors
   blue: '#30bced',
   fadedBlue: 'rgba(48,188,237,0.1)',
+  mostBg: 'rgba(48,188,237,0.1)',
   greyBlue: 'rgba(48,188,237,0.2)',
   lightBlue: '#282356',
   orange: '#ff4000',
@@ -33,6 +34,7 @@ const theme = createTheme({
     inputColor: palette.inputColor,
     authHeaderBackground: palette.fadedBlue,
     eyeBackground: palette.fadedBlue,
+    mostBg: palette.fadedBlue,
     buttonColor: palette.darkBlueButton,
 
     accent: '#ff4000',

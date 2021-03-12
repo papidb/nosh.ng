@@ -3,6 +3,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {BottomTab} from './Bottom.navigation';
+import {palette} from 'constants/theme/default';
 
 const RootStack = createStackNavigator();
 
@@ -16,7 +17,7 @@ export const AppNav = () => {
           options={{
             title: '',
             headerStyle: {
-              //   backgroundColor: palette.white,
+              backgroundColor: palette.mostBg,
               elevation: 0,
               shadowOpacity: 0,
               borderBottomWidth: 0,

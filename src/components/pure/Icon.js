@@ -12,7 +12,6 @@ import fingerprint from 'assets/icons/fingerprint.svg';
 import faceid from 'assets/icons/faceid.svg';
 import receipt from 'assets/icons/receipt.svg';
 
-
 // actual Icons
 const ICONS = {
   eye_off: eye_off,

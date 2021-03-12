@@ -12,8 +12,8 @@ export const TransactionNav = () => {
       <TransactionStack.Screen
         options={{
           headerHideShadow: true,
-          headerStyle: {backgroundColor: palette.white},
-          contentStyle: {backgroundColor: palette.white},
+          headerStyle: {backgroundColor: palette.mostBg},
+          contentStyle: {backgroundColor: palette.mostBg},
           //   headerRight: () => <Text variant="header">Transaction History</Text>,
           headerTitle: '',
           headerShown: false,
