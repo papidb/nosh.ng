@@ -11,10 +11,13 @@ import {StatusBar} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
+import {enableScreens} from 'react-native-screens';
 
 import {Main} from 'navigation';
 import configureStore from './store';
 import theme from 'constants/theme/default';
+
+enableScreens();
 
 const {store, persistor} = configureStore();
 
