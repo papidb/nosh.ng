@@ -13,6 +13,8 @@ import faceid from 'assets/icons/faceid.svg';
 import receipt from 'assets/icons/receipt.svg';
 import apple from 'assets/icons/apple.svg';
 import home from 'assets/icons/home.svg';
+import forward from 'assets/icons/forward.svg';
+import forwardgreen from 'assets/icons/forwardgreen.svg';
 
 // actual Icons
 const ICONS = {
@@ -24,6 +26,8 @@ const ICONS = {
   'icon-receipt': receipt,
   'icon-apple': apple,
   'icon-home': home,
+  'icon-forward': forward,
+  'icon-forwardgreen': forwardgreen,
 };
 
 export const Icon = ({name, size = 24, fill = palette.brandColor, style}) => {
