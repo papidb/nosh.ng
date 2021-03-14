@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 import {Box} from '../pure';
 import images from 'constants/images';
 
-export const AuthAvatar = ({size = 167, containerProps}) => {
+export const AuthAvatar = ({size = 167, containerProps, imageProps}) => {
   return (
     <Box
-      // margin
       marginTop="xl"
       marginBottom="l"
       alignSelf="center"
@@ -20,7 +19,7 @@ export const AuthAvatar = ({size = 167, containerProps}) => {
       overflow="hidden"
       backgroundColor="primary"
       {...containerProps}>
-      <Image source={images.auth_face} />
+      <Image source={images.auth_face} {...imageProps} />
     </Box>
   );
 };
