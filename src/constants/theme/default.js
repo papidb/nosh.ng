@@ -10,7 +10,10 @@ export const palette = {
   mostBg: 'rgba(48,188,237,0.1)',
   greyBlue: 'rgba(48,188,237,0.2)',
   lightBlue: '#282356',
+  transparent: 'transparent',
   orange: '#ff4000',
+  green: '#3DAA9D',
+  darkGrey: '#525C6B',
 
   // black and white
   white: '#FFF',
@@ -29,6 +32,9 @@ const theme = createTheme({
     primary: palette.blue,
     secondary: palette.lightBlue,
     white: palette.white,
+    transparent: palette.transparent,
+    success: palette.green,
+    text: palette.darkGrey,
 
     // specifics
     inputColor: palette.inputColor,
@@ -46,7 +52,7 @@ const theme = createTheme({
     xs: 6,
     s: 8,
     m: 10,
-    l: 20,
+    l: 22,
     xl: 32,
     xxl: 43,
     xxxl: 50,
