@@ -27,4 +27,5 @@ export const AuthAvatar = ({size = 167, containerProps, imageProps}) => {
 AuthAvatar.propTypes = {
   size: PropTypes.number,
   containerProps: PropTypes.object,
+  imageProps: PropTypes.object,
 };

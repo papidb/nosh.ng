@@ -10,9 +10,6 @@ import {uuid} from 'shared/utils';
 export const TransactionHome = () => {
   const [isModalVisible, setModalVisible] = useState(true);
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
   const closeModal = () => setModalVisible(false);
   const openModal = () => setModalVisible(true);
 

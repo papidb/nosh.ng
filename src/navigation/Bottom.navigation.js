@@ -1,71 +1,72 @@
+/* eslint-disable react/display-name */
 import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
+// import {TouchableOpacity, View, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {palette} from 'constants/theme/default';
+// import {palette} from 'constants/theme/default';
 import {Icon} from 'components';
-import {uuid} from 'shared/utils';
+// import {uuid} from 'shared/utils';
 
 import {TransactionNav} from './transaction.navigation';
 
 const Tab = createBottomTabNavigator();
 
-function MyTabBar({state, descriptors, navigation}) {
-  const focusedOptions = descriptors[state.routes[state.index].key].options;
+// function MyTabBar({state, descriptors, navigation}) {
+//   const focusedOptions = descriptors[state.routes[state.index].key].options;
 
-  if (focusedOptions.tabBarVisible === false) {
-    return null;
-  }
+//   if (focusedOptions.tabBarVisible === false) {
+//     return null;
+//   }
 
-  return (
-    <View style={{flexDirection: 'row'}}>
-      {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+//   return (
+//     <View style={{flexDirection: 'row'}}>
+//       {state.routes.map((route, index) => {
+//         const {options} = descriptors[route.key];
+//         const label =
+//           options.tabBarLabel !== undefined
+//             ? options.tabBarLabel
+//             : options.title !== undefined
+//             ? options.title
+//             : route.name;
 
-        const isFocused = state.index === index;
+//         const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+//         const onPress = () => {
+//           const event = navigation.emit({
+//             type: 'tabPress',
+//             target: route.key,
+//             canPreventDefault: true,
+//           });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
+//           if (!isFocused && !event.defaultPrevented) {
+//             navigation.navigate(route.name);
+//           }
+//         };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
+//         const onLongPress = () => {
+//           navigation.emit({
+//             type: 'tabLongPress',
+//             target: route.key,
+//           });
+//         };
 
-        return (
-          <TouchableOpacity
-            key={uuid()}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? {selected: true} : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            onPress={onPress}
-            onLongPress={onLongPress}
-            style={{flex: 1}}>
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
-}
+//         return (
+//           <TouchableOpacity
+//             key={uuid()}
+//             accessibilityRole="button"
+//             accessibilityState={isFocused ? {selected: true} : {}}
+//             accessibilityLabel={options.tabBarAccessibilityLabel}
+//             testID={options.tabBarTestID}
+//             onPress={onPress}
+//             onLongPress={onLongPress}
+//             style={{flex: 1}}>
+//             <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
+//           </TouchableOpacity>
+//         );
+//       })}
+//     </View>
+//   );
+// }
 
 export const BottomTab = () => {
   return (
@@ -103,7 +104,7 @@ export const BottomTab = () => {
         name="Transaction"
         options={{
           title: 'DashBoard',
-          // eslint-disable-next-line react/display-name
+          // eslint-disable-next-line react/prop-types
           tabBarIcon: ({color, size, focused}) =>
             focused ? (
               <Icon name={'icon-receipt'} color={color} size={size} />

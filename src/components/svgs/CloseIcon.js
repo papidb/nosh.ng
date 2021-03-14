@@ -1,5 +1,7 @@
 import * as React from 'react';
-import Svg, {Path} from 'react-native-svg';
+
+import Svg, {Path, SvgProps} from 'react-native-svg';
+import PropTypes from 'prop-types';
 
 export function CloseIcon({fill = '#FF4000', ...props}) {
   return (
@@ -17,3 +19,8 @@ export function CloseIcon({fill = '#FF4000', ...props}) {
     </Svg>
   );
 }
+
+CloseIcon.propTypes = {
+  fill: PropTypes.string,
+  ...SvgProps,
+};
