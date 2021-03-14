@@ -1,56 +1,131 @@
-import React from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {ScrollView, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-import {Box, Text, Divider, Icon, HeaderInfo} from 'components';
+import Modal from 'react-native-modal';
+
+import {Box, Text, Divider, SvgIcon, Circle, HeaderInfo} from 'components';
+import {TransactionTab} from './components';
 import {uuid} from 'shared/utils';
-
-const TransactionTab = () => {
-  return (
-    <TouchableOpacity>
-      <Box flexDirection="row" alignItems="center" marginBottom="s">
-        {/* Icon */}
-        <Box
-          backgroundColor="white"
-          height={52}
-          width={52}
-          borderRadius={52}
-          marginRight="m"
-          justifyContent="center"
-          alignItems="center">
-          <Icon name="icon-apple" />
-        </Box>
-        {/* Text */}
-        <Box flex={1}>
-          <Text fontSize={16} fontWeight="bold" color="text" lineHeight={20.35}>
-            USA Apple Itunes
-          </Text>
-          <Text
-            fontSize={12}
-            fontWeight="bold"
-            color="success"
-            lineHeight={15.26}>
-            April 5 - 2021
-          </Text>
-        </Box>
-        {/* Amount */}
-        <Text
-          fontWeight="bold"
-          fontSize={18}
-          color="success"
-          lineHeight={22.9}
-          marginRight="l">
-          560,000
-        </Text>
-      </Box>
-      <Divider marginBottom="s" />
-    </TouchableOpacity>
-  );
-};
+import images from 'constants/images';
 
 export const TransactionHome = () => {
+  const [isModalVisible, setModalVisible] = useState(true);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  const closeModal = () => setModalVisible(false);
+  const openModal = () => setModalVisible(true);
+
   return (
     <Box flex={1}>
-      <ScrollView style={{flex: 1, paddingHorizontal: 20}}>
+      <Modal isVisible={isModalVisible} onBackdropPress={() => closeModal()}>
+        <Box backgroundColor="white" borderRadius={38} padding="l">
+          <TouchableOpacity onPress={() => closeModal()}>
+            <Circle
+              size={41}
+              borderWidth={4}
+              borderColor="primary"
+              alignSelf="flex-end">
+              <SvgIcon.CloseIcon />
+            </Circle>
+          </TouchableOpacity>
+
+          {/* Content */}
+          <Box alignItems="center" marginBottom="s" marginTop="l">
+            <Image source={images.itunes_2} />
+          </Box>
+
+          <Box>
+            <Box>
+              <Divider
+                marginBottom="l"
+                marginTop="m"
+                style={styles.headerDivider}
+              />
+              <Box
+                flexDirection="row"
+                justifyContent="space-between"
+                marginBottom="s"
+                marginHorizontal="l"
+                alignItems="center">
+                <Text color="text" fontSize={16} fontWeight="bold">
+                  USA Apple Itunes
+                </Text>
+                <Text color="success" fontSize={16} fontWeight="bold">
+                  x 4cards
+                </Text>
+              </Box>
+
+              <Divider marginTop="m" style={styles.headerDivider} />
+            </Box>
+            <Box>
+              <Box
+                marginTop="l"
+                flexDirection="row"
+                justifyContent="space-between"
+                marginBottom="s"
+                marginHorizontal="l"
+                alignItems="center">
+                <Text color="primary" fontSize={24}>
+                  2,000.00
+                </Text>
+                <Text color="primary" fontSize={12} fontWeight="bold">
+                  USD
+                </Text>
+              </Box>
+
+              <Divider marginTop="m" style={styles.headerDivider} />
+            </Box>
+            <Box>
+              <Box
+                marginTop="l"
+                flexDirection="row"
+                justifyContent="space-between"
+                marginBottom="s"
+                marginHorizontal="l"
+                alignItems="center">
+                <Text color="success" fontSize={24}>
+                  560,000.00
+                </Text>
+                <Text color="success" fontSize={12} fontWeight="bold">
+                  USD
+                </Text>
+              </Box>
+            </Box>
+            <Box>
+              <Box
+                marginTop="l"
+                flexDirection="row"
+                justifyContent="space-between"
+                marginBottom="s"
+                marginHorizontal="l"
+                alignItems="center">
+                <Text color="success" fontSize={12} fontWeight="bold">
+                  April 5 - 2021
+                </Text>
+                <Text color="success" fontSize={12} fontWeight="bold">
+                  10:36am
+                </Text>
+              </Box>
+            </Box>
+            <Box>
+              <Box
+                marginTop="l"
+                justifyContent="flex-end"
+                marginBottom="s"
+                marginHorizontal="l"
+                //
+              >
+                <Text color="primary" fontSize={13} textAlign="right">
+                  No Optional comments
+                </Text>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
+      <ScrollView style={styles.scrollView}>
         {/* Header */}
         <Box marginBottom="m">
           <Divider />
@@ -69,7 +144,7 @@ export const TransactionHome = () => {
           <Divider />
         </Box>
         {Array.from(Array(20)).map(() => {
-          return <TransactionTab key={uuid()} />;
+          return <TransactionTab key={uuid()} onPress={() => openModal()} />;
         })}
       </ScrollView>
       <Divider style={[styles.bottomDivider, styles.noMarginTop]} />
@@ -82,12 +157,16 @@ export const TransactionHome = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollView: {flex: 1, paddingHorizontal: 20},
   header: {
     marginBottom: 15,
   },
   ngn: {marginRight: 35, marginBottom: 9},
   noMarginTop: {
     marginTop: 0,
+  },
+  headerDivider: {
+    marginHorizontal: 14,
   },
   bottomDivider: {
     marginVertical: 19,
