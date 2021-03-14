@@ -12,6 +12,7 @@ import fingerprint from 'assets/icons/fingerprint.svg';
 import faceid from 'assets/icons/faceid.svg';
 import receipt from 'assets/icons/receipt.svg';
 import apple from 'assets/icons/apple.svg';
+import home from 'assets/icons/home.svg';
 
 // actual Icons
 const ICONS = {
@@ -22,6 +23,7 @@ const ICONS = {
   'icon-faceid': faceid,
   'icon-receipt': receipt,
   'icon-apple': apple,
+  'icon-home': home,
 };
 
 export const Icon = ({name, size = 24, fill = palette.brandColor, style}) => {

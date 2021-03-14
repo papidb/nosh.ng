@@ -8,6 +8,7 @@ import {Icon} from 'components';
 // import {uuid} from 'shared/utils';
 
 import {TransactionNav} from './transaction.navigation';
+import {HomeNav} from './Home.navigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -101,9 +102,21 @@ export const BottomTab = () => {
       //
     >
       <Tab.Screen
+        name="Home"
+        options={{
+          // eslint-disable-next-line react/prop-types
+          tabBarIcon: ({color, size, focused}) =>
+            focused ? (
+              <Icon name={'icon-home'} color={color} size={size} />
+            ) : (
+              <Icon name={'icon-home'} color={color} size={size} />
+            ),
+        }}
+        component={HomeNav}
+      />
+      <Tab.Screen
         name="Transaction"
         options={{
-          title: 'DashBoard',
           // eslint-disable-next-line react/prop-types
           tabBarIcon: ({color, size, focused}) =>
             focused ? (
