@@ -72,8 +72,8 @@ export const BottomTab = () => {
     <Tab.Navigator
       tabBarOptions={{
         style: {
-          flex: 1,
-          position: 'absolute',
+          // flex: 1,
+          // position: 'absolute',
           marginBottom: 27,
           borderRadius: 100,
           marginHorizontal: 22,

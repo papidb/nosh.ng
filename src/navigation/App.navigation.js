@@ -2,6 +2,7 @@ import React from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
 
+import {Header} from 'components';
 import {BottomTab} from './Bottom.navigation';
 import {palette} from 'constants/theme/default';
 
@@ -22,6 +23,7 @@ export const AppNav = () => {
               shadowOpacity: 0,
               borderBottomWidth: 0,
             },
+            header: Header,
           }}
         />
       </>
