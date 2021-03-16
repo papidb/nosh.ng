@@ -10,7 +10,10 @@ import eye from 'assets/icons/eye.svg';
 import auth_logo from 'assets/icons/auth_logo.svg';
 import fingerprint from 'assets/icons/fingerprint.svg';
 import faceid from 'assets/icons/faceid.svg';
+
 import receipt from 'assets/icons/receipt.svg';
+import giftcard from 'assets/icons/giftcard.svg';
+
 import apple from 'assets/icons/apple.svg';
 import home from 'assets/icons/home.svg';
 import forward from 'assets/icons/forward.svg';
@@ -24,6 +27,7 @@ const ICONS = {
   'icon-fingerprint': fingerprint,
   'icon-faceid': faceid,
   'icon-receipt': receipt,
+  'icon-giftcard': giftcard,
   'icon-apple': apple,
   'icon-home': home,
   'icon-forward': forward,

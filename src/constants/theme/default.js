@@ -119,6 +119,19 @@ const theme = createTheme({
         color: palette.fadedBlue,
       },
     },
+    giftcard: {
+      color: palette.darkBlueButton,
+      height: BUTTON_HEIGHT,
+      // color: palette.white,
+      fontWeight: 'bold',
+      fontSize: 16,
+      borderWidth: 3,
+      borderColor: '#C4ECFF',
+      disabled: {
+        fontSize: 16,
+        color: palette.fadedBlue,
+      },
+    },
     faded: {
       height: BUTTON_HEIGHT,
       fontWeight: 'bold',
