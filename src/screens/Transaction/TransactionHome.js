@@ -8,7 +8,7 @@ import {TransactionTab, TransactionModal} from './components';
 import {uuid} from 'shared/utils';
 
 export const TransactionHome = () => {
-  const [isModalVisible, setModalVisible] = useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const closeModal = () => setModalVisible(false);
   const openModal = () => setModalVisible(true);
