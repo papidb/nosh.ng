@@ -1,14 +1,10 @@
 import React from 'react';
 import {ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
-import {useNavigation} from '@react-navigation/core';
-
 import {Box, Text, Divider, Button, HeaderInfo, Icon} from 'components';
 import images from 'constants/images';
 
-export const GiftCard = () => {
-  let navigation = useNavigation();
-  let toSubCategory = () => navigation.navigate('SubCategory');
+export const SubCategory = () => {
   return (
     <Box flex={1}>
       <Divider marginBottom="l" />
@@ -36,11 +32,7 @@ export const GiftCard = () => {
             CLICK HERE TO BEGIN
           </Text>
 
-          <Button
-            variant="giftcard"
-            text="Ebay"
-            onPress={() => toSubCategory()}
-          />
+          <Button variant="giftcard" text="Ebay" />
         </Box>
       </ScrollView>
       <Box paddingHorizontal="l" marginBottom="l">
