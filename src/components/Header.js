@@ -2,6 +2,7 @@ import React from 'react';
 import {ViewPropTypes} from 'react-native';
 
 import PropTypes from 'prop-types';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Box, Text} from './pure';
 import {AuthAvatar} from './auth';
@@ -12,12 +13,18 @@ export const Header = () => {
     firstName: 'John',
     lastName: 'Doe',
   };
+  const {top} = useSafeAreaInsets();
+  // console.log({top});
+  let realTop = top / 4 + 10;
   return (
     <Box
       flexDirection="row"
       backgroundColor="mostBg"
       paddingHorizontal="l"
-      paddingTop="m">
+      // paddingTop="m"
+      style={{paddingTop: realTop}}
+      //
+    >
       <Box marginRight="m">
         <AuthAvatar
           size={81}
