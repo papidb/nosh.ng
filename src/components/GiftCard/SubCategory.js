@@ -3,11 +3,13 @@ import {StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 import PropTypes from 'prop-types';
 
-import {Box, Text, Circle, Input, Button, HeaderInfo, Icon} from 'components';
+import {Box, Text, Circle, Select, Button, HeaderInfo, Icon} from 'components';
 import {GiftCardBox} from './GiftCardBox';
 
 import {commaFormatter} from 'shared/utils';
 import images from 'constants/images';
+import data from 'constants/data';
+import {palette} from 'constants/theme';
 
 export const SubCategory = ({next, prev}) => {
   const USD_AMOUNT = 1400;
@@ -34,33 +36,29 @@ export const SubCategory = ({next, prev}) => {
           USA Apple Itunes
         </Text>
       </GiftCardBox>
-      <Input
-        variant="giftcard"
-        placeholder="1,400.00"
-        keyboardType="number-pad"
-        RightIcon={
-          <Text fontSize={12} fontWeight="600" color="primary">
-            USD
-          </Text>
-        }
+      <Select
+        placeholder={data.cardSub}
+        onClose={console.log}
+        onValueChange={(string) => console.log({string})}
+        items={data.cardsubcategory}
       />
-      <GiftCardBox
-        marginVertical="m"
-        flexDirection="row"
-        backgroundColor="mostBg"
-        justifyContent="space-between">
-        <Text fontSize={24} fontWeight="400" color="success">
-          {commaFormatter(USD_AMOUNT)}
-        </Text>
-        <Text fontSize={12} fontWeight="600" color="success">
-          NGN
-        </Text>
-      </GiftCardBox>
-
-      <Box marginHorizontal="xl" marginTop="s" marginBottom="l">
-        <Text fontSize={12} fontWeight="600" color="success">
-          YOU GET PAID
-        </Text>
+      <Box flexDirection="row" marginVertical="xs">
+        <Box flex={1} />
+        <Box
+          flex={1}
+          backgroundColor="lightSuccess"
+          borderRadius={100}
+          padding="l"
+          justifyContent="center"
+          flexDirection="row"
+          alignItems="center">
+          <Text fontSize={14} color="buttonColor" fontWeight="700">
+            Hottest{' '}
+          </Text>
+          <Text fontSize={14} color="buttonColor">
+            Cards
+          </Text>
+        </Box>
       </Box>
 
       {/* Button */}

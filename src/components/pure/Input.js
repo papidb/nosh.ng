@@ -156,7 +156,7 @@ Input.propTypes = {
   variant: PropTypes.string,
   labelVariant: PropTypes.string,
   LeftIcon: PropTypes.bool,
-  RightIcon: PropTypes.func,
+  RightIcon: PropTypes.any,
   nospace: PropTypes.bool,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,

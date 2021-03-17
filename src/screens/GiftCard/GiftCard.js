@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/core';
 import Swiper from 'react-native-swiper';
 
 import {Box, Text, Divider, Button, HeaderInfo, Icon} from 'components';
-import {SubCategory} from 'components/GiftCard';
+import {SubCategory, SubAmount} from 'components/GiftCard';
 import images from 'constants/images';
 
 export const GiftCard = () => {
@@ -63,6 +63,7 @@ export const GiftCard = () => {
             />
           </Box>
           <SubCategory next={goToNextSlide} prev={goBack} />
+          <SubAmount next={goToNextSlide} prev={goBack} />
           <Box style={[styles.slide]}>
             <Text style={styles.text}>And simple</Text>
           </Box>

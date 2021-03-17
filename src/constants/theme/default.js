@@ -6,6 +6,7 @@ const INPUT_HEIGHT = 62;
 export const palette = {
   // main colors
   blue: '#30bced',
+  selectIconBlue: '#B4EBFF',
   fadedBlue: 'rgba(48,188,237,0.1)',
   mostBg: 'rgba(48,188,237,0.1)',
   greyBlue: 'rgba(48,188,237,0.2)',
@@ -13,6 +14,7 @@ export const palette = {
   transparent: 'transparent',
   orange: '#ff4000',
   green: '#3DAA9D',
+  lightGreen: ' rgba(61,170,157,0.1)',
   darkGrey: '#525C6B',
 
   // black and white
@@ -34,6 +36,8 @@ const theme = createTheme({
     white: palette.white,
     transparent: palette.transparent,
     success: palette.green,
+    lightSuccess: palette.lightGreen,
+
     text: palette.darkGrey,
 
     // specifics
@@ -46,6 +50,7 @@ const theme = createTheme({
     accent: '#ff4000',
     inactiveInputBorder: palette.greyBlue,
     error: palette.red,
+    selectIconBlue: palette.selectIconBlue,
   },
   spacing: {
     xxs: 3,
@@ -162,7 +167,7 @@ const theme = createTheme({
     },
   },
   selectVariants: {
-    default: {},
+    defaults: {},
   },
   maxContentWidth: 500,
 });
