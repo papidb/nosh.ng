@@ -52,10 +52,13 @@ export const Input = ({
   const ICON_SIZE = 27;
 
   // extract props you need in the container
-  const {borderWidth, height, ...realInputStyle} = StyleSheet.flatten([
-    variantProps,
-    inputStyle,
-  ]);
+  const {
+    borderWidth,
+    backgroundColor = palette.transparent,
+    height,
+    placeholderTextColor = palette.inputColor,
+    ...realInputStyle
+  } = StyleSheet.flatten([variantProps, inputStyle]);
   const changeIcon = () => {
     setState((prevState) => ({
       icon: prevState.icon === 'eye' ? 'eye_off' : 'eye',
@@ -90,7 +93,7 @@ export const Input = ({
           padding="l"
           paddingHorizontal="xl"
           borderRadius={30}
-          {...{borderWidth, borderColor, height}}
+          {...{borderWidth, borderColor, height, backgroundColor}}
           {...paddingRight}
           {...innerContainerProps}>
           {LeftIcon}
@@ -99,7 +102,7 @@ export const Input = ({
               ref={inputRef}
               style={realInputStyle}
               secureTextEntry={state.password}
-              placeholderTextColor={palette.inputColor}
+              placeholderTextColor={placeholderTextColor}
               onFocus={(event) => {
                 // make border color change
                 setFocus(true);

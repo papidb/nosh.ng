@@ -150,6 +150,16 @@ const theme = createTheme({
       color: palette.inputColor,
       // placeholderTextColor: palette.inputColor,
     },
+    giftcard: {
+      height: 65,
+      fontFamily: 'Hurme Geometric Sans 1',
+      fontWeight: '400',
+      fontSize: 24,
+      borderWidth: 0,
+      color: palette.blue,
+      placeholderTextColor: palette.blue,
+      backgroundColor: 'white',
+    },
   },
   selectVariants: {
     default: {},
