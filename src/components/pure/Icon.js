@@ -18,6 +18,7 @@ import apple from 'assets/icons/apple.svg';
 import home from 'assets/icons/home.svg';
 import forward from 'assets/icons/forward.svg';
 import forwardgreen from 'assets/icons/forwardgreen.svg';
+import backward from 'assets/icons/backward.svg';
 
 // actual Icons
 const ICONS = {
@@ -32,6 +33,7 @@ const ICONS = {
   'icon-home': home,
   'icon-forward': forward,
   'icon-forwardgreen': forwardgreen,
+  'icon-backward': backward,
 };
 
 export const Icon = ({name, size = 24, fill = palette.brandColor, style}) => {
