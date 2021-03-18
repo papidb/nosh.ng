@@ -15,7 +15,14 @@ import apple from 'assets/icons/apple.svg';
 import home from 'assets/icons/home.svg';
 import forward from 'assets/icons/forward.svg';
 import forwardgreen from 'assets/icons/forwardgreen.svg';
-
+import settings from 'assets/icons/settings.svg';
+import add from 'assets/icons/add.svg';
+import bookmark from 'assets/icons/bookmark.svg';
+import chat from 'assets/icons/chat.svg';
+import expand from 'assets/icons/expand.svg';
+import not_visible from 'assets/icons/not_visible.svg';
+import power from 'assets/icons/power.svg';
+import share from 'assets/icons/share.svg';
 // actual Icons
 const ICONS = {
   eye_off: eye_off,
@@ -28,6 +35,14 @@ const ICONS = {
   'icon-home': home,
   'icon-forward': forward,
   'icon-forwardgreen': forwardgreen,
+  'icon-settings': settings,
+  'icon-add': add,
+  'icon-bookmark': bookmark,
+  'icon-chat': chat,
+  'icon-expand': expand,
+  'icon-not_visible': not_visible,
+  'icon-power': power,
+  'icon-share': share,
 };
 
 export const Icon = ({name, size = 24, fill = palette.brandColor, style}) => {
