@@ -20,6 +20,8 @@ import forward from 'assets/icons/forward.svg';
 import forwardgreen from 'assets/icons/forwardgreen.svg';
 import backward from 'assets/icons/backward.svg';
 import dropdown from 'assets/icons/dropdown.svg';
+import cart from 'assets/icons/cart.svg';
+import edit2 from 'assets/icons/edit2.svg';
 
 // actual Icons
 const ICONS = {
@@ -36,6 +38,8 @@ const ICONS = {
   'icon-forwardgreen': forwardgreen,
   'icon-backward': backward,
   'icon-dropdown': dropdown,
+  'icon-cart': cart,
+  'icon-edit2': edit2,
 };
 
 export const Icon = ({name, size = 24, fill = palette.brandColor, style}) => {
