@@ -17,6 +17,7 @@ export const palette = {
 
   // black and white
   white: '#FFF',
+  whiteFaded: 'rgba(255,255,255,0.5)',
   black: '#000',
 
   // red
@@ -32,6 +33,7 @@ const theme = createTheme({
     primary: palette.blue,
     secondary: palette.lightBlue,
     white: palette.white,
+    whiteFaded: palette.whiteFaded,
     transparent: palette.transparent,
     success: palette.green,
     text: palette.darkGrey,
