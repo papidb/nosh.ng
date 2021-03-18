@@ -8,6 +8,7 @@ import {Icon} from 'components';
 // import {uuid} from 'shared/utils';
 
 import {TransactionNav} from './transaction.navigation';
+import {SettingsNav} from './Settings.navigation';
 import {HomeNav} from './Home.navigation';
 
 const Tab = createBottomTabNavigator();
@@ -126,6 +127,19 @@ export const BottomTab = () => {
             ),
         }}
         component={TransactionNav}
+      />
+      <Tab.Screen
+        name="Settings"
+        options={{
+          // eslint-disable-next-line react/prop-types
+          tabBarIcon: ({color, size, focused}) =>
+            focused ? (
+              <Icon name={'icon-settings'} color={color} size={size} />
+            ) : (
+              <Icon name={'icon-settings'} color={color} size={size} />
+            ),
+        }}
+        component={SettingsNav}
       />
     </Tab.Navigator>
   );
