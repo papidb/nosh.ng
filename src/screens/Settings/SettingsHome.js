@@ -1,55 +1,11 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 
-import Modal from 'react-native-modal';
-
-import {Box, Text, Divider, Icon, HeaderInfo, Circle} from 'components';
+import {Box, Divider, HeaderInfo} from 'components';
+import {SettingsTab} from 'components/Settings';
 import {logout} from 'action';
 import {uuid} from 'shared/utils';
-
-const SettingsTab = ({
-  text,
-  icon,
-  iconProps,
-  onPress,
-  containerProps,
-  circleProps,
-  textProps,
-}) => {
-  return (
-    <TouchableOpacity {...{onPress}}>
-      <Box
-        backgroundColor="whiteFaded"
-        flexDirection="row"
-        borderRadius={100}
-        alignItems="center"
-        paddingRight="l"
-        marginBottom="xs"
-        height={57}
-        {...containerProps}>
-        <Circle
-          size={57}
-          backgroundColor="whiteFaded"
-          marginRight="xs"
-          {...circleProps}>
-          <Icon name={icon} size={30} {...iconProps} />
-        </Circle>
-        <Box
-          flex={1}
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          marginLeft="l">
-          <Text fontSize={15} fontWeight="600" {...textProps}>
-            {text}
-          </Text>
-          <Icon size={14} name="icon-forward" />
-        </Box>
-      </Box>
-    </TouchableOpacity>
-  );
-};
 
 export const Screen = ({logout}) => {
   const options = [
@@ -95,12 +51,8 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 15,
   },
-  ngn: {marginRight: 35, marginBottom: 9},
   noMarginTop: {
     marginTop: 0,
-  },
-  headerDivider: {
-    marginHorizontal: 14,
   },
   bottomDivider: {
     marginVertical: 19,
