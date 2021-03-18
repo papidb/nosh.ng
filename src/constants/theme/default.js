@@ -14,6 +14,7 @@ export const palette = {
   orange: '#ff4000',
   green: '#3DAA9D',
   darkGrey: '#525C6B',
+  fadedBrown: '#DADADA',
 
   // black and white
   white: '#FFF',
@@ -26,6 +27,8 @@ export const palette = {
   // confused
   inputColor: 'rgba(40,35,86,0.5)',
   darkBlueButton: '#023248',
+  lightBlack: 'rgba(0, 0, 0, 0.6)',
+  FAFAFA: '#FAFAFA',
 };
 
 const theme = createTheme({
@@ -48,6 +51,9 @@ const theme = createTheme({
     accent: '#ff4000',
     inactiveInputBorder: palette.greyBlue,
     error: palette.red,
+    overlayBg: palette.lightBlack,
+    disabledTextInput: palette.fadedBrown,
+    lightGray: palette.FAFAFA,
   },
   spacing: {
     xxs: 3,
@@ -137,6 +143,15 @@ const theme = createTheme({
       fontSize: 16,
       borderWidth: 2,
       color: palette.inputColor,
+      // placeholderTextColor: palette.inputColor,
+    },
+    profile: {
+      height: INPUT_HEIGHT,
+      fontFamily: 'Hurme Geometric Sans 1',
+      fontSize: 16,
+      borderWidth: 0,
+      color: palette.fadedBrown,
+      backgroundColor: 'lightGray',
       // placeholderTextColor: palette.inputColor,
     },
   },

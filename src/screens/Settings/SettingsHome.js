@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 
-import {Box, Divider, HeaderInfo} from 'components';
-import {SettingsTab} from 'components/Settings';
+import {Box, Divider, HeaderInfo, NoshModalize} from 'components';
+import {SettingsTab, EditProfile} from 'components/Settings';
 import {logout} from 'action';
 import {uuid} from 'shared/utils';
+import {Portal} from 'react-native-portalize';
 
 export const Screen = ({logout}) => {
+  const modalizeRef = useRef(null);
+
+  const onOpenProfile = () => {
+    modalizeRef.current?.open();
+  };
+
   const options = [
-    {text: 'Edit Profile', icon: 'icon-expand'},
+    {text: 'Edit Profile', icon: 'icon-expand', onPress: onOpenProfile},
     {text: 'Add Bank', icon: 'icon-add'},
     {text: 'Security settings', icon: 'icon-not_visible'},
     {text: 'Privacy policy', icon: 'icon-bookmark'},
@@ -41,6 +48,12 @@ export const Screen = ({logout}) => {
         ))}
         <Divider style={styles.bottomDivider} />
       </ScrollView>
+      {/* Modals */}
+      <Portal>
+        <NoshModalize ref={modalizeRef}>
+          <EditProfile />
+        </NoshModalize>
+      </Portal>
     </Box>
   );
 };

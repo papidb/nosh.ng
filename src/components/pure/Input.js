@@ -52,10 +52,12 @@ export const Input = ({
   const ICON_SIZE = 27;
 
   // extract props you need in the container
-  const {borderWidth, height, ...realInputStyle} = StyleSheet.flatten([
-    variantProps,
-    inputStyle,
-  ]);
+  const {
+    borderWidth,
+    height,
+    backgroundColor,
+    ...realInputStyle
+  } = StyleSheet.flatten([variantProps, inputStyle]);
   const changeIcon = () => {
     setState((prevState) => ({
       icon: prevState.icon === 'eye' ? 'eye_off' : 'eye',
@@ -90,7 +92,7 @@ export const Input = ({
           padding="l"
           paddingHorizontal="xl"
           borderRadius={30}
-          {...{borderWidth, borderColor, height}}
+          {...{borderWidth, borderColor, height, backgroundColor}}
           {...paddingRight}
           {...innerContainerProps}>
           {LeftIcon}
