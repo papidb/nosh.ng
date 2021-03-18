@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
 
 import Modal from 'react-native-modal';
 
 import {Box, Text, Divider, Icon, HeaderInfo, Circle} from 'components';
+import {logout} from 'action';
 import {uuid} from 'shared/utils';
 
 const SettingsTab = ({
@@ -49,7 +51,7 @@ const SettingsTab = ({
   );
 };
 
-export const SettingsHome = () => {
+export const Screen = ({logout}) => {
   const options = [
     {text: 'Edit Profile', icon: 'icon-expand'},
     {text: 'Add Bank', icon: 'icon-add'},
@@ -67,6 +69,7 @@ export const SettingsHome = () => {
         backgroundColor: 'mostBg',
       },
       textProps: {color: 'primary'},
+      onPress: () => logout(),
     },
   ];
   return (
@@ -86,6 +89,7 @@ export const SettingsHome = () => {
   );
 };
 
+export const SettingsHome = connect(null, {logout})(Screen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   header: {

@@ -4,6 +4,7 @@ import {useFormik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import * as Yup from 'yup';
+import {connect} from 'react-redux';
 
 import {
   Box,
@@ -14,6 +15,7 @@ import {
   AuthAvatar,
   AuthContainer,
 } from 'components';
+import {login} from 'action';
 import {waait} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
@@ -30,7 +32,7 @@ const initailValues = __DEV__
     }
   : {name: '', email: '', phone: '', password: '', confirm_password: ''};
 
-export const PersonalLoginScreen = () => {
+export const PersonalLoginScreen = ({login}) => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
   const toResetPassword = () => navigation.navigate('ResetPassword');
@@ -48,8 +50,9 @@ export const PersonalLoginScreen = () => {
     initialValues: initailValues,
     onSubmit: async (submitValues) => {
       console.log({submitValues});
-      await waait(2000);
-      toLogin();
+      // await waait(2000);
+      console.log({login})
+      login();
     },
     validationSchema: LoginSchema,
   });
@@ -95,23 +98,25 @@ export const PersonalLoginScreen = () => {
             value={values.password}
             passwordIcon
           />
-          <Box
-            marginTop={'xl'}
-            alignSelf="center"
-            height={85}
-            width={85}
-            borderRadius={85}
-            alignItems="center"
-            justifyContent="center"
-            backgroundColor="eyeBackground">
-            <Icon name="icon-fingerprint" size={43} />
-          </Box>
+          <TouchableOpacity onPress={() => toLogin()}>
+            <Box
+              marginTop={'xl'}
+              alignSelf="center"
+              height={85}
+              width={85}
+              borderRadius={85}
+              alignItems="center"
+              justifyContent="center"
+              backgroundColor="eyeBackground">
+              <Icon name="icon-fingerprint" size={43} />
+            </Box>
+          </TouchableOpacity>
         </Box>
       </KeyboardAwareScrollView>
     </AuthContainer>
   );
 };
-export const PersonalLogin = PersonalLoginScreen;
+export const PersonalLogin = connect(null, {login})(PersonalLoginScreen);
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
   bottom: {marginTop: 50},
