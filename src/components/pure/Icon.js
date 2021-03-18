@@ -23,6 +23,7 @@ import expand from 'assets/icons/expand.svg';
 import not_visible from 'assets/icons/not_visible.svg';
 import power from 'assets/icons/power.svg';
 import share from 'assets/icons/share.svg';
+import edit2 from 'assets/icons/edit2.svg';
 // actual Icons
 const ICONS = {
   eye_off: eye_off,
@@ -43,6 +44,7 @@ const ICONS = {
   'icon-not_visible': not_visible,
   'icon-power': power,
   'icon-share': share,
+  'icon-edit2': edit2,
 };
 
 export const Icon = ({name, size = 24, fill = palette.brandColor, style}) => {
