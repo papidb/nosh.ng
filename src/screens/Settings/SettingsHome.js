@@ -3,21 +3,26 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 
 import {Box, Divider, HeaderInfo, NoshModalize} from 'components';
-import {SettingsTab, EditProfile} from 'components/Settings';
+import {SettingsTab, EditProfile, AddBank} from 'components/Settings';
 import {logout} from 'action';
 import {uuid} from 'shared/utils';
 import {Portal} from 'react-native-portalize';
 
 export const Screen = ({logout}) => {
-  const modalizeRef = useRef(null);
+  const editProfileModalizeRef = useRef(null);
+  const addBankModalizeRef = useRef(null);
 
   const onOpenProfile = () => {
-    modalizeRef.current?.open();
+    editProfileModalizeRef.current?.open();
+  };
+  const openAddBank = () => {
+    console.log('omo');
+    addBankModalizeRef.current?.open();
   };
 
   const options = [
     {text: 'Edit Profile', icon: 'icon-expand', onPress: onOpenProfile},
-    {text: 'Add Bank', icon: 'icon-add'},
+    {text: 'Add Bank', icon: 'icon-add', onPress: openAddBank},
     {text: 'Security settings', icon: 'icon-not_visible'},
     {text: 'Privacy policy', icon: 'icon-bookmark'},
     {text: 'Live chat', icon: 'icon-chat'},
@@ -50,8 +55,11 @@ export const Screen = ({logout}) => {
       </ScrollView>
       {/* Modals */}
       <Portal>
-        <NoshModalize ref={modalizeRef}>
+        <NoshModalize ref={editProfileModalizeRef}>
           <EditProfile />
+        </NoshModalize>
+        <NoshModalize ref={addBankModalizeRef}>
+          <AddBank />
         </NoshModalize>
       </Portal>
     </Box>
