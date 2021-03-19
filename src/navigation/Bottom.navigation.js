@@ -10,6 +10,7 @@ import {Icon} from 'components';
 import {TransactionNav} from './transaction.navigation';
 import {SettingsNav} from './Settings.navigation';
 import {HomeNav} from './Home.navigation';
+import {GiftCardNav} from './GiftCard.navigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -114,6 +115,19 @@ export const BottomTab = () => {
             ),
         }}
         component={HomeNav}
+      />
+      <Tab.Screen
+        name="Giftcard"
+        options={{
+          // eslint-disable-next-line react/prop-types
+          tabBarIcon: ({color, size, focused}) =>
+            focused ? (
+              <Icon name={'icon-giftcard'} color={color} size={size} />
+            ) : (
+              <Icon name={'icon-giftcard'} color={color} size={size} />
+            ),
+        }}
+        component={GiftCardNav}
       />
       <Tab.Screen
         name="Transaction"

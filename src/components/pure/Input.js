@@ -55,7 +55,8 @@ export const Input = ({
   const {
     borderWidth,
     height,
-    backgroundColor,
+    backgroundColor = palette.transparent,
+    placeholderTextColor = palette.inputColor,
     ...realInputStyle
   } = StyleSheet.flatten([variantProps, inputStyle]);
   const changeIcon = () => {
@@ -101,7 +102,7 @@ export const Input = ({
               ref={inputRef}
               style={realInputStyle}
               secureTextEntry={state.password}
-              placeholderTextColor={palette.inputColor}
+              placeholderTextColor={placeholderTextColor}
               onFocus={(event) => {
                 // make border color change
                 setFocus(true);
@@ -155,7 +156,7 @@ Input.propTypes = {
   variant: PropTypes.string,
   labelVariant: PropTypes.string,
   LeftIcon: PropTypes.bool,
-  RightIcon: PropTypes.func,
+  RightIcon: PropTypes.any,
   nospace: PropTypes.bool,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,

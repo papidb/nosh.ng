@@ -6,3 +6,4 @@ export * from './Button';
 export * from './Divider';
 export * from './Circle';
 export * from './Modalize';
+export * from './Select';

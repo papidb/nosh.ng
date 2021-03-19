@@ -6,6 +6,7 @@ const INPUT_HEIGHT = 62;
 export const palette = {
   // main colors
   blue: '#30bced',
+  selectIconBlue: '#B4EBFF',
   fadedBlue: 'rgba(48,188,237,0.1)',
   mostBg: 'rgba(48,188,237,0.1)',
   greyBlue: 'rgba(48,188,237,0.2)',
@@ -13,6 +14,7 @@ export const palette = {
   transparent: 'transparent',
   orange: '#ff4000',
   green: '#3DAA9D',
+  lightGreen: ' rgba(61,170,157,0.1)',
   darkGrey: '#525C6B',
   fadedBrown: '#DADADA',
 
@@ -39,6 +41,8 @@ const theme = createTheme({
     whiteFaded: palette.whiteFaded,
     transparent: palette.transparent,
     success: palette.green,
+    lightSuccess: palette.lightGreen,
+
     text: palette.darkGrey,
 
     // specifics
@@ -54,6 +58,7 @@ const theme = createTheme({
     overlayBg: palette.lightBlack,
     disabledTextInput: palette.fadedBrown,
     lightGray: palette.FAFAFA,
+    selectIconBlue: palette.selectIconBlue,
   },
   spacing: {
     xxs: 3,
@@ -127,6 +132,19 @@ const theme = createTheme({
         color: palette.fadedBlue,
       },
     },
+    giftcard: {
+      color: palette.darkBlueButton,
+      height: BUTTON_HEIGHT,
+      // color: palette.white,
+      fontWeight: 'bold',
+      fontSize: 16,
+      borderWidth: 3,
+      borderColor: '#C4ECFF',
+      disabled: {
+        fontSize: 16,
+        color: palette.fadedBlue,
+      },
+    },
     faded: {
       height: BUTTON_HEIGHT,
       fontWeight: 'bold',
@@ -154,9 +172,19 @@ const theme = createTheme({
       backgroundColor: 'lightGray',
       // placeholderTextColor: palette.inputColor,
     },
+    giftcard: {
+      height: 65,
+      fontFamily: 'Hurme Geometric Sans 1',
+      fontWeight: '400',
+      fontSize: 24,
+      borderWidth: 0,
+      color: palette.blue,
+      placeholderTextColor: palette.blue,
+      backgroundColor: 'white',
+    },
   },
   selectVariants: {
-    default: {},
+    defaults: {},
   },
   maxContentWidth: 500,
 });

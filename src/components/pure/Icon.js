@@ -10,7 +10,10 @@ import eye from 'assets/icons/eye.svg';
 import auth_logo from 'assets/icons/auth_logo.svg';
 import fingerprint from 'assets/icons/fingerprint.svg';
 import faceid from 'assets/icons/faceid.svg';
+
 import receipt from 'assets/icons/receipt.svg';
+import giftcard from 'assets/icons/giftcard.svg';
+
 import apple from 'assets/icons/apple.svg';
 import home from 'assets/icons/home.svg';
 import forward from 'assets/icons/forward.svg';
@@ -24,6 +27,10 @@ import not_visible from 'assets/icons/not_visible.svg';
 import power from 'assets/icons/power.svg';
 import share from 'assets/icons/share.svg';
 import edit2 from 'assets/icons/edit2.svg';
+import backward from 'assets/icons/backward.svg';
+import dropdown from 'assets/icons/dropdown.svg';
+import cart from 'assets/icons/cart.svg';
+
 // actual Icons
 const ICONS = {
   eye_off: eye_off,
@@ -32,6 +39,7 @@ const ICONS = {
   'icon-fingerprint': fingerprint,
   'icon-faceid': faceid,
   'icon-receipt': receipt,
+  'icon-giftcard': giftcard,
   'icon-apple': apple,
   'icon-home': home,
   'icon-forward': forward,
@@ -44,6 +52,9 @@ const ICONS = {
   'icon-not_visible': not_visible,
   'icon-power': power,
   'icon-share': share,
+  'icon-backward': backward,
+  'icon-dropdown': dropdown,
+  'icon-cart': cart,
   'icon-edit2': edit2,
 };
 

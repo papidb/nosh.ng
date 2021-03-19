@@ -54,7 +54,7 @@ export const HeaderInfo = ({text, containerProps, textProps}) => {
       {...containerProps}>
       <Text
         color="primary"
-        fontWeight="bold"
+        fontWeight="600"
         textAlign="center"
         fontSize={12}
         {...textProps}>

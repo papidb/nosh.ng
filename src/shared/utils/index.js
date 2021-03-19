@@ -1,5 +1,7 @@
 import shortid from 'shortid';
 
+export * from './currency.utils';
+
 export const uuid = () => shortid.generate();
 
 export const waait = (amount = 0) =>
