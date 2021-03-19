@@ -8,9 +8,11 @@ import {
   Input,
   Circle,
   Icon,
-  AuthAvatar,
+  Select,
   Button,
 } from 'components';
+import data from 'constants/data';
+import {palette} from 'constants/theme';
 
 const ModalContainer = ({children}) => {
   return <Box style={styles.modalContainer}>{children}</Box>;
@@ -27,19 +29,32 @@ export const AddBank = () => {
       </Box>
 
       <Box marginVertical="xs">
-        <Input placeholder="Name" variant="profile" editable={false} nospace />
-      </Box>
-      <Box marginBottom="xs">
-        <Input
-          placeholder="Number"
-          variant="profile"
-          editable={false}
-          nospace
+        <Select
+          placeholder={data.addBankPlaceholder}
+          onClose={console.log}
+          onValueChange={(string) => console.log({string})}
+          items={data.cardsubcategory}
         />
       </Box>
       <Box marginBottom="xs">
-        <Input placeholder="Email" variant="profile" editable={false} nospace />
+        <Input
+          placeholder="Enter Account Number"
+          placeholderTextColor={palette.blue}
+          variant="profile"
+          nospace
+        />
       </Box>
+      <Box
+        marginBottom="xs"
+        backgroundColor="mostBg"
+        padding="l"
+        borderRadius={100}
+        paddingHorizontal="xl">
+        <Text color="primary" fontSize={15}>
+          Nnamdi Ayoola
+        </Text>
+      </Box>
+      <Box height={65} />
       <Box>
         <Button text="Save" />
       </Box>

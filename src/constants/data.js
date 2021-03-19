@@ -24,11 +24,15 @@ export default {
   ],
   cardSub: {
     label: 'Select Sub-Category',
-    value: 'sSelect Card Sub Category',
+    value: 'Select Card Sub Category',
   },
   cardsubcategory: [
     {label: 'Choose Card Category', value: '1'},
     {label: 'Choose Card Category', value: '2'},
     {label: 'Choose Card Category', value: '3'},
   ],
+  addBankPlaceholder: {
+    label: 'Choose Bank',
+    value: 'Choose Bank',
+  },
 };
