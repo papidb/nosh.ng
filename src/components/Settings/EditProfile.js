@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   modalContainer: {padding: 22, paddingTop: 26},
 });
 
-export const EditProfile = () => {
+export const EditProfile = ({close}) => {
   return (
     <ModalContainer>
       <Box marginBottom="xs">
@@ -68,7 +68,7 @@ export const EditProfile = () => {
         <Input placeholder="Email" variant="profile" editable={false} nospace />
       </Box>
       <Box>
-        <Button text="Save" />
+        <Button text="Save" onPress={close} />
       </Box>
     </ModalContainer>
   );

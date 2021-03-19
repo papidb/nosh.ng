@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   modalContainer: {padding: 22, paddingTop: 26},
 });
 
-export const AddBank = () => {
+export const AddBank = ({close}) => {
   return (
     <ModalContainer>
       <Box marginBottom="xxxl">
@@ -56,7 +56,7 @@ export const AddBank = () => {
       </Box>
       <Box height={65} />
       <Box>
-        <Button text="Save" />
+        <Button text="Save" onPress={close} />
       </Box>
     </ModalContainer>
   );

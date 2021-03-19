@@ -7,18 +7,19 @@ import {SettingsTab, EditProfile, AddBank} from 'components/Settings';
 import {logout} from 'action';
 import {uuid} from 'shared/utils';
 import {Portal} from 'react-native-portalize';
+import {useModalize} from 'hooks';
 
 export const Screen = ({logout}) => {
-  const editProfileModalizeRef = useRef(null);
-  const addBankModalizeRef = useRef(null);
-
-  const onOpenProfile = () => {
-    editProfileModalizeRef.current?.open();
-  };
-  const openAddBank = () => {
-    console.log('omo');
-    addBankModalizeRef.current?.open();
-  };
+  const {
+    openModal: onOpenProfile,
+    closeModal: closeProfileModal,
+    Component: ProfileModalize,
+  } = useModalize();
+  const {
+    openModal: openAddBank,
+    closeModal: closeAddBankModal,
+    Component: AddBankModalize,
+  } = useModalize();
 
   const options = [
     {text: 'Edit Profile', icon: 'icon-expand', onPress: onOpenProfile},
@@ -55,12 +56,12 @@ export const Screen = ({logout}) => {
       </ScrollView>
       {/* Modals */}
       <Portal>
-        <NoshModalize ref={editProfileModalizeRef}>
-          <EditProfile />
-        </NoshModalize>
-        <NoshModalize ref={addBankModalizeRef}>
-          <AddBank />
-        </NoshModalize>
+        <ProfileModalize>
+          <EditProfile close={closeProfileModal} />
+        </ProfileModalize>
+        <AddBankModalize>
+          <AddBank close={closeAddBankModal} />
+        </AddBankModalize>
       </Portal>
     </Box>
   );
