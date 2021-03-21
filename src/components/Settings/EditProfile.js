@@ -14,12 +14,7 @@ import {
   Button,
 } from 'components';
 
-const ModalContainer = (props) => {
-  return <Box style={styles.modalContainer} {...props} />;
-};
-const styles = StyleSheet.create({
-  modalContainer: {padding: 22, paddingTop: 26},
-});
+import {ModalContainer} from './ModalContainer';
 
 export const EditProfile = ({close}) => {
   return (
