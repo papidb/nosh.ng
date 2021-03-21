@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
+import {Portal} from 'react-native-portalize';
+import {useModalize} from 'hooks';
+
 import {Box, Text, Divider, Circle, Icon} from 'components';
+import {UserNameSetup} from 'components/Home';
+import {palette} from 'constants/theme';
 import images from 'constants/images';
 
 const Balance = () => {
@@ -41,8 +46,23 @@ const Balance = () => {
 };
 
 export const Home = () => {
+  const {
+    openModal: openSetupUsername,
+    closeModal: closeSetupUsername,
+    Component: UserNameSetupModalize,
+  } = useModalize();
+
+  const toNoshWallet = () => {
+    openSetupUsername();
+  };
+  useEffect(() => openSetupUsername(), [openSetupUsername]);
   return (
     <Box flex={1}>
+      <Portal>
+        <UserNameSetupModalize childrenStyle={styles.childrenStyle}>
+          <UserNameSetup close={closeSetupUsername} />
+        </UserNameSetupModalize>
+      </Portal>
       <Divider marginBottom="m" />
       <ScrollView style={styles.scrollView}>
         {/* Header */}
@@ -95,7 +115,7 @@ export const Home = () => {
         </Box>
         <Divider />
         {/* Nosh Wallet */}
-        <TouchableOpacity>
+        <TouchableOpacity onPress={toNoshWallet}>
           <Box
             marginTop="s"
             flex={1}
@@ -119,4 +139,9 @@ export const Home = () => {
 };
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
+  childrenStyle: {
+    backgroundColor: palette.darkBlueButton,
+    borderTopLeftRadius: 38,
+    borderTopRightRadius: 38,
+  },
 });

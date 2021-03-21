@@ -29,6 +29,8 @@ export const palette = {
   // confused
   inputColor: 'rgba(40,35,86,0.5)',
   darkBlueButton: '#023248',
+  fadedDarkBlueButton: '#005175',
+  // fadedBlue: '#00405C',
   lightBlack: 'rgba(0, 0, 0, 0.6)',
   FAFAFA: '#FAFAFA',
 };
@@ -44,6 +46,7 @@ const theme = createTheme({
     lightSuccess: palette.lightGreen,
 
     text: palette.darkGrey,
+    fadedDarkBlueButton: palette.fadedDarkBlueButton,
 
     // specifics
     inputColor: palette.inputColor,
@@ -117,6 +120,11 @@ const theme = createTheme({
       color: 'success',
       fontWeight: '600',
       fontSize: 12,
+    },
+    darkButton: {
+      color: 'buttonColor',
+      fontWeight: '600',
+      fontSize: 16,
     },
     buttonDisabled: {
       color: 'primary',
