@@ -3,22 +3,13 @@ import {TouchableOpacity, Image, StyleSheet} from 'react-native';
 
 import PropTypes from 'prop-types';
 
-import {Box, Text, Divider, SvgIcon, Circle} from 'components';
+import {Box, Text, Divider, Close, Circle} from 'components';
 import images from 'constants/images';
 
 export const TransactionModal = ({closeModal = () => {}}) => {
   return (
     <Box backgroundColor="white" borderRadius={38} padding="l">
-      <TouchableOpacity onPress={() => closeModal()}>
-        <Circle
-          size={41}
-          borderWidth={4}
-          borderColor="primary"
-          alignSelf="flex-end">
-          <SvgIcon.CloseIcon />
-        </Circle>
-      </TouchableOpacity>
-
+      <Close onPress={closeModal} />
       {/* Content */}
       <Box alignItems="center" marginBottom="s" marginTop="l">
         <Image source={images.itunes_2} />

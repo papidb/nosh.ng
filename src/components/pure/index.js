@@ -7,3 +7,4 @@ export * from './Divider';
 export * from './Circle';
 export * from './Modalize';
 export * from './Select';
+export * from './Close';
