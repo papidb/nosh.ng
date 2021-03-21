@@ -1,5 +1,8 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
+
+import PropTypes from 'prop-types';
+
 import {useFormik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
@@ -16,7 +19,6 @@ import {
   AuthContainer,
 } from 'components';
 import {login} from 'action';
-import {waait} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Invalid Email').required('Required'),
@@ -51,7 +53,7 @@ export const PersonalLoginScreen = ({login}) => {
     onSubmit: async (submitValues) => {
       console.log({submitValues});
       // await waait(2000);
-      console.log({login})
+      console.log({login});
       login();
     },
     validationSchema: LoginSchema,
@@ -116,7 +118,13 @@ export const PersonalLoginScreen = ({login}) => {
     </AuthContainer>
   );
 };
+
+PersonalLoginScreen.propTypes = {
+  login: PropTypes.func,
+};
+
 export const PersonalLogin = connect(null, {login})(PersonalLoginScreen);
+
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
   bottom: {marginTop: 50},

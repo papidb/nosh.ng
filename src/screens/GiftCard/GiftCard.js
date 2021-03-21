@@ -1,18 +1,17 @@
-import React, {useRef, useState} from 'react';
-import {ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, {useRef} from 'react';
+import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {useNavigation} from '@react-navigation/core';
 import Swiper from 'react-native-swiper';
 
 import {Box, Text, Divider, Button, HeaderInfo, Icon} from 'components';
 import {SubCategory, SubUpload, SubAmount} from 'components/GiftCard';
-import images from 'constants/images';
 
 export const GiftCard = () => {
-  let [sliderIndex, setSliderIndex] = useState(0);
+  // let [sliderIndex, setSliderIndex] = useState(0);
 
   let navigation = useNavigation();
-  let toSubCategory = () => navigation.navigate('SubCategory');
+  // let toSubCategory = () => navigation.navigate('SubCategory');
   let swiperRef = useRef();
   const goToNextSlide = () => {
     swiperRef.current?.scrollBy(1);

@@ -1,25 +1,12 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
 
-import {
-  Box,
-  Text,
-  HeaderInfo,
-  Input,
-  Circle,
-  Icon,
-  Select,
-  Button,
-} from 'components';
+import PropTypes from 'prop-types';
+
+import {Box, Text, HeaderInfo, Input, Select, Button} from 'components';
 import data from 'constants/data';
 import {palette} from 'constants/theme';
 
-const ModalContainer = ({children}) => {
-  return <Box style={styles.modalContainer}>{children}</Box>;
-};
-const styles = StyleSheet.create({
-  modalContainer: {padding: 22, paddingTop: 26},
-});
+import {ModalContainer} from './ModalContainer';
 
 export const AddBank = ({close}) => {
   return (
@@ -60,4 +47,8 @@ export const AddBank = ({close}) => {
       </Box>
     </ModalContainer>
   );
+};
+
+AddBank.propTypes = {
+  close: PropTypes.func,
 };

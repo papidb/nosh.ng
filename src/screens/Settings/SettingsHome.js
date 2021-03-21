@@ -1,9 +1,11 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
+
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {Box, Divider, HeaderInfo, NoshModalize} from 'components';
-import {SettingsTab, EditProfile, AddBank} from 'components/Settings';
+import {Box, Divider, HeaderInfo} from 'components';
+import {SettingsTab, EditProfile, Withdraw, AddBank} from 'components/Settings';
 import {logout} from 'action';
 import {uuid} from 'shared/utils';
 import {Portal} from 'react-native-portalize';
@@ -20,11 +22,20 @@ export const Screen = ({logout}) => {
     closeModal: closeAddBankModal,
     Component: AddBankModalize,
   } = useModalize();
+  const {
+    openModal: openWithdraw,
+    closeModal: closeWithdrawModal,
+    Component: WithdrawModalize,
+  } = useModalize();
 
   const options = [
     {text: 'Edit Profile', icon: 'icon-expand', onPress: onOpenProfile},
     {text: 'Add Bank', icon: 'icon-add', onPress: openAddBank},
-    {text: 'Security settings', icon: 'icon-not_visible'},
+    {
+      text: 'Security settings',
+      icon: 'icon-not_visible',
+      onPress: openWithdraw,
+    },
     {text: 'Privacy policy', icon: 'icon-bookmark'},
     {text: 'Live chat', icon: 'icon-chat'},
     {text: 'Share App', icon: 'icon-share'},
@@ -62,9 +73,16 @@ export const Screen = ({logout}) => {
         <AddBankModalize>
           <AddBank close={closeAddBankModal} />
         </AddBankModalize>
+        <WithdrawModalize>
+          <Withdraw close={closeWithdrawModal} />
+        </WithdrawModalize>
       </Portal>
     </Box>
   );
+};
+
+Screen.propTypes = {
+  logout: PropTypes.func,
 };
 
 export const SettingsHome = connect(null, {logout})(Screen);

@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 
+import PropTypes from 'prop-types';
+
 import {
   Box,
   Text,
@@ -12,8 +14,8 @@ import {
   Button,
 } from 'components';
 
-const ModalContainer = ({children}) => {
-  return <Box style={styles.modalContainer}>{children}</Box>;
+const ModalContainer = (props) => {
+  return <Box style={styles.modalContainer} {...props} />;
 };
 const styles = StyleSheet.create({
   modalContainer: {padding: 22, paddingTop: 26},
@@ -72,4 +74,8 @@ export const EditProfile = ({close}) => {
       </Box>
     </ModalContainer>
   );
+};
+
+EditProfile.propTypes = {
+  close: PropTypes.func,
 };

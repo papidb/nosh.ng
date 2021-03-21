@@ -4,14 +4,13 @@ import {StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import {Box, Text, Circle, Input, Button, HeaderInfo, Icon} from 'components';
+import {Box, Text, Circle, Button, HeaderInfo, Icon} from 'components';
 import {GiftCardBox} from './GiftCardBox';
 
-import {commaFormatter} from 'shared/utils';
 import images from 'constants/images';
 
 export const SubUpload = ({next, prev}) => {
-  const USD_AMOUNT = 1400;
+  // const USD_AMOUNT = 1400;
   return (
     <KeyboardAwareScrollView>
       <HeaderInfo text="UPLOAD GIFTCARD (S)" />
@@ -28,7 +27,7 @@ export const SubUpload = ({next, prev}) => {
           </Circle>
         </TouchableOpacity>
 
-        <Image source={images.itunes_2} style={{width: 120, height: 67.5}} />
+        <Image source={images.itunes_2} style={styles.image} />
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
@@ -75,6 +74,9 @@ export const SubUpload = ({next, prev}) => {
     </KeyboardAwareScrollView>
   );
 };
+const styles = StyleSheet.create({
+  image: {width: 120, height: 67.5},
+});
 
 SubUpload.propTypes = {
   prev: PropTypes.func.isRequired,

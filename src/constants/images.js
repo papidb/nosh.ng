@@ -3,6 +3,7 @@ const images = {
   auth_face: require('assets/images/auth_face.png'),
   itunes_2: require('assets/images/itunes2.png'),
   FFHome: require('assets/images/FFHome.png'),
+  kuda: require('assets/images/Kuda.png'),
 };
 const toArray = () => {
   let keys = Object.keys(images);

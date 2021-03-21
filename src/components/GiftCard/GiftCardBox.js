@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Box} from 'components';
 
-export const GiftCardBox = ({children, ...props}) => {
+export const GiftCardBox = (props) => {
   return (
     <Box
       backgroundColor="white"
@@ -11,8 +11,7 @@ export const GiftCardBox = ({children, ...props}) => {
       alignItems="center"
       justifyContent="center"
       height={93}
-      {...props}>
-      {children}
-    </Box>
+      {...props}
+    />
   );
 };

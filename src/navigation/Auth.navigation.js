@@ -17,7 +17,7 @@ export const AuthNav = () => {
       screenOptions={{
         header: () => null,
         // TODO: need to import background Color from theme file
-        cardStyle: {backgroundColor: '#E5E5E5'},
+        cardStyle: {backgroundColor: '#FFF'},
       }}>
       <AppStack.Screen name="PersonalLogin" component={PersonalLogin} />
       <AppStack.Screen name="Login" component={Login} />

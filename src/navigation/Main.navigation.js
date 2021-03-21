@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
 import {NavigationContainer} from '@react-navigation/native';
 import {Host} from 'react-native-portalize';
 import {connect} from 'react-redux';
@@ -19,3 +20,7 @@ const MainNavigation = ({authenticated}) => {
 const mapStateToProps = (state) => state;
 
 export const Main = connect(mapStateToProps)(MainNavigation);
+
+MainNavigation.propTypes = {
+  authenticated: PropTypes.bool,
+};

@@ -1,5 +1,7 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, ViewPropTypes} from 'react-native';
+
+import PropTypes from 'prop-types';
 
 import {Box, Text, Icon, Circle} from 'components';
 
@@ -44,4 +46,14 @@ export const SettingsTab = ({
       </Box>
     </TouchableOpacity>
   );
+};
+
+SettingsTab.propTypes = {
+  text: PropTypes.string,
+  icon: PropTypes.string,
+  onPress: PropTypes.func,
+  iconProps: ViewPropTypes.style,
+  containerProps: PropTypes.object,
+  circleProps: PropTypes.object,
+  textProps: PropTypes.object,
 };

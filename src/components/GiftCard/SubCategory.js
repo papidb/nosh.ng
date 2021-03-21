@@ -1,18 +1,16 @@
 import React from 'react';
-import {StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 import PropTypes from 'prop-types';
 
 import {Box, Text, Circle, Select, Button, HeaderInfo, Icon} from 'components';
 import {GiftCardBox} from './GiftCardBox';
 
-import {commaFormatter} from 'shared/utils';
 import images from 'constants/images';
 import data from 'constants/data';
-import {palette} from 'constants/theme';
 
 export const SubCategory = ({next, prev}) => {
-  const USD_AMOUNT = 1400;
+  // const USD_AMOUNT = 1400;
   return (
     <Box>
       <HeaderInfo text="SELECT SUB-CATEGORY" />
@@ -29,7 +27,7 @@ export const SubCategory = ({next, prev}) => {
           </Circle>
         </TouchableOpacity>
 
-        <Image source={images.itunes_2} style={{width: 120, height: 67.5}} />
+        <Image source={images.itunes_2} style={styles.image} />
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
@@ -67,6 +65,9 @@ export const SubCategory = ({next, prev}) => {
   );
 };
 
+const styles = StyleSheet.create({
+  image: {width: 120, height: 67.5},
+});
 SubCategory.propTypes = {
   prev: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,

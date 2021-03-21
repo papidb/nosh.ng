@@ -28,7 +28,7 @@ export const SubAmount = ({next, prev}) => {
           </Circle>
         </TouchableOpacity>
 
-        <Image source={images.itunes_2} style={{width: 120, height: 67.5}} />
+        <Image source={images.itunes_2} style={styles.image} />
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
@@ -74,3 +74,7 @@ SubAmount.propTypes = {
   prev: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
 };
+
+const styles = StyleSheet.create({
+  image: {width: 120, height: 67.5},
+});

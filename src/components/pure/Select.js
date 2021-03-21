@@ -19,7 +19,6 @@ export const Select = ({
   iconContainer,
   isSubmitting,
   disabled,
-  indicatorColor,
   labelStyle,
   label,
   touched,
@@ -36,6 +35,7 @@ export const Select = ({
   ...props
 }) => {
   const [focused, setFocused] = useState(false);
+  focused;
   const pickerRef = useRef(null);
   const openPicker = () => {
     pickerRef?.current?.togglePicker?.(true);
@@ -68,7 +68,7 @@ export const Select = ({
           paddingHorizontal="s"
           top={0}
           zIndex={1}
-          style={{marginLeft: 6}}
+          style={styles.label}
           marginLeft="s">
           <Text color={tintColor} variant={labelVariant}>
             {label}
@@ -119,6 +119,7 @@ export const Select = ({
 };
 
 const styles = StyleSheet.create({
+  label: {marginLeft: 6},
   viewContainer: {
     justifyContent: 'flex-end',
     marginVertical: 5,
@@ -180,15 +181,34 @@ Select.defaultProps = {
   errorInput: styles.errorInput,
   //   ...styles, // this would spread the styles object
 };
-
 const stylePropsType = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.object),
   PropTypes.object,
 ]);
-
 Select.propTypes = {
+  inputStyle: stylePropsType,
+  containerStyle: stylePropsType,
+  innerContainerProps: stylePropsType,
+  ErrorTextStyles: stylePropsType,
+  touched: PropTypes.bool,
+  error: PropTypes.string,
+  passwordIcon: PropTypes.bool,
+  variant: PropTypes.string,
+  labelVariant: PropTypes.string,
+  LeftIcon: PropTypes.bool,
+  RightIcon: PropTypes.any,
+  nospace: PropTypes.bool,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
   viewContainer: stylePropsType,
   inputIOS: stylePropsType,
+  inputAndroid: stylePropsType,
   iconContainer: stylePropsType,
-  textStyle: stylePropsType,
+  isSubmitting: PropTypes.bool,
+  disabled: PropTypes.bool,
+  labelStyle: stylePropsType,
+  label: PropTypes.string,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  // onValueChange = () => {},
 };

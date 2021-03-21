@@ -113,6 +113,11 @@ const theme = createTheme({
       fontWeight: '600',
       fontSize: 16,
     },
+    buttonSwipe: {
+      color: 'success',
+      fontWeight: '600',
+      fontSize: 12,
+    },
     buttonDisabled: {
       color: 'primary',
       fontWeight: '600',
