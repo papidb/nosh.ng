@@ -8,6 +8,7 @@ const BaseModalize = (props, ref) => (
     ref={ref}
     withHandle={false}
     modalStyle={styles.modalStyle}
+    childrenStyle={styles.childrenStyle}
     adjustToContentHeight
     {...props}
   />
@@ -15,6 +16,10 @@ const BaseModalize = (props, ref) => (
 
 const styles = StyleSheet.create({
   modalStyle: {
+    borderTopLeftRadius: 38,
+    borderTopRightRadius: 38,
+  },
+  childrenStyle: {
     borderTopLeftRadius: 38,
     borderTopRightRadius: 38,
   },
