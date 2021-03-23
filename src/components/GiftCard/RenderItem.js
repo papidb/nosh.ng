@@ -3,7 +3,7 @@ import FastImage from 'react-native-fast-image';
 
 import {Box} from 'components';
 
-export const RenderItem = ({item: {title}}) => {
+export const RenderItem = ({item: {title}, ...props}) => {
   const imageUri = `https://api.nosh.ng/uploads/images/cards/${title}.png`;
 
   return (

@@ -6493,7 +6493,14 @@ react-native-svg@^12.1.0:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
 
-react-native-swiper@^1.6.0:
+react-native-swiper-hook@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/react-native-swiper-hook/-/react-native-swiper-hook-1.0.11.tgz#0dea9de41d338072f076e2a42f2b745f8deef401"
+  integrity sha512-Cf2AwcXMoFDvBBKbKI1xyo9ZB0fJWA9GFcMwu/OGoVIkbiwm/4YGQhbbqeuQ4ENfx8LnrCCcine8ep1niNBl9A==
+  dependencies:
+    react-native-swiper "1.6.0"
+
+react-native-swiper@1.6.0, react-native-swiper@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0.tgz#59fdbdf95addee49630312f27077622c27776819"
   integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==

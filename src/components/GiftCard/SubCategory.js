@@ -8,8 +8,9 @@ import {GiftCardBox} from './GiftCardBox';
 
 import images from 'constants/images';
 import data from 'constants/data';
+import {capitalizeFirstLetter} from 'shared/utils';
 
-export const SubCategory = ({next, prev}) => {
+export const SubCategory = ({next, prev, data: giftCard}) => {
   // const USD_AMOUNT = 1400;
   return (
     <Box>
@@ -31,7 +32,7 @@ export const SubCategory = ({next, prev}) => {
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
-          USA Apple Itunes
+          {capitalizeFirstLetter(giftCard?.displayName)}
         </Text>
       </GiftCardBox>
       <Select

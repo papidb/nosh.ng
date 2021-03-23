@@ -8,8 +8,9 @@ import {Box, Text, Circle, Button, HeaderInfo, Icon} from 'components';
 import {GiftCardBox} from './GiftCardBox';
 
 import images from 'constants/images';
+import {capitalizeFirstLetter} from 'shared/utils';
 
-export const SubUpload = ({next, prev}) => {
+export const SubUpload = ({next, prev, data: giftCard}) => {
   // const USD_AMOUNT = 1400;
   return (
     <KeyboardAwareScrollView>
@@ -31,7 +32,7 @@ export const SubUpload = ({next, prev}) => {
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
-          USA Apple Itunes
+          {capitalizeFirstLetter(giftCard?.displayName)}
         </Text>
       </GiftCardBox>
       <TouchableOpacity>
@@ -58,7 +59,7 @@ export const SubUpload = ({next, prev}) => {
           padding="none"
           paddingHorizontal="xl"
           justifyContent="space-between">
-          <Icon name="icon-edit2" />
+          <Icon name="icon-edit_colored" size={25} />
           <Text color="success" fontSize={13}>
             + Add Optional comments
           </Text>

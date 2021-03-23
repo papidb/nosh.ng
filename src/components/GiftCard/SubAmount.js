@@ -9,8 +9,9 @@ import {GiftCardBox} from './GiftCardBox';
 
 import {commaFormatter} from 'shared/utils';
 import images from 'constants/images';
+import {capitalizeFirstLetter} from 'shared/utils';
 
-export const SubAmount = ({next, prev}) => {
+export const SubAmount = ({next, prev, data: giftCard}) => {
   const USD_AMOUNT = 1400;
   return (
     <KeyboardAwareScrollView>
@@ -32,7 +33,7 @@ export const SubAmount = ({next, prev}) => {
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
-          USA Apple Itunes
+          {capitalizeFirstLetter(giftCard?.displayName)}
         </Text>
       </GiftCardBox>
       <Input
