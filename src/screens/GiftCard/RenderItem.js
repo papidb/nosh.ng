@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import {Box, Text, Divider, Button, HeaderInfo, Icon} from 'components';
 
@@ -15,7 +16,10 @@ export const RenderItem = ({item: {title}}) => {
   return (
     <Box>
       <Text>{title}</Text>
-      <Image source={{uri: imageUri}} style={{width: 300, height: 220}} />
+      <FastImage
+        source={{uri: imageUri, priority: FastImage.priority.high}}
+        style={{width: 300, height: 220}}
+      />
     </Box>
   );
 };
