@@ -27,6 +27,7 @@ import not_visible from 'assets/icons/not_visible.svg';
 import power from 'assets/icons/power.svg';
 import share from 'assets/icons/share.svg';
 import edit2 from 'assets/icons/edit2.svg';
+import edit_colored from 'assets/icons/edit_colored.svg';
 import backward from 'assets/icons/backward.svg';
 import dropdown from 'assets/icons/dropdown.svg';
 import cart from 'assets/icons/cart.svg';
@@ -57,6 +58,7 @@ const ICONS = {
   'icon-dropdown': dropdown,
   'icon-cart': cart,
   'icon-edit2': edit2,
+  'icon-edit_colored': edit_colored,
   'icon-notification': notification,
 };
 
