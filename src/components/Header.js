@@ -1,14 +1,16 @@
-import React from 'react';
-import {ViewPropTypes} from 'react-native';
+import React, {useState} from 'react';
+import {ViewPropTypes, TouchableOpacity} from 'react-native';
 
 import PropTypes from 'prop-types';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {Box, Text} from './pure';
+import {Box, Text, Icon} from './pure';
 import {AuthAvatar} from './auth';
 import {generateReadableName} from 'shared/utils';
+import Modal from 'react-native-modal';
+import {NotificationModal} from './NotificationModal';
 
-export const Header = () => {
+export const Header = ({onPress}) => {
   const user = {
     firstName: 'John',
     lastName: 'Doe',
@@ -16,6 +18,11 @@ export const Header = () => {
   const {top} = useSafeAreaInsets();
   // console.log({top});
   let realTop = top / 4 + 10;
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const closeModal = () => setModalVisible(false);
+  const openModal = () => setModalVisible(true);
+
   return (
     <Box
       flexDirection="row"
@@ -25,6 +32,9 @@ export const Header = () => {
       style={{paddingTop: realTop}}
       //
     >
+      <Modal isVisible={isModalVisible} onBackdropPress={() => closeModal()}>
+        <NotificationModal {...{closeModal}} />
+      </Modal>
       <Box marginRight="m">
         <AuthAvatar
           size={81}
@@ -40,6 +50,11 @@ export const Header = () => {
         <Text color="buttonColor" fontWeight="bold" fontSize={20}>
           {generateReadableName(user)}
         </Text>
+      </Box>
+      <Box alignSelf="flex-start" top={1.5 * realTop}>
+        <TouchableOpacity {...{onPress: openModal}}>
+          <Icon name="icon-notification" size={32} />
+        </TouchableOpacity>
       </Box>
     </Box>
   );
