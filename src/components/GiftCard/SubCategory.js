@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 
+import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
 
 import {Box, Text, Circle, Select, Button, HeaderInfo, Icon} from 'components';
@@ -12,6 +13,8 @@ import {capitalizeFirstLetter} from 'shared/utils';
 
 export const SubCategory = ({next, prev, data: giftCard}) => {
   // const USD_AMOUNT = 1400;
+  const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
+
   return (
     <Box>
       <HeaderInfo text="SELECT SUB-CATEGORY" />
@@ -28,7 +31,10 @@ export const SubCategory = ({next, prev, data: giftCard}) => {
           </Circle>
         </TouchableOpacity>
 
-        <Image source={images.itunes_2} style={styles.image} />
+        <FastImage
+          source={{uri: imageUri, priority: FastImage.priority.high}}
+          style={styles.image}
+        />
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
