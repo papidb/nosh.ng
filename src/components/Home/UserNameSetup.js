@@ -4,11 +4,11 @@ import {palette} from 'constants/theme';
 
 import {ModalContainer} from 'components/Settings';
 
-export const UserNameSetup = () => {
+export const UserNameSetup = ({close = () => {}}) => {
   return (
     <ModalContainer>
       <Close
-        onPress={() => {}}
+        onPress={close}
         circleProps={{borderColor: 'fadedDarkBlueButton'}}
         closeProps={{
           fill: palette.white,

@@ -31,7 +31,7 @@ export const GiftCard = () => {
           style={styles.wrapper}
           showsButtons={false}
           showsPagination={false}
-          scrollEnabled={__DEV__}
+          scrollEnabled={false}
           // style={{height: 250}}
           //
         >
