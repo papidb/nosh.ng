@@ -1,12 +1,26 @@
 import React from 'react';
+
+import PropTypes from 'prop-types';
 import {NavigationContainer} from '@react-navigation/native';
+import {Host} from 'react-native-portalize';
+import {connect} from 'react-redux';
 
-import {AppNav} from './Auth.navigation';
+import {AuthNav} from './Auth.navigation';
+import {AppNav} from './App.navigation';
 
-export const Main = () => {
+const MainNavigation = ({authenticated}) => {
+  // const {authenticated} = useStore().getState();
   return (
     <NavigationContainer>
-      <AppNav />
+      <Host>{authenticated ? <AppNav /> : <AuthNav />}</Host>
     </NavigationContainer>
   );
+};
+
+const mapStateToProps = (state) => state;
+
+export const Main = connect(mapStateToProps)(MainNavigation);
+
+MainNavigation.propTypes = {
+  authenticated: PropTypes.bool,
 };
