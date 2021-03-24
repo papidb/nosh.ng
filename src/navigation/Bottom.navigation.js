@@ -179,6 +179,7 @@ export const BottomTab = () => {
       <Tab.Screen
         name="Home"
         options={{
+          title: 'Dashboard',
           // eslint-disable-next-line react/prop-types
           tabBarIcon: ({color, size, focused}) =>
             focused ? (

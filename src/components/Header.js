@@ -10,7 +10,8 @@ import {generateReadableName} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
 
-export const Header = ({onPress}) => {
+export const Header = ({onPress, ...props}) => {
+  console.log({props});
   const user = {
     firstName: 'John',
     lastName: 'Doe',

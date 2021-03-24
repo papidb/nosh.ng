@@ -8,6 +8,10 @@ import {Box, Text, Divider, Circle, Icon, Header} from 'components';
 import {UserNameSetup} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
+import HomeHand from 'assets/icons/home_hand.svg';
+import FastImage from 'react-native-fast-image';
+
+import {useNavigation} from '@react-navigation/native';
 
 const Balance = () => {
   // const amount = 267000;
@@ -55,6 +59,14 @@ export const Home = () => {
   const toNoshWallet = () => {
     openSetupUsername();
   };
+  const navigation = useNavigation();
+  const toHottestCards = () => {
+    navigation.navigate('HottestCards');
+  };
+  const toGiftCards = () => {
+    navigation.navigate('GiftCard');
+  };
+
   useEffect(() => openSetupUsername(), [openSetupUsername]);
   return (
     <Box flex={1}>
@@ -64,55 +76,63 @@ export const Home = () => {
         </UserNameSetupModalize>
       </Portal>
       <Divider marginBottom="m" />
-      <Header />
+      {/* <Header /> */}
       <ScrollView style={styles.scrollView}>
         {/* Header */}
         <Balance />
         {/* Image */}
         <Box
-          alignItems="center"
-          marginVertical={{bigScreen: 'xxl', phone: 'xl'}}>
+          // alignItems="center"
+          marginHorizontal="-l"
+          marginVertical={{bigScreen: 'xxl', phone: 'xl'}}
+          //
+        >
           <Image source={images.FFHome} />
         </Box>
         {/* Rest */}
         <Box flex={1} flexDirection="row" marginBottom="s">
-          <Box
-            flex={1}
-            backgroundColor="mostBg"
-            borderRadius={100}
-            padding="l"
-            justifyContent="center"
-            flexDirection="row"
-            alignItems="center">
-            <Text fontSize={14} color="buttonColor" fontWeight="700">
-              Hottest{' '}
-            </Text>
-            <Text fontSize={14} color="buttonColor">
-              Cards
-            </Text>
-          </Box>
-          <Box
-            flex={2}
-            backgroundColor="mostBg"
-            borderRadius={100}
-            padding="xs"
-            flexDirection="row"
-            marginLeft="xxs"
-            alignItems="center">
-            <Box flex={1} justifyContent="center" flexDirection="row">
-              <Text fontSize={14} color="buttonColor">
-                Sell{' '}
-              </Text>
+          <TouchableOpacity onPress={toHottestCards}>
+            <Box
+              flex={1}
+              backgroundColor="mostBg"
+              borderRadius={100}
+              padding="l"
+              justifyContent="center"
+              flexDirection="row"
+              alignItems="center">
               <Text fontSize={14} color="buttonColor" fontWeight="700">
-                GiftCards
+                Hottest{' '}
+              </Text>
+              <Text fontSize={14} color="buttonColor">
+                Cards
               </Text>
             </Box>
-            <Box position="absolute" right={4}>
-              <Circle size={42} backgroundColor="white">
-                <Icon name="icon-forward" size={14} />
-              </Circle>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={toGiftCards} style={{flex: 1}}>
+            <Box
+              flex={2}
+              backgroundColor="mostBg"
+              borderRadius={100}
+              padding="xs"
+              flexDirection="row"
+              marginLeft="xxs"
+              alignItems="center">
+              <Box flex={1} justifyContent="center" flexDirection="row">
+                <Text fontSize={14} color="buttonColor">
+                  Sell{' '}
+                </Text>
+                <Text fontSize={14} color="buttonColor" fontWeight="700">
+                  GiftCards
+                </Text>
+              </Box>
+              <Box position="absolute" right={4}>
+                <Circle size={42} backgroundColor="white">
+                  <Icon name="icon-forward" size={14} />
+                </Circle>
+              </Box>
             </Box>
-          </Box>
+          </TouchableOpacity>
         </Box>
         <Divider />
         {/* Nosh Wallet */}
