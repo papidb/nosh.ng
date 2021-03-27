@@ -9,6 +9,7 @@ export const palette = {
   selectIconBlue: '#B4EBFF',
   fadedBlue: 'rgba(48,188,237,0.1)',
   mostBg: 'rgba(48,188,237,0.1)',
+  mostBgPure: '#EAF8FD',
   greyBlue: 'rgba(48,188,237,0.2)',
   lightBlue: '#282356',
   transparent: 'transparent',
@@ -53,6 +54,8 @@ const theme = createTheme({
     authHeaderBackground: palette.fadedBlue,
     eyeBackground: palette.fadedBlue,
     mostBg: palette.fadedBlue,
+    mostBgPure: palette.mostBgPure,
+
     buttonColor: palette.darkBlueButton,
 
     accent: '#ff4000',
@@ -86,7 +89,7 @@ const theme = createTheme({
   textVariants: {
     defaults: {
       fontSize: 16,
-      fontFamily: 'Hurme Geometric Sans 1',
+      fontFamily: 'Hurme Geometric Sans 2',
     },
     small_light: {
       fontSize: 12,
@@ -170,7 +173,7 @@ const theme = createTheme({
   inputVariants: {
     defaults: {
       height: INPUT_HEIGHT,
-      fontFamily: 'Hurme Geometric Sans 1',
+      fontFamily: 'Hurme Geometric Sans 2',
       fontSize: 16,
       borderWidth: 2,
       color: palette.inputColor,
@@ -178,7 +181,7 @@ const theme = createTheme({
     },
     profile: {
       height: INPUT_HEIGHT,
-      fontFamily: 'Hurme Geometric Sans 1',
+      fontFamily: 'Hurme Geometric Sans 2',
       fontSize: 16,
       borderWidth: 0,
       color: palette.fadedBrown,
@@ -187,7 +190,7 @@ const theme = createTheme({
     },
     giftcard: {
       height: 65,
-      fontFamily: 'Hurme Geometric Sans 1',
+      fontFamily: 'Hurme Geometric Sans 2',
       fontWeight: '400',
       fontSize: 24,
       borderWidth: 0,

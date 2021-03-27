@@ -23,6 +23,9 @@
 		734AC52349EE49A084F09AD5 /* HurmeGeometricSans.otf in Resources */ = {isa = PBXBuildFile; fileRef = 33EE56F8E27040B2AB162C14 /* HurmeGeometricSans.otf */; };
 		33B0A37158294E2095E63425 /* HurmeGeometricSansOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = 803B0C320D554FCAA37AE4A3 /* HurmeGeometricSansOblique.otf */; };
 		AFD6718925024F788DA2CF4F /* HurmeGeometricSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6F5165A9E41404993735B32 /* HurmeGeometricSansBold.otf */; };
+		C6167E97AD324C96A795A5D9 /* HurmeGeometricSans2 Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 904735AFEC92428EBAD6A796 /* HurmeGeometricSans2 Bold.otf */; };
+		870253A2B160445DB08259F1 /* HurmeGeometricSans2 SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C60644A1AF140989B42746E /* HurmeGeometricSans2 SemiBold.otf */; };
+		0CC5987195284E5F838A2D02 /* HurmeGeometricSans2.otf in Resources */ = {isa = PBXBuildFile; fileRef = B0E01AB243DE4A1D8D4103F2 /* HurmeGeometricSans2.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,9 @@
 		33EE56F8E27040B2AB162C14 /* HurmeGeometricSans.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSans.otf"; path = "../src/assets/fonts/HurmeGeometricSans.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		803B0C320D554FCAA37AE4A3 /* HurmeGeometricSansOblique.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSansOblique.otf"; path = "../src/assets/fonts/HurmeGeometricSansOblique.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		F6F5165A9E41404993735B32 /* HurmeGeometricSansBold.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSansBold.otf"; path = "../src/assets/fonts/HurmeGeometricSansBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		904735AFEC92428EBAD6A796 /* HurmeGeometricSans2 Bold.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSans2 Bold.otf"; path = "../src/assets/fonts/HurmeGeometricSans2 Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1C60644A1AF140989B42746E /* HurmeGeometricSans2 SemiBold.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSans2 SemiBold.otf"; path = "../src/assets/fonts/HurmeGeometricSans2 SemiBold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B0E01AB243DE4A1D8D4103F2 /* HurmeGeometricSans2.otf */ = {isa = PBXFileReference; name = "HurmeGeometricSans2.otf"; path = "../src/assets/fonts/HurmeGeometricSans2.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +217,9 @@
 				33EE56F8E27040B2AB162C14 /* HurmeGeometricSans.otf */,
 				803B0C320D554FCAA37AE4A3 /* HurmeGeometricSansOblique.otf */,
 				F6F5165A9E41404993735B32 /* HurmeGeometricSansBold.otf */,
+				904735AFEC92428EBAD6A796 /* HurmeGeometricSans2 Bold.otf */,
+				1C60644A1AF140989B42746E /* HurmeGeometricSans2 SemiBold.otf */,
+				B0E01AB243DE4A1D8D4103F2 /* HurmeGeometricSans2.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -363,6 +372,9 @@
 				734AC52349EE49A084F09AD5 /* HurmeGeometricSans.otf in Resources */,
 				33B0A37158294E2095E63425 /* HurmeGeometricSansOblique.otf in Resources */,
 				AFD6718925024F788DA2CF4F /* HurmeGeometricSansBold.otf in Resources */,
+				C6167E97AD324C96A795A5D9 /* HurmeGeometricSans2 Bold.otf in Resources */,
+				870253A2B160445DB08259F1 /* HurmeGeometricSans2 SemiBold.otf in Resources */,
+				0CC5987195284E5F838A2D02 /* HurmeGeometricSans2.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
