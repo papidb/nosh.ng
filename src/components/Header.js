@@ -33,7 +33,10 @@ export const Header = ({onPress, ...props}) => {
       style={{paddingTop: realTop}}
       //
     >
-      <Modal isVisible={isModalVisible} onBackdropPress={() => closeModal()}>
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={() => closeModal()}
+        style={{marginHorizontal: 40}}>
         <NotificationModal {...{closeModal}} />
       </Modal>
       <Box marginRight="m">
