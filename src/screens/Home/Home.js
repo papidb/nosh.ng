@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Portal} from 'react-native-portalize';
 import {useModalize} from 'hooks';
 
-import {Box, Text, Divider, Circle, Icon, Header} from 'components';
+import {Box, Text, Divider, Circle, Icon, RaiseAndroid} from 'components';
 import {UserNameSetup} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
@@ -155,6 +155,7 @@ export const Home = () => {
             <Icon name="icon-forwardgreen" size={14} />
           </Box>
         </TouchableOpacity>
+        <RaiseAndroid />
       </ScrollView>
     </Box>
   );

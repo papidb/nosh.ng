@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import {Box, Divider, HeaderInfo} from 'components';
+import {Box, Divider, HeaderInfo, RaiseAndroid} from 'components';
 import {SettingsTab, EditProfile, Withdraw, AddBank} from 'components/Settings';
 import {logout} from 'action';
 import {uuid} from 'shared/utils';
@@ -64,6 +64,7 @@ export const Screen = ({logout}) => {
           <SettingsTab {...data} key={uuid()} />
         ))}
         <Divider style={styles.bottomDivider} />
+        <RaiseAndroid />
       </ScrollView>
       {/* Modals */}
       <Portal>
