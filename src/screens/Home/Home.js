@@ -49,7 +49,7 @@ const Balance = () => {
   );
 };
 
-export const Home = () => {
+export const Home = ({navigation}) => {
   const {
     openModal: openSetupUsername,
     closeModal: closeSetupUsername,
@@ -59,7 +59,7 @@ export const Home = () => {
   const toNoshWallet = () => {
     openSetupUsername();
   };
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const toHottestCards = () => {
     navigation.navigate('HottestCards');
   };

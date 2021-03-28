@@ -6,7 +6,15 @@ import {useNavigation} from '@react-navigation/native';
 import phone from 'phone';
 import * as Yup from 'yup';
 
-import {Box, Button, Text, Input, AuthContainer, AuthAvatar} from 'components';
+import {
+  Box,
+  Button,
+  Text,
+  Input,
+  AuthContainer,
+  AuthAvatar,
+  RaiseAndroid,
+} from 'components';
 
 import {waait} from 'shared/utils';
 
@@ -82,6 +90,7 @@ const LoginScreen = ({}) => {
           Register
         </Text>
       </TouchableOpacity>
+      <RaiseAndroid />
     </Box>
   );
   return (
@@ -108,7 +117,7 @@ const LoginScreen = ({}) => {
             passwordIcon
           />
           {/* Agreement */}
-          <Box marginBottom="xl" marginTop="xs">
+          <Box marginBottom={{bigScreen: 'xl', phone: 'l'}} marginTop="xs">
             <TouchableOpacity onPress={() => toResetPassword()}>
               <Text fontSize={14} textAlign="right" style={styles.tandc}>
                 Forgot Password?

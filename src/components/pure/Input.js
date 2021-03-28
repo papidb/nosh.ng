@@ -102,6 +102,7 @@ export const Input = ({
             <TextInput
               ref={inputRef}
               style={[
+                {paddingVertical: 0},
                 realInputStyle,
                 Platform.OS === 'android' ? {height: 40} : {},
               ]}
@@ -114,6 +115,7 @@ export const Input = ({
                   componentOnFocus?.(event);
                 }
               }}
+              underlineColorAndroid="transparent"
               onBlur={(event) => {
                 // make border color on blur
                 setFocus(false);

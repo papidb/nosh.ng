@@ -143,9 +143,11 @@ const theme = createTheme({
       fontWeight: 'bold',
       fontSize: 16,
       borderWidth: undefined,
+      textColor: 'white',
       disabled: {
         fontSize: 16,
         color: palette.fadedBlue,
+        textColor: 'black',
       },
     },
     giftcard: {
@@ -159,6 +161,7 @@ const theme = createTheme({
       disabled: {
         fontSize: 16,
         color: palette.fadedBlue,
+        textColor: 'black',
       },
     },
     faded: {
@@ -167,6 +170,7 @@ const theme = createTheme({
       fontSize: 16,
       borderWidth: undefined,
       color: palette.fadedBlue,
+      textColor: 'black',
       disabled: {},
     },
   },
