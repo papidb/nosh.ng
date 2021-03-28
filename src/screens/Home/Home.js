@@ -142,13 +142,14 @@ export const Home = () => {
             flex={1}
             backgroundColor="mostBg"
             borderRadius={100}
+            height={38}
             padding="m"
             paddingLeft="xl"
             paddingRight="l"
             justifyContent="space-between"
             flexDirection="row"
             alignItems="center">
-            <Text color="primary" fontWeight="bold">
+            <Text color="primary" fontWeight="500" fontSize={14}>
               NOSH WALLET
             </Text>
             <Icon name="icon-forwardgreen" size={14} />

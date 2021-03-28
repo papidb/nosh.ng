@@ -47,7 +47,7 @@ export const SubCategory = ({next, prev, data: giftCard}) => {
         onValueChange={(string) => console.log({string})}
         items={data.cardsubcategory}
       />
-      <Box flexDirection="row" marginVertical="xs">
+      <Box flexDirection="row" marginVertical="xs" marginTop="xxl">
         <Box flex={1} />
         <Box
           flex={1}
