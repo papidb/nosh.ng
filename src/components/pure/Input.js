@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Platform,
 } from 'react-native';
 import PropTypes from 'prop-types';
 // import Feather from 'react-native-vector-icons/Feather';
@@ -100,7 +101,10 @@ export const Input = ({
           <Box flex={1}>
             <TextInput
               ref={inputRef}
-              style={realInputStyle}
+              style={[
+                realInputStyle,
+                Platform.OS === 'android' ? {height: 40} : {},
+              ]}
               secureTextEntry={state.password}
               placeholderTextColor={placeholderTextColor}
               onFocus={(event) => {
