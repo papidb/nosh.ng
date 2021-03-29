@@ -41,8 +41,14 @@ const Item = ({title, amount}) => (
     flexDirection="row"
     justifyContent="space-between"
     alignItems="center"
-    style={{paddingTop: 14, paddingBottom: 16}}>
-    <Text fontWeight="600">{title}</Text>
+    style={{paddingTop: 14, paddingBottom: 16, paddingHorizontal: 18}}>
+    <Text
+      fontFamily="Hurme Geometric Sans 2"
+      fontSize={14}
+      fontWeight="500"
+      style={{color: '#525C6B'}}>
+      {title}
+    </Text>
     {amount && (
       <Text color="primary" fontSize={18}>
         {commaFormatter(amount)}
@@ -53,7 +59,12 @@ const Item = ({title, amount}) => (
 
 export const NotificationModal = ({closeModal}) => {
   return (
-    <Box backgroundColor="white" borderRadius={38} padding="l">
+    <Box
+      backgroundColor="white"
+      borderRadius={38}
+      padding="l"
+      height="75%"
+      style={{paddingHorizontal: 15}}>
       <Close onPress={closeModal} />
 
       <Text
@@ -69,9 +80,14 @@ export const NotificationModal = ({closeModal}) => {
         keyExtractor={(item, index) => item + index}
         renderItem={({item}) => <Item {...item} />}
         renderSectionHeader={({section: {title}}) => (
-          <HeaderInfo text={String(title).toUpperCase()} />
+          <HeaderInfo
+            text={String(title).toUpperCase()}
+            containerProps={{backgroundColor: 'mostBgPure'}}
+          />
         )}
-        ItemSeparatorComponent={() => <Divider style={null} />}
+        ItemSeparatorComponent={() => (
+          <Divider style={{marginHorizontal: 18}} />
+        )}
       />
     </Box>
   );

@@ -5,7 +5,9 @@ import {Text as RNText} from 'react-native';
 
 const BaseText = (props, ref) => {
   const styledProps = useRestyle(textRestyleFunctions, props);
-  return <RNText {...styledProps} ref={ref} />;
+  return (
+    <RNText fontFamily="Hurme Geometric Sans 2" {...styledProps} ref={ref} />
+  );
 };
 export const Text = forwardRef(BaseText);
 

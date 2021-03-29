@@ -17,6 +17,7 @@ import {
   Input,
   AuthAvatar,
   AuthContainer,
+  RaiseAndroid,
 } from 'components';
 import {login} from 'action';
 
@@ -75,6 +76,7 @@ export const PersonalLoginScreen = ({login}) => {
           {/* Register */}
         </Text>
       </TouchableOpacity>
+      <RaiseAndroid />
     </Box>
   );
   return (
@@ -102,7 +104,7 @@ export const PersonalLoginScreen = ({login}) => {
           />
           <TouchableOpacity onPress={() => toLogin()}>
             <Box
-              marginTop={'xl'}
+              marginTop={{bigScreen: 'xl', phone: 'm'}}
               alignSelf="center"
               height={85}
               width={85}

@@ -33,13 +33,16 @@ export const Header = ({onPress, ...props}) => {
       style={{paddingTop: realTop}}
       //
     >
-      <Modal isVisible={isModalVisible} onBackdropPress={() => closeModal()}>
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={() => closeModal()}
+        style={{marginHorizontal: 40}}>
         <NotificationModal {...{closeModal}} />
       </Modal>
       <Box marginRight="m">
         <AuthAvatar
           size={81}
-          containerProps={{alignSelf: 'flex-start', margin: 'none'}}
+          // containerProps={{alignSelf: 'flex-start', margin: 'none'}}
           imageProps={{style: {height: 50, width: 50}}}
         />
       </Box>
@@ -54,7 +57,7 @@ export const Header = ({onPress, ...props}) => {
       </Box>
       <Box alignSelf="flex-start" top={1.5 * realTop}>
         <TouchableOpacity {...{onPress: openModal}}>
-          <Icon name="icon-notification" size={32} />
+          <Icon name="icon-notification" size={40} />
         </TouchableOpacity>
       </Box>
     </Box>
@@ -65,13 +68,16 @@ export const HeaderInfo = ({text, containerProps, textProps}) => {
   return (
     <Box
       padding="m"
+      height={38}
+      alignItems="center"
+      justifyContent="center"
       borderRadius={100}
       backgroundColor="mostBg"
       {...containerProps}>
       <Text
         color="primary"
-        fontWeight="600"
         textAlign="center"
+        fontWeight="500"
         fontSize={12}
         {...textProps}>
         {text}

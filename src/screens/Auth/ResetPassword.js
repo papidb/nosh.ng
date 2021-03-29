@@ -1,11 +1,20 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import {useFormik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import * as Yup from 'yup';
 
-import {Box, Icon, Button, Text, Input, AuthHeader} from 'components';
+import {
+  Box,
+  Icon,
+  Button,
+  Text,
+  Input,
+  AuthHeader,
+  AuthContainer,
+  RaiseAndroid,
+} from 'components';
 import {waait} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
@@ -45,8 +54,10 @@ export const ResetPasswordScreen = () => {
   });
   const Bottom = (
     <Box justifyContent="flex-end" style={[styles.container, styles.bottom]}>
-      <Box marginTop="xxxl" />
-      <Box marginTop="xxxl" />
+      {Platform.OS == 'ios' && (
+        <Box marginTop={{bigScreen: 'xxxl', phone: 'xl'}} />
+      )}
+      <Box marginTop={{bigScreen: 'xxxl', phone: 'xl'}} />
       {/* Button */}
       <Box marginBottom="m">
         <Button
@@ -56,7 +67,35 @@ export const ResetPasswordScreen = () => {
           onPress={handleSubmit}
         />
       </Box>
+      <RaiseAndroid />
     </Box>
+  );
+  return (
+    <AuthContainer bottom={Bottom}>
+      <KeyboardAwareScrollView>
+        {/* Header */}
+        <AuthHeader header="Oops!!!" />
+        {/* bottom padding */}
+        <Box
+          margin="s"
+          marginTop={{bigScreen: 'xxxl', phone: 'xl'}}
+          style={styles.container}>
+          <Box marginBottom="m">
+            <Text color="primary" textAlign="center">
+              {text}
+            </Text>
+          </Box>
+          <Input
+            placeholder="Email"
+            onChangeText={handleChange('email')}
+            onBlur={handleBlur('email')}
+            error={errors.email}
+            touched={touched.email}
+            value={values.email}
+          />
+        </Box>
+      </KeyboardAwareScrollView>
+    </AuthContainer>
   );
   return (
     <Box flex={1}>
@@ -88,7 +127,7 @@ export const ResetPasswordScreen = () => {
           </Box>
         </KeyboardAwareScrollView>
         {Bottom}
-        <Box height={60} />
+        {/* <Box height={60} /> */}
       </Box>
     </Box>
   );

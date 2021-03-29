@@ -56,6 +56,7 @@ export const Button = ({
       paddingHorizontal="m"
       flexDirection="row"
       {...{containerProps}}>
+      {/* {console.log({textColor})} */}
       {loading ? (
         <ActivityIndicator color={textColor} />
       ) : (

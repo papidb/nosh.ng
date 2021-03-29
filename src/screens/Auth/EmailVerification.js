@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 
-import {Box, Button, Text, AuthContainer} from 'components';
+import {Box, Button, Text, AuthContainer, RaiseAndroid} from 'components';
 
 import MailBox from 'assets/svgs/MailBox.svg';
 
@@ -23,6 +23,7 @@ const EmailVerificationScreen = ({}) => {
           onPress={() => toLogin()}
         />
       </Box>
+      <RaiseAndroid />
     </Box>
   );
   return (

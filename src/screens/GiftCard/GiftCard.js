@@ -68,6 +68,7 @@ export const GiftCard = () => {
             data={selectedGiftCard}
             next={goToNextSlide}
             prev={goBack}
+            {...{navigation}}
           />
           <SubAmount
             data={selectedGiftCard}
@@ -80,32 +81,32 @@ export const GiftCard = () => {
             prev={goBack}
           />
         </Swiper>
+        <Box paddingHorizontal="l" marginBottom="l">
+          <Divider />
+          {/* Nosh Wallet */}
+          <TouchableOpacity
+            onPress={() => {
+              // goToNextSlide();
+            }}>
+            <Box
+              marginTop="s"
+              // flex={1}
+              backgroundColor="mostBg"
+              borderRadius={100}
+              padding="m"
+              paddingLeft="xl"
+              paddingRight="l"
+              justifyContent="space-between"
+              flexDirection="row"
+              alignItems="center">
+              <Text color="primary" fontWeight="bold">
+                NOSH WALLET
+              </Text>
+              <Icon name="icon-forwardgreen" size={14} />
+            </Box>
+          </TouchableOpacity>
+        </Box>
       </ScrollView>
-      <Box paddingHorizontal="l" marginBottom="l">
-        <Divider />
-        {/* Nosh Wallet */}
-        <TouchableOpacity
-          onPress={() => {
-            // goToNextSlide();
-          }}>
-          <Box
-            marginTop="s"
-            // flex={1}
-            backgroundColor="mostBg"
-            borderRadius={100}
-            padding="m"
-            paddingLeft="xl"
-            paddingRight="l"
-            justifyContent="space-between"
-            flexDirection="row"
-            alignItems="center">
-            <Text color="primary" fontWeight="bold">
-              NOSH WALLET
-            </Text>
-            <Icon name="icon-forwardgreen" size={14} />
-          </Box>
-        </TouchableOpacity>
-      </Box>
     </Box>
   );
 };

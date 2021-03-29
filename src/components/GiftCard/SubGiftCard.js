@@ -28,6 +28,7 @@ export const SubGiftCard = ({onSnapToItem, selectedGiftCard, next}) => {
         <Carousel
           data={data.giftCards}
           layout="stack"
+          layoutCardOffset={18}
           loop
           renderItem={RenderItem}
           sliderWidth={CAROUSEL_WIDTH}

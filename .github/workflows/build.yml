@@ -1,0 +1,52 @@
+name: react-native-android-build-apk
+on:
+  push:
+    branches:
+      - master
+jobs:
+  install-and-test:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install yarn dependencies
+        run: |
+          yarn install
+  build-android:
+    needs: install-and-test
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install yarn dependencies
+        run: |
+          yarn install
+      - name: Generate Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE }}" > ms.keystore
+          base64 -D -in ms.keystore > android/app/my-upload-key.keystore
+          pwd
+      - name: Build Android Release
+        run: |
+          cd android && ./gradlew assembleRelease
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
+      # - name: Send mail
+      #   uses: dawidd6/action-send-mail@v2
+      #   with:
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     username: ${{secrets.MAIL_USERNAME}}
+      #     password: ${{secrets.MAIL_PASSWORD}}
+      #     subject: Github Actions job result
+      #     # Literal body:
+      #     body: Build job of ${{github.repository}} completed successfully!
+      #     # Read file contents as body:
+      #     # body: file://README.md
+      #     to: dadibighead@gmail.com,benjamindaniel706@gmail.com
+      #     from: Benjamin Daniel # <benjamin-daniel706@gmail.com>
+      #     # Optional content type (defaults to text/plain):
+      #     content_type: text/html
+      #     # Optional attachments:
+      #     attachments: android/app/build/outputs/apk/release/app-release.apk

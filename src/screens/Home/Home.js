@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Portal} from 'react-native-portalize';
 import {useModalize} from 'hooks';
 
-import {Box, Text, Divider, Circle, Icon, Header} from 'components';
+import {Box, Text, Divider, Circle, Icon, RaiseAndroid} from 'components';
 import {UserNameSetup} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
@@ -49,7 +49,7 @@ const Balance = () => {
   );
 };
 
-export const Home = () => {
+export const Home = ({navigation}) => {
   const {
     openModal: openSetupUsername,
     closeModal: closeSetupUsername,
@@ -59,7 +59,7 @@ export const Home = () => {
   const toNoshWallet = () => {
     openSetupUsername();
   };
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const toHottestCards = () => {
     navigation.navigate('HottestCards');
   };
@@ -142,18 +142,20 @@ export const Home = () => {
             flex={1}
             backgroundColor="mostBg"
             borderRadius={100}
+            height={38}
             padding="m"
             paddingLeft="xl"
             paddingRight="l"
             justifyContent="space-between"
             flexDirection="row"
             alignItems="center">
-            <Text color="primary" fontWeight="bold">
+            <Text color="primary" fontWeight="500" fontSize={14}>
               NOSH WALLET
             </Text>
             <Icon name="icon-forwardgreen" size={14} />
           </Box>
         </TouchableOpacity>
+        <RaiseAndroid />
       </ScrollView>
     </Box>
   );
