@@ -16,9 +16,6 @@ jobs:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
-      - name: Install yarn dependencies
-        run: |
-          yarn install
       - name: Generate Keystore
         run: |
           echo "${{ secrets.KEYSTORE }}" > ms.keystore
