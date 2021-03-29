@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
@@ -11,7 +11,12 @@ import images from 'constants/images';
 import data from 'constants/data';
 import {capitalizeFirstLetter} from 'shared/utils';
 
-export const SubCategory = ({next, prev, data: giftCard}) => {
+export const SubCategory = ({next, prev, data: giftCard, navigation}) => {
+  const toHottestCards = useCallback(
+    () => navigation.navigate('HottestCards'),
+    // () => navigation.navigate('Home', {screen: 'HottestCards'})
+    [navigation],
+  );
   // const USD_AMOUNT = 1400;
   const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
 
@@ -49,21 +54,23 @@ export const SubCategory = ({next, prev, data: giftCard}) => {
       />
       <Box flexDirection="row" marginVertical="xs" marginTop="xxl">
         <Box flex={1} />
-        <Box
-          flex={1}
-          backgroundColor="lightSuccess"
-          borderRadius={100}
-          padding="l"
-          justifyContent="center"
-          flexDirection="row"
-          alignItems="center">
-          <Text fontSize={14} color="buttonColor" fontWeight="700">
-            Hottest{' '}
-          </Text>
-          <Text fontSize={14} color="buttonColor">
-            Cards
-          </Text>
-        </Box>
+        <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
+          <Box
+            flex={1}
+            backgroundColor="lightSuccess"
+            borderRadius={100}
+            padding="l"
+            justifyContent="center"
+            flexDirection="row"
+            alignItems="center">
+            <Text fontSize={14} color="buttonColor" fontWeight="700">
+              Hottest{' '}
+            </Text>
+            <Text fontSize={14} color="buttonColor">
+              Cards
+            </Text>
+          </Box>
+        </TouchableOpacity>
       </Box>
 
       {/* Button */}

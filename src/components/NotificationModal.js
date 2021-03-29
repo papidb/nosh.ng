@@ -63,6 +63,7 @@ export const NotificationModal = ({closeModal}) => {
       backgroundColor="white"
       borderRadius={38}
       padding="l"
+      height="75%"
       style={{paddingHorizontal: 15}}>
       <Close onPress={closeModal} />
 

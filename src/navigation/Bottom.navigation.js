@@ -168,6 +168,7 @@ export const BottomTab = () => {
         //   fontFamily: 'Hurme Geometric Sans 1',
         //   fontWeight: 'bold',
         // },
+        keyboardHidesTabBar: true,
         activeTintColor: palette.blue,
         inactiveTintColor: '#A2A2A2',
         showLabel: false,

@@ -68,6 +68,7 @@ export const GiftCard = () => {
             data={selectedGiftCard}
             next={goToNextSlide}
             prev={goBack}
+            {...{navigation}}
           />
           <SubAmount
             data={selectedGiftCard}
