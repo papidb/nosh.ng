@@ -1,6 +1,10 @@
 import shortid from 'shortid';
+import Snackbar from 'react-native-snackbar';
+
+import {palette} from 'constants/theme';
 
 export * from './currency.utils';
+export * from './data.utils';
 
 export const uuid = () => shortid.generate();
 
@@ -23,3 +27,35 @@ export function capitalizeFirstLetter(string = '') {
 
 export const generateReadableName = (user) =>
   `${user.firstName} ${getFirstLetter(user.lastName).toUpperCase()}.`;
+
+export const showSuccessSnackBar = (options) => {
+  const text = options.text ? options.text : 'Something went wrong';
+  return Snackbar.show({
+    duration: Snackbar.LENGTH_LONG,
+    fontFamily: 'Hurme Geometric Sans 2',
+    backgroundColor: palette.greenLight,
+    ...options,
+    text,
+  });
+};
+export const showErrorSnackBar = async (options) => {
+  const text = options.text ? options.text : 'Something went wrong';
+  try {
+    const vibrationOption = {
+      enableVibrateFallback: true,
+      ignoreAndroidSystemSettings: false,
+    };
+
+    // await ReactNativeHapticFeedback.trigger(
+    //   'notificationError',
+    //   vibrationOption,
+    // );
+  } catch (error) {}
+  return Snackbar.show({
+    duration: Snackbar.LENGTH_LONG,
+    fontFamily: 'Hurme Geometric Sans 2',
+    backgroundColor: palette.red,
+    ...options,
+    text,
+  });
+};

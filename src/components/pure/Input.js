@@ -12,7 +12,7 @@ import {useTheme} from '@shopify/restyle';
 import {Box} from './Box';
 import {Icon as SvgIcon} from './Icon';
 import {palette} from 'constants/theme';
-// import {ErrorText} from './ErrorText';
+import {ErrorText} from './ErrorText';
 /**
  *
  * @see https://lefkowitz.me/visual-guide-to-react-native-textinput-keyboardtype-options/
@@ -141,8 +141,8 @@ export const Input = ({
             </TouchableOpacity>
           )}
         </Box>
-        {/* <ErrorText {...{touched, error, ErrorTextStyles}} /> */}
       </TouchableWithoutFeedback>
+      <ErrorText {...{touched, error}} />
     </Box>
   );
 };

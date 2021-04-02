@@ -8,17 +8,21 @@ import {
   PersonalLogin,
   ResetPassword,
 } from '../screens/Auth';
+import {connect} from 'react-redux';
 
 const AppStack = createStackNavigator();
 
-export const AuthNav = () => {
+const AuthScreens = ({user}) => {
+  const loggedInBefore = Boolean(user?.email);
+
   return (
     <AppStack.Navigator
       screenOptions={{
         header: () => null,
         // TODO: need to import background Color from theme file
         cardStyle: {backgroundColor: '#FFF'},
-      }}>
+      }}
+      initialRouteName={loggedInBefore ? 'PersonalLogin' : 'Login'}>
       <AppStack.Screen name="PersonalLogin" component={PersonalLogin} />
       <AppStack.Screen name="Login" component={Login} />
       <AppStack.Screen name="ResetPassword" component={ResetPassword} />
@@ -27,3 +31,7 @@ export const AuthNav = () => {
     </AppStack.Navigator>
   );
 };
+
+const mapStateToProps = ({user}) => ({user});
+
+export const AuthNav = connect(mapStateToProps)(AuthScreens);

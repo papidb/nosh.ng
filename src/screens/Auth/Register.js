@@ -8,7 +8,13 @@ import * as Yup from 'yup';
 
 import {Box, Button, Text, Input, AuthContainer} from 'components';
 
-import {waait} from 'shared/utils';
+import {connect} from 'react-redux';
+import {register} from 'action';
+import {
+  showErrorSnackBar,
+  showSuccessSnackBar,
+  extractErrorMessage,
+} from 'shared/utils';
 
 Yup.addMethod(Yup.string, 'validatePhone', function () {
   return this.test({
@@ -27,22 +33,24 @@ const RegisterSchema = Yup.object().shape({
   name: Yup.string().required('Required'),
   email: Yup.string().trim().email('Invalid Email').required('Required'),
   password: Yup.string().required('Required').min(4, 'Minimun length of 4'),
-  phone: Yup.string().required('Required').validatePhone(),
+  phoneNumber: Yup.string().required('Required').validatePhone(),
 });
 
 const initailValues = __DEV__
   ? {
-      name: 'omomo',
+      name: 'Daniel Sikal',
       email: 'benjamindaniel706@gmail.com',
-      phone: '07018782712',
-      password: 'oomom',
-      confirm_password: 'omoioi',
+      password: 'Password123@',
+      confirmPassword: 'Password123@',
+      phoneNumber: '07012345678',
     }
-  : {name: '', email: '', phone: '', password: '', confirm_password: ''};
+  : {name: '', email: '', phoneNumber: '', password: '', confirmPassword: ''};
 
-const RegisterScreen = ({}) => {
+const RegisterScreen = ({register}) => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
+  const toEmailVerification = () => navigation.navigate('EmailVerification');
+
   const {
     handleChange,
     handleBlur,
@@ -55,9 +63,16 @@ const RegisterScreen = ({}) => {
   } = useFormik({
     initialValues: initailValues,
     onSubmit: async (submitValues) => {
-      console.log({submitValues});
-      await waait(2000);
-      //   toLogin();
+      register;
+      try {
+        let userData = await register(submitValues);
+        if (userData && userData?.message)
+          showSuccessSnackBar({text: userData?.message});
+        toEmailVerification();
+      } catch (error) {
+        const text = extractErrorMessage(error);
+        showErrorSnackBar({text});
+      }
     },
     validationSchema: RegisterSchema,
   });
@@ -83,11 +98,11 @@ const RegisterScreen = ({}) => {
           />
           <Input
             placeholder="Phone"
-            onChangeText={handleChange('phone')}
-            onBlur={handleBlur('phone')}
-            error={errors.phone}
-            touched={touched.phone}
-            value={values.phone}
+            onChangeText={handleChange('phoneNumber')}
+            onBlur={handleBlur('phoneNumber')}
+            error={errors.phoneNumber}
+            touched={touched.phoneNumber}
+            value={values.phoneNumber}
           />
           <Input
             placeholder="Password"
@@ -100,11 +115,11 @@ const RegisterScreen = ({}) => {
           />
           <Input
             placeholder="Confirm Password"
-            onChangeText={handleChange('confirm_password')}
-            onBlur={handleBlur('confirm_password')}
-            error={errors.confirm_password}
-            touched={touched.confirm_password}
-            value={values.confirm_password}
+            onChangeText={handleChange('confirmPassword')}
+            onBlur={handleBlur('confirmPassword')}
+            error={errors.confirmPassword}
+            touched={touched.confirmPassword}
+            value={values.confirmPassword}
             passwordIcon
           />
           {/* Agreement */}
@@ -134,7 +149,7 @@ const RegisterScreen = ({}) => {
   );
 };
 
-export const Register = RegisterScreen;
+export const Register = connect(null, {register})(RegisterScreen);
 
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
