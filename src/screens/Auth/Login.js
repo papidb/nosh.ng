@@ -70,6 +70,7 @@ const LoginScreen = ({login}) => {
       try {
         let userData = await login(submitValues);
         console.log({userData});
+        // console.log(me);
       } catch (error) {
         const text = extractErrorMessage(error);
         showErrorSnackBar({text});

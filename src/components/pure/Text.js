@@ -9,6 +9,9 @@ const BaseText = (props, ref) => {
     <RNText fontFamily="Hurme Geometric Sans 2" {...styledProps} ref={ref} />
   );
 };
+// BaseText.defaultProps = {
+//   fontFamily: 'Hurme Geometric Sans 2',
+// };
 export const Text = forwardRef(BaseText);
 
 BaseText.propTypes = {

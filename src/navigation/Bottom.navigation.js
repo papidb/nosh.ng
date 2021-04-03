@@ -164,10 +164,9 @@ export const BottomTab = () => {
         //   alignSelf: 'center',
         //   // justifyContent: 'center',
         // },
-        // labelStyle: {
-        //   fontFamily: 'Hurme Geometric Sans 1',
-        //   fontWeight: 'bold',
-        // },
+        labelStyle: {
+          fontFamily: 'Hurme Geometric Sans 2 Bold',
+        },
         keyboardHidesTabBar: true,
         activeTintColor: palette.blue,
         inactiveTintColor: '#A2A2A2',

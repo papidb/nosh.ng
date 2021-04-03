@@ -198,6 +198,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01' 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
 
+    // add gif support
+    // implementation 'com.facebook.fresco:animated-gif:2.0.0'   //use
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

@@ -104,6 +104,7 @@ export const Input = ({
               style={[
                 {paddingVertical: 0},
                 realInputStyle,
+                // {fontFamily: 'Hurme Geometric Sans 2'},
                 Platform.OS === 'android' ? {height: 40} : {},
               ]}
               secureTextEntry={state.password}
