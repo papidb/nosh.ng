@@ -6527,6 +6527,10 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+"react-native-image-sequence@https://github.com/benjamin-daniel/react-native-image-sequence":
+  version "0.7.0"
+  resolved "https://github.com/benjamin-daniel/react-native-image-sequence#4ae867a67f55a99a2232d3245c600b9a7a1abfb5"
+
 react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
