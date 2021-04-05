@@ -7,17 +7,21 @@ import {
   EmailVerification,
   PersonalLogin,
   ResetPassword,
-  OnBoarding,
 } from '../screens/Auth';
+import {OnBoarding} from '../screens/OnBoarding';
 import {connect} from 'react-redux';
 
 const AppStack = createStackNavigator();
 
-const AuthScreens = ({user}) => {
+const AuthScreens = ({user, onboarded}) => {
+  console.log({onboarded});
   const loggedInBefore = Boolean(user?.email);
-
-  // const initialRouteName = loggedInBefore ? 'PersonalLogin' : 'Login';
-  const initialRouteName = 'OnBoarding';
+  const initialRouteName = onboarded
+    ? loggedInBefore
+      ? 'PersonalLogin'
+      : 'Login'
+    : 'OnBoarding';
+  // const initialRouteName = 'OnBoarding';
   return (
     <AppStack.Navigator
       screenOptions={{
@@ -36,6 +40,6 @@ const AuthScreens = ({user}) => {
   );
 };
 
-const mapStateToProps = ({user}) => ({user});
+const mapStateToProps = ({user, misc}) => ({user, onboarded: misc.onboarded});
 
 export const AuthNav = connect(mapStateToProps)(AuthScreens);

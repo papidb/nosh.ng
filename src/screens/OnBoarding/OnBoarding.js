@@ -14,7 +14,7 @@ import {
   RaiseAndroid,
 } from 'components';
 import {connect} from 'react-redux';
-import {login} from 'action';
+import {onBoardUser} from 'action';
 import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 import {onboardingImages, splitToChunks} from './onboardingImages';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -194,7 +194,7 @@ const NextButton = ({index, scrollX, scrollTo}) => {
   );
 };
 
-const OnBoardingScreen = ({}) => {
+const OnBoardingScreen = ({onBoardUser}) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const slidesRef = React.useRef(null);
 
@@ -207,7 +207,11 @@ const OnBoardingScreen = ({}) => {
     if (index + 1 < phase) {
       slidesRef?.current?.scrollToIndex({index: index + 1});
     } else {
-      console.log('Go away from onboarding screen');
+      onBoardUser();
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
     }
   }, [index, phase]);
   // const scrollTo = () => {
@@ -293,7 +297,7 @@ const OnBoardingScreen = ({}) => {
   );
 };
 
-export const OnBoarding = connect(null, {login})(OnBoardingScreen);
+export const OnBoarding = connect(null, {onBoardUser})(OnBoardingScreen);
 
 const styles = StyleSheet.create({
   container: {
