@@ -1,11 +1,19 @@
 import React from 'react';
 import {Image} from 'react-native';
 import PropTypes from 'prop-types';
+import FastImage from 'react-native-fast-image';
 
 import {Box} from '../pure';
 import images from 'constants/images';
 
-export const AuthAvatar = ({size = 167, containerProps, imageProps}) => {
+export const AuthAvatar = ({
+  size = 167,
+  avatar,
+  containerProps,
+  imageProps,
+}) => {
+  const imageUri = `https://api.nosh.ng/${avatar}`;
+  console.log({imageProps});
   return (
     <Box
       marginTop="xl"
@@ -19,13 +27,21 @@ export const AuthAvatar = ({size = 167, containerProps, imageProps}) => {
       overflow="hidden"
       backgroundColor="primary"
       {...containerProps}>
-      <Image source={images.auth_face} {...imageProps} />
+      {!!avatar ? (
+        <FastImage
+          source={{uri: imageUri, priority: FastImage.priority.high}}
+          {...imageProps}
+        />
+      ) : (
+        <Image source={images.auth_face} {...imageProps} />
+      )}
     </Box>
   );
 };
 
 AuthAvatar.propTypes = {
   size: PropTypes.number,
+  avatar: PropTypes.string,
   containerProps: PropTypes.object,
   imageProps: PropTypes.object,
 };
