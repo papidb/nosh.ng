@@ -1,3 +1,7 @@
+import FormData from 'form-data';
+import {Platform} from 'react-native';
+import shortid from 'shortid';
+
 export const getErrorMessage = (error) => {
   if (error?.response?.data?.message) return error?.response?.data?.message;
   return null;
@@ -36,4 +40,23 @@ export const getMessage = () => {
     }
   }
   return message;
+};
+
+export const getFormData = (values) => {
+  let data = new FormData();
+  Object.keys(values).forEach((key) => {
+    data.append(key, values[key]);
+  });
+  return data;
+};
+
+export const createFormData = ({uri, type}) => {
+  const data = new FormData();
+
+  data.append('avatar', {
+    name: shortid.generate(),
+    type: type,
+    uri: Platform.OS === 'android' ? uri : uri.replace('file://', ''),
+  });
+  return data;
 };
