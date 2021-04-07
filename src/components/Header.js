@@ -6,7 +6,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Box, Text, Icon} from 'components';
 import {AuthAvatar} from './auth';
-import {generateReadableName, getMessage} from 'shared/utils';
+import {getMessage} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
 import {connect, useStore} from 'react-redux';
