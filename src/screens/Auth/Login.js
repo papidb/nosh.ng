@@ -44,7 +44,7 @@ const initailValues = __DEV__
       name: 'omomo',
       email: 'benjamindaniel706@gmail.com',
       phone: '07018782712',
-      password: 'Password123@',
+      password: 'Silver1@',
       confirm_password: 'omoioi',
     }
   : {name: '', email: '', phone: '', password: '', confirm_password: ''};

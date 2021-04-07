@@ -12,6 +12,7 @@ import HomeHand from 'assets/icons/home_hand.svg';
 import FastImage from 'react-native-fast-image';
 
 import {useNavigation} from '@react-navigation/native';
+import {connect} from 'react-redux';
 
 const Balance = () => {
   // const amount = 267000;
@@ -49,7 +50,7 @@ const Balance = () => {
   );
 };
 
-export const Home = ({navigation}) => {
+const HomeScreen = ({navigation}) => {
   const {
     openModal: openSetupUsername,
     closeModal: closeSetupUsername,
@@ -160,6 +161,11 @@ export const Home = ({navigation}) => {
     </Box>
   );
 };
+
+const mapStateToProps = (user) => {
+  return {user};
+};
+export const Home = connect(mapStateToProps)(HomeScreen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   childrenStyle: {
