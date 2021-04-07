@@ -1,56 +1,28 @@
 import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 
 import {Portal} from 'react-native-portalize';
 import {useModalize} from 'hooks';
 
 import {Box, Text, Divider, Circle, Icon, RaiseAndroid} from 'components';
-import {UserNameSetup} from 'components/Home';
+import {UserNameSetup, Balance} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
 import HomeHand from 'assets/icons/home_hand.svg';
 import FastImage from 'react-native-fast-image';
-
+import {getBanks, getUser} from 'action';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
+import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 
-const Balance = () => {
-  // const amount = 267000;
-  return (
-    <Box
-      marginHorizontal="s"
-      backgroundColor="white"
-      padding="l"
-      borderRadius={155}
-      justifyContent="center"
-      alignItems="center">
-      <Text fontSize={12} color="primary" textAlign="center" fontWeight="bold">
-        Available Balance
-      </Text>
-      <Box flexDirection="row" alignItems="center">
-        <Text
-          color="buttonColor"
-          fontSize={33}
-          fontWeight="bold"
-          lineHeight={42.37}>
-          267,000
-        </Text>
-        <Text color="primary" fontSize={30}>
-          .00
-        </Text>
-        <Text
-          color="buttonColor"
-          fontSize={15}
-          fontWeight="bold"
-          marginLeft="xxs">
-          {'NGN'}
-        </Text>
-      </Box>
-    </Box>
-  );
-};
-
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({user, getBanks, getUser}) => {
+  const navigation = useNavigation();
   const {
     openModal: openSetupUsername,
     closeModal: closeSetupUsername,
@@ -60,7 +32,6 @@ const HomeScreen = ({navigation}) => {
   const toNoshWallet = () => {
     openSetupUsername();
   };
-  // const navigation = useNavigation();
   const toHottestCards = () => {
     navigation.navigate('HottestCards');
   };
@@ -68,7 +39,62 @@ const HomeScreen = ({navigation}) => {
     navigation.navigate('GiftCard');
   };
 
-  useEffect(() => openSetupUsername(), [openSetupUsername]);
+  // Many many
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  // get more data to use in app
+  const getInfo = React.useCallback(async () => {
+    return Promise.all([getBanks(), getUser()]);
+  }, [getBanks, getUser]);
+
+  const onRefresh = React.useCallback(async () => {
+    try {
+      setRefreshing(true);
+      await getInfo();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [getInfo]);
+  const init = React.useCallback(async () => {
+    getBanks().catch((error) => {
+      console.log(error);
+    });
+    (async () => {
+      try {
+        await getInfo();
+      } catch (error) {
+        console.log({error});
+      }
+      // try {
+      //   await messaging().subscribeToTopic('nosh');
+      //   if (__DEV__) {
+      //     await messaging().subscribeToTopic('test');
+      //   }
+      // } catch (error) {
+      //   console.log({error});
+      // }
+    })();
+  }, [getBanks, getInfo]);
+  useEffect(() => {
+    console.log('running init');
+    try {
+      init();
+      const unsubscribe = navigation.addListener('focus', async () => {
+        try {
+          console.log('running these cause this screen was focused on');
+          await getInfo();
+          await init();
+        } catch (error) {}
+      });
+      // Return the function to unsubscribe from the event so it gets removed on unmount
+      return unsubscribe;
+    } catch (error) {
+      const text = extractErrorMessage(error);
+      showErrorSnackBar({text});
+    }
+  }, [getBanks, getInfo, init, navigation]);
   return (
     <Box flex={1}>
       <Portal>
@@ -78,9 +104,13 @@ const HomeScreen = ({navigation}) => {
       </Portal>
       <Divider marginBottom="m" />
       {/* <Header /> */}
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        style={styles.scrollView}>
         {/* Header */}
-        <Balance />
+        <Balance {...{user}} />
         {/* Image */}
         <Box
           // alignItems="center"
@@ -162,10 +192,10 @@ const HomeScreen = ({navigation}) => {
   );
 };
 
-const mapStateToProps = (user) => {
+const mapStateToProps = ({user}) => {
   return {user};
 };
-export const Home = connect(mapStateToProps)(HomeScreen);
+export const Home = connect(mapStateToProps, {getBanks, getUser})(HomeScreen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   childrenStyle: {
