@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, Text} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -20,7 +20,31 @@ import theme from 'constants/theme/default';
 enableScreens();
 
 const {store, persistor} = configureStore();
+function SetCustomText(customProps) {
+  const TextRender = Text.render;
+  const initialDefaultProps = Text.defaultProps;
+  Text.defaultProps = {
+    ...initialDefaultProps,
+    ...customProps,
+  };
+  Text.render = function render(props) {
+    let oldProps = props;
+    props = {...props, style: [customProps.style, props.style]};
+    try {
+      return TextRender.apply(this, arguments);
+    } finally {
+      props = oldProps;
+    }
+  };
+}
 
+const TextProps = {
+  style: {
+    // color: 'blue',
+    fontFamily: 'Hurme Geometric Sans 2',
+  },
+};
+SetCustomText(TextProps);
 const App = () => {
   return (
     <Provider store={store}>

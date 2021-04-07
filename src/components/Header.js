@@ -4,14 +4,13 @@ import {ViewPropTypes, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {Box, Text, Icon} from './pure';
+import {Box, Text, Icon} from 'components';
 import {AuthAvatar} from './auth';
 import {generateReadableName} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
 
 export const Header = ({onPress, ...props}) => {
-  console.log({props});
   const user = {
     firstName: 'John',
     lastName: 'Doe',
@@ -48,10 +47,16 @@ export const Header = ({onPress, ...props}) => {
       </Box>
       {/* Remaining */}
       <Box flex={1} alignSelf="center">
-        <Text color="primary" fontWeight="bold" fontSize={14}>
+        <Text
+          // fontFamily="Hurme Geometric Sans 2 Bold"
+          color="primary"
+          fontSize={14}>
           Good Morning
         </Text>
-        <Text color="buttonColor" fontWeight="bold" fontSize={20}>
+        <Text
+          // fontFamily="Hurme Geometric Sans 2 Bold"
+          color="buttonColor"
+          fontSize={20}>
           {generateReadableName(user)}
         </Text>
       </Box>
@@ -75,6 +80,7 @@ export const HeaderInfo = ({text, containerProps, textProps}) => {
       backgroundColor="mostBg"
       {...containerProps}>
       <Text
+        fontFamily="Hurme Geometric Sans 2"
         color="primary"
         textAlign="center"
         fontWeight="500"

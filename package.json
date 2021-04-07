@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "link": "react-native link",
     "test": "jest",
     "lint": "eslint .",
     "pod": "cd ios && pod install && cd .."
@@ -32,6 +33,7 @@
     "react-native-animated-nav-tab-bar": "^3.1.4",
     "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-image-sequence": "https://github.com/benjamin-daniel/react-native-image-sequence",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-modal": "^11.7.0",
     "react-native-modalize": "^2.0.8",
@@ -41,6 +43,7 @@
     "react-native-redash": "^16.0.8",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.18.1",
+    "react-native-snackbar": "^2.4.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^12.1.0",
     "react-native-swiper": "^1.6.0",

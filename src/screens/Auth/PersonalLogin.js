@@ -54,8 +54,7 @@ export const PersonalLoginScreen = ({login}) => {
     onSubmit: async (submitValues) => {
       console.log({submitValues});
       // await waait(2000);
-      console.log({login});
-      login();
+      // login();
     },
     validationSchema: LoginSchema,
   });

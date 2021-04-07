@@ -10,7 +10,7 @@ const persistedReducer = persistReducer(
   {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: [],
+    whitelist: ['user', 'misc'],
     stateReconciler: autoMergeLevel2,
   },
   rootReducer,

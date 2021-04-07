@@ -15,8 +15,9 @@ import {
   AuthAvatar,
   RaiseAndroid,
 } from 'components';
-
-import {waait} from 'shared/utils';
+import {connect} from 'react-redux';
+import {login} from 'action';
+import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 
 Yup.addMethod(Yup.string, 'validatePhone', function () {
   return this.test({
@@ -43,12 +44,12 @@ const initailValues = __DEV__
       name: 'omomo',
       email: 'benjamindaniel706@gmail.com',
       phone: '07018782712',
-      password: 'oomom',
+      password: 'Password123@',
       confirm_password: 'omoioi',
     }
   : {name: '', email: '', phone: '', password: '', confirm_password: ''};
 
-const LoginScreen = ({}) => {
+const LoginScreen = ({login}) => {
   const navigation = useNavigation();
   const toResetPassword = () => navigation.navigate('ResetPassword');
   const toEmailVerification = () => navigation.navigate('EmailVerification');
@@ -66,9 +67,14 @@ const LoginScreen = ({}) => {
   } = useFormik({
     initialValues: initailValues,
     onSubmit: async (submitValues) => {
-      console.log({submitValues});
-      await waait(2000);
-      toEmailVerification();
+      try {
+        let userData = await login(submitValues);
+        console.log({userData});
+        // console.log(me);
+      } catch (error) {
+        const text = extractErrorMessage(error);
+        showErrorSnackBar({text});
+      }
     },
     validationSchema: RegisterSchema,
   });
@@ -130,8 +136,8 @@ const LoginScreen = ({}) => {
   );
 };
 
-// export const Login = () => connect()(LoginScreen);
-export const Login = LoginScreen;
+export const Login = connect(null, {login})(LoginScreen);
+// export const Login = LoginScreen;
 
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},

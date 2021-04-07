@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   inputIOS: {
     fontSize: 12,
-    fontFamily: 'Hurme Geometric Sans 1',
+    fontFamily: 'Hurme Geometric Sans 2',
     color: palette.blue,
     fontWeight: '600',
     height: 36,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   inputAndroid: {
     fontSize: 12,
-    fontFamily: 'Hurme Geometric Sans 1',
+    fontFamily: 'Hurme Geometric Sans 2',
     color: palette.blue,
     fontWeight: '600',
     height: 36,

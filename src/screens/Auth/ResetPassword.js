@@ -17,6 +17,10 @@ import {
 } from 'components';
 import {waait} from 'shared/utils';
 
+import {connect} from 'react-redux';
+import {forgotPassword} from 'action';
+import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
+
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Invalid Email').required('Required'),
 });
@@ -27,7 +31,7 @@ const initailValues = __DEV__
     }
   : {email: ''};
 
-export const ResetPasswordScreen = () => {
+export const ResetPasswordScreen = ({forgotPassword}) => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
   const [text /** ,setText */] = useState('Please Enter a valid Email address');
@@ -46,9 +50,13 @@ export const ResetPasswordScreen = () => {
   } = useFormik({
     initialValues: initailValues,
     onSubmit: async (submitValues) => {
-      console.log({submitValues});
-      await waait(2000);
-      toLogin();
+      try {
+        await forgotPassword(submitValues);
+        toLogin();
+      } catch (error) {
+        const text = extractErrorMessage(error);
+        showErrorSnackBar({text});
+      }
     },
     validationSchema: LoginSchema,
   });
@@ -132,7 +140,9 @@ export const ResetPasswordScreen = () => {
     </Box>
   );
 };
-export const ResetPassword = ResetPasswordScreen;
+export const ResetPassword = connect(null, {forgotPassword})(
+  ResetPasswordScreen,
+);
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
   bottom: {marginTop: 125},

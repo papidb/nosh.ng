@@ -4,7 +4,7 @@ const images = {
   itunes_2: require('assets/images/itunes2.png'),
   FFHome: require('assets/images/FFHome.png'),
   kuda: require('assets/images/Kuda.png'),
-  fire: require('assets/images/fire.png'),
+  fire: require('assets/images/fire.gif'),
 };
 const toArray = () => {
   let keys = Object.keys(images);
