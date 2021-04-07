@@ -12,12 +12,24 @@ import {
   AddBank,
   Security,
 } from 'components/Settings';
-import {changePassword, toggleBio, logout} from 'action';
+import {
+  changePassword,
+  toggleBio,
+  logout,
+  getUser,
+  updateProfilePic,
+} from 'action';
 import {uuid} from 'shared/utils';
 import {Portal} from 'react-native-portalize';
 import {useModalize} from 'hooks';
 
-export const Screen = ({logout, toggleBio, changePassword}) => {
+export const Screen = ({
+  logout,
+  toggleBio,
+  changePassword,
+  updateProfilePic,
+  getUser,
+}) => {
   const {
     openModal: onOpenProfile,
     closeModal: closeProfileModal,
@@ -80,7 +92,10 @@ export const Screen = ({logout, toggleBio, changePassword}) => {
       {/* Modals */}
       <Portal>
         <ProfileModalize>
-          <EditProfile close={closeProfileModal} />
+          <EditProfile
+            close={closeProfileModal}
+            {...{updateProfilePic, getUser}}
+          />
         </ProfileModalize>
         <AddBankModalize>
           <AddBank close={closeAddBankModal} />
@@ -108,6 +123,8 @@ export const SettingsHome = connect(null, {
   logout,
   changePassword,
   toggleBio,
+  updateProfilePic,
+  getUser,
 })(Screen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
