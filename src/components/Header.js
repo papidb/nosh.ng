@@ -6,15 +6,17 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import {Box, Text, Icon} from 'components';
 import {AuthAvatar} from './auth';
-import {generateReadableName} from 'shared/utils';
+import {generateReadableName, getMessage} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
+import {connect, useStore} from 'react-redux';
 
-export const Header = ({onPress, ...props}) => {
-  const user = {
-    firstName: 'John',
-    lastName: 'Doe',
-  };
+const HeaderComponent = ({onPress, ...props}) => {
+  const {user} = useStore().getState();
+  // const user = {
+  //   firstName: 'John',
+  //   lastName: 'Doe',
+  // };
   const {top} = useSafeAreaInsets();
   // console.log({top});
   let realTop = top / 4 + 10;
@@ -51,13 +53,15 @@ export const Header = ({onPress, ...props}) => {
           // fontFamily="Hurme Geometric Sans 2 Bold"
           color="primary"
           fontSize={14}>
-          Good Morning
+          {/* Good Morning */}
+          {getMessage()}
         </Text>
         <Text
           // fontFamily="Hurme Geometric Sans 2 Bold"
           color="buttonColor"
           fontSize={20}>
-          {generateReadableName(user)}
+          {/* {generateReadableName(user)} */}
+          {user.name}
         </Text>
       </Box>
       <Box alignSelf="flex-start" top={1.5 * realTop}>
@@ -92,6 +96,7 @@ export const HeaderInfo = ({text, containerProps, textProps}) => {
   );
 };
 
+export const Header = HeaderComponent;
 HeaderInfo.propTypes = {
   text: PropTypes.string,
   textProps: ViewPropTypes.style,
