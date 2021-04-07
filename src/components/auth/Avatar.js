@@ -11,7 +11,10 @@ export const AuthAvatar = ({
   avatar,
   containerProps,
   imageProps,
+  imagePropsActive,
 }) => {
+  const active = !!avatar;
+  if (!imagePropsActive) imagePropsActive = imageProps;
   const imageUri = `https://api.nosh.ng/${avatar}`;
   return (
     <Box
@@ -26,10 +29,10 @@ export const AuthAvatar = ({
       overflow="hidden"
       backgroundColor="primary"
       {...containerProps}>
-      {!!avatar ? (
+      {active ? (
         <FastImage
           source={{uri: imageUri, priority: FastImage.priority.high}}
-          {...imageProps}
+          {...(active ? imagePropsActive : imageProps)}
         />
       ) : (
         <Image source={images.auth_face} {...imageProps} />

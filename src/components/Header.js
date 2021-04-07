@@ -43,8 +43,10 @@ const HeaderComponent = ({onPress, ...props}) => {
       <Box marginRight="m">
         <AuthAvatar
           size={81}
+          avatar={user.avatar}
           // containerProps={{alignSelf: 'flex-start', margin: 'none'}}
-          imageProps={{style: {height: 50, width: 50}}}
+          imageProps={{style: {height: 50, width: 50, borderRadius: 50}}}
+          imagePropsActive={{style: {height: 81, width: 81, borderRadius: 81}}}
         />
       </Box>
       {/* Remaining */}
