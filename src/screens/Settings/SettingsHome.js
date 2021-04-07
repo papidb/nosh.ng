@@ -5,13 +5,19 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {Box, Divider, HeaderInfo, RaiseAndroid} from 'components';
-import {SettingsTab, EditProfile, Withdraw, AddBank} from 'components/Settings';
-import {logout} from 'action';
+import {
+  SettingsTab,
+  EditProfile,
+  Withdraw,
+  AddBank,
+  Security,
+} from 'components/Settings';
+import {changePassword, toggleBio, logout} from 'action';
 import {uuid} from 'shared/utils';
 import {Portal} from 'react-native-portalize';
 import {useModalize} from 'hooks';
 
-export const Screen = ({logout}) => {
+export const Screen = ({logout, toggleBio, changePassword}) => {
   const {
     openModal: onOpenProfile,
     closeModal: closeProfileModal,
@@ -27,6 +33,11 @@ export const Screen = ({logout}) => {
     closeModal: closeWithdrawModal,
     Component: WithdrawModalize,
   } = useModalize();
+  const {
+    openModal: openSecurity,
+    closeModal: closeSecurityModal,
+    Component: SecurityModalize,
+  } = useModalize();
 
   const options = [
     {text: 'Edit Profile', icon: 'icon-expand', onPress: onOpenProfile},
@@ -34,7 +45,7 @@ export const Screen = ({logout}) => {
     {
       text: 'Security settings',
       icon: 'icon-not_visible',
-      onPress: openWithdraw,
+      onPress: openSecurity,
     },
     {text: 'Privacy policy', icon: 'icon-bookmark'},
     {text: 'Live chat', icon: 'icon-chat'},
@@ -77,6 +88,12 @@ export const Screen = ({logout}) => {
         <WithdrawModalize>
           <Withdraw close={closeWithdrawModal} />
         </WithdrawModalize>
+        <SecurityModalize>
+          <Security
+            close={closeSecurityModal}
+            {...{changePassword, toggleBio}}
+          />
+        </SecurityModalize>
       </Portal>
     </Box>
   );
@@ -86,7 +103,12 @@ Screen.propTypes = {
   logout: PropTypes.func,
 };
 
-export const SettingsHome = connect(null, {logout})(Screen);
+// ({misc: {bio}}) => ({bio})
+export const SettingsHome = connect(null, {
+  logout,
+  changePassword,
+  toggleBio,
+})(Screen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   header: {

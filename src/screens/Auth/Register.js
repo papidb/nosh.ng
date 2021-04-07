@@ -55,9 +55,21 @@ const RegisterScreen = ({}) => {
   } = useFormik({
     initialValues: initailValues,
     onSubmit: async (submitValues) => {
+<<<<<<< Updated upstream
       console.log({submitValues});
       await waait(2000);
       //   toLogin();
+=======
+      try {
+        let userData = await register(submitValues);
+        if (userData && userData?.message)
+          showSuccessSnackBar({text: userData?.message});
+        toEmailVerification();
+      } catch (error) {
+        const text = extractErrorMessage(error);
+        showErrorSnackBar({text});
+      }
+>>>>>>> Stashed changes
     },
     validationSchema: RegisterSchema,
   });

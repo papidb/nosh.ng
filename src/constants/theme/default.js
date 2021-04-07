@@ -8,6 +8,7 @@ export const palette = {
   blue: '#30bced',
   selectIconBlue: '#B4EBFF',
   fadedBlue: 'rgba(48,188,237,0.1)',
+  lightPrimary: '#EBF9FE',
   mostBg: 'rgba(48,188,237,0.1)',
   mostBgPure: '#EAF8FD',
   greyBlue: 'rgba(48,188,237,0.2)',
@@ -55,6 +56,7 @@ const theme = createTheme({
     eyeBackground: palette.fadedBlue,
     mostBg: palette.fadedBlue,
     mostBgPure: palette.mostBgPure,
+    lightPrimary: palette.lightPrimary,
 
     buttonColor: palette.darkBlueButton,
 
@@ -190,6 +192,15 @@ const theme = createTheme({
       borderWidth: 0,
       color: palette.fadedBrown,
       backgroundColor: 'lightGray',
+      // placeholderTextColor: palette.inputColor,
+    },
+    profilePrimary: {
+      height: INPUT_HEIGHT,
+      fontFamily: 'Hurme Geometric Sans 2',
+      fontSize: 16,
+      borderWidth: 0,
+      color: palette.blue,
+      backgroundColor: 'lightPrimary',
       // placeholderTextColor: palette.inputColor,
     },
     giftcard: {
