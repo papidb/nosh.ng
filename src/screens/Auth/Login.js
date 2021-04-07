@@ -16,7 +16,7 @@ import {
   RaiseAndroid,
 } from 'components';
 import {connect} from 'react-redux';
-import {login} from 'action';
+import {login, getUser} from 'action';
 import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 
 Yup.addMethod(Yup.string, 'validatePhone', function () {
@@ -49,7 +49,7 @@ const initailValues = __DEV__
     }
   : {name: '', email: '', phone: '', password: '', confirm_password: ''};
 
-const LoginScreen = ({login}) => {
+const LoginScreen = ({login, getUser}) => {
   const navigation = useNavigation();
   const toResetPassword = () => navigation.navigate('ResetPassword');
   const toEmailVerification = () => navigation.navigate('EmailVerification');
@@ -68,7 +68,8 @@ const LoginScreen = ({login}) => {
     initialValues: initailValues,
     onSubmit: async (submitValues) => {
       try {
-        let userData = await login(submitValues);
+        await login(submitValues);
+        const userData = await getUser();
         console.log({userData});
         // console.log(me);
       } catch (error) {
@@ -136,7 +137,7 @@ const LoginScreen = ({login}) => {
   );
 };
 
-export const Login = connect(null, {login})(LoginScreen);
+export const Login = connect(null, {login, getUser})(LoginScreen);
 // export const Login = LoginScreen;
 
 const styles = StyleSheet.create({

@@ -23,6 +23,8 @@ const initialState = {
   lastLogin: '',
   createdAt: '',
   updatedAt: '',
+  accessToken: '',
+  refreshToken: '',
 };
 
 export default function userReducer(state = initialState, action) {

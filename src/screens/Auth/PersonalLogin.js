@@ -19,7 +19,8 @@ import {
   AuthContainer,
   RaiseAndroid,
 } from 'components';
-import {login} from 'action';
+import {getUser, login} from 'action';
+import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Invalid Email').required('Required'),
@@ -27,15 +28,12 @@ const LoginSchema = Yup.object().shape({
 
 const initailValues = __DEV__
   ? {
-      name: 'omomo',
-      email: 'benjamindaniel706@gmail.com',
-      phone: '07018782712',
-      password: 'oomom',
-      confirm_password: 'omoioi',
+      email: '',
+      password: 'Silver1@',
     }
-  : {name: '', email: '', phone: '', password: '', confirm_password: ''};
+  : {email: '', password: ''};
 
-export const PersonalLoginScreen = ({login}) => {
+export const PersonalLoginScreen = ({login, getUser, user}) => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
   const toResetPassword = () => navigation.navigate('ResetPassword');
@@ -50,11 +48,17 @@ export const PersonalLoginScreen = ({login}) => {
     isSubmitting,
     isValid,
   } = useFormik({
-    initialValues: initailValues,
+    initialValues: {...initailValues, email: user?.email},
     onSubmit: async (submitValues) => {
-      console.log({submitValues});
-      // await waait(2000);
-      // login();
+      try {
+        await login(submitValues);
+        const userData = await getUser();
+        console.log({userData});
+        // console.log(me);
+      } catch (error) {
+        const text = extractErrorMessage(error);
+        showErrorSnackBar({text});
+      }
     },
     validationSchema: LoginSchema,
   });
@@ -89,7 +93,7 @@ export const PersonalLoginScreen = ({login}) => {
               Welcome Back
             </Text>
             <Text color="buttonColor" fontWeight="700" fontSize={24}>
-              Nnamdi
+              {user?.name}
             </Text>
           </Box>
           <Input
@@ -124,7 +128,9 @@ PersonalLoginScreen.propTypes = {
   login: PropTypes.func,
 };
 
-export const PersonalLogin = connect(null, {login})(PersonalLoginScreen);
+export const PersonalLogin = connect(({user}) => ({user}), {login, getUser})(
+  PersonalLoginScreen,
+);
 
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},

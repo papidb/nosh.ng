@@ -18,3 +18,22 @@ export const extractErrorMessage = (err) => {
   //   return message;
   // }
 };
+
+export const getMessage = () => {
+  let message = '';
+  const data = [
+      [22, 'Working Late'],
+      [18, 'Good Evening'],
+      [12, 'Good Afternoon'],
+      [5, 'Good Morning'],
+      [0, 'Whoa, early bird'],
+    ],
+    hr = new Date().getHours();
+  for (let i = 0; i < data.length; i++) {
+    if (hr >= data[i][0]) {
+      message = data[i][1];
+      break;
+    }
+  }
+  return message;
+};
