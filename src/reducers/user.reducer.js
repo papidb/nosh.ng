@@ -41,7 +41,7 @@ export default function userReducer(state = initialState, action) {
       if (payload?.wallet?.bank == null) {
         return {
           ...state,
-          ...action.payload,
+          ...(payload?.user ?? {}),
           wallet: {
             ...action?.payload?.wallet,
             banks: [],
@@ -50,7 +50,7 @@ export default function userReducer(state = initialState, action) {
       }
       return {
         ...state,
-        ...action.payload,
+        ...(payload?.user ?? {}),
       };
     case LOGIN:
       const {user} = payload;
