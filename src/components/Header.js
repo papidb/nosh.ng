@@ -48,13 +48,13 @@ export const Header = ({onPress, ...props}) => {
       {/* Remaining */}
       <Box flex={1} alignSelf="center">
         <Text
-          fontFamily="Hurme Geometric Sans 2 Bold"
+          // fontFamily="Hurme Geometric Sans 2 Bold"
           color="primary"
           fontSize={14}>
           Good Morning
         </Text>
         <Text
-          fontFamily="Hurme Geometric Sans 2 Bold"
+          // fontFamily="Hurme Geometric Sans 2 Bold"
           color="buttonColor"
           fontSize={20}>
           {generateReadableName(user)}

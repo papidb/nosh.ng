@@ -165,7 +165,8 @@ export const BottomTab = () => {
         //   // justifyContent: 'center',
         // },
         labelStyle: {
-          fontFamily: 'Hurme Geometric Sans 2 Bold',
+          fontFamily: 'Hurme Geometric Sans 2',
+          fontWeight: '600',
         },
         keyboardHidesTabBar: true,
         activeTintColor: palette.blue,
