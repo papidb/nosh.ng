@@ -4,6 +4,7 @@ import {ActivityIndicator, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useStore} from 'react-redux';
+import ImageColors from 'react-native-image-colors';
 
 import {
   Box,
@@ -26,6 +27,7 @@ import {ModalContainer} from './ModalContainer';
 export const EditProfile = ({close, updateProfilePic, getUser}) => {
   const {user} = useStore().getState();
   const [loading, setLoading] = useState(false);
+  const [backgroundColor, setBackgroundColor] = useState('transparent');
   const [avatar, setAvatar] = useState(user.avatar);
 
   const useImage = async (photo) => {
@@ -50,7 +52,27 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
     const options = {mediaType: 'photo'};
     launchImageLibrary(options, useImage);
   };
+  React.useEffect(() => {
+    (async () => {
+      const imageUri = `https://api.nosh.ng/${avatar}`;
+      let backgroundColor = '';
+      const colors = await ImageColors.getColors(imageUri, {
+        fallback: 'green',
+      });
+      if (colors.platform === 'android') {
+        // Access android properties
+        // e.g.
+        backgroundColor = colors.average;
+      } else {
+        // Access iOS properties
+        // e.g.
+        backgroundColor = colors.background;
+        setBackgroundColor(backgroundColor);
+      }
+    })();
+  }, [avatar, setBackgroundColor]);
 
+  console.log({backgroundColor});
   return (
     <ModalContainer>
       <Box marginBottom="xs">
@@ -69,6 +91,7 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
                 marginTop: 'none',
                 marginBottom: 'none',
                 backgroundColor: 'success',
+                style: {backgroundColor: backgroundColor},
               }}
               imageProps={{style: {height: 60, width: 60, borderRadius: 60}}}
             />
