@@ -55,24 +55,19 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
   React.useEffect(() => {
     (async () => {
       const imageUri = `https://api.nosh.ng/${avatar}`;
-      let backgroundColor = '';
+      let bg = '';
       const colors = await ImageColors.getColors(imageUri, {
-        fallback: 'green',
+        fallback: '#30bced',
       });
       if (colors.platform === 'android') {
-        // Access android properties
-        // e.g.
-        backgroundColor = colors.average;
+        bg = colors.average;
       } else {
-        // Access iOS properties
-        // e.g.
-        backgroundColor = colors.background;
-        setBackgroundColor(backgroundColor);
+        bg = colors.background;
+        setBackgroundColor(bg);
       }
     })();
   }, [avatar, setBackgroundColor]);
 
-  console.log({backgroundColor});
   return (
     <ModalContainer>
       <Box marginBottom="xs">
