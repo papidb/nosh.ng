@@ -1,7 +1,6 @@
-import axios, {AxiosResponse} from 'axios';
+import axios from './axios';
 
 import {TOGGLE_BIO} from './type';
-
 import {BASE_URL} from 'constants/config';
 
 export const changePassword = (data) => {
