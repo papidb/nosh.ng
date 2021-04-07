@@ -27,13 +27,11 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
   const {user} = useStore().getState();
   const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState(user.avatar);
-  console.log({avatar});
 
   const useImage = async (photo) => {
     if (photo.didCancel) return;
     setLoading(true);
     try {
-      // console.log({photo});
       const res = await updateProfilePic(createFormData(photo));
       const text = res?.message ?? 'Successful';
       showSuccessSnackBar({text});
@@ -41,7 +39,6 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
       setAvatar(newAvatar);
     } catch (error) {
       const text = extractErrorMessage(error);
-      // console.log({text});
       showErrorSnackBar({text});
     } finally {
       setLoading(false);

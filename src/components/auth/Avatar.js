@@ -13,7 +13,6 @@ export const AuthAvatar = ({
   imageProps,
 }) => {
   const imageUri = `https://api.nosh.ng/${avatar}`;
-  console.log({imageProps});
   return (
     <Box
       marginTop="xl"
