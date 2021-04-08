@@ -21,7 +21,7 @@ import {
 import data from 'constants/data';
 import {capitalizeFirstLetter} from 'shared/utils';
 
-import {RenderItem} from '../../components/GiftCard/RenderItem';
+import {GiftCard as GiftCardImage} from '../../components/GiftCard/GiftCard';
 
 export const GiftCard = () => {
   // let [sliderIndex, setSliderIndex] = useState(0);

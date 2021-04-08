@@ -13,7 +13,7 @@ import {Box, Text, Divider, Button, HeaderInfo} from 'components';
 import data from 'constants/data';
 import {capitalizeFirstLetter} from 'shared/utils';
 
-import {RenderItem} from './RenderItem';
+import {GiftCard} from './GiftCard';
 
 export const SubGiftCard = ({onSnapToItem, selectedGiftCard, next}) => {
   const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
@@ -30,7 +30,7 @@ export const SubGiftCard = ({onSnapToItem, selectedGiftCard, next}) => {
           layout="stack"
           layoutCardOffset={18}
           loop
-          renderItem={RenderItem}
+          renderItem={GiftCard}
           sliderWidth={CAROUSEL_WIDTH}
           itemWidth={CAROUSEL_WIDTH}
           containerCustomStyle={styles.slider}
