@@ -27,7 +27,14 @@ export const GiftCard = () => {
   // let [sliderIndex, setSliderIndex] = useState(0);
   const [index, setIndex] = useState(0);
   const [giftCard, setSelected] = useState(null);
-
+  const [height, setHeight] = useState(458);
+  const setSwiperHeight = React.useCallback(
+    (newHeight) => {
+      console.log({newHeight, height});
+      setHeight(Math.max(newHeight, height));
+    },
+    [setHeight, height],
+  );
   const selectedGiftCard = useMemo(() => data.giftCards[index], [index]);
 
   let navigation = useNavigation();
@@ -49,6 +56,7 @@ export const GiftCard = () => {
         <Swiper
           ref={swiperRef}
           style={giftcardStyles.wrapper}
+          containerStyle={{height: height}}
           showsButtons={false}
           showsPagination={false}
           scrollEnabled={false}
@@ -56,32 +64,43 @@ export const GiftCard = () => {
           //
         >
           <SubGiftCard
-            next={goToNextSlide}
-            prev={goBack}
             onSnapToItem={(slideIndex) => {
               setIndex(slideIndex);
               setSelected(data.giftCards[slideIndex]);
             }}
-            selectedGiftCard={selectedGiftCard}
+            {...{
+              setSwiperHeight,
+              prev: goBack,
+              next: goToNextSlide,
+              selectedGiftCard: selectedGiftCard,
+            }}
           />
           <SubCategory
-            data={selectedGiftCard}
-            next={goToNextSlide}
-            prev={goBack}
-            {...{navigation}}
+            {...{
+              setSwiperHeight,
+              prev: goBack,
+              next: goToNextSlide,
+              data: selectedGiftCard,
+            }}
           />
           <SubAmount
-            data={selectedGiftCard}
-            next={goToNextSlide}
-            prev={goBack}
+            {...{
+              setSwiperHeight,
+              prev: goBack,
+              next: goToNextSlide,
+              data: selectedGiftCard,
+            }}
           />
           <SubUpload
-            data={selectedGiftCard}
-            next={goToNextSlide}
-            prev={goBack}
+            {...{
+              setSwiperHeight,
+              prev: goBack,
+              next: goToNextSlide,
+              data: selectedGiftCard,
+            }}
           />
         </Swiper>
-        <Box paddingHorizontal="l" marginBottom="l">
+        <Box paddingHorizontal="l" marginBottom="l" marginTop="l">
           <Divider />
           {/* Nosh Wallet */}
           <TouchableOpacity

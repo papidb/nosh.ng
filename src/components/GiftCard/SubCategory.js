@@ -11,7 +11,13 @@ import images from 'constants/images';
 import data from 'constants/data';
 import {capitalizeFirstLetter} from 'shared/utils';
 
-export const SubCategory = ({next, prev, data: giftCard, navigation}) => {
+export const SubCategory = ({
+  next,
+  prev,
+  data: giftCard,
+  navigation,
+  setSwiperHeight,
+}) => {
   const toHottestCards = useCallback(
     () => navigation.navigate('HottestCards'),
     // () => navigation.navigate('Home', {screen: 'HottestCards'})
@@ -21,7 +27,14 @@ export const SubCategory = ({next, prev, data: giftCard, navigation}) => {
   const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
 
   return (
-    <Box>
+    <Box
+      onLayout={({
+        nativeEvent: {
+          layout: {height},
+        },
+      }) => {
+        setSwiperHeight(height);
+      }}>
       <HeaderInfo text="SELECT SUB-CATEGORY" />
       <Box
         justifyContent="space-between"

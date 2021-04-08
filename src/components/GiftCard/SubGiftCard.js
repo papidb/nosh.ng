@@ -15,11 +15,23 @@ import {capitalizeFirstLetter} from 'shared/utils';
 
 import {GiftCard} from './GiftCard';
 
-export const SubGiftCard = ({onSnapToItem, selectedGiftCard, next}) => {
+export const SubGiftCard = ({
+  onSnapToItem,
+  selectedGiftCard,
+  next,
+  setSwiperHeight,
+}) => {
   const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
-
   return (
-    <Box overflow="hidden">
+    <Box
+      overflow="hidden"
+      onLayout={({
+        nativeEvent: {
+          layout: {height},
+        },
+      }) => {
+        setSwiperHeight(height);
+      }}>
       <HeaderInfo text="SWIPE THROUGH TO SELECT CATEGORY" />
       <Box
         height={250}
