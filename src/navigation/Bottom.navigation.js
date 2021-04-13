@@ -147,23 +147,6 @@ export const BottomTab = () => {
     <Tab.Navigator
       appearance={{floating: true}}
       tabBarOptions={{
-        // style: {
-        //   // flex: 1,
-        //   // position: 'absolute',
-        //   marginBottom: 27,
-        //   borderRadius: 100,
-        //   marginHorizontal: 22,
-        //   height: 62,
-        //   paddingBottom: 0,
-        // },
-        // tabStyle: {
-        //   flex: 1,
-        //   // backgroundColor: 'red',
-        //   borderRadius: 100,
-        //   // height: 62,
-        //   alignSelf: 'center',
-        //   // justifyContent: 'center',
-        // },
         labelStyle: {
           fontFamily: 'Hurme Geometric Sans 2',
           fontWeight: '600',

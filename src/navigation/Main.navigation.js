@@ -7,12 +7,13 @@ import {connect} from 'react-redux';
 
 import {AuthNav} from './Auth.navigation';
 import {AppNav} from './App.navigation';
+import {BottomTab} from './Bottom.navigation';
 
 const MainNavigation = ({authenticated}) => {
   // const {authenticated} = useStore().getState();
   return (
     <NavigationContainer>
-      <Host>{authenticated ? <AppNav /> : <AuthNav />}</Host>
+      <Host>{authenticated ? <BottomTab /> : <AuthNav />}</Host>
     </NavigationContainer>
   );
 };

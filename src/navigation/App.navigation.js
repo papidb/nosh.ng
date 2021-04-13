@@ -23,7 +23,7 @@ export const AppNav = () => {
               shadowOpacity: 0,
               borderBottomWidth: 0,
             },
-            header: Header,
+            // header: Header,
           }}
         />
       </>

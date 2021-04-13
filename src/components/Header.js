@@ -10,8 +10,9 @@ import {getMessage} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
 import {connect, useStore} from 'react-redux';
+import {palette} from 'constants/theme';
 
-const HeaderComponent = ({onPress, ...props}) => {
+const HeaderComponent = ({onPress, bright, ...props}) => {
   const {user} = useStore().getState();
   // const user = {
   //   firstName: 'John',
@@ -28,10 +29,13 @@ const HeaderComponent = ({onPress, ...props}) => {
   return (
     <Box
       flexDirection="row"
-      backgroundColor="mostBg"
+      // backgroundColor="mostBg"
       paddingHorizontal="l"
       // paddingTop="m"
-      style={{paddingTop: realTop}}
+      style={{
+        paddingTop: realTop,
+        // backgroundColor: palette.mostBgPure
+      }}
       //
     >
       <Modal
@@ -60,7 +64,7 @@ const HeaderComponent = ({onPress, ...props}) => {
         </Text>
         <Text
           // fontFamily="Hurme Geometric Sans 2 Bold"
-          color="buttonColor"
+          color={bright ? 'white' : 'buttonColor'}
           fontSize={20}>
           {/* {generateReadableName(user)} */}
           {user.name}

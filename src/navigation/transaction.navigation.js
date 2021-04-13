@@ -1,23 +1,25 @@
 import React from 'react';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 
+import {createStackNavigator} from '@react-navigation/stack';
+
+import {Header} from 'components';
 import {TransactionHome} from 'screens/Transaction';
 import {palette} from 'constants/theme';
 
-const TransactionStack = createNativeStackNavigator();
+const TransactionStack = createStackNavigator();
 
 export const TransactionNav = () => {
   return (
-    <TransactionStack.Navigator>
+    <TransactionStack.Navigator
+      headerMode="screen"
+      screenOptions={{
+        headerHideShadow: true,
+        cardStyle: {backgroundColor: palette.mostBgPure},
+        headerTitle: '',
+        header: Header,
+        headerShown: true,
+      }}>
       <TransactionStack.Screen
-        options={{
-          headerHideShadow: true,
-          headerStyle: {backgroundColor: palette.mostBg},
-          contentStyle: {backgroundColor: palette.mostBg},
-          //   headerRight: () => <Text variant="header">Transaction History</Text>,
-          headerTitle: '',
-          headerShown: false,
-        }}
         name="TransactionHome"
         component={TransactionHome}
       />

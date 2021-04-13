@@ -1,26 +1,25 @@
 import React from 'react';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 
+import {createStackNavigator} from '@react-navigation/stack';
+
+import {Header} from 'components';
 import {SettingsHome} from 'screens/Settings';
 import {palette} from 'constants/theme';
 
-const SettingsStack = createNativeStackNavigator();
+const SettingsStack = createStackNavigator();
 
 export const SettingsNav = () => {
   return (
-    <SettingsStack.Navigator>
-      <SettingsStack.Screen
-        options={{
-          headerHideShadow: true,
-          headerStyle: {backgroundColor: palette.mostBg},
-          contentStyle: {backgroundColor: palette.mostBg},
-          //   headerRight: () => <Text variant="header">Settings History</Text>,
-          headerTitle: '',
-          headerShown: false,
-        }}
-        name="SettingsHome"
-        component={SettingsHome}
-      />
+    <SettingsStack.Navigator
+      headerMode="screen"
+      screenOptions={{
+        headerHideShadow: true,
+        cardStyle: {backgroundColor: palette.mostBgPure},
+        headerTitle: '',
+        header: Header,
+        headerShown: true,
+      }}>
+      <SettingsStack.Screen name="SettingsHome" component={SettingsHome} />
     </SettingsStack.Navigator>
   );
 };

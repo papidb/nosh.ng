@@ -1,35 +1,38 @@
+/* eslint-disable react/display-name */
 import React from 'react';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {Home, HottestCard} from 'screens/Home';
 import {palette} from 'constants/theme';
 
-const HomeStack = createNativeStackNavigator();
+import {Header} from 'components';
+const HomeStack = createStackNavigator();
+
+// const ScreenWrapper = (props) => <Box>{...props}</Box>;
 
 export const HomeNav = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+      headerMode="screen"
+      screenOptions={{
+        headerHideShadow: true,
+        cardStyle: {backgroundColor: palette.mostBgPure},
+        headerTitle: '',
+        header: Header,
+        // headerShown: false,
+      }}>
       <HomeStack.Screen
         options={{
-          headerHideShadow: true,
-          headerStyle: {backgroundColor: palette.mostBg},
-          contentStyle: {backgroundColor: palette.mostBg},
-          // contentStyle: {backgroundColor: palette.darkBlueButton},
-          //   headerRight: () => <Text variant="header">Transaction History</Text>,
-          headerTitle: '',
-          headerShown: false,
+          header: Header,
         }}
         name="Home"
         component={Home}
       />
       <HomeStack.Screen
         options={{
-          headerHideShadow: true,
-          headerStyle: {backgroundColor: palette.mostBg},
-          contentStyle: {backgroundColor: palette.darkBlueButton},
-          //   headerRight: () => <Text variant="header">Transaction History</Text>,
+          cardStyle: {backgroundColor: palette.darkBlueButton},
           headerTitle: '',
-          headerShown: false,
+          header: () => <Header bright />,
         }}
         name="HottestCards"
         component={HottestCard}

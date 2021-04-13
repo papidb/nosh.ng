@@ -22,7 +22,6 @@ import {connect} from 'react-redux';
 import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 
 const HomeScreen = ({user, getBanks, getUser}) => {
-  console.log({user})
   const navigation = useNavigation();
   const {
     openModal: openSetupUsername,
