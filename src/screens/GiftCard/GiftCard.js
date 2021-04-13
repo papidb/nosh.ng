@@ -30,7 +30,7 @@ export const GiftCard = () => {
   const [height, setHeight] = useState(458);
   const setSwiperHeight = React.useCallback(
     (newHeight) => {
-      console.log({newHeight, height});
+      // console.log({newHeight, height});
       setHeight(Math.max(newHeight, height));
     },
     [setHeight, height],
@@ -55,11 +55,13 @@ export const GiftCard = () => {
 
         <Swiper
           ref={swiperRef}
+          key="omo"
           style={giftcardStyles.wrapper}
           containerStyle={{height: height}}
           showsButtons={false}
           showsPagination={false}
           scrollEnabled={false}
+          loop={false}
           // style={{height: 250}}
           //
         >
@@ -81,6 +83,7 @@ export const GiftCard = () => {
               prev: goBack,
               next: goToNextSlide,
               data: selectedGiftCard,
+              navigation,
             }}
           />
           <SubAmount

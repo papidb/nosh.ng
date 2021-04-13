@@ -14,7 +14,6 @@ import {connect} from 'react-redux';
 const AppStack = createStackNavigator();
 
 const AuthScreens = ({user, onboarded}) => {
-  console.log({onboarded});
   const loggedInBefore = Boolean(user?.email);
   const initialRouteName = onboarded
     ? loggedInBefore

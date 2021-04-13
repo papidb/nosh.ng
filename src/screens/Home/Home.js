@@ -22,6 +22,7 @@ import {connect} from 'react-redux';
 import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 
 const HomeScreen = ({user, getBanks, getUser}) => {
+  console.log({user})
   const navigation = useNavigation();
   const {
     openModal: openSetupUsername,
@@ -36,7 +37,11 @@ const HomeScreen = ({user, getBanks, getUser}) => {
     navigation.navigate('HottestCards');
   };
   const toGiftCards = () => {
-    navigation.navigate('GiftCard');
+    navigation.navigate('Giftcard');
+    // navigation.navigate('Root', {
+    //   screen: 'Giftcard',
+    //   initial: false,
+    // });
   };
 
   // Many many

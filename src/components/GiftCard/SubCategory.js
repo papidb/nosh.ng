@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
@@ -69,14 +69,14 @@ export const SubCategory = ({
         <Box flex={1} />
         <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
           <Box
-            flex={1}
+            // flex={1}
             backgroundColor="lightSuccess"
             borderRadius={100}
             padding="l"
             justifyContent="center"
             flexDirection="row"
             alignItems="center">
-            <Text fontSize={14} color="buttonColor" fontWeight="700">
+            <Text fontSize={14} color="primary" fontWeight="700">
               Hottest{' '}
             </Text>
             <Text fontSize={14} color="buttonColor">
