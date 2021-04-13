@@ -17,14 +17,11 @@ export default {
     {title: 'Bestbuy', displayName: 'Bestbuy'},
     {title: 'sakes', displayName: 'sakes'},
     {title: 'google play', displayName: 'Google Play'},
-    // {title: 'Nordstorm', displayName:  'Nordstorm',},
     {title: 'razer', displayName: 'razer'},
     {title: 'sephora', displayName: 'sephora'},
     {title: 'Target', displayName: 'Target'},
     {title: 'Vanilla', displayName: 'Vanilla'},
     {title: 'visa', displayName: 'visa'},
-    // {title: 'walmart', displayName:  'walmart',},
-    // xbox
   ],
   cardSub: {
     label: 'Select Sub-Category',
