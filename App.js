@@ -14,6 +14,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {enableScreens} from 'react-native-screens';
 
 import {Main} from 'navigation';
+import {Splash} from 'screens/Splash';
 import configureStore from './store';
 import theme from 'constants/theme/default';
 
@@ -46,12 +47,13 @@ const TextProps = {
 };
 SetCustomText(TextProps);
 const App = () => {
+  const [done, setDone] = React.useState(false);
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
           <StatusBar barStyle="dark-content" />
-          <Main />
+          {done ? <Main /> : <Splash {...{setDone}} />}
         </ThemeProvider>
       </PersistGate>
     </Provider>
