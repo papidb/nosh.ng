@@ -5,6 +5,7 @@ import {palette} from 'constants/theme';
 
 export * from './currency.utils';
 export * from './data.utils';
+export * from './network.utils';
 
 export const uuid = () => shortid.generate();
 
