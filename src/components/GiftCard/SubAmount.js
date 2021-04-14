@@ -11,10 +11,54 @@ import {commaFormatter} from 'shared/utils';
 import images from 'constants/images';
 import {capitalizeFirstLetter} from 'shared/utils';
 import FastImage from 'react-native-fast-image';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
 
-export const SubAmount = ({next, prev, data: giftCard, setSwiperHeight}) => {
-  const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
+export const SubAmount = ({
+  next,
+  prev,
+  data: giftCard,
+  setSwiperHeight,
+  subCategory,
+}) => {
+  const AmountSchema = Yup.object().shape({
+    amount: Yup.number().min(
+      subCategory.minimumAcceptableAmount,
+      `Minimum amount of ${subCategory.minimumAcceptableAmount}`,
+    ),
+  });
+
+  // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
+  const imageUri = giftCard.avatar;
   const USD_AMOUNT = 1400;
+  const {
+    errors,
+    values,
+    handleBlur,
+    handleChange,
+    touched,
+    handleSubmit,
+    isSubmitting,
+    // validateForm,
+    // resetForm,
+    setFieldValue,
+    // setValues,
+    setFieldTouched,
+    // isValid,
+    // dirty,
+  } = useFormik({
+    initialValues: {amount: ''},
+    onSubmit: async (values) => {
+      try {
+        console.log({values});
+        next();
+      } catch (error) {
+        console.log({error});
+      }
+    },
+    validationSchema: AmountSchema,
+  });
+  // console.log({subCategory});
   return (
     <Box
       onLayout={({
@@ -45,19 +89,24 @@ export const SubAmount = ({next, prev, data: giftCard, setSwiperHeight}) => {
           />
         </Box>
         <GiftCardBox marginVertical="m">
-          <Text fontSize={18} fontWeight="600">
-            {capitalizeFirstLetter(giftCard?.displayName)}
+          <Text fontSize={16} fontWeight="600">
+            {capitalizeFirstLetter(subCategory?.name)}
           </Text>
         </GiftCardBox>
         <Input
           variant="giftcard"
-          placeholder="1,400.00"
+          placeholder="Enter Amount"
           keyboardType="number-pad"
           RightIcon={
             <Text fontSize={12} fontWeight="600" color="primary">
               USD
             </Text>
           }
+          onChangeText={handleChange('amount')}
+          onBlur={handleBlur('amount')}
+          error={errors.amount}
+          touched={touched.amount}
+          value={values.amount}
         />
         <GiftCardBox
           marginVertical="m"
@@ -65,7 +114,7 @@ export const SubAmount = ({next, prev, data: giftCard, setSwiperHeight}) => {
           backgroundColor="mostBg"
           justifyContent="space-between">
           <Text fontSize={24} fontWeight="400" color="success">
-            {commaFormatter(USD_AMOUNT)}
+            {commaFormatter(subCategory?.rate * values.amount)}
           </Text>
           <Text fontSize={12} fontWeight="600" color="success">
             NGN
@@ -79,7 +128,7 @@ export const SubAmount = ({next, prev, data: giftCard, setSwiperHeight}) => {
         </Box>
 
         {/* Button */}
-        <Button variant="giftcard" text="Continue" onPress={() => next()} />
+        <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
       </KeyboardAwareScrollView>
     </Box>
   );

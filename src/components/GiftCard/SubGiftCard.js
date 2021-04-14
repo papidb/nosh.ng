@@ -20,7 +20,9 @@ export const SubGiftCard = ({
   selectedGiftCard,
   next,
   setSwiperHeight,
+  cardSubCategories = [],
 }) => {
+  console.log({selectedGiftCard});
   const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
   return (
     <Box
@@ -38,7 +40,7 @@ export const SubGiftCard = ({
         alignItems="center"
         marginVertical={{bigScreen: 'xxl', phone: 'xl'}}>
         <Carousel
-          data={data.giftCards}
+          data={cardSubCategories}
           layout="stack"
           layoutCardOffset={18}
           loop
@@ -61,7 +63,7 @@ export const SubGiftCard = ({
 
       <Button
         variant="giftcard"
-        text={capitalizeFirstLetter(selectedGiftCard?.displayName ?? 'Card')}
+        text={capitalizeFirstLetter(selectedGiftCard?.name ?? 'Card')}
         onPress={next}
       />
     </Box>

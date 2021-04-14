@@ -7,7 +7,7 @@ import {Circle, Icon} from 'components';
 import {palette} from 'constants/theme';
 import {Box} from './Box';
 import {Text} from './Text';
-// import {ErrorText} from './ErrorText';
+import {ErrorText} from './ErrorText';
 import {useTheme} from '@shopify/restyle';
 
 const CIRCLE_SIZE = 24;
@@ -30,6 +30,7 @@ export const Select = ({
   variant = 'defaults',
   labelVariant = 'label',
   innerContainerProps,
+  errorTextProps,
   LeftIcon,
   RightIcon,
   ...props
@@ -111,7 +112,7 @@ export const Select = ({
             </Box>
             {RightIcon}
           </Box>
-          {/* <ErrorText {...{touched, error}} /> */}
+          <ErrorText {...{touched, error}} {...errorTextProps} />
         </Box>
       </TouchableWithoutFeedback>
     </Box>

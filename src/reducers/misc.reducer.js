@@ -3,6 +3,7 @@ import {
   TOGGLE_BIO,
   UPDATE_BANKS,
   UPDATE_BANK_MAP,
+  SET_CARDS,
 } from 'action/type';
 import data from 'constants/data';
 
@@ -12,6 +13,7 @@ const initialState = {
   banks: data.banks,
   bankMap: {},
   balanceHidden: false,
+  cardSubCategories: [],
   onboarded: false,
 };
 
@@ -34,6 +36,11 @@ export default function miscReducer(state = initialState, action) {
       return {
         ...state,
         bankMap: payload,
+      };
+    case SET_CARDS:
+      return {
+        ...state,
+        cardSubCategories: payload,
       };
 
     default:

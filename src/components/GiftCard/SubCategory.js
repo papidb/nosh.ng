@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
@@ -10,6 +10,19 @@ import {GiftCardBox} from './GiftCardBox';
 import images from 'constants/images';
 import data from 'constants/data';
 import {capitalizeFirstLetter} from 'shared/utils';
+import * as Yup from 'yup';
+import {useFormik} from 'formik';
+
+const SubSchema = Yup.object().shape({
+  // name: Yup.string().required('Required'),
+  category: Yup.object()
+    .nullable()
+    .test("isnt't-null", 'Required', (value) =>
+      Promise.resolve(value && Object.keys(value).length != 0),
+    )
+    .notOneOf([data.cardSub.value], 'Required')
+    .required('Required'),
+});
 
 export const SubCategory = ({
   next,
@@ -17,15 +30,57 @@ export const SubCategory = ({
   data: giftCard,
   navigation,
   setSwiperHeight,
+  setSubCategory,
 }) => {
   const toHottestCards = useCallback(
     () => navigation.navigate('HottestCards'),
     // () => navigation.navigate('Home', {screen: 'HottestCards'})
     [navigation],
   );
+  // console.log(giftCard.cardSubCategories);
+  const cardsubcategory = (giftCard?.cardSubCategories ?? []).map(
+    (subCategory) => {
+      return {
+        value: subCategory,
+        label: subCategory.name,
+      };
+    },
+  );
   // const USD_AMOUNT = 1400;
-  const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
-
+  // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
+  const imageUri = giftCard.avatar;
+  const {
+    errors,
+    values,
+    handleBlur,
+    handleChange,
+    touched,
+    handleSubmit,
+    isSubmitting,
+    // validateForm,
+    // resetForm,
+    setFieldValue,
+    // setValues,
+    setFieldTouched,
+    // isValid,
+    // dirty,
+  } = useFormik({
+    initialValues: {category: null},
+    onSubmit: async (values) => {
+      try {
+        setSubCategory(values.category);
+        next();
+      } catch (error) {
+        console.log({error});
+      }
+    },
+    validationSchema: SubSchema,
+  });
+  const setcategoryValue = (str) => {
+    setFieldTouched('category', true);
+    setFieldValue('category', str);
+  };
+  console.log({errors, omo: data.cardSub});
   return (
     <Box
       onLayout={({
@@ -56,14 +111,22 @@ export const SubCategory = ({
       </Box>
       <GiftCardBox marginVertical="m">
         <Text fontSize={18} fontWeight="600">
-          {capitalizeFirstLetter(giftCard?.displayName)}
+          {capitalizeFirstLetter(giftCard?.name)}
         </Text>
       </GiftCardBox>
       <Select
         placeholder={data.cardSub}
-        onClose={console.log}
-        onValueChange={(string) => console.log({string})}
-        items={data.cardsubcategory}
+        // onClose={console.log}
+        // onValueChange={(string) => console.log({string})}
+        items={cardsubcategory}
+        value={values.category}
+        touched={touched.category}
+        error={errors.category}
+        onValueChange={setcategoryValue}
+        errorTextProps={{marginLeft: 'l'}}
+        onClose={() => {
+          setFieldTouched('category', true);
+        }}
       />
       <Box flexDirection="row" marginVertical="xs" marginTop="xxl">
         <Box flex={1} />
@@ -87,7 +150,7 @@ export const SubCategory = ({
       </Box>
 
       {/* Button */}
-      <Button variant="giftcard" text="Continue" onPress={() => next()} />
+      <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
     </Box>
   );
 };

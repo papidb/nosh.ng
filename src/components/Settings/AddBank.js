@@ -113,8 +113,6 @@ export const AddBank = ({close, getUser, addBank, user, getBanks}) => {
       <Box marginBottom="xs">
         <Input
           placeholder="Enter Account Number"
-          // placeholderTextColor={palette.blue}
-          // variant="profile"
           variant="profilePrimary"
           placeholderTextColor={palette.fadedBrown}
           onChangeText={handleChange('nuban')}

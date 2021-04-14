@@ -1,10 +1,9 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useMemo, useCallback, useRef, useState, useEffect} from 'react';
 import {
   ScrollView,
-  Image,
+  RefreshControl,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/core';
@@ -22,11 +21,68 @@ import data from 'constants/data';
 import {capitalizeFirstLetter} from 'shared/utils';
 
 import {GiftCard as GiftCardImage} from '../../components/GiftCard/GiftCard';
+import {getCards} from 'action';
+import {connect} from 'react-redux';
+import {
+  showErrorSnackBar,
+  showSuccessSnackBar,
+  extractErrorMessage,
+} from 'shared/utils';
 
-export const GiftCard = () => {
+const GiftCardScreen = ({getCards, cardSubCategories}) => {
+  const navigation = useNavigation();
+
+  // Many many
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  // get more data to use in app
+  const getInfo = React.useCallback(async () => {
+    return Promise.all([getCards()]);
+  }, [getCards]);
+
+  const onRefresh = React.useCallback(async () => {
+    try {
+      setRefreshing(true);
+      await getInfo();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [getInfo]);
+  const init = React.useCallback(async () => {
+    (async () => {
+      try {
+        await getInfo();
+      } catch (error) {
+        console.log({error});
+      }
+    })();
+  }, [getInfo]);
+  useEffect(() => {
+    console.log('running init');
+    try {
+      init();
+      const unsubscribe = navigation.addListener('focus', async () => {
+        try {
+          console.log(
+            'running these cause giftcard screen screen was focused on',
+          );
+          await getInfo();
+          // await init();
+        } catch (error) {}
+      });
+      // Return the function to unsubscribe from the event so it gets removed on unmount
+      return unsubscribe;
+    } catch (error) {
+      const text = extractErrorMessage(error);
+      showErrorSnackBar({text});
+    }
+  }, [getInfo, init, navigation]);
   // let [sliderIndex, setSliderIndex] = useState(0);
   const [index, setIndex] = useState(0);
   const [giftCard, setSelected] = useState(null);
+  const [subCategory, setSubCategory] = useState({});
   const [height, setHeight] = useState(458);
   const setSwiperHeight = React.useCallback(
     (newHeight) => {
@@ -35,9 +91,57 @@ export const GiftCard = () => {
     },
     [setHeight, height],
   );
-  const selectedGiftCard = useMemo(() => data.giftCards[index], [index]);
+  const selectedGiftCard = useMemo(() => cardSubCategories[index], [
+    cardSubCategories,
+    index,
+  ]);
 
-  let navigation = useNavigation();
+  const SubCategoryCallBack = useCallback(
+    () => (
+      <SubCategory
+        {...{
+          setSwiperHeight,
+          prev: goBack,
+          next: goToNextSlide,
+          data: selectedGiftCard,
+          navigation,
+          setSubCategory,
+        }}
+      />
+    ),
+    [navigation, selectedGiftCard, setSwiperHeight, setSubCategory],
+  );
+  const SubAmountCallBack = useCallback(
+    () => (
+      <SubAmount
+        {...{
+          setSwiperHeight,
+          prev: goBack,
+          next: goToNextSlide,
+          data: selectedGiftCard,
+          setSubCategory,
+          subCategory,
+        }}
+      />
+    ),
+    [selectedGiftCard, setSwiperHeight, subCategory, setSubCategory],
+  );
+  const SubUploadCallback = useCallback(
+    () => (
+      <SubUpload
+        {...{
+          setSwiperHeight,
+          prev: goBack,
+          next: goToNextSlide,
+          data: selectedGiftCard,
+          setSubCategory,
+          subCategory,
+        }}
+      />
+    ),
+    [selectedGiftCard, setSwiperHeight, subCategory, setSubCategory],
+  );
+
   // let toSubCategory = () => navigation.navigate('SubCategory');
   let swiperRef = useRef();
   const goToNextSlide = () => {
@@ -49,7 +153,11 @@ export const GiftCard = () => {
   return (
     <Box flex={1}>
       <Divider marginBottom="l" />
-      <ScrollView style={giftcardStyles.scrollView}>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        style={giftcardStyles.scrollView}>
         {/* Header */}
         {/* Content */}
 
@@ -68,40 +176,22 @@ export const GiftCard = () => {
           <SubGiftCard
             onSnapToItem={(slideIndex) => {
               setIndex(slideIndex);
-              setSelected(data.giftCards[slideIndex]);
+              // console.log(cardSubCategories[slideIndex]);
+              setSelected(cardSubCategories[slideIndex]);
+              // setSelected(data.giftCards[slideIndex]);
             }}
             {...{
               setSwiperHeight,
               prev: goBack,
               next: goToNextSlide,
+              cardSubCategories,
               selectedGiftCard: selectedGiftCard,
             }}
           />
-          <SubCategory
-            {...{
-              setSwiperHeight,
-              prev: goBack,
-              next: goToNextSlide,
-              data: selectedGiftCard,
-              navigation,
-            }}
-          />
-          <SubAmount
-            {...{
-              setSwiperHeight,
-              prev: goBack,
-              next: goToNextSlide,
-              data: selectedGiftCard,
-            }}
-          />
-          <SubUpload
-            {...{
-              setSwiperHeight,
-              prev: goBack,
-              next: goToNextSlide,
-              data: selectedGiftCard,
-            }}
-          />
+          <SubCategoryCallBack />
+
+          <SubAmountCallBack />
+          <SubUploadCallback />
         </Swiper>
         <Box paddingHorizontal="l" marginBottom="l" marginTop="l">
           <Divider />
@@ -132,6 +222,12 @@ export const GiftCard = () => {
     </Box>
   );
 };
+
+export const GiftCard = connect(
+  ({misc: {cardSubCategories}}) => ({cardSubCategories}),
+  {getCards},
+)(GiftCardScreen);
+
 const giftcardStyles = StyleSheet.create({
   scrollView: {paddingHorizontal: 20},
   wrapper: {

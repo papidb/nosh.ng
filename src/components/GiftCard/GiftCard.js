@@ -4,13 +4,14 @@ import FastImage from 'react-native-fast-image';
 
 import {Box} from 'components';
 
-export const GiftCard = ({item: {title}, ...props}) => {
+export const GiftCard = ({item, ...props}) => {
+  const title = '';
   const baseImageUrl =
     Platform.OS == 'android'
       ? `https://api.nosh.ng/uploads/images/cards/android/`
       : `https://api.nosh.ng/uploads/images/cards/`;
-  const imageUri = `${baseImageUrl}${title}.png`;
-  // console.log(imageUri);
+  // const imageUri = `${baseImageUrl}${title}.png`;
+  const imageUri = item.avatar;
 
   return (
     <Box>

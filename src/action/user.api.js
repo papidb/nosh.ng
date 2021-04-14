@@ -1,6 +1,6 @@
 import axios from './axios';
 
-import {UPDATE_USER} from './type';
+import {UPDATE_USER, SET_CARDS} from './type';
 import {BASE_URL} from 'constants/config';
 import {HijackError} from 'shared/utils';
 
@@ -37,6 +37,27 @@ export const updateProfilePic = (state) => (dispatch, getState) => {
         headers: {Authorization: `Bearer ${accessToken}`},
       })
       .then(({data}) => data),
+    dispatch,
+    getState,
+  );
+};
+
+export const getCards = (state) => (dispatch, getState) => {
+  const store = getState();
+  const {accessToken} = store?.auth;
+  return HijackError(
+    axios
+      .get(`${BASE_URL}card-categories`, state, {
+        headers: {Authorization: `Bearer ${accessToken}`},
+      })
+      .then(({data}) => {
+        const cardCategories = data?.cardCategories ?? [];
+        // data?.cardCategories.map((card) => {
+        //   console.log(card?.cardSubCategories);
+        // });
+        dispatch({type: SET_CARDS, payload: cardCategories});
+        return data;
+      }),
     dispatch,
     getState,
   );
