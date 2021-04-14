@@ -9,8 +9,7 @@ import {AuthNav} from './Auth.navigation';
 import {AppNav} from './App.navigation';
 import {BottomTab} from './Bottom.navigation';
 
-const MainNavigation = ({authenticated}) => {
-  // const {authenticated} = useStore().getState();
+const MainNavigation = ({auth: {authenticated}}) => {
   return (
     <NavigationContainer>
       <Host>{authenticated ? <BottomTab /> : <AuthNav />}</Host>
@@ -23,5 +22,5 @@ const mapStateToProps = (state) => state;
 export const Main = connect(mapStateToProps)(MainNavigation);
 
 MainNavigation.propTypes = {
-  authenticated: PropTypes.bool,
+  auth: PropTypes.object,
 };
