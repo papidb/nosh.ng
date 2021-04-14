@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -17,6 +17,8 @@ import {
   toggleBio,
   logout,
   getUser,
+  addBank,
+  getBanks,
   updateProfilePic,
 } from 'action';
 import {uuid} from 'shared/utils';
@@ -29,6 +31,11 @@ export const Screen = ({
   changePassword,
   updateProfilePic,
   getUser,
+  getBanks,
+  bankList,
+  bankMap,
+  user,
+  addBank,
 }) => {
   const {
     openModal: onOpenProfile,
@@ -50,6 +57,16 @@ export const Screen = ({
     closeModal: closeSecurityModal,
     Component: SecurityModalize,
   } = useModalize();
+
+  const AddBankC = useCallback(
+    () => (
+      <AddBank
+        close={closeAddBankModal}
+        {...{user, addBank, getUser, getBanks}}
+      />
+    ),
+    [addBank, closeAddBankModal, getBanks, getUser, user],
+  );
 
   const options = [
     {text: 'Edit Profile', icon: 'icon-expand', onPress: onOpenProfile},
@@ -98,7 +115,8 @@ export const Screen = ({
           />
         </ProfileModalize>
         <AddBankModalize>
-          <AddBank close={closeAddBankModal} />
+          {/* <AddBankC /> */}
+          <AddBankC />
         </AddBankModalize>
         <WithdrawModalize>
           <Withdraw close={closeWithdrawModal} />
@@ -118,13 +136,19 @@ Screen.propTypes = {
   logout: PropTypes.func,
 };
 
-// ({misc: {bio}}) => ({bio})
-export const SettingsHome = connect(null, {
+const mapStateToProps = ({user}) => ({
+  user,
+  // bankList,
+  // bankMap,
+});
+export const SettingsHome = connect(mapStateToProps, {
   logout,
   changePassword,
   toggleBio,
   updateProfilePic,
   getUser,
+  addBank,
+  getBanks,
 })(Screen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
