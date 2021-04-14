@@ -7,7 +7,8 @@ import {HijackError} from 'shared/utils';
 export const getUser = () => {
   return (dispatch, getState) => {
     const store = getState();
-    const {_id, accessToken} = store?.user;
+    const {accessToken} = store?.auth;
+    const {_id} = store?.user;
     return HijackError(
       axios
         .get(`${BASE_URL}user/${_id}`, {
@@ -16,6 +17,7 @@ export const getUser = () => {
           },
         })
         .then(({data}) => {
+          console.log({data});
           dispatch({type: UPDATE_USER, payload: data});
           return data;
         }),
@@ -27,7 +29,8 @@ export const getUser = () => {
 
 export const updateProfilePic = (state) => (dispatch, getState) => {
   const store = getState();
-  const {_id, accessToken} = store?.user;
+  const {accessToken} = store?.auth;
+  const {_id} = store?.user;
   return HijackError(
     axios
       .put(`${BASE_URL}user/${_id}`, state, {

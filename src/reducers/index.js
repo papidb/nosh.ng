@@ -5,7 +5,7 @@ import miscReducer from './misc.reducer';
 import userReducer from './user.reducer';
 
 const RootReducer = combineReducers({
-  authenticated: authReducer,
+  auth: authReducer,
   user: userReducer,
   misc: miscReducer,
 });

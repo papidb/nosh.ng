@@ -6,9 +6,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 import rootReducer from './src/reducers';
 
-const whitelist = __DEV__
-  ? ['user', 'misc', 'authenticated']
-  : ['user', 'misc'];
+const whitelist = __DEV__ ? ['user', 'misc', 'auth'] : ['user', 'misc'];
 
 const persistedReducer = persistReducer(
   {

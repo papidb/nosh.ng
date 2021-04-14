@@ -60,3 +60,19 @@ export const createFormData = ({uri, type}) => {
   });
   return data;
 };
+
+export const getAppBanks = (rawBanks) => {
+  let banks = (rawBanks ?? [])
+    // .filter()
+    .map(({code, name}) => {
+      return {
+        value: code,
+        label: name,
+      };
+    });
+  let bankMap = {};
+  banks.forEach((bank) => {
+    bankMap[bank.value] = bank.label;
+  });
+  return {banks, bankMap};
+};

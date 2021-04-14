@@ -54,6 +54,8 @@ export default function userReducer(state = initialState, action) {
       };
     case LOGIN:
       const {user} = payload;
+      delete user.accessToken;
+      delete user.refreshToken;
       //   try {
       //     Intercom.registerIdentifiedUser({userId: data.email});
       //     Intercom.updateUser({

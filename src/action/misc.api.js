@@ -2,14 +2,14 @@ import axios from './axios';
 
 import {ONBOARDED, UPDATE_BANKS, UPDATE_BANK_MAP} from './type';
 import {BASE_URL} from 'constants/config';
-import {HijackError} from 'shared/utils';
+import {HijackError, getAppBanks} from 'shared/utils';
 
 export const onBoardUser = () => (dispatch) => dispatch({type: ONBOARDED});
 
 export const getBanks = () => {
   return (dispatch, getState) => {
     const store = getState();
-    const {accessToken} = store?.user;
+    const {accessToken} = store?.auth;
     return HijackError(
       axios
         .get(`${BASE_URL}banks`, {
@@ -18,21 +18,10 @@ export const getBanks = () => {
           },
         })
         .then(({data}) => {
-          let banks = (data?.banks ?? [])
-            // .filter()
-            .map(({code, name}) => {
-              return {
-                value: code,
-                label: name,
-              };
-            });
-          let bankMap = {};
-          banks.forEach((bank) => {
-            bankMap[bank.value] = bank.label;
-          });
+          const {banks, bankMap} = getAppBanks(data?.banks);
           dispatch({type: UPDATE_BANKS, payload: banks});
           dispatch({type: UPDATE_BANK_MAP, payload: bankMap});
-          return data;
+          return {banks, bankMap};
         }),
       dispatch,
       getState,

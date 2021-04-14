@@ -12,5 +12,23 @@ export const changePassword = (data) => {
       getState,
     );
 };
+export const addBank = (data) => {
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    const {_id} = store?.user;
+    return HijackError(
+      axios
+        .post(`${BASE_URL}add-bank/${_id}`, data, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => data),
+      dispatch,
+      getState,
+    );
+  };
+};
 
 export const toggleBio = () => (dispatch) => dispatch({type: TOGGLE_BIO});
