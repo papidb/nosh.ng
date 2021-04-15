@@ -148,8 +148,8 @@ export const BottomTab = () => {
       appearance={{floating: true}}
       tabBarOptions={{
         labelStyle: {
-          fontFamily: 'Hurme Geometric Sans 2',
-          fontWeight: '600',
+          fontFamily: 'Hurme Geometric Sans 2 Bold',
+          // fontWeight: '600',
         },
         keyboardHidesTabBar: true,
         activeTintColor: palette.blue,

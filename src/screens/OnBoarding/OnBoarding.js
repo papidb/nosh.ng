@@ -18,6 +18,7 @@ import {onBoardUser} from 'action';
 import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
 import {onboardingImages, splitToChunks} from './onboardingImages';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 
 // const OTHER = Array.from(Array(249).keys()).map((imageNumber) => {
 //   let fullImageName = `00${imageNumber}`;
@@ -34,7 +35,10 @@ const phase = 3;
 // const phaseAmount = onboardingImages.length / phase;
 const splitedImages = splitToChunks([...onboardingImages], phase);
 
-const {width, height} = Dimensions.get('window');
+const width = ExtraDimensions.getRealWindowWidth();
+console.log({width});
+
+const {height} = Dimensions.get('window');
 const SIZE_WIDTH = width;
 const SIZE_HEIGHT = height;
 
@@ -245,14 +249,23 @@ const OnBoardingScreen = ({onBoardUser}) => {
   //  </Box>
   // );
   return (
-    <Box flex={1}>
-      <Box position="absolute">
+    <Box
+      flex={1}
+      // style={{backgroundColor: '#411476'}}
+    >
+      <Box width={SIZE_WIDTH - 12} position="absolute">
         <ImageSequence
           // images={splitedImages[index]}
           images={images[index]}
           startFrameIndex={centerIndex}
           framesPerSecond={framesPerSecond}
-          style={{width: SIZE_WIDTH, height: SIZE_HEIGHT}}
+          style={{
+            width: SIZE_WIDTH,
+            height: SIZE_HEIGHT,
+            resizeMode: 'repeat',
+            // height: '100%',
+            // width: '100%',
+          }}
           loop={false}
         />
       </Box>

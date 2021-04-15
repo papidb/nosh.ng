@@ -1,18 +1,33 @@
-import React from 'react';
-import {StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 import PropTypes from 'prop-types';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {Box, Text, Circle, Button, HeaderInfo, Icon, Input} from 'components';
+import {waait} from 'shared/utils';
 import {GiftCardBox} from './GiftCardBox';
 
 import images from 'constants/images';
 import {capitalizeFirstLetter} from 'shared/utils';
 import {palette} from 'constants/theme';
 import FastImage from 'react-native-fast-image';
-import {useFormik} from 'formik';
+// import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
+import {useFormik} from 'formik';
+import {createFormArrayData, createFormData} from 'shared/utils';
+import {
+  showErrorSnackBar,
+  showSuccessSnackBar,
+  extractErrorMessage,
+} from 'shared/utils';
 export const SubUpload = ({
   next,
   prev,
@@ -20,6 +35,8 @@ export const SubUpload = ({
   setSwiperHeight,
   subCategory,
 }) => {
+  const [images, setImages] = useState([]);
+
   // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
   const imageUri = giftCard.avatar;
   const {
@@ -41,14 +58,38 @@ export const SubUpload = ({
     initialValues: {comment: ''},
     onSubmit: async (values) => {
       try {
-        console.log({values});
+        // const rawData = createFormArrayData(
+        //   images.map(
+        //     ({mime, path}) => console.log({path}) || {type: mime, uri: path},
+        //   ),
+        // );
+        // console.log({rawData});
+        // // const rawData = createFormData(images[0]);
+        await waait(2000);
+        showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
       } catch (error) {
         console.log({error});
       }
     },
     // validationSchema: AmountSchema,
   });
-  // const USD_AMOUNT = 1400;
+  const openPicker = async () => {
+    try {
+      const maxImages = 30;
+      const options = {
+        multiple: true,
+        mediaType: 'photo',
+        cropping: false,
+        maxFiles: 30,
+      };
+      const response = await ImagePicker.openPicker(options);
+      setImages(response);
+      console.log({response});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const imagesSize = images.length;
   return (
     <Box
       onLayout={({
@@ -59,7 +100,13 @@ export const SubUpload = ({
         setSwiperHeight(height);
       }}>
       <KeyboardAwareScrollView>
-        <HeaderInfo text="UPLOAD GIFTCARD (S)" />
+        <HeaderInfo
+          text={`UPLOAD GIFTCARD ${
+            imagesSize != 0
+              ? `(${imagesSize}) image${imagesSize > 0 ? 's' : ''}`
+              : ''
+          }`}
+        />
         <Box
           justifyContent="space-between"
           flexDirection="row"
@@ -83,7 +130,7 @@ export const SubUpload = ({
             {capitalizeFirstLetter(subCategory?.name)}
           </Text>
         </GiftCardBox>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={openPicker}>
           <GiftCardBox marginVertical="m" padding="none">
             <Text fontSize={18} fontWeight="600">
               <Icon name="icon-cart" size={43.2} />
@@ -99,6 +146,25 @@ export const SubUpload = ({
           </Text>
         </TouchableOpacity>
 
+        {/* <Box>
+          {images.map((item) => {
+            console.log({item});
+            return renderItem({item});
+          })}
+        </Box> */}
+
+        {/* <FlatList
+          style={[
+            style.container,
+            {
+              paddingTop: 6,
+            },
+          ]}
+          data={images}
+          keyExtractor={(item, index) => (item?.filename ?? item?.path) + index}
+          renderItem={renderItem}
+          numColumns={3}
+        /> */}
         <Box backgroundColor="transparent" marginVertical="m">
           <Input
             onChangeText={handleChange('comment')}
@@ -119,8 +185,9 @@ export const SubUpload = ({
         {/* Button */}
         <Button
           variant="giftcard"
-          text="SWIPE TO SELL"
+          text="SELL"
           disabled={isSubmitting}
+          loading={isSubmitting}
           onPress={handleSubmit}
         />
       </KeyboardAwareScrollView>
@@ -135,3 +202,49 @@ SubUpload.propTypes = {
   prev: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
 };
+
+const {width} = Dimensions.get('window');
+
+const IMAGE_WIDTH = (width - 24) / 3;
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  imageView: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingVertical: 24,
+  },
+  media: {
+    marginLeft: 6,
+    width: IMAGE_WIDTH,
+    height: IMAGE_WIDTH,
+    marginBottom: 6,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  },
+  openText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  openPicker: {
+    flex: 1 / 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonDelete: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    position: 'absolute',
+    top: 6,
+    right: 6,
+    backgroundColor: '#ffffff92',
+    borderRadius: 4,
+  },
+  titleDelete: {
+    fontWeight: 'bold',
+    fontSize: 12,
+    color: '#000',
+  },
+});

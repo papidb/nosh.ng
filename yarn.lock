@@ -706,11 +706,6 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@baronha/react-native-multiple-image-picker@^0.2.9":
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/@baronha/react-native-multiple-image-picker/-/react-native-multiple-image-picker-0.2.9.tgz#450f55d28c7f9ec881f08ba9ec2425781a8aaa63"
-  integrity sha512-pWryahzbqf8AZ1Zg2qL1sagbfb4jRr8rkgujok+eLA+DRxsGkW0ZVzIxJPvm/5lD5Rj4Dfpo22P5BK6f+1P8eQ==
-
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
@@ -6541,6 +6536,11 @@ react-native-animated-nav-tab-bar@^3.1.4:
     react-native-screens "^2.17.1"
     styled-components "^4.4.1"
 
+react-native-extra-dimensions-android@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/react-native-extra-dimensions-android/-/react-native-extra-dimensions-android-1.2.5.tgz#8ade91029aaac7519bf305116d39019e618a60f0"
+  integrity sha512-eorFo9X1vEqAWUkgcZ300yKBG1wtgNeE7tdWAH2CE+P50FGTniJg5Sr6l1iPWG8ZskQOuF+KeiSTFlDa4vLfMw==
+
 react-native-fast-image@^8.3.4:
   version "8.3.4"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.3.4.tgz#79edca177e30311b19d59ff335625bcbe22650d7"
@@ -6561,6 +6561,11 @@ react-native-image-colors@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/react-native-image-colors/-/react-native-image-colors-1.2.7.tgz#cdffa4bb0296e03bc2d878286f6f229bd64e7ee2"
   integrity sha512-7CpzkiReS/D5LNcJr8KjGSQwIlo5OZPCLlJTMX27pBdraRSsisgLvvpUCLQ0Yr+Pq5+3EH392nWMOthu2I0uQQ==
+
+react-native-image-crop-picker@^0.36.0:
+  version "0.36.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.36.0.tgz#adf5a5677c3ae0e0bdaa18c73d880db2190e3023"
+  integrity sha512-1S8+0EZJmUMWMcdo2tTadqIIsJo7aPxPed0P7Cop3DhBqEeYrAWfgdrJq9VoTXI+cIrOOcTAxn4NZPz+DQEn7g==
 
 react-native-image-picker@^3.3.2:
   version "3.3.2"

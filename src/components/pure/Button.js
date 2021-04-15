@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   },
   content: {
     textAlign: 'center',
+    fontFamily: 'Hurme Geometric Sans 2 Bold',
   },
 });
 

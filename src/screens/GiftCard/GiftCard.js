@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/core';
 import Swiper from 'react-native-swiper';
 import Carousel from 'react-native-snap-carousel';
 
-import {Box, Text, Divider, Button, HeaderInfo, Icon} from 'components';
+import {Box, Text, Divider, Button, RaiseAndroid, Icon} from 'components';
 import {
   SubGiftCard,
   SubCategory,
@@ -83,7 +83,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
   const [index, setIndex] = useState(0);
   const [giftCard, setSelected] = useState(null);
   const [subCategory, setSubCategory] = useState({});
-  const [height, setHeight] = useState(458);
+  const [height, setHeight] = useState(600);
   const setSwiperHeight = React.useCallback(
     (newHeight) => {
       // console.log({newHeight, height});
@@ -91,7 +91,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
     },
     [setHeight, height],
   );
-  const selectedGiftCard = useMemo(() => cardSubCategories[index], [
+  const selectedGiftCard = useMemo(() => cardSubCategories[index] || {}, [
     cardSubCategories,
     index,
   ]);
@@ -218,6 +218,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
             </Box>
           </TouchableOpacity>
         </Box>
+        <RaiseAndroid />
       </ScrollView>
     </Box>
   );
