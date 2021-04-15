@@ -1,5 +1,5 @@
 package com.nosh;
-
+import android.os.Bundle; // required for onCreate parameter
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
@@ -14,6 +14,10 @@ public class MainActivity extends ReactActivity {
   @Override
   protected String getMainComponentName() {
     return "Nosh";
+  }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      super.onCreate(null);
   }
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {

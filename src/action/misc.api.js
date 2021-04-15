@@ -28,3 +28,24 @@ export const getBanks = () => {
     );
   };
 };
+
+export const getNotifications = () => {
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    return HijackError(
+      axios
+        .get(`${BASE_URL}banks`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => {
+          const notifications = data?.notifications ?? [];
+          return notifications;
+        }),
+      dispatch,
+      getState,
+    );
+  };
+};

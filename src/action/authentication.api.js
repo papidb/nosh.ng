@@ -10,6 +10,7 @@ export const logout = () => (dispatch) => dispatch({type: LOGOUT});
 export const login = (data) => {
   return (dispatch) => {
     return axios.post(`${BASE_URL}login`, data).then((res) => {
+      // console.log(res?.data);
       dispatch({type: LOGIN, payload: res?.data});
       return res.data;
     });

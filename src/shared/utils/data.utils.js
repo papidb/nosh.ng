@@ -50,6 +50,12 @@ export const getFormData = (values) => {
   return data;
 };
 
+const createFileForm = ({type, uri}) => ({
+  name: shortid.generate(),
+  type: type,
+  uri: Platform.OS === 'android' ? uri : uri.replace('file://', ''),
+});
+
 export const createFormData = ({uri, type}) => {
   const data = new FormData();
 
@@ -58,6 +64,11 @@ export const createFormData = ({uri, type}) => {
     type: type,
     uri: Platform.OS === 'android' ? uri : uri.replace('file://', ''),
   });
+  return data;
+};
+export const createFormArrayData = (arr = []) => {
+  const data = new FormData();
+  arr.forEach((avatar) => data.append('avatar[]', createFileForm(avatar)));
   return data;
 };
 
