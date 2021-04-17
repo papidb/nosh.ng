@@ -14,12 +14,7 @@ import {palette} from 'constants/theme';
 
 const HeaderComponent = ({onPress, bright, ...props}) => {
   const {user} = useStore().getState();
-  // const user = {
-  //   firstName: 'John',
-  //   lastName: 'Doe',
-  // };
   const {top} = useSafeAreaInsets();
-  // console.log({top});
   let realTop = top / 4 + 10;
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -31,26 +26,41 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       flexDirection="row"
       // backgroundColor="mostBg"
       paddingHorizontal="l"
-      // paddingTop="m"
-      style={{
-        paddingTop: realTop,
-        // backgroundColor: palette.mostBgPure
-      }}
+      style={
+        {
+          // paddingTop: realTop,
+          // backgroundColor: palette.mostBgPure
+        }
+      }
       //
     >
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={() => closeModal()}
-        style={{marginHorizontal: 40}}>
+        style={{marginHorizontal: 20}}>
         <NotificationModal {...{closeModal}} />
       </Modal>
       <Box marginRight="m">
         <AuthAvatar
           size={81}
           avatar={user.avatar}
-          // containerProps={{alignSelf: 'flex-start', margin: 'none'}}
-          imageProps={{style: {height: 50, width: 50, borderRadius: 50}}}
-          imagePropsActive={{style: {height: 81, width: 81, borderRadius: 81}}}
+          containerProps={{marginTop: 'm', style: {marginBottom: 15}}}
+          imageProps={{
+            style: {
+              height: 65,
+              width: 65,
+              borderRadius: 65,
+              resizeMode: 'contain',
+            },
+          }}
+          imagePropsActive={{
+            style: {
+              height: 81,
+              width: 81,
+              borderRadius: 81,
+              resizeMode: 'contain',
+            },
+          }}
         />
       </Box>
       {/* Remaining */}

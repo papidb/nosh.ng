@@ -148,14 +148,24 @@ export const BottomTab = () => {
       appearance={{floating: true}}
       tabBarOptions={{
         labelStyle: {
-          // fontFamily: 'Hurme Geometric Sans 2 Bold',
-          // fontWeight: '600',
+          fontFamily: 'Hurme Geometric Sans 2 Bold',
+          fontSize: 14,
         },
         keyboardHidesTabBar: true,
         activeTintColor: palette.blue,
         inactiveTintColor: '#A2A2A2',
         showLabel: false,
         activeBackgroundColor: palette.darkBlueButton,
+        tabStyle: {
+          elevation: 10,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 5,
+          },
+          shadowOpacity: 0.34,
+          shadowRadius: 6.27,
+        },
       }}
       // tabBar={(props) => <MyTabBar {...props} />}
       //

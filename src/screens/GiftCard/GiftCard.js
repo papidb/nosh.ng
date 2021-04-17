@@ -83,7 +83,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
   const [index, setIndex] = useState(0);
   const [giftCard, setSelected] = useState(null);
   const [subCategory, setSubCategory] = useState({});
-  const [height, setHeight] = useState(600);
+  const [height, setHeight] = useState(550);
   const setSwiperHeight = React.useCallback(
     (newHeight) => {
       // console.log({newHeight, height});
@@ -193,7 +193,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
           <SubAmountCallBack />
           <SubUploadCallback />
         </Swiper>
-        <Box paddingHorizontal="l" marginBottom="l" marginTop="l">
+        <Box paddingHorizontal="l" marginBottom="l" marginTop="m">
           <Divider />
           {/* Nosh Wallet */}
           <TouchableOpacity

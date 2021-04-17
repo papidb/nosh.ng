@@ -19,7 +19,11 @@ import FastImage from 'react-native-fast-image';
 import {getBanks, getUser} from 'action';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
+import {
+  showErrorSnackBar,
+  extractErrorMessage,
+  getRandomInt,
+} from 'shared/utils';
 
 const HomeScreen = ({user, getBanks, getUser}) => {
   const navigation = useNavigation();
@@ -37,14 +41,16 @@ const HomeScreen = ({user, getBanks, getUser}) => {
   };
   const toGiftCards = () => {
     navigation.navigate('Giftcard');
-    // navigation.navigate('Root', {
-    //   screen: 'Giftcard',
-    //   initial: false,
-    // });
   };
+
+  const coreImages = ['HomeCard', 'HomeCard2'];
+  // const imageIndex = getRandomInt(0, coreImages.length - 1);
 
   // Many many
   const [refreshing, setRefreshing] = React.useState(false);
+  const [imageIndex, setImageIndex] = React.useState(
+    getRandomInt(0, coreImages.length - 1),
+  );
 
   // get more data to use in app
   const getInfo = React.useCallback(async () => {
@@ -106,7 +112,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
           <UserNameSetup close={closeSetupUsername} />
         </UserNameSetupModalize>
       </Portal>
-      <Divider marginBottom="m" />
+      <Divider />
       {/* <Header /> */}
       <ScrollView
         refreshControl={
@@ -114,15 +120,18 @@ const HomeScreen = ({user, getBanks, getUser}) => {
         }
         style={styles.scrollView}>
         {/* Header */}
-        <Balance {...{user}} />
+        <Balance {...{user, containerProps: {style: {marginTop: 16}}}} />
         {/* Image */}
         <Box
           // alignItems="center"
           marginHorizontal="-l"
-          marginVertical={{bigScreen: 'xxl', phone: 'xl'}}
-          //
-        >
-          <Image source={images.FFHome} />
+          marginVertical={{bigScreen: 'l', phone: 'm'}}
+          style={styles.coreImage}>
+          <Image source={images.Hands} />
+          <Image
+            source={images[coreImages[imageIndex]]}
+            style={{position: 'absolute', top: 46, left: 50}}
+          />
         </Box>
         {/* Rest */}
         <Box flex={1} flexDirection="row" marginBottom="s">
@@ -206,5 +215,9 @@ const styles = StyleSheet.create({
     backgroundColor: palette.darkBlueButton,
     borderTopLeftRadius: 38,
     borderTopRightRadius: 38,
+  },
+  coreImage: {
+    marginTop: 18,
+    marginBottom: 7,
   },
 });

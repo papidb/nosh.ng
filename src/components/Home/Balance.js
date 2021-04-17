@@ -5,7 +5,7 @@ import {commaFormatter} from 'shared/utils';
 
 import {Box, Text} from 'components';
 
-export const Balance = ({user}) => {
+export const Balance = ({user, containerProps}) => {
   const balance = user?.wallet?.balance ?? 0;
   const [balanceWhole, balanceFraction] = String(
     commaFormatter(balance, 2),
@@ -18,7 +18,8 @@ export const Balance = ({user}) => {
       padding="l"
       borderRadius={155}
       justifyContent="center"
-      alignItems="center">
+      alignItems="center"
+      {...containerProps}>
       <Text fontSize={12} color="primary" textAlign="center" fontWeight="bold">
         Available Balance
       </Text>

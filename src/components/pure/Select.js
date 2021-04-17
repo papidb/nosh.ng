@@ -92,9 +92,26 @@ export const Select = ({
             <Box flex={1} justifyContent="center">
               <RNPickerSelect
                 ref={pickerRef}
+                useNativeAndroidPickerStyle={false}
+                textInputProps={{
+                  fontSize: 14,
+                  fontFamily: 'Hurme Geometric Sans 2',
+                  color: palette.blue,
+                  fontWeight: 'bold',
+                  backgroundColor: 'transparent',
+                  // color: colors.inputText,
+                  // flex: 1,
+                  paddingLeft: 10,
+                  paddingRight: 30,
+                }}
                 onOpen={focus}
                 onClose={realBlur}
-                style={{viewContainer, inputIOS, inputAndroid, iconContainer}}
+                style={{
+                  viewContainer,
+                  inputIOS,
+                  inputAndroid,
+                  iconContainer,
+                }}
                 Icon={() => {
                   return (
                     <Circle size={CIRCLE_SIZE} backgroundColor="selectIconBlue">
@@ -122,8 +139,8 @@ export const Select = ({
 const styles = StyleSheet.create({
   label: {marginLeft: 6},
   viewContainer: {
-    justifyContent: 'flex-end',
-    marginVertical: 5,
+    flex: 1,
+    justifyContent: 'center',
   },
   inputIOS: {
     fontSize: 12,
@@ -147,10 +164,12 @@ const styles = StyleSheet.create({
   },
   inputAndroid: {
     fontSize: 12,
+    top: 5,
     fontFamily: 'Hurme Geometric Sans 2',
     color: palette.blue,
     fontWeight: '600',
-    height: 36,
+    height: 40,
+    justifyContent: 'center',
     // width: "100%",
     borderRadius: 5,
     // paddingHorizontal: 12,

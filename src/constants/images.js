@@ -3,6 +3,10 @@ const images = {
   auth_face: require('assets/images/auth_face.png'),
   itunes_2: require('assets/images/itunes2.png'),
   FFHome: require('assets/images/FFHome.png'),
+  Hands: require('assets/images/Hands.png'),
+  discount: require('assets/images/discount.png'),
+  HomeCard: require('assets/images/Cards.png'),
+  HomeCard2: require('assets/images/Cards2.png'),
   kuda: require('assets/images/Kuda.png'),
   fire: require('assets/images/fire.gif'),
 };
