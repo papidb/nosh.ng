@@ -20,7 +20,11 @@ import {
   RaiseAndroid,
 } from 'components';
 import {getUser, login} from 'action';
-import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
+import {
+  showErrorSnackBar,
+  // showSuccessSnackBar,
+  extractErrorMessage,
+} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Invalid Email').required('Required'),

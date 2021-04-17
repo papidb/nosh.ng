@@ -1,6 +1,6 @@
 import shortid from 'shortid';
 import Snackbar from 'react-native-snackbar';
-
+import {Keyboard} from 'react-native';
 import {palette} from 'constants/theme';
 
 export * from './currency.utils';
@@ -31,10 +31,14 @@ export const generateReadableName = (user) =>
 
 export const showSuccessSnackBar = (options) => {
   const text = options.text ? options.text : 'Something went wrong';
+  try {
+    Keyboard.dismiss();
+  } catch (error) {}
   return Snackbar.show({
     duration: Snackbar.LENGTH_LONG,
     fontFamily: 'Hurme Geometric Sans 2',
-    backgroundColor: palette.greenLight,
+    backgroundColor: palette.blue,
+    textColor: 'black',
     ...options,
     text,
   });
@@ -47,6 +51,7 @@ export const showErrorSnackBar = async (options) => {
       ignoreAndroidSystemSettings: false,
     };
 
+    Keyboard.dismiss();
     // await ReactNativeHapticFeedback.trigger(
     //   'notificationError',
     //   vibrationOption,
