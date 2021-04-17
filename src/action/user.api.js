@@ -17,7 +17,7 @@ export const getUser = () => {
           },
         })
         .then(({data}) => {
-          console.log({data});
+          // console.log({data});
           dispatch({type: UPDATE_USER, payload: data});
           return data;
         }),

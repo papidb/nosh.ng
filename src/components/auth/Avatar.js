@@ -13,7 +13,8 @@ export const AuthAvatar = ({
   imageProps,
   imagePropsActive,
 }) => {
-  const active = !!avatar;
+  // const active = !!avatar;
+  const active = false;
   if (!imagePropsActive) imagePropsActive = imageProps;
   const imageUri = `https://api.nosh.ng/${avatar}`;
   return (
