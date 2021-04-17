@@ -96,6 +96,10 @@ export default function userReducer(state = initialState, action) {
       //   }
       return {
         ...initialState,
+        email: state.email,
+        name: state.name,
+        userId: state.userId,
+        _id: state._id,
       };
 
     default:

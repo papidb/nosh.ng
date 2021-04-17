@@ -19,7 +19,11 @@ import {waait} from 'shared/utils';
 
 import {connect} from 'react-redux';
 import {forgotPassword} from 'action';
-import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
+import {
+  showErrorSnackBar,
+  showSuccessSnackBar,
+  extractErrorMessage,
+} from 'shared/utils';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Invalid Email').required('Required'),
@@ -52,6 +56,7 @@ export const ResetPasswordScreen = ({forgotPassword}) => {
     onSubmit: async (submitValues) => {
       try {
         await forgotPassword(submitValues);
+        showSuccessSnackBar({text: 'Check your mail!'});
         toLogin();
       } catch (error) {
         const text = extractErrorMessage(error);
@@ -62,11 +67,6 @@ export const ResetPasswordScreen = ({forgotPassword}) => {
   });
   const Bottom = (
     <Box justifyContent="flex-end" style={[styles.container, styles.bottom]}>
-      {Platform.OS == 'ios' && (
-        <Box marginTop={{bigScreen: 'xxxl', phone: 'xl'}} />
-      )}
-      <Box marginTop={{bigScreen: 'xxxl', phone: 'xl'}} />
-      {/* Button */}
       <Box marginBottom="m">
         <Button
           text="Reset Password"
@@ -75,16 +75,17 @@ export const ResetPasswordScreen = ({forgotPassword}) => {
           onPress={handleSubmit}
         />
       </Box>
-      <RaiseAndroid />
+      <RaiseAndroid height={20} />
     </Box>
   );
   return (
-    <AuthContainer bottom={Bottom}>
-      <KeyboardAwareScrollView>
+    <AuthContainer>
+      <KeyboardAwareScrollView contentContainerStyle={{flexGrow: 1}}>
         {/* Header */}
         <AuthHeader header="Oops!!!" />
         {/* bottom padding */}
         <Box
+          flex={1}
           margin="s"
           marginTop={{bigScreen: 'xxxl', phone: 'xl'}}
           style={styles.container}>
@@ -102,42 +103,9 @@ export const ResetPasswordScreen = ({forgotPassword}) => {
             value={values.email}
           />
         </Box>
+        {Bottom}
       </KeyboardAwareScrollView>
     </AuthContainer>
-  );
-  return (
-    <Box flex={1}>
-      <Box flex={1}>
-        <KeyboardAwareScrollView>
-          <Box
-            alignItems="center"
-            marginBottom="l"
-            style={{marginTop: headerHeight}}>
-            <Icon name="icon-auth_logo" size={63} />
-          </Box>
-          {/* Header */}
-          <AuthHeader header="Oops!!!" />
-          {/* bottom padding */}
-          <Box margin="s" marginTop="xxxl" style={styles.container}>
-            <Box marginBottom="m">
-              <Text color="primary" textAlign="center">
-                {text}
-              </Text>
-            </Box>
-            <Input
-              placeholder="Email"
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              error={errors.email}
-              touched={touched.email}
-              value={values.email}
-            />
-          </Box>
-        </KeyboardAwareScrollView>
-        {Bottom}
-        {/* <Box height={60} /> */}
-      </Box>
-    </Box>
   );
 };
 export const ResetPassword = connect(null, {forgotPassword})(

@@ -73,26 +73,48 @@ export const PersonalLoginScreen = ({login, getUser, user}) => {
           onPress={handleSubmit}
         />
       </Box>
-      <TouchableOpacity onPress={() => toResetPassword()}>
-        <Text fontSize={14} textAlign="center">
-          <Text color="primary">Forgot Password? </Text>
-          {/* Register */}
-        </Text>
-      </TouchableOpacity>
-      <RaiseAndroid />
+      <Box flexDirection="row" justifyContent="center">
+        <TouchableOpacity onPress={toResetPassword}>
+          <Text fontSize={14} textAlign="center">
+            <Text color="primary">Forgot Password?</Text>
+            {/* Register */}
+          </Text>
+        </TouchableOpacity>
+        <Text>{' | '}</Text>
+        <TouchableOpacity onPress={toLogin}>
+          <Text fontSize={14} textAlign="center">
+            <Text color="buttonColor">Not You? </Text>
+          </Text>
+        </TouchableOpacity>
+      </Box>
+
+      <RaiseAndroid height={20} />
     </Box>
   );
   return (
-    <AuthContainer bottom={Bottom}>
+    <AuthContainer>
       <KeyboardAwareScrollView>
         <Box margin="s" marginTop="none" style={styles.container}>
           {/* Image */}
-          <AuthAvatar />
+          <AuthAvatar
+            size={135}
+            imageProps={{
+              style: {
+                height: 110,
+                width: 110,
+                borderRadius: 110,
+                resizeMode: 'contain',
+              },
+            }}
+          />
           <Box alignItems="center" marginBottom="m">
             <Text color="secondary" opacity={0.5} fontSize={16}>
               Welcome Back
             </Text>
-            <Text color="buttonColor" fontWeight="700" fontSize={24}>
+            <Text
+              color="buttonColor"
+              fontFamily="Hurme Geometric Sans 2 Bold"
+              fontSize={24}>
               {user?.name}
             </Text>
           </Box>
@@ -105,9 +127,9 @@ export const PersonalLoginScreen = ({login, getUser, user}) => {
             value={values.password}
             passwordIcon
           />
-          <TouchableOpacity onPress={() => toLogin()}>
+          <TouchableOpacity>
             <Box
-              marginTop={{bigScreen: 'xl', phone: 'm'}}
+              marginTop={{bigScreen: 'xl', phone: 's'}}
               alignSelf="center"
               height={85}
               width={85}
@@ -119,6 +141,7 @@ export const PersonalLoginScreen = ({login, getUser, user}) => {
             </Box>
           </TouchableOpacity>
         </Box>
+        {Bottom}
       </KeyboardAwareScrollView>
     </AuthContainer>
   );
@@ -134,7 +157,7 @@ export const PersonalLogin = connect(({user}) => ({user}), {login, getUser})(
 
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
-  bottom: {marginTop: 50},
+  bottom: {marginTop: 10},
   tandc: {
     color: '#525C6B',
   },

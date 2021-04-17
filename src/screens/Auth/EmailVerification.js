@@ -15,7 +15,7 @@ const EmailVerificationScreen = ({}) => {
   const Bottom = (
     <Box justifyContent="flex-end" style={[styles.container, styles.bottom]}>
       {/* Button */}
-      <Box marginBottom="m">
+      <Box>
         <Button
           text="Verified? Hop-in"
           variant="faded"
@@ -23,13 +23,13 @@ const EmailVerificationScreen = ({}) => {
           onPress={() => toLogin()}
         />
       </Box>
-      <RaiseAndroid />
+      <RaiseAndroid height={20} />
     </Box>
   );
   return (
-    <AuthContainer bottom={Bottom}>
-      <KeyboardAwareScrollView>
-        <Box margin="s" marginVertical="xxxl" style={styles.container}>
+    <AuthContainer>
+      <KeyboardAwareScrollView contentContainerStyle={{flexGrow: 1}}>
+        <Box flex={1} margin="s" marginTop="xxl" style={styles.container}>
           {/* Image */}
           <Box right={-113}>
             <MailBox />
@@ -40,6 +40,7 @@ const EmailVerificationScreen = ({}) => {
             </Text>
           </Box>
         </Box>
+        {Bottom}
       </KeyboardAwareScrollView>
     </AuthContainer>
   );

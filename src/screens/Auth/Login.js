@@ -81,7 +81,10 @@ const LoginScreen = ({login, getUser}) => {
   });
 
   const Bottom = (
-    <Box justifyContent="flex-end" style={[styles.container, styles.bottom]}>
+    <Box
+      justifyContent="flex-end"
+      style={[styles.container]}
+      marginTop={{bigScreen: 'xl', phone: 'l'}}>
       {/* Button */}
       <Box marginBottom="m">
         <Button
@@ -97,15 +100,25 @@ const LoginScreen = ({login, getUser}) => {
           Register
         </Text>
       </TouchableOpacity>
-      <RaiseAndroid />
+      <RaiseAndroid height={20} />
     </Box>
   );
   return (
-    <AuthContainer bottom={Bottom}>
+    <AuthContainer>
       <KeyboardAwareScrollView>
         <Box margin="s" marginTop="none" style={styles.container}>
           {/* Image */}
-          <AuthAvatar />
+          <AuthAvatar
+            size={135}
+            imageProps={{
+              style: {
+                height: 110,
+                width: 110,
+                borderRadius: 110,
+                resizeMode: 'contain',
+              },
+            }}
+          />
           <Input
             placeholder="Email"
             onChangeText={handleChange('email')}
@@ -132,6 +145,7 @@ const LoginScreen = ({login, getUser}) => {
             </TouchableOpacity>
           </Box>
         </Box>
+        {Bottom}
       </KeyboardAwareScrollView>
     </AuthContainer>
   );
@@ -142,7 +156,7 @@ export const Login = connect(null, {login, getUser})(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
-  bottom: {marginTop: 75},
+  bottom: {marginTop: 20},
   tandc: {
     color: '#525C6B',
   },

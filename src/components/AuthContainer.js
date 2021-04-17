@@ -4,18 +4,20 @@ import PropTypes from 'prop-types';
 
 import {Box, Text, Icon} from './pure';
 
-export const AuthHeader = ({header = null}) => {
+export const AuthHeader = ({header = null, ...containerProps}) => {
   return (
     <Box>
       <Box
         width={200}
         alignSelf="flex-end"
         alignItems="center"
+        marginTop="m"
         paddingVertical="m"
         paddingHorizontal="xl"
         backgroundColor="authHeaderBackground"
         right={-32}
-        borderRadius={100}>
+        borderRadius={100}
+        {...containerProps}>
         <Text color="primary" fontWeight="600" fontSize={20} lineHeight={25.44}>
           {header}
         </Text>
@@ -28,14 +30,15 @@ AuthHeader.propTypes = {
 };
 
 export const AuthContainer = ({header = null, bottom, children}) => {
-  const headerHeight = 72;
+  const headerHeight = 35;
   return (
-    <ScrollView>
+    <Box flex={1}>
       <Box
         alignItems="center"
-        marginBottom="l"
+        marginBottom="m"
+        // backgroundColor="success"
         style={{marginTop: headerHeight}}>
-        <Icon name="icon-auth_logo" size={63} />
+        <Icon name="icon-auth_logo" size={60} />
       </Box>
 
       {/* Header */}
@@ -45,9 +48,8 @@ export const AuthContainer = ({header = null, bottom, children}) => {
       <>{children}</>
 
       {/* bottom padding */}
-      <Box height={60} />
-      <Box>{bottom}</Box>
-    </ScrollView>
+      {bottom}
+    </Box>
   );
 };
 

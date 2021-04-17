@@ -43,6 +43,7 @@ const TextProps = {
   style: {
     // color: 'blue',
     fontFamily: 'Hurme Geometric Sans 2',
+    fontSize: 14,
   },
 };
 SetCustomText(TextProps);
@@ -52,7 +53,11 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar
+            barStyle="dark-content"
+            // theme background of app
+            backgroundColor="rgba(48,188,237,0.1)"
+          />
           {done ? <Main /> : <Splash {...{setDone}} />}
         </ThemeProvider>
       </PersistGate>

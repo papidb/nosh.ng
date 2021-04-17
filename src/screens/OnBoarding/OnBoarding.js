@@ -226,20 +226,11 @@ const OnBoardingScreen = ({onBoardUser}) => {
       });
     }
   }, [index, phase]);
-  // const scrollTo = () => {
-  //   console.log({index, nex: phase});
-  //   if (index + 1 < phase) {
-  //     slidesRef?.current?.scrollToIndex({index: index + 1});
-  //   } else {
-  //     console.log('Go away from onboarding screen');
-  //   }
-  // };
   const framesPerSecond = 24;
   const images = {
     0: onboardingImages.slice(49, 50),
-    1: onboardingImages.slice(49, 100),
-    2: onboardingImages.slice(155, 200),
-    // 2: onboardingImages.slice(208, 209),
+    1: onboardingImages.slice(51, 100),
+    2: onboardingImages.slice(150, 200),
   };
 
   // slider props

@@ -58,7 +58,7 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
         <Text
           // fontFamily="Hurme Geometric Sans 2 Bold"
           color="primary"
-          fontSize={14}>
+          fontSize={12}>
           {/* Good Morning */}
           {getMessage()}
         </Text>
