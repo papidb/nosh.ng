@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import {Box, Text, Circle, Select, Button, HeaderInfo, Icon} from 'components';
 import {GiftCardBox} from './GiftCardBox';
 
-import images from 'constants/images';
 import data from 'constants/data';
+import images from 'constants/images';
 import {capitalizeFirstLetter} from 'shared/utils';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
@@ -128,14 +128,16 @@ export const SubCategory = ({
           setFieldTouched('category', true);
         }}
       />
-      <Box flexDirection="row" marginVertical="xs" marginTop="xxl">
+      <Box flexDirection="row" marginVertical="xs" marginTop="l">
         <Box flex={1} />
+        <Image source={images.discount} />
         <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
           <Box
             // flex={1}
             backgroundColor="lightSuccess"
             borderRadius={100}
             padding="l"
+            height={52}
             justifyContent="center"
             flexDirection="row"
             alignItems="center">

@@ -108,11 +108,25 @@ export const SubAmount = ({
           touched={touched.amount}
           value={values.amount}
         />
+        {/* <Input
+          variant="giftcard"
+          placeholder="Enter Amount"
+          keyboardType="number-pad"
+          RightIcon={
+            <Text fontSize={12} fontWeight="600" color="primary">
+              NGN
+            </Text>
+          }
+          innerContainerProps={{backgroundColor: 'mostBg'}}
+          editable={false}
+          value={commaFormatter(subCategory?.rate * values.amount)}
+        /> */}
         <GiftCardBox
           marginVertical="m"
           flexDirection="row"
           backgroundColor="mostBg"
-          justifyContent="space-between">
+          justifyContent="space-between"
+          height={62}>
           <Text fontSize={24} fontWeight="400" color="success">
             {commaFormatter(subCategory?.rate * values.amount)}
           </Text>
