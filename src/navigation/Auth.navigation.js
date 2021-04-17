@@ -15,12 +15,12 @@ const AppStack = createStackNavigator();
 
 const AuthScreens = ({user, onboarded}) => {
   const loggedInBefore = Boolean(user?.email);
-  const initialRouteName = onboarded
-    ? loggedInBefore
-      ? 'PersonalLogin'
-      : 'Login'
-    : 'OnBoarding';
-  // const initialRouteName = 'OnBoarding';
+  // const initialRouteName = onboarded
+  //   ? loggedInBefore
+  //     ? 'PersonalLogin'
+  //     : 'Login'
+  //   : 'OnBoarding';
+  const initialRouteName = 'OnBoarding';
   return (
     <AppStack.Navigator
       screenOptions={{

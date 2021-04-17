@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Dimensions, Animated, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  Dimensions,
+  Platform,
+  Animated,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 
 import ImageSequence from 'react-native-image-sequence';
 import {useNavigation} from '@react-navigation/native';
@@ -35,10 +42,11 @@ const phase = 3;
 // const phaseAmount = onboardingImages.length / phase;
 const splitedImages = splitToChunks([...onboardingImages], phase);
 
-const width = ExtraDimensions.getRealWindowWidth();
-console.log({width});
+// const width = ExtraDimensions.getRealWindowWidth();
+// console.log({width});
 
-const {height} = Dimensions.get('window');
+let {height, width} = Dimensions.get('window');
+if (Platform.OS == 'android') width = ExtraDimensions.getRealWindowWidth();
 const SIZE_WIDTH = width;
 const SIZE_HEIGHT = height;
 
@@ -228,9 +236,10 @@ const OnBoardingScreen = ({onBoardUser}) => {
   // };
   const framesPerSecond = 24;
   const images = {
-    0: onboardingImages.slice(28, 100),
-    1: onboardingImages.slice(148, 200),
-    2: onboardingImages.slice(208, 209),
+    0: onboardingImages.slice(49, 50),
+    1: onboardingImages.slice(49, 100),
+    2: onboardingImages.slice(155, 200),
+    // 2: onboardingImages.slice(208, 209),
   };
 
   // slider props
@@ -253,59 +262,60 @@ const OnBoardingScreen = ({onBoardUser}) => {
       flex={1}
       // style={{backgroundColor: '#411476'}}
     >
-      <Box width={SIZE_WIDTH - 12} position="absolute">
-        <ImageSequence
-          // images={splitedImages[index]}
-          images={images[index]}
-          startFrameIndex={centerIndex}
-          framesPerSecond={framesPerSecond}
-          style={{
-            width: SIZE_WIDTH,
-            height: SIZE_HEIGHT,
-            resizeMode: 'repeat',
-            // height: '100%',
-            // width: '100%',
-          }}
-          loop={false}
-        />
-      </Box>
-
-      <Box flex={1}>
-        <SafeAreaView style={{flex: 1}}>
-          <Animated.FlatList
-            ref={slidesRef}
-            // style={{flex: 1, height: 500}}
-            keyExtractor={(item) => item.key + ''}
-            data={data}
-            renderItem={({item, index}) => (
-              <Item {...item} index={index} scrollX={scrollX} />
-            )}
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            onViewableItemsChanged={onViewableItemsChanged}
-            viewabilityConfig={viewabilityConfig}
-            onScroll={Animated.event(
-              [{nativeEvent: {contentOffset: {x: scrollX}}}],
-              {useNativeDriver: true},
-            )}
-            scrollEventThrottle={16}
+      <ImageBackground
+        source={require('../../assets/onboarding/bg.png')}
+        style={{width: '100%', height: '100%'}}>
+        <Box width={SIZE_WIDTH - 12} position="absolute">
+          <ImageSequence
+            // images={splitedImages[index]}
+            images={images[index]}
+            startFrameIndex={centerIndex}
+            framesPerSecond={framesPerSecond}
+            style={{
+              width: SIZE_WIDTH,
+              height: SIZE_HEIGHT,
+            }}
+            loop={false}
           />
-        </SafeAreaView>
-        <Box flex={1} justifyContent="flex-end">
-          {/* {__DEV__ && <Text textAlign="center">{index}</Text>} */}
-          <Box
-            marginBottom="xl"
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="center"
-            paddingHorizontal="xl">
-            <Pagination {...{index, scrollX}} />
-            {/* button */}
-            <NextButton {...{index, scrollX, scrollTo}} />
+        </Box>
+
+        <Box flex={1}>
+          <SafeAreaView style={{flex: 1}}>
+            <Animated.FlatList
+              ref={slidesRef}
+              // style={{flex: 1, height: 500}}
+              keyExtractor={(item) => item.key + ''}
+              data={data}
+              renderItem={({item, index}) => (
+                <Item {...item} index={index} scrollX={scrollX} />
+              )}
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              onViewableItemsChanged={onViewableItemsChanged}
+              viewabilityConfig={viewabilityConfig}
+              onScroll={Animated.event(
+                [{nativeEvent: {contentOffset: {x: scrollX}}}],
+                {useNativeDriver: true},
+              )}
+              scrollEventThrottle={16}
+            />
+          </SafeAreaView>
+          <Box flex={1} justifyContent="flex-end">
+            {/* {__DEV__ && <Text textAlign="center">{index}</Text>} */}
+            <Box
+              marginBottom="xl"
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+              paddingHorizontal="xl">
+              <Pagination {...{index, scrollX}} />
+              {/* button */}
+              <NextButton {...{index, scrollX, scrollTo}} />
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </ImageBackground>
     </Box>
   );
 };
