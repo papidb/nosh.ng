@@ -58,7 +58,7 @@ const App = () => {
             // theme background of app
             backgroundColor="rgba(48,188,237,0.1)"
           />
-          {done ? <Main /> : <Splash {...{setDone}} />}
+          {__DEV__ ? <Main /> : done ? <Main /> : <Splash {...{setDone}} />}
         </ThemeProvider>
       </PersistGate>
     </Provider>
