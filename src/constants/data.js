@@ -1,6 +1,13 @@
 import images from 'constants/images';
+const BiometryTypes = {
+  FaceID: 'FaceID',
+  none: 'none',
+  passcode: 'passcode',
+  TouchID: 'TouchID',
+};
 
 export default {
+  BiometryTypes,
   giftCards: [
     {title: 'Amazon', displayName: 'Amazon'},
     {title: 'American exp', displayName: 'American Express'},

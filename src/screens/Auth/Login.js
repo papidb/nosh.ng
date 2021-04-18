@@ -17,7 +17,15 @@ import {
 } from 'components';
 import {connect} from 'react-redux';
 import {login, getUser} from 'action';
-import {showErrorSnackBar, extractErrorMessage} from 'shared/utils';
+import {
+  showErrorSnackBar,
+  extractErrorMessage,
+  saveToKeyChain,
+  requestFaceId,
+} from 'shared/utils';
+import * as Keychain from 'react-native-keychain';
+
+// import {} from 'shared/utils';
 
 Yup.addMethod(Yup.string, 'validatePhone', function () {
   return this.test({
@@ -68,10 +76,26 @@ const LoginScreen = ({login, getUser}) => {
     initialValues: initailValues,
     onSubmit: async (submitValues) => {
       try {
-        await login(submitValues);
-        const userData = await getUser();
-        console.log({userData});
-        // console.log(me);
+        // await login(submitValues);
+
+        // const userData = await getUser();
+        // console.log({userData});
+        try {
+          await requestFaceId();
+        } catch (error) {}
+        await login(submitValues).then(async () => {
+          try {
+            console.log('here');
+            await saveToKeyChain(values.email, values.password, {
+              accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET,
+            });
+            console.log('there');
+
+            await getUser();
+          } catch (error) {
+            console.log({error});
+          }
+        });
       } catch (error) {
         const text = extractErrorMessage(error);
         showErrorSnackBar({text});

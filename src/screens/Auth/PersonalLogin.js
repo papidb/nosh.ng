@@ -24,7 +24,13 @@ import {
   showErrorSnackBar,
   // showSuccessSnackBar,
   extractErrorMessage,
+  requestFaceId,
 } from 'shared/utils';
+import * as Keychain from 'react-native-keychain';
+import data from 'constants/data';
+
+const BiometryTypes = data.BiometryTypes;
+import {useBiometryType} from 'hooks';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().trim().email('Invalid Email').required('Required'),
@@ -37,10 +43,11 @@ const initailValues = __DEV__
     }
   : {email: '', password: ''};
 
-export const PersonalLoginScreen = ({login, getUser, user}) => {
+export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
   const toResetPassword = () => navigation.navigate('ResetPassword');
+  let bio = useBiometryType();
 
   const {
     handleChange,
@@ -51,12 +58,14 @@ export const PersonalLoginScreen = ({login, getUser, user}) => {
     errors,
     isSubmitting,
     isValid,
+    setSubmitting,
   } = useFormik({
     initialValues: {...initailValues, email: user?.email},
     onSubmit: async (submitValues) => {
       try {
         await login(submitValues);
         const userData = await getUser();
+        await requestFaceId();
         console.log({userData});
         // console.log(me);
       } catch (error) {
@@ -66,6 +75,43 @@ export const PersonalLoginScreen = ({login, getUser, user}) => {
     },
     validationSchema: LoginSchema,
   });
+  const load = async () => {
+    try {
+      let options = {
+        authenticationPrompt: {
+          title: 'Authentication needed',
+          subtitle: 'Subtitle',
+          description: 'Some descriptive text',
+          cancel: 'Cancel',
+        },
+      };
+      return Keychain.getGenericPassword(options);
+      // if (credentials) {
+      //   console.log({credentials});
+      // } else {
+      // }
+    } catch (err) {}
+  };
+  const getPassword = async () => {
+    try {
+      setSubmitting(true);
+      let credentials = await load();
+      console.log({credentials});
+      let data = {
+        // entry: 'ios',
+        email: credentials.username,
+        password: credentials.password,
+      };
+
+      await login(data);
+    } catch (error) {
+      console.log({error});
+      const message = extractErrorMessage(error);
+      showErrorSnackBar({text: message});
+    } finally {
+      setSubmitting(false);
+    }
+  };
   const Bottom = (
     <Box justifyContent="flex-end" style={[styles.container, styles.bottom]}>
       {/* Button */}
@@ -131,19 +177,29 @@ export const PersonalLoginScreen = ({login, getUser, user}) => {
             value={values.password}
             passwordIcon
           />
-          <TouchableOpacity>
-            <Box
-              marginTop={{bigScreen: 'xl', phone: 's'}}
-              alignSelf="center"
-              height={85}
-              width={85}
-              borderRadius={85}
-              alignItems="center"
-              justifyContent="center"
-              backgroundColor="eyeBackground">
-              <Icon name="icon-fingerprint" size={43} />
-            </Box>
-          </TouchableOpacity>
+          <Box marginTop={{bigScreen: 'xl', phone: 's'}}>
+            {bio !== BiometryTypes.none && BIOAPP && (
+              <Box alignItems="center">
+                <TouchableOpacity>
+                  <Box
+                    alignSelf="center"
+                    height={85}
+                    width={85}
+                    borderRadius={85}
+                    alignItems="center"
+                    justifyContent="center"
+                    backgroundColor="eyeBackground">
+                    <Icon
+                      name={
+                        bio == 'FaceID' ? 'icon-faceid' : 'icon-fingerprint'
+                      }
+                      size={43}
+                    />
+                  </Box>
+                </TouchableOpacity>
+              </Box>
+            )}
+          </Box>
         </Box>
         {Bottom}
       </KeyboardAwareScrollView>
@@ -155,9 +211,10 @@ PersonalLoginScreen.propTypes = {
   login: PropTypes.func,
 };
 
-export const PersonalLogin = connect(({user}) => ({user}), {login, getUser})(
-  PersonalLoginScreen,
-);
+export const PersonalLogin = connect(({user, misc: {bio}}) => ({user, bio}), {
+  login,
+  getUser,
+})(PersonalLoginScreen);
 
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
