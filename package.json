@@ -54,6 +54,7 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.18.1",
     "react-native-segmented-control-tab": "^3.4.1",
+    "react-native-share": "^5.2.2",
     "react-native-snackbar": "^2.4.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^12.1.0",

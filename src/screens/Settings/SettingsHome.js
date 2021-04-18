@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 
 import PropTypes from 'prop-types';
+import Share from 'react-native-share';
 import {connect} from 'react-redux';
 
 import {Box, Divider, HeaderInfo, RaiseAndroid} from 'components';
@@ -67,6 +68,18 @@ export const Screen = ({
     ),
     [addBank, closeAddBankModal, getBanks, getUser, user],
   );
+  const onShare = async () => {
+    try {
+      const result = await Share.open({
+        title: 'Download Nosh',
+        message: 'Please install this app and stay safe.',
+        url: 'https://nosh.ng',
+      });
+      console.log({result});
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const options = [
     {text: 'Edit Profile', icon: 'icon-expand', onPress: onOpenProfile},
@@ -78,7 +91,7 @@ export const Screen = ({
     },
     {text: 'Privacy policy', icon: 'icon-bookmark'},
     {text: 'Live chat', icon: 'icon-chat'},
-    {text: 'Share App', icon: 'icon-share'},
+    {text: 'Share App', icon: 'icon-share', onPress: onShare},
     {
       text: 'LogOut',
       icon: 'icon-power',
