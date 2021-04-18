@@ -19,6 +19,7 @@ module.exports = {
           utils: './src/utils',
         },
       },
+      'react-native-reanimated/plugin',
     ],
     // ['@shopify/react-i18n/babel', {mode: 'from-dictionary-index'}],
   ],
