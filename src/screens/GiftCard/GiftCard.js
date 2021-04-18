@@ -173,7 +173,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
           // style={{height: 250}}
           //
         >
-          <SubGiftCard
+          {/* <SubGiftCard
             onSnapToItem={(slideIndex) => {
               setIndex(slideIndex);
               // console.log(cardSubCategories[slideIndex]);
@@ -190,7 +190,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
           />
           <SubCategoryCallBack />
 
-          <SubAmountCallBack />
+          <SubAmountCallBack /> */}
           <SubUploadCallback />
         </Swiper>
         <Box paddingHorizontal="l" marginBottom="l" marginTop="m">

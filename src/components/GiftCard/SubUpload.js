@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {
   StyleSheet,
   Dimensions,
   FlatList,
   Image,
+  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 
@@ -23,11 +24,14 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import {useFormik} from 'formik';
 import {createFormArrayData, createFormData} from 'shared/utils';
+import SwipeButton from 'rn-swipe-button';
+
 import {
   showErrorSnackBar,
   showSuccessSnackBar,
   extractErrorMessage,
 } from 'shared/utils';
+
 export const SubUpload = ({
   next,
   prev,
@@ -89,6 +93,20 @@ export const SubUpload = ({
       console.log(error);
     }
   };
+  const thumbIcon = useCallback(() => {
+    return (
+      <Box backgroundColor="mostBg">
+        {isSubmitting ? (
+          <ActivityIndicator color="white" />
+        ) : (
+          <Icon name="icon-forward" size={14} />
+        )}
+      </Box>
+    );
+  }, [isSubmitting]);
+  // const thumbIcon = () => {
+
+  // };
   const imagesSize = images.length;
   return (
     <Box
@@ -183,13 +201,41 @@ export const SubUpload = ({
           />
         </Box>
         {/* Button */}
-        <Button
+        {/* <Button
           variant="giftcard"
           text="SELL"
           disabled={isSubmitting}
           loading={isSubmitting}
           onPress={handleSubmit}
-        />
+        /> */}
+        <Box alignItems="center">
+          <SwipeButton
+            // disabled={isSubmitting}
+            //disable the button by doing true (Optional)
+            swipeSuccessThreshold={70}
+            height={58}
+            containerStyles={{borderWidth: 5}}
+            //height of the button (Optional)
+            width={'95%'}
+            //width of the button (Optional)
+            title="SWIPE T0 SELL"
+            //Text inside the button (Optional)
+            thumbIconComponent={thumbIcon}
+            //You can also set your own icon for the button (Optional)
+            onSwipeSuccess={handleSubmit}
+            successTitle="loading"
+            //After the completion of swipe (Optional)
+            railFillBackgroundColor="#3DAA9D" //(Optional)
+            railFillBorderColor="#3DAA9D" //(Optional)
+            thumbIconBackgroundColor="rgba(61,170,157, 0.1)" //(Optional)
+            shouldResetAfterSuccess
+            // thumbIconBorderColor="#ed9aff" //(Optional)
+            railBackgroundColor="#023248" //(Optional)
+            railBorderColor="transparent" //(Optional)
+            titleColor="#3DAA9D"
+            titleStyles={{color: '#3DAA9D', textAlign: 'right', fontSize: 12}}
+          />
+        </Box>
       </KeyboardAwareScrollView>
     </Box>
   );
