@@ -9,7 +9,8 @@
     "link": "react-native link",
     "test": "jest",
     "lint": "eslint .",
-    "pod": "cd ios && pod install && cd .."
+    "pod": "cd ios && pod install && cd ..",
+    "icon": "react-native set-icon --path ./Icon.jpg"
   },
   "dependencies": {
     "@gorhom/animated-tabbar": "^2.1.1",
@@ -21,6 +22,7 @@
     "@react-navigation/stack": "^5.14.3",
     "@shopify/react-i18n": "^5.0.2",
     "@shopify/restyle": "^1.1.0",
+    "@welldone-software/why-did-you-render": "^6.1.1",
     "axios": "^0.19.2",
     "date-fns": "^2.16.1",
     "form-data": "^4.0.0",
@@ -32,6 +34,7 @@
     "prop-types": "^15.7.2",
     "qrcode": "^1.4.4",
     "react": "16.13.1",
+    "react-hot-loader": "^4.13.0",
     "react-native": "0.63.4",
     "react-native-animated-nav-tab-bar": "^3.1.4",
     "react-native-device-info": "^8.1.0",
@@ -72,6 +75,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
+    "@bam.tech/react-native-make": "^3.0.0",
     "@react-native-community/eslint-config": "^1.1.0",
     "babel-jest": "^25.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
