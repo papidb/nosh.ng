@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ActivityIndicator, TouchableOpacity} from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -25,10 +25,13 @@ import {
 import {ModalContainer} from './ModalContainer';
 
 export const EditProfile = ({close, updateProfilePic, getUser}) => {
-  const {user} = useStore().getState();
+  const {user: rawUser} = useStore().getState();
+  console.log({rawUser});
+  const [user, setUser] = useState(rawUser);
   const [loading, setLoading] = useState(false);
   const [backgroundColor, setBackgroundColor] = useState('transparent');
   const [avatar, setAvatar] = useState(user.avatar);
+  console.log({avatar});
 
   const useImage = async (photo) => {
     if (photo.didCancel) return;
@@ -52,21 +55,32 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
     const options = {mediaType: 'photo'};
     launchImageLibrary(options, useImage);
   };
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
-      const imageUri = `https://api.nosh.ng/${avatar}`;
-      let bg = '';
-      const colors = await ImageColors.getColors(imageUri, {
-        fallback: '#30bced',
-      });
-      if (colors.platform === 'android') {
-        bg = colors.average;
-      } else {
-        bg = colors.background;
-        setBackgroundColor(bg);
-      }
+      // try {
+      //   let newUser = await getUser();
+      //   console.log({newUser});
+      //   // setUser(newUser);
+      // } catch (error) {
+      //   console.log({error});
+      // }
     })();
-  }, [avatar, setBackgroundColor]);
+  }, [getUser, setUser]);
+  // React.useEffect(() => {
+  //   (async () => {
+  //     const imageUri = `https://api.nosh.ng/${avatar}`;
+  //     let bg = '';
+  //     const colors = await ImageColors.getColors(imageUri, {
+  //       fallback: '#30bced',
+  //     });
+  //     if (colors.platform === 'android') {
+  //       bg = colors.average;
+  //     } else {
+  //       bg = colors.background;
+  //       setBackgroundColor(bg);
+  //     }
+  //   })();
+  // }, [avatar, setBackgroundColor]);
 
   return (
     <ModalContainer>
@@ -88,11 +102,26 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
                 backgroundColor: 'success',
                 style: {backgroundColor: backgroundColor},
               }}
-              imageProps={{style: {height: 60, width: 60, borderRadius: 60}}}
+              imageProps={{
+                style: {
+                  height: 70,
+                  width: 70,
+                  borderRadius: 70,
+                },
+                resizeMode: 'contain',
+              }}
+              imagePropsActive={{
+                style: {
+                  height: 81,
+                  width: 81,
+                  borderRadius: 81,
+                  resizeMode: 'contain',
+                },
+              }}
             />
             <Circle size={81} backgroundColor="overlayBg" position="absolute">
               {loading ? (
-                <ActivityIndicator />
+                <ActivityIndicator color="white" />
               ) : (
                 <Icon name="icon-edit2" size={30} />
               )}
@@ -108,18 +137,31 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
       </Box>
       {/* Form */}
       <Box marginBottom="xs">
-        <Input placeholder="Name" variant="profile" editable={false} nospace />
-      </Box>
-      <Box marginBottom="xs">
         <Input
-          placeholder="Number"
+          placeholder="Name"
           variant="profile"
+          value={user.name}
           editable={false}
           nospace
         />
       </Box>
       <Box marginBottom="xs">
-        <Input placeholder="Email" variant="profile" editable={false} nospace />
+        <Input
+          placeholder="Number"
+          variant="profile"
+          value={user.phoneNumber}
+          editable={false}
+          nospace
+        />
+      </Box>
+      <Box marginBottom="xs">
+        <Input
+          placeholder="Email"
+          variant="profile"
+          value={user.email}
+          editable={false}
+          nospace
+        />
       </Box>
       <Box>
         <Button text="Save" onPress={close} />

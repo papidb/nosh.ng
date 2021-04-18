@@ -63,7 +63,8 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
     initialValues: {...initailValues, email: user?.email},
     onSubmit: async (submitValues) => {
       try {
-        await login(submitValues);
+        const deets = await login(submitValues);
+        // console.log({deets});
         const userData = await getUser();
         await requestFaceId();
         console.log({userData});
@@ -103,7 +104,8 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
         password: credentials.password,
       };
 
-      await login(data);
+      const deets = await login(data);
+      console.log({deets});
     } catch (error) {
       console.log({error});
       const message = extractErrorMessage(error);

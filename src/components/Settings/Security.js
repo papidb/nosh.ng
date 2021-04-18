@@ -81,8 +81,8 @@ export const Security = ({close, changePassword, toggleBio}) => {
         borderRadius={100}
         paddingHorizontal="xl"
         paddingRight="m">
-        <Text color="primary" fontSize={15}>
-          Nnamdi Ayoola
+        <Text color="primary" fontSize={15} fontWeight="600">
+          Biometrics
         </Text>
         <ToggleSwitch
           isOn={bio}
@@ -98,6 +98,17 @@ export const Security = ({close, changePassword, toggleBio}) => {
           }}
         />
       </Box>
+      <Divider />
+      <Box style={{marginVertical: 17}}>
+        <Text
+          fontSize={12}
+          fontWeight="500"
+          textAlign="center"
+          style={{color: '#A9A9A9'}}>
+          CHANGE PASSWORD
+        </Text>
+      </Box>
+
       {/* Form */}
       <Box marginBottom="xs">
         <Input

@@ -9,11 +9,13 @@ import {AuthAvatar} from './auth';
 import {getMessage} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
-import {connect, useStore} from 'react-redux';
+import {useSelector, useStore} from 'react-redux';
 import {palette} from 'constants/theme';
 
 const HeaderComponent = ({onPress, bright, ...props}) => {
-  const {user} = useStore().getState();
+  // const {user} = useStore().getState();
+  const user = useSelector((state) => state.user);
+
   const {top} = useSafeAreaInsets();
   let realTop = top / 4 + 10;
   const [isModalVisible, setModalVisible] = useState(false);

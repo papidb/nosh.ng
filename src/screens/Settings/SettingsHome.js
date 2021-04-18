@@ -77,7 +77,7 @@ export const Screen = ({
       });
       console.log({result});
     } catch (error) {
-      alert(error.message);
+      // console.log(error.message);
     }
   };
 
