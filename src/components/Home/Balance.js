@@ -20,17 +20,24 @@ export const Balance = ({user, containerProps}) => {
       justifyContent="center"
       alignItems="center"
       {...containerProps}>
-      <Text fontSize={12} color="primary" textAlign="center" fontWeight="bold">
+      <Text
+        fontSize={12}
+        color="primary"
+        textAlign="center"
+        fontWeight="600"
+        // fontWeight="600"
+        //
+      >
         Available Balance
       </Text>
       <Box flexDirection="row" alignItems="center">
         <Text
           color="buttonColor"
           fontSize={33}
-          fontWeight="bold"
+          fontWeight="600"
           lineHeight={42.37}>
-          {/* 267,000 */}
-          {balanceWhole}
+          {/* {balanceWhole} */}
+          232,323
         </Text>
         <Text color="primary" fontSize={30}>
           .{balanceFraction}
@@ -38,7 +45,7 @@ export const Balance = ({user, containerProps}) => {
         <Text
           color="buttonColor"
           fontSize={15}
-          fontWeight="bold"
+          fontWeight="600"
           marginLeft="xxs">
           {'NGN'}
         </Text>

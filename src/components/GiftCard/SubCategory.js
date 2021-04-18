@@ -141,7 +141,7 @@ export const SubCategory = ({
             justifyContent="center"
             flexDirection="row"
             alignItems="center">
-            <Text fontSize={14} color="primary" fontWeight="700">
+            <Text fontSize={14} color="primary" fontWeight="600">
               Hottest{' '}
             </Text>
             <Text fontSize={14} color="buttonColor">

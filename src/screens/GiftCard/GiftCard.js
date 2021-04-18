@@ -155,9 +155,9 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
     <Box flex={1}>
       <Divider marginBottom="l" />
       <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
+        // refreshControl={
+        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        // }
         style={giftcardStyles.scrollView}>
         {/* Header */}
         {/* Content */}
@@ -209,7 +209,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
               justifyContent="space-between"
               flexDirection="row"
               alignItems="center">
-              <Text color="primary" fontWeight="bold">
+              <Text color="primary" fontWeight="600">
                 NOSH WALLET
               </Text>
               <Icon name="icon-forwardgreen" size={14} />
@@ -257,7 +257,7 @@ const giftcardStyles = StyleSheet.create({
   text: {
     color: '#fff',
     fontSize: 30,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
 });
 

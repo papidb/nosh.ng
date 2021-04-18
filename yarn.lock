@@ -6864,6 +6864,11 @@ react-native-fast-image@^8.3.4:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.3.4.tgz#79edca177e30311b19d59ff335625bcbe22650d7"
   integrity sha512-LpzAdjUphihUpVEBn5fEv5AILe55rHav0YiZroPZ1rumKDhAl4u2cG01ku2Pb7l8sayjTsNu7FuURAlXUUDsow==
 
+react-native-font-weight@^0.1.5-alpha:
+  version "0.1.5-alpha"
+  resolved "https://registry.yarnpkg.com/react-native-font-weight/-/react-native-font-weight-0.1.5-alpha.tgz#4a60e5c38c3b6e1a8aa662b5c4cdac7052eb5867"
+  integrity sha512-yyVSIfx2EpwzG2hSAXkuERJxjo1xx0mta8XzkNPrbLzBBbiK6PBTwCm+L3K3BZGFWeI193pd/ukarF/YBXgE7Q==
+
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz#942bbf2963bbf49fa79593600ee9d7b5dab3cfc0"

@@ -160,13 +160,14 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
             }}
           />
           <Box alignItems="center" marginBottom="m">
-            <Text color="secondary" opacity={0.5} fontSize={16}>
+            <Text color="secondary" opacity={0.5} fontSize={14}>
               Welcome Back
             </Text>
             <Text
               color="buttonColor"
-              fontFamily="Hurme Geometric Sans 2 Bold"
-              fontSize={24}>
+              fontFamily="Hurme Geometric Sans 2"
+              fontWeight="600"
+              fontSize={22}>
               {user?.name}
             </Text>
           </Box>

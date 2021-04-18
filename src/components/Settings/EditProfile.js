@@ -130,7 +130,7 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
         </TouchableOpacity>
 
         <Box marginLeft="m">
-          <Text fontSize={14} fontWeight="bold" color="text">
+          <Text fontSize={14} fontWeight="600" color="text">
             Edit profile photo
           </Text>
         </Box>

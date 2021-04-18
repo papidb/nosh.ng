@@ -76,17 +76,13 @@ const Item = ({title, index, amount}) => {
         <Text fontSize={16} fontWeight="600" color="white" lineHeight={20.35}>
           Bank withdrawal
         </Text>
-        <Text
-          fontSize={12}
-          fontWeight="bold"
-          color="success"
-          lineHeight={15.26}>
+        <Text fontSize={12} fontWeight="600" color="success" lineHeight={15.26}>
           April 5 - 2021
         </Text>
       </Box>
       {/* Amount */}
       <Text
-        fontWeight="bold"
+        fontWeight="600"
         fontSize={18}
         color="success"
         lineHeight={22.9}
@@ -149,7 +145,7 @@ export const WalletScreen = ({addBank, getBanks, getUser, withdraw}) => {
           <Text
             color="success"
             textAlign="right"
-            fontWeight="bold"
+            fontWeight="600"
             fontSize={12}
             lineHeight={15.26}
             style={styles.ngn}>

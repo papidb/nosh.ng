@@ -28,10 +28,10 @@ export const TransactionModal = ({closeModal = () => {}}) => {
             marginBottom="s"
             marginHorizontal="l"
             alignItems="center">
-            <Text color="text" fontSize={16} fontWeight="bold">
+            <Text color="text" fontSize={16} fontWeight="600">
               USA Apple Itunes
             </Text>
-            <Text color="success" fontSize={16} fontWeight="bold">
+            <Text color="success" fontSize={16} fontWeight="600">
               x 4cards
             </Text>
           </Box>
@@ -49,7 +49,7 @@ export const TransactionModal = ({closeModal = () => {}}) => {
             <Text color="primary" fontSize={24}>
               2,000.00
             </Text>
-            <Text color="primary" fontSize={12} fontWeight="bold">
+            <Text color="primary" fontSize={12} fontWeight="600">
               USD
             </Text>
           </Box>
@@ -67,7 +67,7 @@ export const TransactionModal = ({closeModal = () => {}}) => {
             <Text color="success" fontSize={24}>
               560,000.00
             </Text>
-            <Text color="success" fontSize={12} fontWeight="bold">
+            <Text color="success" fontSize={12} fontWeight="600">
               USD
             </Text>
           </Box>
@@ -80,10 +80,10 @@ export const TransactionModal = ({closeModal = () => {}}) => {
             marginBottom="s"
             marginHorizontal="l"
             alignItems="center">
-            <Text color="success" fontSize={12} fontWeight="bold">
+            <Text color="success" fontSize={12} fontWeight="600">
               April 5 - 2021
             </Text>
-            <Text color="success" fontSize={12} fontWeight="bold">
+            <Text color="success" fontSize={12} fontWeight="600">
               10:36am
             </Text>
           </Box>

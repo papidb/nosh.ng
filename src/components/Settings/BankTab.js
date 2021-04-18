@@ -16,7 +16,7 @@ export const BankTab = ({name = 'NNAMDI AYOOLA', nuban = '0289387823'}) => {
         </Circle>
       </Box>
       <Box>
-        <Text color="primary" fontWeight="bold" fontSize={12}>
+        <Text color="primary" fontWeight="600" fontSize={12}>
           {name} - {nuban}
         </Text>
       </Box>

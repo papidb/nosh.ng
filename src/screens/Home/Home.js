@@ -145,7 +145,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
               justifyContent="center"
               flexDirection="row"
               alignItems="center">
-              <Text fontSize={14} color="buttonColor" fontWeight="700">
+              <Text fontSize={14} color="buttonColor" fontWeight="600">
                 Hottest{' '}
               </Text>
               <Text fontSize={14} color="buttonColor">
@@ -167,7 +167,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
                 <Text fontSize={14} color="buttonColor">
                   Sell{' '}
                 </Text>
-                <Text fontSize={14} color="buttonColor" fontWeight="700">
+                <Text fontSize={14} color="buttonColor" fontWeight="600">
                   GiftCards
                 </Text>
               </Box>
@@ -194,7 +194,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
             justifyContent="space-between"
             flexDirection="row"
             alignItems="center">
-            <Text color="primary" fontWeight="500" fontSize={14}>
+            <Text color="primary" fontWeight="600" fontSize={14}>
               NOSH WALLET
             </Text>
             <Icon name="icon-forwardgreen" size={14} />

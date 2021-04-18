@@ -97,7 +97,7 @@ export const Select = ({
                   fontSize: 14,
                   fontFamily: 'Hurme Geometric Sans 2',
                   color: palette.blue,
-                  fontWeight: 'bold',
+                  fontWeight: '600',
                   backgroundColor: 'transparent',
                   // color: colors.inputText,
                   // flex: 1,

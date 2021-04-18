@@ -67,16 +67,14 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       </Box>
       {/* Remaining */}
       <Box flex={1} alignSelf="center">
-        <Text
-          // fontFamily="Hurme Geometric Sans 2 Bold"
-          color="primary"
-          fontSize={12}>
+        <Text fontWeight="600" color="primary" fontSize={12}>
           {/* Good Morning */}
           {getMessage()}
         </Text>
         <Text
-          // fontFamily="Hurme Geometric Sans 2 Bold"
+          fontWeight="600"
           color={bright ? 'white' : 'buttonColor'}
+          // fontWeight="600"
           fontSize={20}>
           {/* {generateReadableName(user)} */}
           {user.name}
@@ -102,10 +100,9 @@ export const HeaderInfo = ({text, containerProps, textProps}) => {
       backgroundColor="mostBg"
       {...containerProps}>
       <Text
-        // fontFamily="Hurme Geometric Sans 2 Bold"
+        fontWeight="600"
         color="primary"
         textAlign="center"
-        fontWeight="500"
         fontSize={12}
         {...textProps}>
         {text}

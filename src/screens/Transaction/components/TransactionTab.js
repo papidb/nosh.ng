@@ -22,12 +22,12 @@ export const TransactionTab = ({onPress = () => {}}) => {
         </Box>
         {/* Text */}
         <Box flex={1}>
-          <Text fontSize={16} fontWeight="bold" color="text" lineHeight={20.35}>
+          <Text fontSize={16} fontWeight="600" color="text" lineHeight={20.35}>
             USA Apple Itunes
           </Text>
           <Text
             fontSize={12}
-            fontWeight="bold"
+            fontWeight="600"
             color="success"
             lineHeight={15.26}>
             April 5 - 2021
@@ -35,7 +35,7 @@ export const TransactionTab = ({onPress = () => {}}) => {
         </Box>
         {/* Amount */}
         <Text
-          fontWeight="bold"
+          fontWeight="600"
           fontSize={18}
           color="success"
           lineHeight={22.9}

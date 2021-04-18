@@ -28,7 +28,7 @@ export const TransactionHome = () => {
           <Text
             color="success"
             textAlign="right"
-            fontWeight="bold"
+            fontWeight="600"
             fontSize={12}
             lineHeight={15.26}
             style={styles.ngn}>
@@ -41,7 +41,7 @@ export const TransactionHome = () => {
         })}
       </ScrollView>
       <Divider style={[styles.bottomDivider, styles.noMarginTop]} />
-      <Text textAlign="center" color="primary" fontSize={12} fontWeight="bold">
+      <Text textAlign="center" color="primary" fontSize={12} fontWeight="600">
         CLICK ON TRANSACTION FOR DETAILS
       </Text>
       <Divider style={styles.bottomDivider} />

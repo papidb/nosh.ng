@@ -19,7 +19,7 @@ export const UserNameSetup = ({close = () => {}}) => {
           color="primary"
           textAlign="center"
           fontSize={14}
-          fontWeight="bold">
+          fontWeight="600">
           SET UP ONE-TIME USERNAME
         </Text>
       </Box>

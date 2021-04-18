@@ -45,7 +45,7 @@ const Item = ({title, amount}) => (
     <Text
       fontFamily="Hurme Geometric Sans 2"
       fontSize={14}
-      fontWeight="500"
+      fontWeight="600"
       style={{color: '#525C6B'}}>
       {title}
     </Text>
@@ -68,7 +68,7 @@ export const NotificationModal = ({closeModal}) => {
       <Close onPress={closeModal} />
 
       <Text
-        fontWeight="bold"
+        fontWeight="600"
         color="primary"
         textAlign="center"
         marginBottom="l">

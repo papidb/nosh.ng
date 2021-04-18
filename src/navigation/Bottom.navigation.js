@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, Platform, Text} from 'react-native';
 // import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {palette} from 'constants/theme/default';
@@ -148,8 +148,15 @@ export const BottomTab = () => {
       appearance={{floating: true}}
       tabBarOptions={{
         labelStyle: {
-          fontFamily: 'Hurme Geometric Sans 2 Bold',
-          fontSize: 14,
+          fontSize: 12,
+          ...(Platform.OS == 'android'
+            ? {
+                fontFamily: 'Hurme Geometric Sans 2 Bold',
+              }
+            : {
+                fontFamily: 'Hurme Geometric Sans 2',
+                fontWeight: '600',
+              }),
         },
         keyboardHidesTabBar: true,
         activeTintColor: palette.blue,

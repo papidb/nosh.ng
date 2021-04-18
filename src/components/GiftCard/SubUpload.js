@@ -121,7 +121,7 @@ export const SubUpload = ({
         <HeaderInfo
           text={`UPLOAD GIFTCARD ${
             imagesSize != 0
-              ? `(${imagesSize}) image${imagesSize > 0 ? 's' : ''}`
+              ? `(${imagesSize}) image${imagesSize > 1 ? 's' : ''}`
               : ''
           }`}
         />
@@ -157,10 +157,22 @@ export const SubUpload = ({
           <Text
             color="primary"
             fontSize={12}
-            fontWeight="bold"
+            fontWeight="600"
             textAlign="center"
-            marginVertical="xs">
+            marginTop="xs">
             CLICK HERE TO UPLOAD CARD
+          </Text>
+          <Text
+            color="primary"
+            fontSize={12}
+            fontWeight="600"
+            textAlign="center"
+            marginBottom="xs">
+            {`${
+              imagesSize != 0
+                ? `${imagesSize} card${imagesSize > 1 ? 's' : ''}`
+                : ''
+            } selected`}
           </Text>
         </TouchableOpacity>
 
@@ -271,7 +283,7 @@ const style = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
   openText: {
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontSize: 16,
   },
   openPicker: {
@@ -289,7 +301,7 @@ const style = StyleSheet.create({
     borderRadius: 4,
   },
   titleDelete: {
-    fontWeight: 'bold',
+    fontWeight: '600',
     fontSize: 12,
     color: '#000',
   },

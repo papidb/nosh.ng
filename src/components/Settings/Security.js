@@ -102,7 +102,7 @@ export const Security = ({close, changePassword, toggleBio}) => {
       <Box style={{marginVertical: 17}}>
         <Text
           fontSize={12}
-          fontWeight="500"
+          fontWeight="600"
           textAlign="center"
           style={{color: '#A9A9A9'}}>
           CHANGE PASSWORD

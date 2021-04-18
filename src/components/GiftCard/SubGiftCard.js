@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: 'rgba(255, 255, 255, 0.9)',
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
   },
   titleDark: {

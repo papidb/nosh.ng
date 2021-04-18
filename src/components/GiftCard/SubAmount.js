@@ -95,7 +95,7 @@ export const SubAmount = ({
         </GiftCardBox>
         <Input
           variant="giftcard"
-          placeholder="Enter Amount"
+          placeholder="0.00"
           keyboardType="number-pad"
           RightIcon={
             <Text fontSize={12} fontWeight="600" color="primary">
@@ -127,7 +127,7 @@ export const SubAmount = ({
           backgroundColor="mostBg"
           justifyContent="space-between"
           height={62}>
-          <Text fontSize={24} fontWeight="400" color="success">
+          <Text fontSize={24} color="success">
             {commaFormatter(subCategory?.rate * values.amount)}
           </Text>
           <Text fontSize={12} fontWeight="600" color="success">

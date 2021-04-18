@@ -62,12 +62,12 @@ const Item = ({title, index, amount}) => {
                 }
               : {},
           ]}>
-          <Text fontWeight="bold" color={firstColor}>
+          <Text fontWeight="600" color={firstColor}>
             {index}
           </Text>
         </Circle>
         <Box flex={1} flexDirection="row" justifyContent="space-between">
-          <Text fontSize={16} fontWeight="bold" color={textColor}>
+          <Text fontSize={16} fontWeight="600" color={textColor}>
             {title}
           </Text>
           <Text fontSize={18} color={textColor}>
