@@ -82,7 +82,7 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       </Box>
       <Box alignSelf="flex-start" top={1.5 * realTop}>
         <TouchableOpacity {...{onPress: openModal}}>
-          <Icon name="icon-notification" size={40} />
+          <Icon name="icon-notification" size={35} />
         </TouchableOpacity>
       </Box>
     </Box>

@@ -63,6 +63,7 @@ export const Button = ({
         <>
           <Text
             variant={realTextVariant}
+            fontWeight="500"
             style={{
               ...styles.content,
               //   color: textColor || buttonColor,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   content: {
     textAlign: 'center',
-    fontWeight: '600',
+    // fontWeight: '600',
   },
 });
 

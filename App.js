@@ -13,7 +13,7 @@ import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {enableScreens} from 'react-native-screens';
 
-import {Icon, Box, Text as RNText} from 'components';
+import {Icon, Box, Text as RNText, Okay} from 'components';
 import {Main} from 'navigation';
 import {Splash} from 'screens/Splash';
 import configureStore from './store';
@@ -70,13 +70,9 @@ const App = () => {
           />
           {__DEV__ ? <Main /> : done ? <Main /> : <Splash {...{setDone}} />}
           {/* <SafeAreaView>
-            <RNText
-              fontWeight="600"
-              fontFamily="Hurme Geometric Sans 2"
-              //
-            >
-              omsdlkjsdlkfjsd sdlksjdlkjsldkj sdljsdlkjhsdlkjh sdo
-            </RNText>
+            <Box flex={1} justifyContent="flex-start" alignItems="center">
+              <Okay />
+            </Box>
           </SafeAreaView> */}
         </ThemeProvider>
       </PersistGate>
