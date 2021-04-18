@@ -34,7 +34,8 @@ const HomeScreen = ({user, getBanks, getUser}) => {
   } = useModalize();
 
   const toNoshWallet = () => {
-    openSetupUsername();
+    // openSetupUsername();
+    navigation.navigate('Wallet');
   };
   const toHottestCards = () => {
     navigation.navigate('HottestCards');

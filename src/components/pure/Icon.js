@@ -10,6 +10,9 @@ import eye from 'assets/icons/eye.svg';
 import auth_logo from 'assets/icons/auth_logo.svg';
 import fingerprint from 'assets/icons/fingerprint.svg';
 import faceid from 'assets/icons/faceid.svg';
+import kuda from 'assets/icons/kuda.svg';
+import send from 'assets/icons/send.svg';
+
 
 import receipt from 'assets/icons/receipt.svg';
 import giftcard from 'assets/icons/giftcard.svg';
@@ -60,6 +63,8 @@ const ICONS = {
   'icon-edit2': edit2,
   'icon-edit_colored': edit_colored,
   'icon-notification': notification,
+  'icon-kuda': kuda,
+  'icon-send': send,
 };
 
 export const Icon = ({name, size = 24, fill = palette.brandColor, style}) => {

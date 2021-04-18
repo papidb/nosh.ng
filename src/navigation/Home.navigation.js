@@ -2,7 +2,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Home, HottestCard} from 'screens/Home';
+import {Home, Wallet, HottestCard} from 'screens/Home';
 import {palette} from 'constants/theme';
 
 import {Header} from 'components';
@@ -36,6 +36,15 @@ export const HomeNav = () => {
         }}
         name="HottestCards"
         component={HottestCard}
+      />
+      <HomeStack.Screen
+        options={{
+          cardStyle: {backgroundColor: palette.darkBlueButton},
+          headerTitle: '',
+          header: () => <Header bright />,
+        }}
+        name="Wallet"
+        component={Wallet}
       />
     </HomeStack.Navigator>
   );

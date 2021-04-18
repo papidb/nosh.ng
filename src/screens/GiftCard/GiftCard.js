@@ -32,6 +32,7 @@ import {
 const GiftCardScreen = ({getCards, cardSubCategories}) => {
   const navigation = useNavigation();
 
+  const toWallet = () => navigation.navigate('Wallet');
   // Many many
   const [refreshing, setRefreshing] = React.useState(false);
 
@@ -196,10 +197,7 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
         <Box paddingHorizontal="l" marginBottom="l" marginTop="m">
           <Divider />
           {/* Nosh Wallet */}
-          <TouchableOpacity
-            onPress={() => {
-              // goToNextSlide();
-            }}>
+          <TouchableOpacity onPress={toWallet}>
             <Box
               marginTop="s"
               // flex={1}
