@@ -118,7 +118,7 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
       <Box height={25} />
       <Box>
         <Button
-          text="Save"
+          text="Withdraw"
           loading={isSubmitting}
           onPress={handleSubmit}
           disabled={isSubmitting}

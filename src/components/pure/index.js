@@ -10,3 +10,4 @@ export * from './Select';
 export * from './Close';
 export * from './RaiseAndroid';
 export * from './Loading';
+export * from './SwipeButton';

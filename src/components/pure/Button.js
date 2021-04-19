@@ -63,7 +63,7 @@ export const Button = ({
         <>
           <Text
             variant={realTextVariant}
-            fontWeight="500"
+            fontWeight="600"
             style={{
               ...styles.content,
               //   color: textColor || buttonColor,

@@ -21,6 +21,7 @@ import theme from 'constants/theme/default';
 import {SafeAreaView} from 'react-native-safe-area-context';
 // import SwipeButton from 'rn-swipe-button';
 // import FontManager from 'react-native-font-weight';
+// import SwipeButton from './SwipeButton';
 
 enableScreens();
 
@@ -53,12 +54,16 @@ const TextProps = {
 SetCustomText(TextProps);
 const App = () => {
   const [done, setDone] = React.useState(false);
+  const [toggleState, setToggleState] = React.useState(false);
+  const handleToggle = (value) => setToggleState(value);
+
   // React.useEffect(() => {
   //   FontManager.init();
   //   FontManager.override({
   //     fontFamily: 'Hurme Geometric Sans 2',
   //   });
   // }, []);
+  console.log({toggleState});
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -70,9 +75,7 @@ const App = () => {
           />
           {__DEV__ ? <Main /> : done ? <Main /> : <Splash {...{setDone}} />}
           {/* <SafeAreaView>
-            <Box flex={1} justifyContent="flex-start" alignItems="center">
-              <Okay />
-            </Box>
+            <SwipeButton onToggle={handleToggle} />
           </SafeAreaView> */}
         </ThemeProvider>
       </PersistGate>

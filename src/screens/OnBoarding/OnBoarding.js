@@ -347,6 +347,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 5,
     textAlign: 'center',
+    ...(Platform.OS === 'android'
+      ? {
+          fontFamily: 'Hurme Geometric Sans 2 Bold',
+        }
+      : {
+          fontFamily: 'Hurme Geometric Sans 2',
+          fontWeight: '600',
+        }),
   },
   description: {
     fontWeight: '600',
@@ -356,6 +364,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 16 * 1.5,
     color: '#7F76D1',
+    fontFamily: 'Hurme Geometric Sans 2',
   },
   logo: {
     opacity: 0.9,

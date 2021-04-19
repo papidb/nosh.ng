@@ -46,7 +46,7 @@ const OkayLottie = (props) => (
 export const Okay = ({offModal = () => {}, text, ...props}) => {
   return (
     <Box
-      backgroundColor="mostBg"
+      // backgroundColor="mostBg"
       height={Layout.window.height}
       width={Layout.window.width}
       //

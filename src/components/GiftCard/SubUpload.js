@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {
   StyleSheet,
   Dimensions,
-  FlatList,
+  ScrollView,
   Image,
   ActivityIndicator,
   TouchableOpacity,
@@ -11,9 +11,19 @@ import {
 import PropTypes from 'prop-types';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import {Box, Text, Circle, Button, HeaderInfo, Icon, Input} from 'components';
-import {waait} from 'shared/utils';
+import {
+  Box,
+  Text,
+  Circle,
+  SwipeButton,
+  Okay,
+  HeaderInfo,
+  Icon,
+  Input,
+} from 'components';
+import {waait, uuid} from 'shared/utils';
 import {GiftCardBox} from './GiftCardBox';
+import Modal from 'react-native-modal';
 
 import images from 'constants/images';
 import {capitalizeFirstLetter} from 'shared/utils';
@@ -24,13 +34,13 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import {useFormik} from 'formik';
 import {createFormArrayData, createFormData} from 'shared/utils';
-import SwipeButton from 'rn-swipe-button';
 
 import {
   showErrorSnackBar,
   showSuccessSnackBar,
   extractErrorMessage,
 } from 'shared/utils';
+import {useNavigation} from '@react-navigation/core';
 
 export const SubUpload = ({
   next,
@@ -40,6 +50,13 @@ export const SubUpload = ({
   subCategory,
 }) => {
   const [images, setImages] = useState([]);
+  const [done, setDone] = useState(false);
+  const navigation = useNavigation();
+
+  const offModal = () => {
+    navigation.navigate('Home');
+    setDone(false);
+  };
 
   // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
   const imageUri = giftCard.avatar;
@@ -70,6 +87,7 @@ export const SubUpload = ({
         // console.log({rawData});
         // // const rawData = createFormData(images[0]);
         await waait(2000);
+        setDone(true);
         showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
       } catch (error) {
         console.log({error});
@@ -94,8 +112,9 @@ export const SubUpload = ({
     }
   };
   const thumbIcon = useCallback(() => {
+    console.log('omo');
     return (
-      <Box backgroundColor="mostBg">
+      <Box>
         {isSubmitting ? (
           <ActivityIndicator color="white" />
         ) : (
@@ -104,6 +123,21 @@ export const SubUpload = ({
       </Box>
     );
   }, [isSubmitting]);
+  const renderItem = ({path}) => {
+    return (
+      <Circle size={75} key={uuid()}>
+        <Image
+          style={{
+            width: 75,
+            height: 75,
+            borderRadius: 75,
+            // resizeMode: 'contain',
+          }}
+          source={{uri: path}}
+        />
+      </Circle>
+    );
+  };
   // const thumbIcon = () => {
 
   // };
@@ -118,6 +152,11 @@ export const SubUpload = ({
         setSwiperHeight(height);
       }}>
       <KeyboardAwareScrollView>
+        <Modal isVisible={done} backdropColor="#EAF8FD" backdropOpacity={1}>
+          <Box flex={1} justifyContent="flex-start" alignItems="center">
+            <Okay {...{offModal}} />
+          </Box>
+        </Modal>
         <HeaderInfo
           text={`UPLOAD GIFTCARD ${
             imagesSize != 0
@@ -149,11 +188,26 @@ export const SubUpload = ({
           </Text>
         </GiftCardBox>
         <TouchableOpacity onPress={openPicker}>
-          <GiftCardBox marginVertical="m" padding="none">
-            <Text fontSize={18} fontWeight="600">
-              <Icon name="icon-cart" size={43.2} />
-            </Text>
-          </GiftCardBox>
+          {imagesSize ? (
+            <Box
+              paddingHorizontal="m"
+              paddingVertical="xs"
+              backgroundColor="white"
+              borderRadius={155}
+              justifyContent="center">
+              <ScrollView horizontal>
+                {images.map((item) => {
+                  return renderItem(item);
+                })}
+              </ScrollView>
+            </Box>
+          ) : (
+            <GiftCardBox marginVertical="m" padding="none">
+              <Text fontSize={18} fontWeight="600">
+                <Icon name="icon-cart" size={43.2} />
+              </Text>
+            </GiftCardBox>
+          )}
           <Text
             color="primary"
             fontSize={12}
@@ -162,26 +216,7 @@ export const SubUpload = ({
             marginTop="xs">
             CLICK HERE TO UPLOAD CARD
           </Text>
-          <Text
-            color="primary"
-            fontSize={12}
-            fontWeight="600"
-            textAlign="center"
-            marginBottom="xs">
-            {`${
-              imagesSize != 0
-                ? `${imagesSize} card${imagesSize > 1 ? 's' : ''}`
-                : ''
-            } selected`}
-          </Text>
         </TouchableOpacity>
-
-        {/* <Box>
-          {images.map((item) => {
-            console.log({item});
-            return renderItem({item});
-          })}
-        </Box> */}
 
         {/* <FlatList
           style={[
@@ -222,30 +257,10 @@ export const SubUpload = ({
         /> */}
         <Box alignItems="center">
           <SwipeButton
-            // disabled={isSubmitting}
-            //disable the button by doing true (Optional)
-            swipeSuccessThreshold={70}
-            height={58}
-            containerStyles={{borderWidth: 5}}
-            //height of the button (Optional)
-            width={'95%'}
-            //width of the button (Optional)
             title="SWIPE T0 SELL"
-            //Text inside the button (Optional)
-            thumbIconComponent={thumbIcon}
-            //You can also set your own icon for the button (Optional)
-            onSwipeSuccess={handleSubmit}
-            successTitle="loading"
-            //After the completion of swipe (Optional)
-            railFillBackgroundColor="#3DAA9D" //(Optional)
-            railFillBorderColor="#3DAA9D" //(Optional)
-            thumbIconBackgroundColor="rgba(61,170,157, 0.1)" //(Optional)
-            shouldResetAfterSuccess
-            // thumbIconBorderColor="#ed9aff" //(Optional)
-            railBackgroundColor="#023248" //(Optional)
-            railBorderColor="transparent" //(Optional)
-            titleColor="#3DAA9D"
-            titleStyles={{color: '#3DAA9D', textAlign: 'right', fontSize: 12}}
+            thumbIcon={thumbIcon}
+            {...{loading: isSubmitting}}
+            onToggle={handleSubmit}
           />
         </Box>
       </KeyboardAwareScrollView>
