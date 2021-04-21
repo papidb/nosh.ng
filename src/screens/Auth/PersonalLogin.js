@@ -143,31 +143,41 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
       <RaiseAndroid height={20} />
     </Box>
   );
+  console.log(user?.avatar);
   return (
     <AuthContainer>
       <KeyboardAwareScrollView>
-        <Box margin="s" marginTop="none" style={styles.container}>
+        <Box margin="none" marginTop="none" style={styles.container}>
           {/* Image */}
           <AuthAvatar
-            size={135}
+            avatar={user.avatar}
+            size={120}
             imageProps={{
               style: {
-                height: 110,
-                width: 110,
-                borderRadius: 110,
+                height: 105,
+                width: 105,
+                borderRadius: 105,
+                resizeMode: 'contain',
+              },
+            }}
+            imagePropsActive={{
+              style: {
+                height: 120,
+                width: 120,
+                borderRadius: 120,
                 resizeMode: 'contain',
               },
             }}
           />
           <Box alignItems="center" marginBottom="m">
-            <Text color="secondary" opacity={0.5} fontSize={14}>
+            <Text color="secondary" opacity={0.5} fontSize={12}>
               Welcome Back
             </Text>
             <Text
               color="buttonColor"
               fontFamily="Hurme Geometric Sans 2"
               fontWeight="600"
-              fontSize={22}>
+              fontSize={20}>
               {user?.name}
             </Text>
           </Box>
@@ -221,7 +231,7 @@ export const PersonalLogin = connect(({user, misc: {bio}}) => ({user, bio}), {
 
 const styles = StyleSheet.create({
   container: {marginHorizontal: 37},
-  bottom: {marginTop: 10},
+  bottom: {marginTop: 30},
   tandc: {
     color: '#525C6B',
   },

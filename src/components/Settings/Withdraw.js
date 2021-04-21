@@ -108,7 +108,7 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
         </Box>
       ) : (
         <Box>
-          <Text textAlign="center" color="primary">
+          <Text textAlign="center" color="primary" fontWeight="600">
             Add banks to be able to withdraw
           </Text>
         </Box>

@@ -194,28 +194,28 @@ const GiftCardScreen = ({getCards, cardSubCategories}) => {
           <SubAmountCallBack />
           <SubUploadCallback />
         </Swiper>
-        <Box paddingHorizontal="l" marginBottom="l" marginTop="m">
-          <Divider />
-          {/* Nosh Wallet */}
-          <TouchableOpacity onPress={toWallet}>
-            <Box
-              marginTop="s"
-              // flex={1}
-              backgroundColor="mostBg"
-              borderRadius={100}
-              padding="m"
-              paddingLeft="xl"
-              paddingRight="l"
-              justifyContent="space-between"
-              flexDirection="row"
-              alignItems="center">
-              <Text color="primary" fontWeight="600">
-                NOSH WALLET
-              </Text>
-              <Icon name="icon-forwardgreen" size={14} />
-            </Box>
-          </TouchableOpacity>
-        </Box>
+        <Divider />
+        {/* Nosh Wallet */}
+        <TouchableOpacity onPress={toWallet}>
+          <Box
+            marginTop="s"
+            flex={1}
+            backgroundColor="mostBg"
+            borderRadius={100}
+            height={38}
+            padding="m"
+            paddingLeft="xl"
+            paddingRight="l"
+            justifyContent="space-between"
+            flexDirection="row"
+            alignItems="center">
+            <Text color="primary" fontWeight="600" fontSize={14}>
+              NOSH WALLET
+            </Text>
+            <Icon name="icon-forwardgreen" size={14} />
+          </Box>
+        </TouchableOpacity>
+
         <RaiseAndroid />
       </ScrollView>
     </Box>

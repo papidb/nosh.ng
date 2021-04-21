@@ -19,7 +19,7 @@ import {Box, Text, Divider, HeaderInfo, Circle, Icon, Header} from 'components';
 import {UserNameSetup, Balance} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
-import {addBank, getBanks, getUser, withdraw} from 'action';
+import {addBank, getBanks, getUser, verifyAccount, withdraw} from 'action';
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -93,9 +93,16 @@ const Item = ({title, index, amount}) => {
   );
 };
 
-export const WalletScreen = ({addBank, getBanks, getUser, withdraw}) => {
+export const WalletScreen = ({
+  addBank,
+  getBanks,
+  verifyAccount,
+  getUser,
+  withdraw,
+}) => {
   const user = useSelector((state) => state.user);
   const banks = user?.wallet?.banks ?? [];
+  console.log({banks});
   const thereIsBank = banks.length > 0;
   const {
     openModal: openAddBank,
@@ -111,10 +118,10 @@ export const WalletScreen = ({addBank, getBanks, getUser, withdraw}) => {
     () => (
       <AddBank
         close={closeAddBankModal}
-        {...{user, addBank, getUser, getBanks}}
+        {...{user, addBank, getUser, getBanks, verifyAccount}}
       />
     ),
-    [addBank, closeAddBankModal, getBanks, getUser, user],
+    [addBank, closeAddBankModal, getBanks, getUser, user, verifyAccount],
   );
 
   const renderItem = ({item, index}) => (
@@ -227,6 +234,7 @@ export const Wallet = connect(null, {
   getBanks,
   getUser,
   withdraw,
+  verifyAccount,
 })(WalletScreen);
 
 const styles = StyleSheet.create({

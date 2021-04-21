@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import {Box, Text, Circle} from 'components';
 import images from 'constants/images';
 
-export const BankTab = ({name = 'NNAMDI AYOOLA', nuban = '0289387823'}) => {
+export const BankTab = ({accountName = '', accountNumber = ''}) => {
   return (
     <Box flexDirection="row" alignItems="center" justifyContent="space-between">
       {/* Image */}
@@ -17,7 +17,7 @@ export const BankTab = ({name = 'NNAMDI AYOOLA', nuban = '0289387823'}) => {
       </Box>
       <Box>
         <Text color="primary" fontWeight="600" fontSize={12}>
-          {name} - {nuban}
+          {accountName} - {accountNumber}
         </Text>
       </Box>
     </Box>

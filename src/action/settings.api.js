@@ -31,6 +31,21 @@ export const addBank = (data) => {
   };
 };
 
+export const verifyAccount = (state) => (dispatch, getState) => {
+  const store = getState();
+  const {accessToken} = store?.auth;
+  console.log({accessToken});
+  return HijackError(
+    axios
+      .post(`${BASE_URL}verify-bank-account`, state, {
+        headers: {Authorization: `Bearer ${accessToken}`},
+      })
+      .then(({data}) => {
+        return data;
+      }),
+    dispatch,
+  );
+};
 export const withdraw = (data) => {
   return (dispatch, getState) => {
     const store = getState();

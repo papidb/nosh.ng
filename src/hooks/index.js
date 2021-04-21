@@ -5,4 +5,4 @@ export * from './useAppState';
 // export * from './useCombinedRefs';
 // export {default as magicMemo} from './magicMemo';
 // export * from './useRealm';
-// export * from './useVerifyBankAccount';
+export * from './useVerifyBankAccount';

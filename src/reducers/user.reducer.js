@@ -38,18 +38,20 @@ export default function userReducer(state = initialState, action) {
       //     name: payload.name,
       //     unsubscribed_from_emails: true,
       //   });
-      if (payload?.wallet?.bank == null) {
+      // console.log(payload?.user?.wallet?.banks == null);
+
+      let banks = payload?.user?.wallet?.banks;
+      if (banks == null || banks?.length == 0) {
         return {
           ...state,
           ...(payload?.user ?? {}),
           wallet: {
-            ...action?.payload?.wallet,
+            ...payload?.user?.wallet,
             banks: [],
           },
         };
       }
       return {
-        ...state,
         ...(payload?.user ?? {}),
       };
     case LOGIN:
@@ -100,6 +102,7 @@ export default function userReducer(state = initialState, action) {
         name: state.name,
         userId: state.userId,
         _id: state._id,
+        avatar: state.avatar,
       };
 
     default:

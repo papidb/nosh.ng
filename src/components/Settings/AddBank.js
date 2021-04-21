@@ -15,6 +15,7 @@ import {
 } from 'shared/utils';
 import {ModalContainer} from './ModalContainer';
 import {useStore} from 'react-redux';
+import {useVerifyBankAccount} from 'hooks';
 
 const BankSchema = Yup.object({
   bankcode: Yup.string().required('Required!').notOneOf(['Bank'], 'Required'),
@@ -27,7 +28,14 @@ const initailValues = __DEV__
       bankcode: '058',
     }
   : {nuban: '', bankcode: ''};
-export const AddBank = ({close, getUser, addBank, user, getBanks}) => {
+export const AddBank = ({
+  close,
+  getUser,
+  addBank,
+  user,
+  getBanks,
+  verifyAccount,
+}) => {
   const {
     misc: {banks: reduxBanks = [], bankMap: reduxBankMap = {}},
   } = useStore().getState();
@@ -87,6 +95,12 @@ export const AddBank = ({close, getUser, addBank, user, getBanks}) => {
     },
     validationSchema: BankSchema,
   });
+  // console.log({verifyAccount});
+  // const {account, loading: getNameLoading, valid} = useVerifyBankAccount(
+  //   true,
+  //   values,
+  //   verifyAccount,
+  // );
   const setBankCodeValue = (str) => {
     setFieldTouched('bankcode', true);
     setFieldValue('bankcode', str);

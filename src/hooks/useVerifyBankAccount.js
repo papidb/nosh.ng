@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Keyboard} from 'react-native';
-import {getFormData} from '@shared/utils';
 
 export const useVerifyBankAccount = (
   isValid,
   values,
-  verifyAccountFn,
+  verifyAccountFn = () => {},
   //   setLoading = () => {},
 ) => {
   const [account, setAccountName] = useState('');
@@ -15,7 +14,7 @@ export const useVerifyBankAccount = (
   useEffect(() => {
     try {
       (async () => {
-        let {nuban, bankcode, amount} = values;
+        let {nuban, bankcode} = values;
         // console.log({nuban, bankcode});
         if (nuban && nuban.trim() == '') {
           nuban = null;
@@ -24,21 +23,21 @@ export const useVerifyBankAccount = (
         if (!nuban || nuban.length !== 10) return;
         setLoading(true);
         Keyboard.dismiss();
-        let bankData = await getFormData({code: bankcode, nuban: nuban.trim()});
+        let bankData = {bankCode: bankcode, accountNumber: nuban.trim()};
         let accountName = await verifyAccountFn(bankData);
-        // console.log({accountName});
-        if (accountName == 'Unable to resolve bank') {
-          setAccountName('Unable to resolve bank');
-          setValid(false);
-          //   wait(2000).then(() => {
-          //     setAccountName('');
-          //   });
-          //   setFieldValue('nuban', '');
-          return;
-        }
-        setValid(true);
-        setLoading(false);
-        setAccountName(accountName);
+        console.log({accountName});
+        // if (accountName == 'Unable to resolve bank') {
+        //   setAccountName('Unable to resolve bank');
+        //   setValid(false);
+        //   //   wait(2000).then(() => {
+        //   //     setAccountName('');
+        //   //   });
+        //   //   setFieldValue('nuban', '');
+        //   return;
+        // }
+        // setValid(true);
+        // setLoading(false);
+        // setAccountName(accountName);
       })();
     } catch (error) {
       setValid(false);

@@ -20,6 +20,7 @@ import {
   getUser,
   addBank,
   getBanks,
+  verifyAccount,
   updateProfilePic,
 } from 'action';
 import {uuid} from 'shared/utils';
@@ -33,6 +34,7 @@ export const Screen = ({
   updateProfilePic,
   getUser,
   getBanks,
+  verifyAccount,
   bankList,
   bankMap,
   user,
@@ -63,10 +65,10 @@ export const Screen = ({
     () => (
       <AddBank
         close={closeAddBankModal}
-        {...{user, addBank, getUser, getBanks}}
+        {...{user, addBank, getUser, getBanks, verifyAccount}}
       />
     ),
-    [addBank, closeAddBankModal, getBanks, getUser, user],
+    [addBank, closeAddBankModal, getBanks, verifyAccount, getUser, user],
   );
   const onShare = async () => {
     try {
@@ -162,6 +164,7 @@ export const SettingsHome = connect(mapStateToProps, {
   getUser,
   addBank,
   getBanks,
+  verifyAccount,
 })(Screen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},

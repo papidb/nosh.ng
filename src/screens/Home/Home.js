@@ -138,7 +138,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
         <Box flex={1} flexDirection="row" marginBottom="s">
           <TouchableOpacity onPress={toHottestCards}>
             <Box
-              flex={1}
+              flex={0.8}
               backgroundColor="mostBg"
               borderRadius={100}
               padding="l"
@@ -172,7 +172,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
                 </Text>
               </Box>
               <Box position="absolute" right={4}>
-                <Circle size={42} backgroundColor="white">
+                <Circle size={40} backgroundColor="white">
                   <Icon name="icon-forward" size={14} />
                 </Circle>
               </Box>
