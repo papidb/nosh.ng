@@ -48,7 +48,7 @@ const TextProps = {
   style: {
     // color: 'blue',
     fontFamily: 'Hurme Geometric Sans 2',
-    fontSize: 14,
+    fontSize: 13,
   },
 };
 SetCustomText(TextProps);

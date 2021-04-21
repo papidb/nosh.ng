@@ -36,8 +36,8 @@ export const Balance = ({user, containerProps}) => {
           fontSize={33}
           fontWeight="600"
           lineHeight={42.37}>
-          {/* {balanceWhole} */}
-          232,323
+          {balanceWhole}
+          {/* 232,323 */}
         </Text>
         <Text color="primary" fontSize={30}>
           .{balanceFraction}
