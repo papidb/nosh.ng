@@ -16,7 +16,7 @@ export const palette = {
   transparent: 'transparent',
   orange: '#ff4000',
   green: '#3DAA9D',
-  lightGreen: ' rgba(61,170,157,0.1)',
+  lightGreen: 'rgba(61,170,157,0.1)',
   darkGrey: '#525C6B',
   fadedBrown: '#DADADA',
 

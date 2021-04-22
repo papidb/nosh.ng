@@ -87,7 +87,8 @@ export const SubCategory = ({
       <Box
         justifyContent="space-between"
         flexDirection="row"
-        marginVertical="s">
+        marginVertical="xs"
+        marginBottom="xxs">
         <TouchableOpacity onPress={prev}>
           <Circle size={42} backgroundColor="white">
             <Icon name="icon-backward" size={14} />
@@ -99,24 +100,27 @@ export const SubCategory = ({
           style={styles.image}
         />
       </Box>
-      <GiftCardBox marginVertical="m">
+      <GiftCardBox marginVertical="none" marginBottom="xxs">
         <Text fontSize={18} fontWeight="600">
           {capitalizeFirstLetter(giftCard?.name)}
         </Text>
       </GiftCardBox>
-      <Select
-        placeholder={data.cardSub}
-        items={cardsubcategory}
-        value={values.category}
-        touched={touched.category}
-        error={errors.category}
-        onValueChange={setcategoryValue}
-        errorTextProps={{marginLeft: 'l'}}
-        onClose={() => {
-          setFieldTouched('category', true);
-        }}
-      />
-      <Box flexDirection="row" marginVertical="xs" marginTop="l">
+      <Box marginHorizontal="xl">
+        <Select
+          placeholder={data.cardSub}
+          items={cardsubcategory}
+          value={values.category}
+          touched={touched.category}
+          error={errors.category}
+          onValueChange={setcategoryValue}
+          errorTextProps={{marginLeft: 'l'}}
+          onClose={() => {
+            setFieldTouched('category', true);
+          }}
+        />
+      </Box>
+
+      <Box flexDirection="row" marginVertical="xs" marginTop="xl">
         <Box flex={1} />
         <Image source={images.discount} />
         <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>

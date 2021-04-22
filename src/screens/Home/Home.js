@@ -37,6 +37,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
   const toNoshWallet = () => {
     // openSetupUsername();
     navigation.navigate('Wallet');
+    // openSetupUsername();
   };
   const toHottestCards = () => {
     navigation.navigate('HottestCards');
@@ -90,6 +91,12 @@ const HomeScreen = ({user, getBanks, getUser}) => {
     })();
   }, [getBanks, getInfo]);
   useEffect(() => {
+    // check if user has username
+    const hasUsername = !!user.username;
+    console.log({hasUsername});
+    !hasUsername && openSetupUsername();
+  }, [user, openSetupUsername]);
+  useEffect(() => {
     console.log('running init');
     try {
       init();
@@ -110,7 +117,9 @@ const HomeScreen = ({user, getBanks, getUser}) => {
   return (
     <Box flex={1}>
       <Portal>
-        <UserNameSetupModalize childrenStyle={styles.childrenStyle}>
+        <UserNameSetupModalize
+          childrenStyle={styles.childrenStyle}
+          closeOnOverlayTap={false}>
           <UserNameSetup close={closeSetupUsername} />
         </UserNameSetupModalize>
       </Portal>
@@ -130,11 +139,13 @@ const HomeScreen = ({user, getBanks, getUser}) => {
           style={styles.coreImage}>
           <Image
             source={images.Hands}
-            style={{
-              // height: 120,
-              // width: Layout.window.width - 40,
-              resizeMode: 'center',
-            }}
+            style={
+              {
+                // height: 200,
+                // width: Layout.window.width - 40,
+                // resizeMode: 'contain',
+              }
+            }
           />
           <Image
             source={images[coreImages[imageIndex]]}
@@ -143,10 +154,11 @@ const HomeScreen = ({user, getBanks, getUser}) => {
         </Box>
         {/* Rest */}
         <Box flex={1} flexDirection="row" marginBottom="s">
-          <TouchableOpacity onPress={toHottestCards}>
+          <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
             <Box
-              flex={0.8}
+              flex={1}
               backgroundColor="mostBg"
+              height={52}
               borderRadius={100}
               padding="l"
               justifyContent="center"
@@ -161,12 +173,13 @@ const HomeScreen = ({user, getBanks, getUser}) => {
             </Box>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={toGiftCards} style={{flex: 1}}>
+          <TouchableOpacity onPress={toGiftCards} style={{flex: 1.4}}>
             <Box
-              flex={2}
+              flex={1}
               backgroundColor="mostBg"
               borderRadius={100}
-              padding="xs"
+              style={{padding: 5}}
+              height={52}
               flexDirection="row"
               marginLeft="xxs"
               alignItems="center">
@@ -178,8 +191,8 @@ const HomeScreen = ({user, getBanks, getUser}) => {
                   GiftCards
                 </Text>
               </Box>
-              <Box position="absolute" right={4}>
-                <Circle size={40} backgroundColor="white">
+              <Box right={0}>
+                <Circle size={42} backgroundColor="white">
                   <Icon name="icon-forward" size={14} />
                 </Circle>
               </Box>

@@ -32,6 +32,7 @@ export const Input = ({
   RightIcon,
   ErrorTextStyles,
   nospace,
+  outer,
   onBlur: componentOnBlur,
   onFocus: componentOnFocus,
   ...props
@@ -78,7 +79,7 @@ export const Input = ({
   //   }, []);
   const paddingRight = Icon ? {paddingRight: 'm'} : {};
   return (
-    <Box marginVertical={nospace ? 'none' : 's'}>
+    <Box marginVertical={nospace ? 'none' : 's'} {...outer}>
       <TouchableWithoutFeedback
         onPress={() => {
           try {

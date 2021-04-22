@@ -119,8 +119,10 @@ const LoginScreen = ({login, getUser}) => {
         />
       </Box>
       <TouchableOpacity onPress={() => toRegister()}>
-        <Text fontSize={14} textAlign="center">
-          <Text color="primary">Don’t own an account? </Text>
+        <Text fontSize={13} textAlign="center">
+          <Text fontSize={13} color="primary">
+            Don’t own an account?{' '}
+          </Text>
           Register
         </Text>
       </TouchableOpacity>
@@ -130,7 +132,7 @@ const LoginScreen = ({login, getUser}) => {
   return (
     <AuthContainer>
       <KeyboardAwareScrollView>
-        <Box margin="s" marginTop="none" style={styles.container}>
+        <Box margin="s" marginTop="-l" style={styles.container}>
           {/* Image */}
           <AuthAvatar
             size={120}
@@ -163,7 +165,7 @@ const LoginScreen = ({login, getUser}) => {
           {/* Agreement */}
           <Box marginBottom={{bigScreen: 'xl', phone: 'l'}} marginTop="xs">
             <TouchableOpacity onPress={() => toResetPassword()}>
-              <Text fontSize={14} textAlign="right" style={styles.tandc}>
+              <Text fontSize={12} textAlign="right" style={styles.tandc}>
                 Forgot Password?
               </Text>
             </TouchableOpacity>

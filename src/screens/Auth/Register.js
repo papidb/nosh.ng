@@ -86,6 +86,7 @@ const RegisterScreen = ({register}) => {
             error={errors.name}
             touched={touched.name}
             value={values.name}
+            outer={{marginVertical: 'none', marginBottom: 'xs'}}
           />
           <Input
             placeholder="Email"
@@ -94,6 +95,7 @@ const RegisterScreen = ({register}) => {
             error={errors.email}
             touched={touched.email}
             value={values.email}
+            outer={{marginVertical: 'none', marginBottom: 'xs'}}
           />
           <Input
             placeholder="Phone"
@@ -102,6 +104,7 @@ const RegisterScreen = ({register}) => {
             error={errors.phoneNumber}
             touched={touched.phoneNumber}
             value={values.phoneNumber}
+            outer={{marginVertical: 'none', marginBottom: 'xs'}}
           />
           <Input
             placeholder="Password"
@@ -120,9 +123,10 @@ const RegisterScreen = ({register}) => {
             touched={touched.confirmPassword}
             value={values.confirmPassword}
             passwordIcon
+            outer={{marginVertical: 'none', marginBottom: 'xs'}}
           />
           {/* Agreement */}
-          <Box marginBottom="xl" marginTop="l">
+          <Box marginBottom="l" marginTop="m">
             <Text fontSize={13} style={styles.tandc}>
               This means you agree to all our Terms and Conditions
             </Text>
@@ -137,8 +141,10 @@ const RegisterScreen = ({register}) => {
             />
           </Box>
           <TouchableOpacity onPress={() => toLogin()}>
-            <Text fontSize={14} textAlign="center">
-              <Text color="primary">Already own an account? </Text>
+            <Text fontSize={13} textAlign="center">
+              <Text color="primary" fontSize={13}>
+                Already own an account?{' '}
+              </Text>
               Login
             </Text>
           </TouchableOpacity>

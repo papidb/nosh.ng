@@ -116,11 +116,12 @@ export const SubAmount = ({
 
         <GiftCardBox
           // marginVertical="m"
-          marginBottom="xs"
+          // marginBottom="xs"
           flexDirection="row"
           backgroundColor="mostBg"
           justifyContent="space-between"
-          height={62}>
+          height={62}
+          marginBottom="l">
           <Text fontSize={24} color="success">
             {commaFormatter(subCategory?.rate * values.amount)}
           </Text>

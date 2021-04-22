@@ -44,9 +44,9 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       </Modal>
       <Box marginRight="m">
         <AuthAvatar
-          size={81}
+          size={70}
           avatar={user.avatar}
-          containerProps={{marginTop: 'm', style: {marginBottom: 15}}}
+          containerProps={{marginTop: 's', style: {marginBottom: 6}}}
           imageProps={{
             style: {
               height: 65,
@@ -57,9 +57,9 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
           }}
           imagePropsActive={{
             style: {
-              height: 81,
-              width: 81,
-              borderRadius: 81,
+              height: 70,
+              width: 70,
+              borderRadius: 70,
               resizeMode: 'contain',
             },
           }}

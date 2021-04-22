@@ -125,17 +125,21 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
           onPress={handleSubmit}
         />
       </Box>
-      <Box flexDirection="row" justifyContent="center">
+      <Box flexDirection="row" justifyContent="center" alignItems="center">
         <TouchableOpacity onPress={toResetPassword}>
-          <Text fontSize={14} textAlign="center">
-            <Text color="primary">Forgot Password?</Text>
+          <Text fontSize={13} textAlign="center">
+            <Text fontSize={13} color="primary">
+              Forgot Password?
+            </Text>
             {/* Register */}
           </Text>
         </TouchableOpacity>
         <Text>{' | '}</Text>
         <TouchableOpacity onPress={toLogin}>
-          <Text fontSize={14} textAlign="center">
-            <Text color="buttonColor">Not You? </Text>
+          <Text fontSize={13} textAlign="center">
+            <Text fontSize={13} color="buttonColor">
+              Not You?{' '}
+            </Text>
           </Text>
         </TouchableOpacity>
       </Box>
@@ -191,7 +195,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
             passwordIcon
           />
           <Box marginTop={{bigScreen: 'xl', phone: 's'}}>
-            {bio !== BiometryTypes.none && BIOAPP && (
+            {/* {bio !== BiometryTypes.none && BIOAPP && (
               <Box alignItems="center">
                 <TouchableOpacity>
                   <Box
@@ -211,7 +215,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
                   </Box>
                 </TouchableOpacity>
               </Box>
-            )}
+            )} */}
           </Box>
         </Box>
         {Bottom}

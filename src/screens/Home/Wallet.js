@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback} from 'react';
 import {
   FlatList,
@@ -102,7 +103,7 @@ export const WalletScreen = ({
 }) => {
   const user = useSelector((state) => state.user);
   const banks = user?.wallet?.banks ?? [];
-  console.log({banks});
+  // console.log({banks});
   const thereIsBank = banks.length > 0;
   const {
     openModal: openAddBank,
@@ -183,7 +184,7 @@ export const WalletScreen = ({
         renderItem={renderItem}
         keyExtractor={() => uuid()}
         ItemSeparatorComponent={() => (
-          <Divider style={{marginHorizontal: 18, marginBottom: 8}} />
+          <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
         )}
       />
       <Box flexDirection="row">
@@ -199,7 +200,7 @@ export const WalletScreen = ({
             flexDirection: 'row',
             marginRight: 10,
           }}>
-          <Icon name="icon-send" style={{position: 'absolute', left: 19}} />
+          <Icon name="icon-send" size={25} style={{left: 0}} />
           <Text
             color="primary"
             fontWeight="600"
@@ -215,7 +216,7 @@ export const WalletScreen = ({
             height: 52,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'rgba(48,188,237,0.1)',
+            backgroundColor: 'rgba(61,170,157,0.1)',
             borderRadius: 100,
             flexDirection: 'row',
             marginRight: 10,

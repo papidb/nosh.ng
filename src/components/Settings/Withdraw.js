@@ -3,14 +3,23 @@ import {ActivityIndicator} from 'react-native';
 
 import PropTypes from 'prop-types';
 
-import {Box, Icon, Text, HeaderInfo, Input, Divider, Button} from 'components';
+import {
+  Box,
+  Icon,
+  Text,
+  HeaderInfo,
+  SwipeButton,
+  Input,
+  Divider,
+  Button,
+} from 'components';
 import {palette} from 'constants/theme';
 
 import {ModalContainer} from './ModalContainer';
 import {BankTab} from './BankTab';
 import {useFormik} from 'formik';
 
-import SwipeButton from 'rn-swipe-button';
+// import SwipeButton from 'rn-swipe-button';
 
 import {
   showErrorSnackBar,
@@ -56,6 +65,7 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
       } catch (error) {
         const message = extractErrorMessage(error);
         showErrorSnackBar({text: message});
+        close();
       }
     },
     validationSchema: AmountSchema,
@@ -117,12 +127,20 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
       <Divider />
       <Box height={25} />
       <Box>
-        <Button
+        {/* <Button
           text="Withdraw"
           loading={isSubmitting}
           onPress={handleSubmit}
           disabled={isSubmitting}
-        />
+        /> */}
+        <Box alignItems="center" marginBottom="s">
+          <SwipeButton
+            title="SWIPE T0 WITHDRAW"
+            // thumbIcon={thumbIcon}
+            {...{loading: isSubmitting}}
+            onToggle={handleSubmit}
+          />
+        </Box>
         {/* <Box alignItems="center">
           <SwipeButton
             // disabled={isSubmitting}

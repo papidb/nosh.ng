@@ -15,7 +15,7 @@ export const Balance = ({user, containerProps}) => {
     <Box
       marginHorizontal="s"
       backgroundColor="white"
-      padding="l"
+      padding="m"
       borderRadius={155}
       justifyContent="center"
       alignItems="center"
