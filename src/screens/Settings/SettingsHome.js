@@ -119,7 +119,7 @@ export const Screen = ({
           <SettingsTab {...data} key={uuid()} />
         ))}
         <Divider style={styles.bottomDivider} />
-        <RaiseAndroid />
+        <RaiseAndroid height={80} />
       </ScrollView>
       {/* Modals */}
       <Portal>
@@ -176,6 +176,7 @@ const styles = StyleSheet.create({
   },
   bottomDivider: {
     marginVertical: 19,
+    // marginBottom: 10,
     marginHorizontal: 35,
   },
 });

@@ -143,21 +143,19 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
         <SubGiftCard
           onSnapToItem={(slideIndex) => {
             setIndex(slideIndex);
-            // console.log(cardSubCategories[slideIndex]);
             setSelected(cardSubCategories[slideIndex]);
-            // setSelected(data.giftCards[slideIndex]);
           }}
           {...{
             setSwiperHeight,
             // prev: goBack,
             next: toSubCategory,
             cardSubCategories,
-            selectedGiftCard: selectedGiftCard,
+            // selectedGiftCard: selectedGiftCard,
           }}
         />
       </ScrollView>
     );
-  }, [cardSubCategories, selectedGiftCard, setSwiperHeight, toSubCategory]);
+  }, [cardSubCategories, setSwiperHeight, toSubCategory]);
 
   const SubCategoryCallBack = useCallback(
     () => (

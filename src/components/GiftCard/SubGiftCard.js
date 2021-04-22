@@ -19,11 +19,17 @@ const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
 
 export const SubGiftCard = ({
   onSnapToItem,
-  selectedGiftCard,
+  // selectedGiftCard,
   next,
   setSwiperHeight,
   cardSubCategories = [],
 }) => {
+  const [index, setIndex] = useState(0);
+  const [giftCard, setSelected] = useState(null);
+  const selectedGiftCard = useMemo(() => cardSubCategories[index] || {}, [
+    cardSubCategories,
+    index,
+  ]);
   // console.log({selectedGiftCard});
   return (
     <Box overflow="hidden">
@@ -35,6 +41,8 @@ export const SubGiftCard = ({
         <Carousel
           data={cardSubCategories}
           layout="stack"
+          // removeClippedSubviews={false}
+          useScrollView={true}
           layoutCardOffset={18}
           loop
           renderItem={GiftCard}
@@ -42,7 +50,11 @@ export const SubGiftCard = ({
           itemWidth={CAROUSEL_WIDTH}
           containerCustomStyle={styles.slider}
           contentContainerCustomStyle={styles.sliderContentContainer}
-          onSnapToItem={onSnapToItem}
+          onSnapToItem={(slideIndex) => {
+            // onSnapToItem(slideIndex);
+            setIndex(slideIndex);
+            setSelected(cardSubCategories[slideIndex]);
+          }}
         />
       </Box>
       <Text
@@ -109,7 +121,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   slider: {
-    marginTop: 15,
+    // marginTop: 15,
+    paddingLeft: 20,
     overflow: 'visible', // for custom animations
   },
   sliderContentContainer: {
