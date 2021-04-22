@@ -24,6 +24,7 @@ import {
   extractErrorMessage,
   getRandomInt,
 } from 'shared/utils';
+import Layout from 'constants/Layout';
 
 const HomeScreen = ({user, getBanks, getUser}) => {
   const navigation = useNavigation();
@@ -121,14 +122,20 @@ const HomeScreen = ({user, getBanks, getUser}) => {
         }
         style={styles.scrollView}>
         {/* Header */}
-        <Balance {...{user, containerProps: {style: {marginTop: 16}}}} />
+        <Balance {...{user, containerProps: {style: {marginTop: 8}}}} />
         {/* Image */}
         <Box
           // alignItems="center"
           marginHorizontal="-l"
-          marginVertical={{bigScreen: 'l', phone: 'm'}}
           style={styles.coreImage}>
-          <Image source={images.Hands} />
+          <Image
+            source={images.Hands}
+            style={{
+              // height: 120,
+              // width: Layout.window.width - 40,
+              resizeMode: 'center',
+            }}
+          />
           <Image
             source={images[coreImages[imageIndex]]}
             style={{position: 'absolute', top: 46, left: 50}}
@@ -218,7 +225,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 38,
   },
   coreImage: {
-    marginTop: 18,
-    marginBottom: 7,
+    marginTop: 8,
+    marginBottom: 8,
   },
 });
