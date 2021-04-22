@@ -221,7 +221,7 @@ export const SubUpload = ({
           />
         </Box>
         {/* Button */}
-        <Box alignItems="center">
+        <Box alignItems="center" marginBottom="s">
           <SwipeButton
             title="SWIPE T0 SELL"
             // thumbIcon={thumbIcon}

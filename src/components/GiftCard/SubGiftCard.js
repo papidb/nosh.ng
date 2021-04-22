@@ -54,11 +54,13 @@ export const SubGiftCard = ({
         CLICK HERE TO BEGIN
       </Text>
 
-      <Button
-        variant="giftcard"
-        text={capitalizeFirstLetter(selectedGiftCard?.name ?? 'Card')}
-        onPress={next}
-      />
+      <Box alignItems="center" marginBottom="s">
+        <Button
+          variant="giftcard"
+          text={capitalizeFirstLetter(selectedGiftCard?.name ?? 'Card')}
+          onPress={next}
+        />
+      </Box>
     </Box>
   );
 };

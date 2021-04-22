@@ -129,7 +129,9 @@ export const SubAmount = ({
           </Text>
         </GiftCardBox>
         {/* Button */}
-        <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
+        <Box alignItems="center" marginBottom="s">
+          <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
+        </Box>
       </KeyboardAwareScrollView>
     </Box>
   );
