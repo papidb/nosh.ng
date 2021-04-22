@@ -133,7 +133,7 @@ const LoginScreen = ({login, getUser}) => {
         <Box margin="s" marginTop="none" style={styles.container}>
           {/* Image */}
           <AuthAvatar
-            size={135}
+            size={120}
             imageProps={{
               style: {
                 height: 110,
