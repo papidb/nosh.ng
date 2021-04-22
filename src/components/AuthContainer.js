@@ -1,7 +1,9 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
+import {StatusBar, Platform} from 'react-native';
 
+console.log('statusBarHeight: ', StatusBar.currentHeight);
 import {Box, Text, Icon} from './pure';
 
 export const AuthHeader = ({header = null, ...containerProps}) => {
@@ -30,12 +32,14 @@ AuthHeader.propTypes = {
 };
 
 export const AuthContainer = ({header = null, bottom, children}) => {
-  const headerHeight = 35;
+  // const headerHeight = 0;
+  const headerHeight = Platform.OS === 'ios' ? 35 : StatusBar.currentHeight;
+
   return (
     <Box flex={1}>
       <Box
         alignItems="center"
-        marginBottom="m"
+        // marginBottom="m"
         // backgroundColor="success"
         style={{marginTop: headerHeight}}>
         <Icon name="icon-auth_logo" size={60} />
