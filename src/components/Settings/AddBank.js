@@ -77,7 +77,7 @@ export const AddBank = ({
         // console.log({bankMap});
         const bank = bankMap[bankcode];
         // bankList.filter(({value}) => value == bankcode)[0]?.label ?? 'none';
-        const data = {accountNumber: nuban, bankName: bank};
+        const data = {accountNumber: nuban, bankCode: bankcode};
         const addBankRes = await addBank(data);
         // try {
         //   await getUser();
