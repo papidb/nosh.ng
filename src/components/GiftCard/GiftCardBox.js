@@ -7,10 +7,10 @@ export const GiftCardBox = (props) => {
     <Box
       backgroundColor="white"
       padding="xl"
-      borderRadius={155}
+      borderRadius={150}
       alignItems="center"
       justifyContent="center"
-      height={93}
+      height={80}
       {...props}
     />
   );

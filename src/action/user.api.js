@@ -1,4 +1,5 @@
 import axios from './axios';
+import FormData from 'form-data';
 
 import {UPDATE_USER, SET_CARDS} from './type';
 import {BASE_URL} from 'constants/config';
@@ -35,6 +36,25 @@ export const updateProfilePic = (state) => (dispatch, getState) => {
     axios
       .put(`${BASE_URL}user/${_id}`, state, {
         headers: {Authorization: `Bearer ${accessToken}`},
+      })
+      .then(({data}) => data),
+    dispatch,
+    getState,
+  );
+};
+
+export const tradeCard = (state) => (dispatch, getState) => {
+  const store = getState();
+  const {accessToken} = store?.auth;
+  // console.log({state});
+  console.log({accessToken});
+  const {_id} = store?.user;
+  console.log(`${BASE_URL}trade-card/${_id}`);
+  return HijackError(
+    axios
+      .post(`${BASE_URL}trade-card/${_id}`, state, {
+        headers: {Authorization: `Bearer ${accessToken}`},
+        // ...new FormData().getHeaders(),
       })
       .then(({data}) => data),
     dispatch,

@@ -16,7 +16,7 @@ import {useState} from 'react';
 import Layout from 'constants/Layout';
 
 import {Icon} from 'components';
-const BUTTON_WIDTH = Layout.window.width * 0.8;
+const BUTTON_WIDTH = Layout.window.width * 0.85;
 const BUTTON_HEIGHT = 58;
 const BUTTON_PADDING = 6;
 const SWIPEABLE_DIMENSIONS = BUTTON_HEIGHT - 2 * BUTTON_PADDING;

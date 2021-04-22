@@ -15,6 +15,8 @@ import {capitalizeFirstLetter} from 'shared/utils';
 
 import {GiftCard} from './GiftCard';
 
+const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
+
 export const SubGiftCard = ({
   onSnapToItem,
   selectedGiftCard,
@@ -22,23 +24,14 @@ export const SubGiftCard = ({
   setSwiperHeight,
   cardSubCategories = [],
 }) => {
-  console.log({selectedGiftCard});
-  const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
+  // console.log({selectedGiftCard});
   return (
-    <Box
-      overflow="hidden"
-      onLayout={({
-        nativeEvent: {
-          layout: {height},
-        },
-      }) => {
-        setSwiperHeight(height);
-      }}>
+    <Box overflow="hidden">
       <HeaderInfo text="SWIPE THROUGH TO SELECT CATEGORY" />
       <Box
-        height={250}
+        height={225}
         alignItems="center"
-        marginVertical={{bigScreen: 'xxl', phone: 'xl'}}>
+        marginVertical={{bigScreen: 'xl', phone: 'l'}}>
         <Carousel
           data={cardSubCategories}
           layout="stack"

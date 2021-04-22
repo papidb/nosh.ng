@@ -20,6 +20,8 @@ export const SubAmount = ({
   data: giftCard,
   setSwiperHeight,
   subCategory,
+  amount,
+  setAmount,
 }) => {
   const AmountSchema = Yup.object().shape({
     amount: Yup.number().min(
@@ -50,7 +52,7 @@ export const SubAmount = ({
     initialValues: {amount: ''},
     onSubmit: async (values) => {
       try {
-        console.log({values});
+        setAmount(values.amount);
         next();
       } catch (error) {
         console.log({error});
@@ -73,11 +75,8 @@ export const SubAmount = ({
         <Box
           justifyContent="space-between"
           flexDirection="row"
-          marginVertical="m">
-          <TouchableOpacity
-            onPress={() => {
-              prev();
-            }}>
+          style={styles.header}>
+          <TouchableOpacity onPress={prev}>
             <Circle size={42} backgroundColor="white">
               <Icon name="icon-backward" size={14} />
             </Circle>
@@ -88,7 +87,7 @@ export const SubAmount = ({
             style={styles.image}
           />
         </Box>
-        <GiftCardBox marginVertical="m">
+        <GiftCardBox style={styles.giftCardBox}>
           <Text fontSize={16} fontWeight="600">
             {capitalizeFirstLetter(subCategory?.name)}
           </Text>
@@ -97,32 +96,27 @@ export const SubAmount = ({
           variant="giftcard"
           placeholder="0.00"
           keyboardType="number-pad"
-          RightIcon={
-            <Text fontSize={12} fontWeight="600" color="primary">
-              USD
-            </Text>
-          }
+          // RightIcon={
+          //   <Text fontSize={12} fontWeight="600" color="primary">
+          //     USD
+          //   </Text>
+          // }
           onChangeText={handleChange('amount')}
           onBlur={handleBlur('amount')}
           error={errors.amount}
           touched={touched.amount}
           value={values.amount}
+          nospace
         />
-        {/* <Input
-          variant="giftcard"
-          placeholder="Enter Amount"
-          keyboardType="number-pad"
-          RightIcon={
-            <Text fontSize={12} fontWeight="600" color="primary">
-              NGN
-            </Text>
-          }
-          innerContainerProps={{backgroundColor: 'mostBg'}}
-          editable={false}
-          value={commaFormatter(subCategory?.rate * values.amount)}
-        /> */}
+        <Box marginHorizontal="xl" marginVertical="xs">
+          <Text fontSize={12} fontWeight="600" color="success">
+            YOU GET PAID
+          </Text>
+        </Box>
+
         <GiftCardBox
-          marginVertical="m"
+          // marginVertical="m"
+          marginBottom="xs"
           flexDirection="row"
           backgroundColor="mostBg"
           justifyContent="space-between"
@@ -134,13 +128,6 @@ export const SubAmount = ({
             NGN
           </Text>
         </GiftCardBox>
-
-        <Box marginHorizontal="xl" marginTop="s" marginBottom="l">
-          <Text fontSize={12} fontWeight="600" color="success">
-            YOU GET PAID
-          </Text>
-        </Box>
-
         {/* Button */}
         <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
       </KeyboardAwareScrollView>
@@ -155,4 +142,6 @@ SubAmount.propTypes = {
 
 const styles = StyleSheet.create({
   image: {width: 120, height: 67.5},
+  header: {marginTop: 6, marginBottom: 6},
+  giftCardBox: {marginBottom: 8},
 });

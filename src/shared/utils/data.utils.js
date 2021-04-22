@@ -1,6 +1,7 @@
 import FormData from 'form-data';
 import {Platform} from 'react-native';
 import shortid from 'shortid';
+import mime from 'mime';
 
 export const getErrorMessage = (error) => {
   if (error?.response?.data?.message) return error?.response?.data?.message;
@@ -50,11 +51,15 @@ export const getFormData = (values) => {
   return data;
 };
 
-const createFileForm = ({type, uri}) => ({
-  name: shortid.generate(),
-  type: type,
-  uri: Platform.OS === 'android' ? uri : uri.replace('file://', ''),
-});
+const createFileForm = ({path: uri, mime: type}) => {
+  const newImageUri = 'file:///' + uri.split('file:/').join('');
+
+  return {
+    name: shortid.generate(),
+    type: mime.getType(newImageUri),
+    uri: Platform.OS === 'android' ? newImageUri : uri.replace('file://', ''),
+  };
+};
 
 export const createFormData = ({uri, type}) => {
   const data = new FormData();
@@ -68,7 +73,10 @@ export const createFormData = ({uri, type}) => {
 };
 export const createFormArrayData = (arr = []) => {
   const data = new FormData();
-  arr.forEach((avatar) => data.append('avatar[]', createFileForm(avatar)));
+  arr.forEach((avatar) => {
+    console.log({avatar});
+    return data.append('tradeFiles', createFileForm(avatar));
+  });
   return data;
 };
 

@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
+import FormData from 'form-data';
 
 import PropTypes from 'prop-types';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -25,7 +26,7 @@ import {waait, uuid} from 'shared/utils';
 import {GiftCardBox} from './GiftCardBox';
 import Modal from 'react-native-modal';
 
-import images from 'constants/images';
+// import images from 'constants/images';
 import {capitalizeFirstLetter} from 'shared/utils';
 import {palette} from 'constants/theme';
 import FastImage from 'react-native-fast-image';
@@ -48,8 +49,13 @@ export const SubUpload = ({
   data: giftCard,
   setSwiperHeight,
   subCategory,
+  images,
+  setImages,
+  amount,
+  setAmount,
+  tradeCard,
+  reset,
 }) => {
-  const [images, setImages] = useState([]);
   const [done, setDone] = useState(false);
   const navigation = useNavigation();
 
@@ -59,6 +65,7 @@ export const SubUpload = ({
   };
 
   // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
+  // console.log({subCategory});
   const imageUri = giftCard.avatar;
   const {
     errors,
@@ -79,18 +86,21 @@ export const SubUpload = ({
     initialValues: {comment: ''},
     onSubmit: async (values) => {
       try {
-        // const rawData = createFormArrayData(
-        //   images.map(
-        //     ({mime, path}) => console.log({path}) || {type: mime, uri: path},
-        //   ),
-        // );
-        // console.log({rawData});
-        // // const rawData = createFormData(images[0]);
-        await waait(2000);
+        const rawData = createFormArrayData(images);
+        // const rawData = new FormData();
+        // const rawData = {};
+
+        rawData.append('comment', values.comment);
+        rawData.append('cardTotalAmount', amount);
+        rawData.append('cardSubCategory', subCategory.name);
+        rawData.append('cardCategory', giftCard.name);
+        await tradeCard(rawData);
         setDone(true);
+        reset();
         showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
       } catch (error) {
-        console.log({error});
+        console.log(error);
+        console.log(extractErrorMessage(error));
       }
     },
     // validationSchema: AmountSchema,
@@ -111,18 +121,6 @@ export const SubUpload = ({
       console.log(error);
     }
   };
-  const thumbIcon = useCallback(() => {
-    console.log('omo');
-    return (
-      <Box>
-        {isSubmitting ? (
-          <ActivityIndicator color="white" />
-        ) : (
-          <Icon name="icon-forward" size={14} />
-        )}
-      </Box>
-    );
-  }, [isSubmitting]);
   const renderItem = ({path}) => {
     return (
       <Circle size={75} key={uuid()}>
@@ -138,19 +136,9 @@ export const SubUpload = ({
       </Circle>
     );
   };
-  // const thumbIcon = () => {
-
-  // };
   const imagesSize = images.length;
   return (
-    <Box
-      onLayout={({
-        nativeEvent: {
-          layout: {height},
-        },
-      }) => {
-        setSwiperHeight(height);
-      }}>
+    <Box>
       <KeyboardAwareScrollView>
         <Modal isVisible={done} backdropColor="#EAF8FD" backdropOpacity={1}>
           <Box flex={1} justifyContent="flex-start" alignItems="center">
@@ -167,11 +155,8 @@ export const SubUpload = ({
         <Box
           justifyContent="space-between"
           flexDirection="row"
-          marginVertical="m">
-          <TouchableOpacity
-            onPress={() => {
-              prev();
-            }}>
+          marginVertical="xs">
+          <TouchableOpacity onPress={prev}>
             <Circle size={42} backgroundColor="white">
               <Icon name="icon-backward" size={14} />
             </Circle>
@@ -182,7 +167,7 @@ export const SubUpload = ({
             style={styles.image}
           />
         </Box>
-        <GiftCardBox marginVertical="m">
+        <GiftCardBox marginBottom="xs">
           <Text fontSize={16} fontWeight="600">
             {capitalizeFirstLetter(subCategory?.name)}
           </Text>
@@ -194,7 +179,8 @@ export const SubUpload = ({
               paddingVertical="xs"
               backgroundColor="white"
               borderRadius={155}
-              justifyContent="center">
+              justifyContent="center"
+              style={{marginBottom: 14}}>
               <ScrollView horizontal>
                 {images.map((item) => {
                   return renderItem(item);
@@ -202,7 +188,7 @@ export const SubUpload = ({
               </ScrollView>
             </Box>
           ) : (
-            <GiftCardBox marginVertical="m" padding="none">
+            <GiftCardBox padding="none" style={{marginBottom: 14}}>
               <Text fontSize={18} fontWeight="600">
                 <Icon name="icon-cart" size={43.2} />
               </Text>
@@ -213,24 +199,11 @@ export const SubUpload = ({
             fontSize={12}
             fontWeight="600"
             textAlign="center"
-            marginTop="xs">
+            marginBottom="m">
             CLICK HERE TO UPLOAD CARD
           </Text>
         </TouchableOpacity>
-
-        {/* <FlatList
-          style={[
-            style.container,
-            {
-              paddingTop: 6,
-            },
-          ]}
-          data={images}
-          keyExtractor={(item, index) => (item?.filename ?? item?.path) + index}
-          renderItem={renderItem}
-          numColumns={3}
-        /> */}
-        <Box backgroundColor="transparent" marginVertical="m">
+        <Box backgroundColor="transparent" style={{marginBottom: 23}}>
           <Input
             onChangeText={handleChange('comment')}
             onBlur={handleBlur('comment')}
@@ -248,17 +221,10 @@ export const SubUpload = ({
           />
         </Box>
         {/* Button */}
-        {/* <Button
-          variant="giftcard"
-          text="SELL"
-          disabled={isSubmitting}
-          loading={isSubmitting}
-          onPress={handleSubmit}
-        /> */}
         <Box alignItems="center">
           <SwipeButton
             title="SWIPE T0 SELL"
-            thumbIcon={thumbIcon}
+            // thumbIcon={thumbIcon}
             {...{loading: isSubmitting}}
             onToggle={handleSubmit}
           />
@@ -319,5 +285,11 @@ const style = StyleSheet.create({
     fontWeight: '600',
     fontSize: 12,
     color: '#000',
+  },
+  image: {
+    width: 75,
+    height: 75,
+    borderRadius: 75,
+    // resizeMode: 'contain',
   },
 });

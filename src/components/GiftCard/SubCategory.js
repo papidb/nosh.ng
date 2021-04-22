@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, ScrollView, Image} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
@@ -77,28 +77,18 @@ export const SubCategory = ({
     validationSchema: SubSchema,
   });
   const setcategoryValue = (str) => {
-    setFieldTouched('category', true);
+    // setFieldTouched('category', true);
     setFieldValue('category', str);
   };
-  console.log({errors, omo: data.cardSub});
+  // console.log({errors, omo: data.cardSub});
   return (
-    <Box
-      onLayout={({
-        nativeEvent: {
-          layout: {height},
-        },
-      }) => {
-        setSwiperHeight(height);
-      }}>
+    <Box>
       <HeaderInfo text="SELECT SUB-CATEGORY" />
       <Box
         justifyContent="space-between"
         flexDirection="row"
-        marginVertical="m">
-        <TouchableOpacity
-          onPress={() => {
-            prev();
-          }}>
+        marginVertical="s">
+        <TouchableOpacity onPress={prev}>
           <Circle size={42} backgroundColor="white">
             <Icon name="icon-backward" size={14} />
           </Circle>
@@ -116,8 +106,6 @@ export const SubCategory = ({
       </GiftCardBox>
       <Select
         placeholder={data.cardSub}
-        // onClose={console.log}
-        // onValueChange={(string) => console.log({string})}
         items={cardsubcategory}
         value={values.category}
         touched={touched.category}
