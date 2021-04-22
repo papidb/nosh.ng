@@ -29,7 +29,7 @@ import images from 'constants/images';
 import {connect} from 'react-redux';
 
 const Item = (props) => {
-  const {name, index, rate} = props;
+  const {name, index, cardCategory, rate} = props;
   // console.log({props});
   const first = index === 0;
   const textColor = first ? 'primary' : 'white';
@@ -77,6 +77,16 @@ const Item = (props) => {
             >
               {name}
             </Text>
+            <Text
+              fontSize={14}
+              fontWeight="600"
+              color={textColor}
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              //
+            >
+              {cardCategory?.name}
+            </Text>
           </Box>
 
           <Text fontSize={18} color={textColor}>
@@ -108,7 +118,6 @@ const HottestCardScreen = ({getAllSubCategories}) => {
     getData();
   }, [getData]);
 
-  const imageUri = `https://api.nosh.ng/uploads/images/cards/Amazon.png`;
   const renderItem = ({item, index}) => (
     <Item
       {...item}
