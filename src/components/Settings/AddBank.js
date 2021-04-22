@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, {useEffect, useState} from 'react';
 
 import PropTypes from 'prop-types';
@@ -5,7 +6,15 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
 
-import {Box, Text, HeaderInfo, Input, Select, Button} from 'components';
+import {
+  Box,
+  Text,
+  Loading,
+  HeaderInfo,
+  Input,
+  Select,
+  Button,
+} from 'components';
 import data from 'constants/data';
 import {palette} from 'constants/theme';
 import {
@@ -96,11 +105,12 @@ export const AddBank = ({
     validationSchema: BankSchema,
   });
   // console.log({verifyAccount});
-  // const {account, loading: getNameLoading, valid} = useVerifyBankAccount(
-  //   true,
-  //   values,
-  //   verifyAccount,
-  // );
+  const {account, loading: getNameLoading, valid} = useVerifyBankAccount(
+    true,
+    values,
+    verifyAccount,
+  );
+  console.log({valid, getNameLoading});
   const setBankCodeValue = (str) => {
     setFieldTouched('bankcode', true);
     setFieldValue('bankcode', str);
@@ -139,12 +149,23 @@ export const AddBank = ({
       </Box>
       <Box
         marginBottom="xs"
-        backgroundColor="mostBg"
+        backgroundColor="lightGray"
         padding="l"
         borderRadius={100}
         paddingHorizontal="xl">
-        <Text color="primary" fontSize={15}>
-          {user.name}
+        {/* {getNameLoading ? (
+          <Loading />
+        ) : valid == false ? (
+          <Text color="error" fontSize={15} style={{color: '#0732A2'}}>
+            Couldn't verify account number
+          </Text>
+        ) : (
+          <Text color="primary" fontSize={15} style={{color: '#0732A2'}}>
+            {account}
+          </Text>
+        )} */}
+        <Text color="primary" fontSize={15} style={{color: '#0732A2'}}>
+          {account}
         </Text>
       </Box>
       <Box height={65} />

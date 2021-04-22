@@ -24,24 +24,17 @@ export const useVerifyBankAccount = (
         setLoading(true);
         Keyboard.dismiss();
         let bankData = {bankCode: bankcode, accountNumber: nuban.trim()};
-        let accountName = await verifyAccountFn(bankData);
+        let accountName =
+          (await verifyAccountFn(bankData))?.accountData?.accountName ?? null;
+        setValid(true);
+        setLoading(false);
         console.log({accountName});
-        // if (accountName == 'Unable to resolve bank') {
-        //   setAccountName('Unable to resolve bank');
-        //   setValid(false);
-        //   //   wait(2000).then(() => {
-        //   //     setAccountName('');
-        //   //   });
-        //   //   setFieldValue('nuban', '');
-        //   return;
-        // }
-        // setValid(true);
-        // setLoading(false);
-        // setAccountName(accountName);
+        setAccountName(accountName);
       })();
     } catch (error) {
       setValid(false);
-      console.log({error});
+      setLoading(false);
+      // console.log({error});
     }
   }, [values, isValid, setLoading, verifyAccountFn]);
 

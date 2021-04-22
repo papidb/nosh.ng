@@ -34,7 +34,7 @@ export const addBank = (data) => {
 export const verifyAccount = (state) => (dispatch, getState) => {
   const store = getState();
   const {accessToken} = store?.auth;
-  console.log({accessToken});
+  // console.log({accessToken});
   return HijackError(
     axios
       .post(`${BASE_URL}verify-bank-account`, state, {
