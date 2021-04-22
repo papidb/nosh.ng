@@ -1,63 +1,108 @@
-import React from 'react';
-import {SectionList} from 'react-native';
+/* eslint-disable eqeqeq */
+import React, {useState, useCallback, useEffect} from 'react';
+import {SectionList, ActivityIndicator} from 'react-native';
 
-import {Box, Text, Close, Divider, HeaderInfo} from 'components';
+import {Box, Text, Loading, Close, Divider, HeaderInfo} from 'components';
 
-import {commaFormatter} from 'shared/utils';
+import {commaFormatter, uuid, purgeData} from 'shared/utils';
 
-const DATA = [
-  {
-    title: 'april',
-    data: [
-      {title: 'Our rates are exploding right now!!!'},
-      {amount: 30320, title: 'Withdrawal'},
-    ],
-  },
-  {
-    title: 'may',
-    data: [
-      {title: 'Our rates are exploding right now!!!'},
-      {amount: 300, title: 'Withdrawal'},
-    ],
-  },
-  {
-    title: 'June',
-    data: [
-      {title: 'Our rates are exploding right now!!!'},
-      {amount: 300, title: 'Withdrawal'},
-    ],
-  },
-  {
-    title: 'July',
-    data: [
-      {title: 'Our rates are exploding right now!!!'},
-      {amount: 300, title: 'Withdrawal'},
-    ],
-  },
-];
+import {getNotifications} from 'action';
+import {palette} from 'constants/theme';
+import {connect} from 'react-redux';
 
-const Item = ({title, amount}) => (
-  <Box
-    flexDirection="row"
-    justifyContent="space-between"
-    alignItems="center"
-    style={{paddingTop: 14, paddingBottom: 16, paddingHorizontal: 18}}>
-    <Text
-      fontFamily="Hurme Geometric Sans 2"
-      fontSize={14}
-      fontWeight="600"
-      style={{color: '#525C6B'}}>
-      {title}
-    </Text>
-    {amount && (
-      <Text color="primary" fontSize={18}>
-        {commaFormatter(amount)}
+const Item = (props) => {
+  const {message, amount} = props;
+  return (
+    <Box
+      flexDirection="row"
+      justifyContent="space-between"
+      alignItems="center"
+      style={{paddingTop: 14, paddingBottom: 16, paddingHorizontal: 18}}>
+      <Text
+        fontFamily="Hurme Geometric Sans 2"
+        fontSize={14}
+        fontWeight="600"
+        style={{color: '#525C6B'}}>
+        {message}
       </Text>
-    )}
-  </Box>
-);
+      {amount && (
+        <Text color="primary" fontSize={18}>
+          {commaFormatter(amount)}
+        </Text>
+      )}
+    </Box>
+  );
+};
 
-export const NotificationModal = ({closeModal}) => {
+export const NotificationModalList = ({closeModal, getNotifications}) => {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [pure, setPure] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [max, setMax] = useState(false);
+
+  const _renderFooter = useCallback(() => {
+    if (!loadingMore) return null;
+    return (
+      <Box marginVertical="m">
+        <ActivityIndicator color={palette.blue} />
+      </Box>
+    );
+  }, [loadingMore]);
+
+  const _handleLoadMore = useCallback(async () => {
+    try {
+      if (max) return;
+      setLoadingMore(true);
+
+      await getNotifications(currentPage).then((data) => {
+        const {
+          // eslint-disable-next-line no-shadow
+          currentPage,
+          notifications,
+          // totalNotifications,
+          totalPages,
+        } = data;
+        setMax(currentPage == totalPages);
+        setCurrentPage(Number(currentPage) + 1);
+        setData([...data, ...purgeData(notifications)]);
+        setPure([...pure, ...notifications]);
+      });
+    } catch (error) {
+      console.log({error});
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [currentPage, getNotifications, max, pure]);
+
+  const getData = useCallback(async () => {
+    // console.log({getNotifications});
+    try {
+      await getNotifications(currentPage).then((data) => {
+        const {
+          // eslint-disable-next-line no-shadow
+          currentPage,
+          notifications,
+          // totalNotifications,
+          totalPages,
+        } = data;
+        setMax(currentPage == totalPages);
+        setCurrentPage(Number(currentPage) + 1);
+        setData(purgeData(notifications));
+        setPure(notifications);
+      });
+    } catch (error) {
+      console.log({error});
+    } finally {
+      setLoading(false);
+    }
+  }, [currentPage, getNotifications]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
   return (
     <Box
       backgroundColor="white"
@@ -75,20 +120,41 @@ export const NotificationModal = ({closeModal}) => {
         Notifications
       </Text>
 
-      <SectionList
-        sections={DATA}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({item}) => <Item {...item} />}
-        renderSectionHeader={({section: {title}}) => (
-          <HeaderInfo
-            text={String(title).toUpperCase()}
-            containerProps={{backgroundColor: 'mostBgPure'}}
-          />
-        )}
-        ItemSeparatorComponent={() => (
-          <Divider style={{marginHorizontal: 18}} />
-        )}
-      />
+      {loading ? (
+        <Loading />
+      ) : data.length == 0 ? (
+        <Box flex={1} alignItems="center" justifyContent="center">
+          <Text
+            textAlign="center"
+            color="primary"
+            fontSize={14}
+            fontWeight="600">
+            {"There's no notifications. Use our services more\n😭😭😭"}
+          </Text>
+        </Box>
+      ) : (
+        <SectionList
+          sections={data}
+          keyExtractor={(item, index) => uuid()}
+          renderItem={({item}) => <Item {...item} />}
+          renderSectionHeader={({section: {title}}) => (
+            <HeaderInfo
+              text={String(title).toUpperCase()}
+              containerProps={{backgroundColor: 'mostBgPure'}}
+            />
+          )}
+          ListFooterComponent={_renderFooter}
+          ItemSeparatorComponent={() => (
+            <Divider style={{marginHorizontal: 18}} />
+          )}
+          onEndReached={_handleLoadMore}
+          onEndReachedThreshold={0.1}
+        />
+      )}
     </Box>
   );
 };
+
+export const NotificationModal = connect(null, {getNotifications})(
+  NotificationModalList,
+);

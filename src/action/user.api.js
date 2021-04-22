@@ -27,6 +27,27 @@ export const getUser = () => {
     );
   };
 };
+export const getNotifications = (state) => {
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    const {_id} = store?.user;
+    // console.log(`${BASE_URL}notifications/${_id} ${accessToken}`);
+    return HijackError(
+      axios
+        .get(`${BASE_URL}notifications/${_id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => {
+          return data;
+        }),
+      dispatch,
+      getState,
+    );
+  };
+};
 
 export const updateProfilePic = (state) => (dispatch, getState) => {
   const store = getState();
@@ -47,9 +68,9 @@ export const tradeCard = (state) => (dispatch, getState) => {
   const store = getState();
   const {accessToken} = store?.auth;
   // console.log({state});
-  console.log({accessToken});
+  // console.log({accessToken});
   const {_id} = store?.user;
-  console.log(`${BASE_URL}trade-card/${_id}`);
+  // console.log(`${BASE_URL}trade-card/${_id}`);
   return HijackError(
     axios
       .post(`${BASE_URL}trade-card/${_id}`, state, {

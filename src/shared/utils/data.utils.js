@@ -2,6 +2,7 @@ import FormData from 'form-data';
 import {Platform} from 'react-native';
 import shortid from 'shortid';
 import mime from 'mime';
+import {format} from 'date-fns';
 
 export const getErrorMessage = (error) => {
   if (error?.response?.data?.message) return error?.response?.data?.message;
@@ -95,3 +96,60 @@ export const getAppBanks = (rawBanks) => {
   });
   return {banks, bankMap};
 };
+
+export const isToday = (someDate) => {
+  const today = new Date();
+  someDate = new Date(someDate);
+  return (
+    someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear()
+  );
+};
+export const isYesterday = (someDate) => {
+  someDate = new Date(someDate);
+
+  const today = new Date();
+  const yesterday = new Date(today);
+
+  yesterday.setDate(yesterday.getDate() - 1);
+  return (
+    someDate.getDate() === yesterday.getDate() &&
+    someDate.getMonth() === yesterday.getMonth() &&
+    someDate.getFullYear() === yesterday.getFullYear()
+  );
+};
+
+export function purgeData(arr) {
+  // this gives an object with dates as keys
+  const groups = arr.reduce((groups, transaction) => {
+    let time;
+    try {
+      time = new Date(transaction.createdAt);
+    } catch (error) {
+      time = new Date();
+    }
+    const date = isToday(time)
+      ? 'Today'
+      : isYesterday(time)
+      ? 'Yesterday'
+      : // : format(time, 'MMM i, y');
+        format(time, 'MMMM');
+    // console.log({date})
+    // console.log({date: new Date(transaction.time*1000)})
+    if (!groups[date]) {
+      groups[date] = [];
+    }
+    groups[date].push(transaction);
+    return groups;
+  }, {});
+  // return [];
+
+  // Edit: to add it in the array format instead
+  return Object.keys(groups).map((date) => {
+    return {
+      title: date,
+      data: groups[date],
+    };
+  });
+}

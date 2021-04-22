@@ -29,7 +29,7 @@ export const getBanks = () => {
   };
 };
 
-export const getNotifications = () => {
+export const s = () => {
   return (dispatch, getState) => {
     const store = getState();
     const {accessToken} = store?.auth;

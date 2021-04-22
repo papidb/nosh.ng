@@ -1,21 +1,27 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, ActivityIndicator} from 'react-native';
 import LottieView from 'lottie-react-native';
 import Layout from 'constants/Layout';
 import {Box} from './Box';
 import {Text} from './Text';
 import {Close} from 'components';
+import {palette} from 'constants/theme';
 
-// export const Loading = (props) => {
-//   return (
-//     <LottieView
-//       autoPlay
-//       loop
-//       source={require('@assets/animation/loading.json')}
-//       {...props}
-//     />
-//   );
-// };
+export const Loading = (props) => {
+  return (
+    <Box flex={1} justifyContent="center" alignItems="center">
+      <ActivityIndicator color={palette.blue} />
+    </Box>
+  );
+  // return (
+  //   <LottieView
+  //     autoPlay
+  //     loop
+  //     source={require('@assets/animation/loading.json')}
+  //     {...props}
+  //   />
+  // );
+};
 
 // export const Empty = (props) => {
 //   return (
