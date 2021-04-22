@@ -49,6 +49,27 @@ export const getNotifications = (state) => {
   };
 };
 
+export const getTrades = (state) => {
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    const {_id} = store?.user;
+    return HijackError(
+      axios
+        .get(`${BASE_URL}trades/${_id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => {
+          return data;
+        }),
+      dispatch,
+      getState,
+    );
+  };
+};
+
 export const updateProfilePic = (state) => (dispatch, getState) => {
   const store = getState();
   const {accessToken} = store?.auth;
