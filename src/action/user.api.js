@@ -49,6 +49,42 @@ export const getNotifications = (state) => {
   };
 };
 
+export const getAllSubCategories = (state) => {
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    // console.log(`${BASE_URL}notifications/${_id} ${accessToken}`);
+    return HijackError(
+      axios
+        .get(`${BASE_URL}card-sub-categories`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => {
+          const cardSubCategories = data?.cardSubCategories ?? [];
+          const container = {};
+
+          cardSubCategories.forEach((sub) => {
+            const {cardCategory} = sub;
+            const obj = container[cardCategory._id];
+            if (!obj) {
+              container[cardCategory._id] = sub;
+            }
+            if (!!obj && 'rate' in obj && obj.rate < sub.rate) {
+              container[cardCategory._id] = sub;
+            }
+          });
+          const full = Object.keys(container).map((key) => container[key]);
+          full.sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));
+          return full.slice(0, 20);
+        }),
+      dispatch,
+      getState,
+    );
+  };
+};
+
 export const getTrades = (state) => {
   return (dispatch, getState) => {
     const store = getState();
