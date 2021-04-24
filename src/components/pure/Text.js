@@ -93,6 +93,8 @@ const BaseText = ({fontWeight, ...props}, ref) => {
       fontWeight,
       fontFamily: purifiedFontStyle.fontFamily,
     };
+  } else {
+    newProps = {...newProps, fontWeight};
   }
 
   const styledProps = useRestyle(textRestyleFunctions, newProps);
