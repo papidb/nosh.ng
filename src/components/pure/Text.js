@@ -2,6 +2,7 @@ import React, {forwardRef} from 'react';
 import {ViewPropTypes, Platform} from 'react-native';
 import {useRestyle, textRestyleFunctions} from '@shopify/restyle';
 import {Text as RNText} from 'react-native';
+import PropTypes from 'prop-types';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -78,18 +79,22 @@ function font_style_generator(font_family, font_weight, font_style) {
 }
 
 const BaseText = ({fontWeight, ...props}, ref) => {
-  const purifiedFontStyle = font_style_generator(
-    'Hurme Geometric Sans 2',
-    fontWeight,
-    'normal',
-  );
+  let newProps = {...props};
+  if (isAndroid) {
+    const purifiedFontStyle = font_style_generator(
+      'Hurme Geometric Sans 2',
+      fontWeight,
+      'normal',
+    );
 
-  // console.log(purifiedFontStyle);
-  let newProps = {
-    ...props,
-    fontWeight,
-    fontFamily: purifiedFontStyle.fontFamily,
-  };
+    // console.log(purifiedFontStyle);
+    newProps = {
+      ...newProps,
+      fontWeight,
+      fontFamily: purifiedFontStyle.fontFamily,
+    };
+  }
+
   const styledProps = useRestyle(textRestyleFunctions, newProps);
   return (
     <RNText
@@ -107,4 +112,5 @@ export const Text = forwardRef(BaseText);
 
 BaseText.propTypes = {
   style: ViewPropTypes.style,
+  fontWeight: PropTypes.string,
 };
