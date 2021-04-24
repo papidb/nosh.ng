@@ -9,6 +9,7 @@ import {
   ResetPassword,
 } from '../screens/Auth';
 import {OnBoarding} from '../screens/OnBoarding';
+// import KeyChain from '../screens/Auth/Keychain';
 import {connect} from 'react-redux';
 
 const AppStack = createStackNavigator();
@@ -30,6 +31,7 @@ const AuthScreens = ({user, onboarded}) => {
       }}
       initialRouteName={initialRouteName}>
       <AppStack.Screen name="OnBoarding" component={OnBoarding} />
+      {/* <AppStack.Screen name="KeyChain" component={KeyChain} /> */}
       <AppStack.Screen name="PersonalLogin" component={PersonalLogin} />
       <AppStack.Screen name="Login" component={Login} />
       <AppStack.Screen name="ResetPassword" component={ResetPassword} />

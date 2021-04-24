@@ -20,14 +20,19 @@ export function useBiometryType() {
     const getSupportedBiometryType = async () => {
       let type = await Keychain.getSupportedBiometryType();
 
+      // omo no time for many many
+      // you no get bio you non go see anything my guy
       if (isNil(type)) {
-        // 💡️ When `getSupportedBiometryType` returns `null` it can mean either:
-        //    A) the user has no device passcode/biometrics at all
-        //    B) the user has gone into Settings and disabled biometrics specifically for Nosh
-        type = await isPinOrFingerprintSet().then((isPinOrFingerprintSet) =>
-          isPinOrFingerprintSet ? BiometryTypes.passcode : BiometryTypes.none,
-        );
+        type = BiometryTypes.none;
       }
+      // if (isNil(type)) {
+      //   // 💡️ When `getSupportedBiometryType` returns `null` it can mean either:
+      //   //    A) the user has no device passcode/biometrics at all
+      //   //    B) the user has gone into Settings and disabled biometrics specifically for Nosh
+      //   type = await isPinOrFingerprintSet().then((isPinOrFingerprintSet) =>
+      //     isPinOrFingerprintSet ? BiometryTypes.passcode : BiometryTypes.none,
+      //   );
+      // }
 
       if (isMounted.current && type !== prevBiometricType) {
         setBiometryType(type);

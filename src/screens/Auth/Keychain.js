@@ -39,7 +39,7 @@ const SECURITY_STORAGE_MAP = [
   Keychain.STORAGE_TYPE.RSA,
 ];
 
-export class KeychainScreen extends Component {
+export class PersonalLogin extends Component {
   state = {
     username: '',
     password: '',
@@ -60,6 +60,11 @@ export class KeychainScreen extends Component {
     try {
       let start = new Date();
 
+      console.log({
+        accessControl: this.state.accessControl,
+        securityLevel: this.state.securityLevel,
+        storage: this.state.storageSelection,
+      });
       await Keychain.setGenericPassword(
         this.state.username,
         this.state.password,

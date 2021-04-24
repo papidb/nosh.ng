@@ -8,6 +8,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import * as Yup from 'yup';
 import {connect} from 'react-redux';
+import TouchID from 'react-native-touch-id';
 
 import {
   Box,
@@ -81,10 +82,11 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
       let options = {
         authenticationPrompt: {
           title: 'Authentication needed',
-          subtitle: 'Subtitle',
-          description: 'Some descriptive text',
+          subtitle: `Your ${bio} is needed to login!`,
+          description: '',
           cancel: 'Cancel',
         },
+        accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET,
       };
       return Keychain.getGenericPassword(options);
       // if (credentials) {
@@ -97,19 +99,23 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
     try {
       setSubmitting(true);
       let credentials = await load();
-      console.log({credentials});
-      let data = {
-        // entry: 'ios',
-        email: credentials.username,
-        password: credentials.password,
-      };
+      try {
+        let data = {
+          // entry: 'ios',
+          email: credentials.username,
+          password: credentials.password,
+        };
 
-      const deets = await login(data);
-      console.log({deets});
+        const deets = await login(data);
+        console.log({deets});
+      } catch (error) {
+        console.log({error});
+        const message = extractErrorMessage(error);
+        showErrorSnackBar({text: message});
+      }
     } catch (error) {
-      console.log({error});
-      const message = extractErrorMessage(error);
-      showErrorSnackBar({text: message});
+      //
+      console.log(error.message);
     } finally {
       setSubmitting(false);
     }
@@ -125,7 +131,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
           onPress={handleSubmit}
         />
       </Box>
-      <Box flexDirection="row" justifyContent="center" alignItems="center">
+      <Box flexDirection="row" justifyContent="center">
         <TouchableOpacity onPress={toResetPassword}>
           <Text fontSize={13} textAlign="center">
             <Text fontSize={13} color="primary">
@@ -147,11 +153,10 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
       <RaiseAndroid height={20} />
     </Box>
   );
-  console.log(user?.avatar);
   return (
     <AuthContainer>
-      <KeyboardAwareScrollView>
-        <Box margin="none" marginTop="none" style={styles.container}>
+      <KeyboardAwareScrollView contentContainerStyle={{flexGrow: 1}}>
+        <Box flex={1} margin="none" marginTop="none" style={styles.container}>
           {/* Image */}
           <AuthAvatar
             avatar={user.avatar}
@@ -194,10 +199,16 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
             value={values.password}
             passwordIcon
           />
-          <Box marginTop={{bigScreen: 'xl', phone: 's'}}>
-            {/* {bio !== BiometryTypes.none && BIOAPP && (
+          <Box
+            flexGrow={1}
+            // marginTop={{bigScreen: 'xl', phone: 's'}}
+            justifyContent="center"
+            //
+          >
+            {bio !== BiometryTypes.none && BIOAPP && (
+              // {bio && (
               <Box alignItems="center">
-                <TouchableOpacity>
+                <TouchableOpacity disabled={isSubmitting} onPress={getPassword}>
                   <Box
                     alignSelf="center"
                     height={85}
@@ -215,7 +226,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
                   </Box>
                 </TouchableOpacity>
               </Box>
-            )} */}
+            )}
           </Box>
         </Box>
         {Bottom}
