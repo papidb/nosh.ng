@@ -44,7 +44,7 @@ export const AuthContainer = ({header = null, bottom, children}) => {
         // marginBottom="m"
         // backgroundColor="success"
         style={{marginTop: headerHeight}}>
-        <Icon name="icon-auth_logo" size={60} />
+        <Icon name="icon-auth_logo" size={55} />
       </Box>
 
       {/* Header */}

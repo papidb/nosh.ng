@@ -72,7 +72,7 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       </Box>
       {/* Remaining */}
       <Box flex={1} alignSelf="center">
-        <Text fontWeight="600" color="primary" fontSize={12}>
+        <Text color="primary" fontSize={11}>
           {/* Good Morning */}
           {getMessage()}
         </Text>
@@ -108,7 +108,7 @@ export const HeaderInfo = ({text, containerProps, textProps}) => {
         fontWeight="600"
         color="primary"
         textAlign="center"
-        fontSize={12}
+        fontSize={11}
         {...textProps}>
         {text}
       </Text>

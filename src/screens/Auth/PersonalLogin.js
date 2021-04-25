@@ -98,6 +98,8 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
   const getPassword = async () => {
     try {
       setSubmitting(true);
+      const data = await requestFaceId();
+      console.log({data});
       let credentials = await load();
       try {
         let data = {
@@ -121,7 +123,10 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
     }
   };
   const Bottom = (
-    <Box justifyContent="flex-end" style={[styles.container, styles.bottom]}>
+    <Box
+      justifyContent="flex-end"
+      marginBottom={{bigScreen: 'xxxl', phone: 'l'}}
+      style={[styles.container, styles.bottom]}>
       {/* Button */}
       <Box marginBottom="m">
         <Button
@@ -160,20 +165,20 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
           {/* Image */}
           <AuthAvatar
             avatar={user.avatar}
-            size={120}
+            size={160}
             imageProps={{
               style: {
-                height: 105,
-                width: 105,
-                borderRadius: 105,
+                height: 147,
+                width: 147,
+                borderRadius: 147,
                 resizeMode: 'contain',
               },
             }}
             imagePropsActive={{
               style: {
-                height: 120,
-                width: 120,
-                borderRadius: 120,
+                height: 160,
+                width: 160,
+                borderRadius: 160,
                 resizeMode: 'contain',
               },
             }}
@@ -205,28 +210,33 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
             justifyContent="center"
             //
           >
-            {bio !== BiometryTypes.none && BIOAPP && (
-              // {bio && (
-              <Box alignItems="center">
-                <TouchableOpacity disabled={isSubmitting} onPress={getPassword}>
-                  <Box
-                    alignSelf="center"
-                    height={85}
-                    width={85}
-                    borderRadius={85}
-                    alignItems="center"
-                    justifyContent="center"
-                    backgroundColor="eyeBackground">
-                    <Icon
-                      name={
-                        bio == 'FaceID' ? 'icon-faceid' : 'icon-fingerprint'
-                      }
-                      size={43}
-                    />
-                  </Box>
-                </TouchableOpacity>
-              </Box>
-            )}
+            <Box flex={2} />
+            <Box flex={1}>
+              {bio !== BiometryTypes.none && BIOAPP && (
+                // {bio && (
+                <Box alignItems="center">
+                  <TouchableOpacity
+                    disabled={isSubmitting}
+                    onPress={getPassword}>
+                    <Box
+                      alignSelf="center"
+                      height={85}
+                      width={85}
+                      borderRadius={85}
+                      alignItems="center"
+                      justifyContent="center"
+                      backgroundColor="eyeBackground">
+                      <Icon
+                        name={
+                          bio == 'FaceID' ? 'icon-faceid' : 'icon-fingerprint'
+                        }
+                        size={43}
+                      />
+                    </Box>
+                  </TouchableOpacity>
+                </Box>
+              )}
+            </Box>
           </Box>
         </Box>
         {Bottom}

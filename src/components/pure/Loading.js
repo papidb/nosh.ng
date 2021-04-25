@@ -6,7 +6,9 @@ import {Box} from './Box';
 import {Text} from './Text';
 import {Close} from 'components';
 import {palette} from 'constants/theme';
+import ExtraDimensions from 'react-native-extra-dimensions-android';
 
+const height = ExtraDimensions.getRealWindowHeight();
 export const Loading = (props) => {
   return (
     <Box flex={1} justifyContent="center" alignItems="center">
@@ -41,8 +43,8 @@ const OkayLottie = (props) => (
     source={require('assets/animation/ok.json')}
     style={{
       height: (Layout.window.width * 2) / 3,
-      marginTop: 40,
-      marginBottom: Layout.window.width * 0.4,
+      // marginTop: 100,
+      marginTop: Layout.window.height * 0.1,
       justifyContent: 'center',
     }}
     {...props}
@@ -52,27 +54,33 @@ const OkayLottie = (props) => (
 export const Okay = ({offModal = () => {}, text, ...props}) => {
   return (
     <Box
+      // flex={1}
       // backgroundColor="mostBg"
-      height={Layout.window.height}
+      height={height}
       width={Layout.window.width}
       //
     >
-      <TouchableOpacity>
+      <Box position="absolute" top={-25} right={0}>
         <Close
           onPress={offModal}
           circleProps={{style: {marginTop: 16, marginRight: 16}}}
         />
-      </TouchableOpacity>
+      </Box>
 
-      <Box alignItems="center">
+      <Box alignItems="center" marginTop={{bigScreen: 'xxl', phone: 'l'}}>
         <OkayLottie {...{props}} />
       </Box>
 
-      <Text textAlign="center" color="primary" fontSize={12} fontWeight="600">
-        {text
-          ? text
-          : 'We are processing this Transaction.\nWe will get back shortly...'}
-      </Text>
+      <Box
+        position="absolute"
+        alignSelf="center"
+        bottom={250 * Layout.aspectRatio}>
+        <Text textAlign="center" color="primary" fontSize={12} fontWeight="600">
+          {text
+            ? text
+            : 'We are processing this Transaction.\nWe will get back shortly...'}
+        </Text>
+      </Box>
     </Box>
   );
 };

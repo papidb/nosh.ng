@@ -103,7 +103,7 @@ export const SubUpload = ({
 
         await tradeCard(rawData);
         setDone(true);
-        showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
+        // showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
       } catch (error) {
         console.log(error);
         console.log(extractErrorMessage(error));
@@ -144,126 +144,128 @@ export const SubUpload = ({
   };
   const imagesSize = images.length;
   return (
-    <Box>
-      <KeyboardAwareScrollView>
-        <Modal isVisible={done} backdropColor="#EAF8FD" backdropOpacity={1}>
-          <Box flex={1} justifyContent="flex-start" alignItems="center">
-            <Okay {...{offModal}} />
-          </Box>
-        </Modal>
-        <HeaderInfo
-          text={`UPLOAD GIFTCARD ${
-            imagesSize != 0
-              ? `(${imagesSize}) image${imagesSize > 1 ? 's' : ''}`
-              : ''
-          }`}
-        />
-        <Box
-          justifyContent="space-between"
-          flexDirection="row"
-          marginVertical="xs">
-          <TouchableOpacity onPress={prev}>
-            <Circle size={42} backgroundColor="white">
-              <Icon name="icon-backward" size={14} />
-            </Circle>
-          </TouchableOpacity>
+    <>
+      <Modal isVisible={done} backdropColor="#EAF8FD" backdropOpacity={1}>
+        <Box flex={1} justifyContent="flex-start" alignItems="center">
+          <Okay {...{offModal}} />
+        </Box>
+      </Modal>
+      <Box>
+        <KeyboardAwareScrollView>
+          <HeaderInfo
+            text={`UPLOAD GIFTCARD ${
+              imagesSize != 0
+                ? `(${imagesSize}) image${imagesSize > 1 ? 's' : ''}`
+                : ''
+            }`}
+          />
+          <Box
+            justifyContent="space-between"
+            flexDirection="row"
+            marginVertical="xs">
+            <TouchableOpacity onPress={prev}>
+              <Circle size={42} backgroundColor="white">
+                <Icon name="icon-backward" size={14} />
+              </Circle>
+            </TouchableOpacity>
 
-          <FastImage
-            source={{uri: imageUri, priority: FastImage.priority.high}}
-            style={styles.image}
-          />
-        </Box>
-        <GiftCardBox marginBottom="xs">
-          <Text fontSize={16} fontWeight="600">
-            {capitalizeFirstLetter(subCategory?.name)}
-          </Text>
-        </GiftCardBox>
-        <TouchableOpacity onPress={openPicker}>
-          {imagesSize ? (
-            <Box
-              paddingHorizontal="m"
-              paddingVertical="xs"
-              backgroundColor="white"
-              borderRadius={155}
-              justifyContent="center"
-              overflow="hidden"
-              style={{marginBottom: 14}}>
-              <ScrollView
-                horizontal
-                contentContainerStyle={{overflow: 'hidden'}}
-                //
-              >
-                {images.map((item) => {
-                  return renderItem(item);
-                })}
-              </ScrollView>
-            </Box>
-          ) : (
-            <GiftCardBox padding="none" style={{marginBottom: 14}}>
-              <Text fontSize={18} fontWeight="600">
-                <Icon name="icon-cart" size={43.2} />
-              </Text>
-            </GiftCardBox>
-          )}
-          <Text
-            color="primary"
-            fontSize={12}
-            fontWeight="600"
-            textAlign="center"
-            marginBottom="m">
-            CLICK HERE TO UPLOAD CARD
-          </Text>
-        </TouchableOpacity>
-        <Box backgroundColor="transparent" style={{marginBottom: 23}}>
-          <Input
-            onChangeText={handleChange('comment')}
-            onBlur={handleBlur('comment')}
-            error={errors.comment}
-            touched={touched.comment}
-            value={values.comment}
-            placeholder="+ Add Optional comments"
-            LeftIcon={<Icon name="icon-edit_colored" size={25} />}
-            variant="profile"
-            textAlign="right"
-            placeholderTextColor={palette.green}
-            inputStyle={{fontSize: 13, color: palette.green}}
-            innerContainerProps={{height: 40, padding: 'm'}}
-            nospace
-          />
-        </Box>
-        {/* Button */}
-        <Box alignItems="center" marginBottom="s">
-          <SwipeButton
-            title="SWIPE T0 SELL"
-            // thumbIcon={thumbIcon}
-            {...{loading: isSubmitting}}
-            onToggle={handleSubmit}
-          />
-        </Box>
-        <Box>
-          <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
-          {/* Nosh Wallet */}
-          <TouchableOpacity onPress={toWallet}>
-            <Box
-              backgroundColor="mostBg"
-              borderRadius={100}
-              height={38}
-              padding="m"
-              paddingLeft="xl"
-              paddingRight="l"
-              justifyContent="space-between"
-              flexDirection="row"
-              alignItems="center"
-              style={{marginHorizontal: 20}}>
-              <Text color="primary" fontWeight="600" fontSize={14}>
-                NOSH WALLET
-              </Text>
-              <Icon name="icon-forwardgreen" size={14} />
-            </Box>
+            <FastImage
+              source={{uri: imageUri, priority: FastImage.priority.high}}
+              style={styles.image}
+            />
+          </Box>
+          <GiftCardBox marginBottom="xs">
+            <Text fontSize={16} fontWeight="600">
+              {capitalizeFirstLetter(subCategory?.name)}
+            </Text>
+          </GiftCardBox>
+          <TouchableOpacity onPress={openPicker}>
+            {imagesSize ? (
+              <Box
+                paddingHorizontal="m"
+                paddingVertical="xs"
+                backgroundColor="white"
+                borderRadius={155}
+                justifyContent="center"
+                overflow="hidden"
+                style={{marginBottom: 14}}>
+                <ScrollView
+                  horizontal
+                  contentContainerStyle={{overflow: 'hidden'}}
+                  //
+                >
+                  {images.map((item) => {
+                    return renderItem(item);
+                  })}
+                </ScrollView>
+              </Box>
+            ) : (
+              <GiftCardBox padding="none" style={{marginBottom: 14}}>
+                <Text fontSize={18} fontWeight="600">
+                  <Icon name="icon-cart" size={43.2} />
+                </Text>
+              </GiftCardBox>
+            )}
+            <Text
+              color="primary"
+              fontSize={12}
+              fontWeight="600"
+              textAlign="center"
+              marginBottom="m">
+              CLICK HERE TO UPLOAD CARD
+            </Text>
           </TouchableOpacity>
-        </Box>
-      </KeyboardAwareScrollView>
-    </Box>
+          <Box backgroundColor="transparent" style={{marginBottom: 23}}>
+            <Input
+              onChangeText={handleChange('comment')}
+              onBlur={handleBlur('comment')}
+              error={errors.comment}
+              touched={touched.comment}
+              value={values.comment}
+              placeholder="+ Add Optional comments"
+              LeftIcon={<Icon name="icon-edit_colored" size={25} />}
+              variant="profile"
+              textAlign="right"
+              placeholderTextColor={palette.green}
+              inputStyle={{fontSize: 13, color: palette.green}}
+              innerContainerProps={{height: 40, padding: 'm'}}
+              nospace
+            />
+          </Box>
+          {/* Button */}
+          <Box alignItems="center" marginBottom="s">
+            <SwipeButton
+              title="SWIPE TO SELL"
+              // thumbIcon={thumbIcon}
+              {...{loading: isSubmitting}}
+              onToggle={handleSubmit}
+            />
+          </Box>
+          <Box>
+            <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
+            {/* Nosh Wallet */}
+            <TouchableOpacity onPress={toWallet}>
+              <Box
+                backgroundColor="mostBg"
+                borderRadius={100}
+                height={38}
+                padding="m"
+                paddingLeft="xl"
+                paddingRight="l"
+                justifyContent="space-between"
+                flexDirection="row"
+                alignItems="center"
+                style={{marginHorizontal: 20}}>
+                <Text color="primary" fontWeight="600" fontSize={12}>
+                  NOSH WALLET
+                </Text>
+                <Icon name="icon-forwardgreen" size={14} />
+              </Box>
+            </TouchableOpacity>
+          </Box>
+        </KeyboardAwareScrollView>
+      </Box>
+    </>
   );
 };
 const styles = StyleSheet.create({

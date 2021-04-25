@@ -77,7 +77,7 @@ export const getAllSubCategories = (state) => {
           });
           const full = Object.keys(container).map((key) => container[key]);
           full.sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));
-          return full.slice(0, 20);
+          return full.slice(0, 15);
         }),
       dispatch,
       getState,

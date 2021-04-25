@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -21,6 +21,7 @@ import {UserNameSetup, Balance} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
 import {addBank, getBanks, getUser, verifyAccount, withdraw} from 'action';
+import {useNavigation} from '@react-navigation/core';
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -74,17 +75,17 @@ const Item = ({title, index, amount}) => {
       </Box>
       {/* Text */}
       <Box flex={1}>
-        <Text fontSize={16} fontWeight="600" color="white" lineHeight={20.35}>
+        <Text fontSize={14} fontWeight="600" color="white" lineHeight={20.35}>
           Bank withdrawal
         </Text>
-        <Text fontSize={12} fontWeight="600" color="success" lineHeight={15.26}>
+        <Text fontSize={11} fontWeight="600" color="success" lineHeight={15.26}>
           April 5 - 2021
         </Text>
       </Box>
       {/* Amount */}
       <Text
         fontWeight="600"
-        fontSize={18}
+        fontSize={16}
         color="success"
         lineHeight={22.9}
         marginRight="l">
@@ -101,6 +102,7 @@ export const WalletScreen = ({
   getUser,
   withdraw,
 }) => {
+  const navigation = useNavigation();
   const user = useSelector((state) => state.user);
   const banks = user?.wallet?.banks ?? [];
   // console.log({banks});
@@ -132,6 +134,63 @@ export const WalletScreen = ({
       // {...props}
     />
   );
+
+  // Many many
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  // get more data to use in app
+  const getInfo = React.useCallback(async () => {
+    return Promise.all([getBanks(), getUser()]);
+  }, [getBanks, getUser]);
+
+  const onRefresh = React.useCallback(async () => {
+    try {
+      setRefreshing(true);
+      await getInfo();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [getInfo]);
+  const init = React.useCallback(async () => {
+    getBanks().catch((error) => {
+      console.log(error);
+    });
+    (async () => {
+      try {
+        await getInfo();
+      } catch (error) {
+        console.log({error});
+      }
+      // try {
+      //   await messaging().subscribeToTopic('nosh');
+      //   if (__DEV__) {
+      //     await messaging().subscribeToTopic('test');
+      //   }
+      // } catch (error) {
+      //   console.log({error});
+      // }
+    })();
+  }, [getBanks, getInfo]);
+  useEffect(() => {
+    console.log('running inits');
+    try {
+      init();
+      const unsubscribe = navigation.addListener('focus', async () => {
+        try {
+          console.log('running these cause this screen was focused on');
+          await getInfo();
+          await init();
+        } catch (error) {}
+      });
+      // Return the function to unsubscribe from the event so it gets removed on unmount
+      return unsubscribe;
+    } catch (error) {
+      // const text = extractErrorMessage(error);
+      // showErrorSnackBar({text});
+    }
+  }, [getBanks, getInfo, init, navigation]);
 
   const ScreenHeader = () => {
     return (
@@ -204,7 +263,7 @@ export const WalletScreen = ({
           <Text
             color="primary"
             fontWeight="600"
-            fontSize={12}
+            fontSize={11}
             style={{marginLeft: 19}}>
             WITHDRAW FUNDS
           </Text>
@@ -221,7 +280,7 @@ export const WalletScreen = ({
             flexDirection: 'row',
             marginRight: 10,
           }}>
-          <Text color="white" fontWeight="600" fontSize={12}>
+          <Text color="white" fontWeight="600" fontSize={11}>
             + ADD BANK
           </Text>
         </TouchableOpacity>

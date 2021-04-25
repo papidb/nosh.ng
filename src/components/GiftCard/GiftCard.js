@@ -16,7 +16,7 @@ export const GiftCard = ({item, ...props}) => {
           height: 220,
           ...(Platform.OS === 'android'
             ? {
-                marginLeft: 50,
+                marginLeft: 25,
               }
             : {
                 // transform: [{scaleX: -1}],

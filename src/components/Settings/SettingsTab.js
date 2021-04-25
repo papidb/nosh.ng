@@ -38,10 +38,10 @@ export const SettingsTab = ({
           alignItems="center"
           justifyContent="space-between"
           marginLeft="l">
-          <Text fontSize={15} fontWeight="600" {...textProps}>
+          <Text fontSize={14} fontWeight="600" {...textProps}>
             {text}
           </Text>
-          <Icon size={14} name="icon-forward" />
+          <Icon size={12} name="icon-forward_settings" />
         </Box>
       </Box>
     </TouchableOpacity>

@@ -62,6 +62,7 @@ export const Button = ({
       ) : (
         <>
           <Text
+            fontSize={14}
             variant={realTextVariant}
             fontWeight="600"
             style={{

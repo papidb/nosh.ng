@@ -182,9 +182,9 @@ const styles = StyleSheet.create({
     paddingRight: 30,
   },
   iconContainer: {
-    top: (36 - CIRCLE_SIZE) / 2,
+    top: (40 - CIRCLE_SIZE) / 2,
     // top: 4,
-    right: 6,
+    // right: 6,
   },
   labelStyle: {
     // marginVertical: 7.5,

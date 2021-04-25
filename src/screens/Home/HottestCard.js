@@ -20,6 +20,7 @@ import {
   Circle,
   Icon,
   Header,
+  RaiseAndroid,
 } from 'components';
 import {uuid} from 'shared/utils';
 import {getAllSubCategories} from 'action';
@@ -42,7 +43,7 @@ const Item = (props) => {
         alignItems="center"
         marginBottom="s"
         marginHorizontal="l"
-        style={{marginBottom: 14, marginTop: 9}}
+        style={{marginBottom: 14, marginTop: first ? 20 : 9}}
         // marginTop="xs"
       >
         <Circle
@@ -66,7 +67,7 @@ const Item = (props) => {
           </Text>
         </Circle>
         <Box flex={1} flexDirection="row" alignItems="center">
-          <Box flex={1}>
+          <Box flex={1} paddingRight="m">
             <Text
               fontSize={16}
               fontWeight="600"
@@ -75,21 +76,21 @@ const Item = (props) => {
               ellipsizeMode="tail"
               //
             >
-              {name}
+              {cardCategory?.name}
             </Text>
             <Text
               fontSize={14}
-              fontWeight="600"
+              // fontWeight="600"
               color={textColor}
               numberOfLines={2}
               ellipsizeMode="tail"
               //
             >
-              {cardCategory?.name}
+              {name}
             </Text>
           </Box>
 
-          <Text fontSize={18} color={textColor}>
+          <Text fontSize={16} fontWeight="600" color={textColor}>
             {rate}/$
           </Text>
         </Box>
@@ -147,19 +148,20 @@ const HottestCardScreen = ({getAllSubCategories}) => {
           renderItem={renderItem}
           keyExtractor={() => uuid()}
           ItemSeparatorComponent={() => (
-            <Divider style={{marginHorizontal: 45}} />
+            <Divider style={{marginHorizontal: 45, marginBottom: 6}} />
           )}
           ListHeaderComponent={() => {
             return (
-              <Box paddingHorizontal="l" paddingTop="l">
-                <Box position="relative">
-                  <FastImage
-                    source={{
-                      uri: data[0]?.cardCategory?.avatar,
-                      priority: FastImage.priority.high,
-                    }}
-                    style={{width: 216, height: 123, alignSelf: 'center'}}
-                  />
+              <Box paddingHorizontal="l" paddingTop="l" justifyContent="center">
+                <FastImage
+                  source={{
+                    uri: data[0]?.cardCategory?.avatar,
+                    priority: FastImage.priority.high,
+                  }}
+                  style={{width: 216, height: 123, alignSelf: 'center'}}
+                />
+                {/* <Box position="relative">
+                 
                   <Image
                     source={images.fire}
                     // eslint-disable-next-line react-native/no-inline-styles
@@ -171,12 +173,13 @@ const HottestCardScreen = ({getAllSubCategories}) => {
                       right: Dimensions.get('screen').width / 2 + 13,
                     }}
                   />
-                </Box>
+                </Box> */}
 
                 <HeaderInfo text="HOTTEST CARDS" />
               </Box>
             );
           }}
+          ListFooterComponent={() => <RaiseAndroid height={100} />}
         />
       )}
     </Box>

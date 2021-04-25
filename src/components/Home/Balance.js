@@ -5,7 +5,7 @@ import {commaFormatter} from 'shared/utils';
 
 import {Box, Text} from 'components';
 
-export const Balance = ({user, containerProps}) => {
+export const Balance = ({user, text = 'Available Balance', containerProps}) => {
   const balance = user?.wallet?.balance ?? 0;
   const [balanceWhole, balanceFraction] = String(
     commaFormatter(balance, 2),
@@ -24,22 +24,19 @@ export const Balance = ({user, containerProps}) => {
         fontSize={12}
         color="primary"
         textAlign="center"
-        fontWeight="600"
-        // fontWeight="600"
         //
       >
-        Available Balance
+        {text}
       </Text>
-      <Box flexDirection="row" alignItems="center">
+      <Box flexDirection="row" alignItems="center" justifyContent="center">
         <Text
           color="buttonColor"
-          fontSize={33}
+          fontSize={30}
           fontWeight="600"
-          lineHeight={42.37}>
+          lineHeight={35}>
           {balanceWhole}
-          {/* 232,323 */}
         </Text>
-        <Text color="primary" fontSize={30}>
+        <Text color="primary" fontSize={30} lineHeight={35}>
           .{balanceFraction}
         </Text>
         <Text

@@ -10,6 +10,7 @@
     "test": "jest",
     "lint": "eslint .",
     "pod": "cd ios && pod install && cd ..",
+    "postinstall": "./scripts/postinstall.sh",
     "icon": "react-native set-icon --path ./Icon.jpg"
   },
   "dependencies": {
@@ -33,6 +34,7 @@
     "lottie-ios": "3.1.8",
     "lottie-react-native": "^3.5.0",
     "mime": "^2.5.2",
+    "patch-package": "^6.4.7",
     "phone": "^2.4.15",
     "prop-types": "^15.7.2",
     "qrcode": "^1.4.4",

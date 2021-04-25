@@ -132,7 +132,7 @@ const LoginScreen = ({login, getUser}) => {
   return (
     <AuthContainer>
       <KeyboardAwareScrollView contentContainerStyle={{flexGrow: 1}}>
-        <Box flex={1} margin="s" marginTop="-l" style={styles.container}>
+        <Box flex={1} margin="s" style={styles.container}>
           {/* Image */}
           <AuthAvatar
             size={120}

@@ -43,6 +43,10 @@ export default {
     label: 'Choose Bank',
     value: 'Choose Bank',
   },
+  cardCategory: {
+    label: 'Choose Gift Card',
+    value: 'Choose Gift Card',
+  },
   banks: [
     {label: 'Abbey Mortgage Bank', value: '801'},
     {label: 'Access Bank', value: '044'},

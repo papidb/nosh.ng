@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {ActivityIndicator} from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -25,7 +25,7 @@ import {
   showErrorSnackBar,
   showSuccessSnackBar,
   extractErrorMessage,
-  waait,
+  uuid,
 } from 'shared/utils';
 import * as Yup from 'yup';
 
@@ -37,6 +37,7 @@ const AmountSchema = Yup.object().shape({
   ),
 });
 export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
+  const [selected, setSelected] = useState(null);
   const {
     errors,
     values,
@@ -55,10 +56,11 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
   } = useFormik({
     initialValues: {amount: ''},
     onSubmit: async (values) => {
-      console.log({values});
       try {
-        const message = await withdraw({values, bankId: banks[0]?._id ?? null});
-        console.log({message});
+        const message = await withdraw({
+          amount: Number(values.amount),
+          bankId: selected,
+        });
         showSuccessSnackBar({
           text: 'Withdrawal successful, we will get back to you!',
         });
@@ -114,7 +116,9 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
       </Box>
       {thereIsBank ? (
         <Box>
-          <BankTab {...banks[0]} />
+          {banks.map((bank) => (
+            <BankTab key={uuid()} {...bank} {...{selected, setSelected}} />
+          ))}
         </Box>
       ) : (
         <Box>
@@ -135,7 +139,7 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
         /> */}
         <Box alignItems="center" marginBottom="s">
           <SwipeButton
-            title="SWIPE T0 WITHDRAW"
+            title="SWIPE TO WITHDRAW"
             // thumbIcon={thumbIcon}
             {...{loading: isSubmitting}}
             onToggle={handleSubmit}

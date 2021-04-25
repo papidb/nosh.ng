@@ -163,7 +163,7 @@ export const SubAmount = ({
               flexDirection="row"
               alignItems="center"
               style={{marginHorizontal: 20}}>
-              <Text color="primary" fontWeight="600" fontSize={14}>
+              <Text color="primary" fontWeight="600" fontSize={12}>
                 NOSH WALLET
               </Text>
               <Icon name="icon-forwardgreen" size={14} />

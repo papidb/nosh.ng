@@ -1,107 +1,190 @@
 import React from 'react';
-import {TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 
 import PropTypes from 'prop-types';
 
 import {Box, Text, Divider, Close, Circle} from 'components';
-import images from 'constants/images';
+import FastImage from 'react-native-fast-image';
+import {capitalizeFirstLetter, uuid, commaFormatter} from 'shared/utils';
 
-export const TransactionModal = ({closeModal = () => {}}) => {
+import {format} from 'date-fns';
+
+const renderItem = (path) => {
   return (
-    <Box backgroundColor="white" borderRadius={38} padding="l">
-      <Close onPress={closeModal} />
-      {/* Content */}
-      <Box alignItems="center" marginBottom="s" marginTop="l">
-        <Image source={images.itunes_2} />
-      </Box>
+    <Circle size={75} key={uuid()} marginRight="xs">
+      <FastImage
+        source={{
+          uri: path,
+          priority: FastImage.priority.high,
+        }}
+        style={{
+          width: 75,
+          height: 75,
+          borderRadius: 75,
+          // resizeMode: 'contain',
+        }}
+      />
+    </Circle>
+  );
+};
+export const TransactionModal = ({
+  closeModal = () => {},
+  cardCategory,
+  cardTotalAmount,
+  status,
+  color,
+  createdAt,
+  comment,
+  tradeFiles = [],
+  tradeStatus,
+}) => {
+  // const rejectionReason = tradeStatus?.rejectionReason;
+  const rejectionReason = 'Omo we don tire for your matter';
 
-      <Box>
-        <Box>
-          <Divider
-            marginBottom="l"
-            marginTop="m"
-            style={styles.headerDivider}
+  console.log({rejectionReason});
+
+  return (
+    <Box flex={1} paddingBottom="l">
+      {/* <Box flex={1} /> */}
+      <Box
+        backgroundColor="white"
+        borderRadius={38}
+        padding="l"
+        position="relative"
+        paddingTop="none">
+        {/* Content */}
+        <Box position="absolute" zIndex={20390} top={20} right={15}>
+          <Close onPress={closeModal} />
+        </Box>
+        <Box
+          flexDirection="row"
+          alignItems="center"
+          marginBottom="s"
+          marginTop="l">
+          <FastImage
+            source={{
+              uri: cardCategory.avatar,
+              priority: FastImage.priority.high,
+            }}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              width: 97,
+              height: 55,
+            }}
           />
-          <Box
-            flexDirection="row"
-            justifyContent="space-between"
-            marginBottom="s"
-            marginHorizontal="l"
-            alignItems="center">
-            <Text color="text" fontSize={16} fontWeight="600">
-              USA Apple Itunes
-            </Text>
-            <Text color="success" fontSize={16} fontWeight="600">
-              x 4cards
-            </Text>
-          </Box>
+          <Text color="primary" fontSize={13} fontWeight="600">
+            Status:{' '}
+          </Text>
+          <Text color="primary" fontSize={13} fontWeight="600" {...{color}}>
+            {capitalizeFirstLetter(status)}
+          </Text>
+        </Box>
 
-          <Divider marginTop="m" style={styles.headerDivider} />
-        </Box>
         <Box>
-          <Box
-            marginTop="l"
-            flexDirection="row"
-            justifyContent="space-between"
-            marginBottom="s"
-            marginHorizontal="l"
-            alignItems="center">
-            <Text color="primary" fontSize={24}>
-              2,000.00
-            </Text>
-            <Text color="primary" fontSize={12} fontWeight="600">
-              USD
-            </Text>
-          </Box>
+          {tradeFiles.length > 0 && (
+            <ScrollView
+              nestedScrollEnabled
+              horizontal
+              // contentContainerStyle={{overflow: 'hidden'}}
+              //
+            >
+              {tradeFiles.map((item) => {
+                return renderItem(item);
+              })}
+            </ScrollView>
+          )}
+          <Box>
+            <Divider
+              marginBottom="l"
+              marginTop="m"
+              style={styles.headerDivider}
+            />
+            <Box
+              flexDirection="row"
+              justifyContent="space-between"
+              marginBottom="s"
+              marginHorizontal="l"
+              alignItems="center">
+              <Text color="text" fontSize={16} fontWeight="600">
+                {cardCategory?.name}
+              </Text>
+              {/* <Text color="success" fontSize={16} fontWeight="600">
+                x 4cards
+              </Text> */}
+            </Box>
 
-          <Divider marginTop="m" style={styles.headerDivider} />
-        </Box>
-        <Box>
-          <Box
-            marginTop="l"
-            flexDirection="row"
-            justifyContent="space-between"
-            marginBottom="s"
-            marginHorizontal="l"
-            alignItems="center">
-            <Text color="success" fontSize={24}>
-              560,000.00
-            </Text>
-            <Text color="success" fontSize={12} fontWeight="600">
-              USD
-            </Text>
+            <Divider marginTop="m" style={styles.headerDivider} />
           </Box>
-        </Box>
-        <Box>
-          <Box
-            marginTop="l"
-            flexDirection="row"
-            justifyContent="space-between"
-            marginBottom="s"
-            marginHorizontal="l"
-            alignItems="center">
-            <Text color="success" fontSize={12} fontWeight="600">
-              April 5 - 2021
-            </Text>
-            <Text color="success" fontSize={12} fontWeight="600">
-              10:36am
-            </Text>
+          <Box>
+            <Box
+              marginTop="l"
+              flexDirection="row"
+              justifyContent="space-between"
+              marginBottom="s"
+              marginHorizontal="l"
+              alignItems="center">
+              <Text color="primary" fontSize={24}>
+                {cardTotalAmount}
+              </Text>
+              <Text color="success" fontSize={24}>
+                {commaFormatter(cardTotalAmount)}
+              </Text>
+            </Box>
+            <Box marginHorizontal="l">
+              <Text
+                color="success"
+                fontSize={12}
+                fontWeight="600"
+                textAlign="right">
+                NGN
+              </Text>
+            </Box>
+            <Divider marginTop="m" style={styles.headerDivider} />
           </Box>
-        </Box>
-        <Box>
-          <Box
-            marginTop="l"
-            justifyContent="flex-end"
-            marginBottom="s"
-            marginHorizontal="l"
-            //
-          >
-            <Text color="primary" fontSize={13} textAlign="right">
-              No Optional comments
-            </Text>
+          <Box>
+            <Box
+              marginTop="l"
+              flexDirection="row"
+              justifyContent="space-between"
+              marginBottom="s"
+              marginHorizontal="l"
+              alignItems="center">
+              <Text color="success" fontSize={12} fontWeight="600">
+                {format(new Date(createdAt), 'MMMM d - yyyy')}
+              </Text>
+              <Text color="success" fontSize={12} fontWeight="600">
+                {format(new Date(createdAt), 'H:mmbbb')}
+              </Text>
+            </Box>
+            <Divider style={styles.headerDivider} />
+          </Box>
+          <Box>
+            <Box
+              marginTop="l"
+              justifyContent="flex-end"
+              marginBottom="s"
+              marginHorizontal="l"
+              //
+            >
+              <Text
+                fontSize={14}
+                textAlign="left"
+                marginBottom="m"
+                fontWeight="600"
+                style={{color: !!rejectionReason ? '#525C6B' : '#D3D3D3'}}>
+                {/* {!!comment ? comment : 'No Optional comments'} */}
+                Rejection Reason
+              </Text>
+              <Text fontSize={12} textAlign="left" style={{color: '#D3D3D3'}}>
+                {/* {!!comment ? comment : 'No Optional comments'} */}
+                {rejectionReason}
+              </Text>
+            </Box>
           </Box>
         </Box>
       </Box>
+      {/* <Box flex={1} /> */}
     </Box>
   );
 };

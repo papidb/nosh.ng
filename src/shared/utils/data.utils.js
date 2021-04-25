@@ -44,6 +44,13 @@ export const getMessage = () => {
   return message;
 };
 
+// approved, rejected, pending
+const allowStatus = ['approved', 'rejected'];
+
+export const includesStatus = (status) => allowStatus.includes(status);
+export const purifyStatus = (status) =>
+  includesStatus(status) ? status : 'greyish';
+
 export const getFormData = (values) => {
   let data = new FormData();
   Object.keys(values).forEach((key) => {

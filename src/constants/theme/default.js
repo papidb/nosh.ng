@@ -1,7 +1,7 @@
 import {createTheme} from '@shopify/restyle';
 
-const BUTTON_HEIGHT = 62;
-const INPUT_HEIGHT = 62;
+const BUTTON_HEIGHT = 58;
+const INPUT_HEIGHT = 58;
 
 export const palette = {
   // main colors
@@ -27,6 +27,7 @@ export const palette = {
 
   // red
   red: '#FF4000',
+  greyish: '#C9C9C9',
 
   // confused
   inputColor: 'rgba(40,35,86,0.5)',
@@ -45,6 +46,7 @@ const theme = createTheme({
     whiteFaded: palette.whiteFaded,
     transparent: palette.transparent,
     success: palette.green,
+    approved: palette.green,
     lightSuccess: palette.lightGreen,
 
     text: palette.darkGrey,
@@ -63,6 +65,8 @@ const theme = createTheme({
     accent: '#ff4000',
     inactiveInputBorder: palette.greyBlue,
     error: palette.red,
+    rejected: palette.red,
+    greyish: palette.greyish,
     overlayBg: palette.lightBlack,
     disabledTextInput: palette.fadedBrown,
     lightGray: palette.FAFAFA,
@@ -181,7 +185,7 @@ const theme = createTheme({
     defaults: {
       height: INPUT_HEIGHT,
       fontFamily: 'Hurme Geometric Sans 2',
-      fontSize: 16,
+      fontSize: 14,
       borderWidth: 2,
       color: palette.inputColor,
       // placeholderTextColor: palette.inputColor,
@@ -189,7 +193,7 @@ const theme = createTheme({
     profile: {
       height: INPUT_HEIGHT,
       fontFamily: 'Hurme Geometric Sans 2',
-      fontSize: 16,
+      fontSize: 14,
       borderWidth: 0,
       color: palette.fadedBrown,
       backgroundColor: 'lightGray',
@@ -198,7 +202,7 @@ const theme = createTheme({
     profilePrimary: {
       height: INPUT_HEIGHT,
       fontFamily: 'Hurme Geometric Sans 2',
-      fontSize: 16,
+      fontSize: 14,
       borderWidth: 0,
       color: palette.blue,
       backgroundColor: 'lightPrimary',

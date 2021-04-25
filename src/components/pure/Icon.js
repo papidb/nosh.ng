@@ -13,13 +13,13 @@ import faceid from 'assets/icons/faceid.svg';
 import kuda from 'assets/icons/kuda.svg';
 import send from 'assets/icons/send.svg';
 
-
 import receipt from 'assets/icons/receipt.svg';
 import giftcard from 'assets/icons/giftcard.svg';
 
 import apple from 'assets/icons/apple.svg';
 import home from 'assets/icons/home.svg';
 import forward from 'assets/icons/forward.svg';
+import forward_settings from 'assets/icons/forward_settings.svg';
 import forwardgreen from 'assets/icons/forwardgreen.svg';
 import settings from 'assets/icons/settings.svg';
 import add from 'assets/icons/add.svg';
@@ -48,6 +48,7 @@ const ICONS = {
   'icon-apple': apple,
   'icon-home': home,
   'icon-forward': forward,
+  'icon-forward_settings': forward_settings,
   'icon-forwardgreen': forwardgreen,
   'icon-settings': settings,
   'icon-add': add,

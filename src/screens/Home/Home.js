@@ -213,7 +213,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
             justifyContent="space-between"
             flexDirection="row"
             alignItems="center">
-            <Text color="primary" fontWeight="600" fontSize={14}>
+            <Text color="primary" fontWeight="600" fontSize={12}>
               NOSH WALLET
             </Text>
             <Icon name="icon-forwardgreen" size={14} />

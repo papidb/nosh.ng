@@ -1,5 +1,10 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {FlatList, ActivityIndicator, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
 
 import Modal from 'react-native-modal';
 
@@ -17,6 +22,33 @@ import {connect} from 'react-redux';
 import {getTrades} from 'action';
 import {palette} from 'constants/theme';
 
+const HeaderComponent = () => {
+  return (
+    <Box marginBottom="m" marginHorizontal="l">
+      <Divider />
+      <Box marginTop="l" style={styles.header}>
+        <HeaderInfo text="GIFTCARD TRANSACTION HISTORY" />
+      </Box>
+      <Text
+        color="success"
+        textAlign="right"
+        fontWeight="600"
+        fontSize={12}
+        lineHeight={15.26}
+        style={styles.ngn}>
+        NGN
+      </Text>
+      <Divider />
+    </Box>
+  );
+};
+
+const ItemSeparatorComponent = () => (
+  <Box marginHorizontal="l" style={{marginBottom: 9}}>
+    <Divider />
+  </Box>
+);
+
 const TransactionScreen = ({getTrades}) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -25,9 +57,10 @@ const TransactionScreen = ({getTrades}) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [pure, setPure] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
   const [max, setMax] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const _renderFooter = useCallback(() => {
     if (!loadingMore) return null;
@@ -62,37 +95,75 @@ const TransactionScreen = ({getTrades}) => {
     }
   }, [currentPage, getTrades, max]);
 
-  const getData = useCallback(async () => {
-    // console.log({getTrades});
+  const getData = useCallback(
+    async (initPage = currentPage) => {
+      // console.log({getTrades});
+      try {
+        console.log('na you be the bastard');
+        await getTrades(initPage).then((data) => {
+          const {
+            // eslint-disable-next-line no-shadow
+            page,
+            trades,
+            // totalNotifications,
+            totalPages,
+          } = data;
+          // console.log({data, totalPages});
+          setMax(initPage == totalPages);
+          setCurrentPage(Number(initPage) + 1);
+          setData(trades);
+        });
+      } catch (error) {
+        console.log({error});
+      } finally {
+        setLoading(false);
+      }
+    },
+    [currentPage, getTrades],
+  );
+  const onRefresh = React.useCallback(async () => {
     try {
-      await getTrades(currentPage).then((data) => {
-        const {
-          // eslint-disable-next-line no-shadow
-          currentPage,
-          trades,
-          // totalNotifications,
-          totalPages,
-        } = data;
-        setMax(currentPage == totalPages);
-        setCurrentPage(Number(currentPage) + 1);
-        setData(trades);
-      });
+      setRefreshing(true);
+      await getData(1);
     } catch (error) {
-      console.log({error});
+      console.log(error);
     } finally {
-      setLoading(false);
+      setRefreshing(false);
     }
-  }, [currentPage, getTrades]);
+  }, [getData]);
 
   useEffect(() => {
-    getData();
-  }, [getData]);
+    console.log('na you be the bastard');
+    const initPage = 1;
+    (async () => {
+      try {
+        await getTrades(initPage).then((data) => {
+          const {
+            // eslint-disable-next-line no-shadow
+            page,
+            trades,
+            // totalNotifications,
+            totalPages,
+          } = data;
+          // console.log({data, totalPages});
+          setMax(initPage == totalPages);
+          setCurrentPage(Number(initPage) + 1);
+          setData(trades);
+        });
+      } catch (error) {
+        console.log({error});
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [getTrades]);
+  console.log('omo');
 
   return (
     <Box flex={1}>
-      <Modal isVisible={isModalVisible} onBackdropPress={() => closeModal()}>
+      {/* <Modal isVisible={isModalVisible} onBackdropPress={() => closeModal()}>
         <TransactionModal {...{closeModal}} />
-      </Modal>
+      </Modal> */}
       {/* Header */}
       {loading ? (
         <Loading />
@@ -108,39 +179,21 @@ const TransactionScreen = ({getTrades}) => {
         </Box>
       ) : (
         <FlatList
-          ListHeaderComponent={() => {
-            return (
-              <Box marginBottom="m" marginHorizontal="l">
-                <Divider />
-                <Box marginTop="l" style={styles.header}>
-                  <HeaderInfo text="GIFTCARD TRANSACTION HISTORY" />
-                </Box>
-                <Text
-                  color="success"
-                  textAlign="right"
-                  fontWeight="600"
-                  fontSize={12}
-                  lineHeight={15.26}
-                  style={styles.ngn}>
-                  NGN
-                </Text>
-                <Divider />
-              </Box>
-            );
-          }}
+          // refreshControl={
+          //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          // }
+          ListHeaderComponent={HeaderComponent}
           data={data}
           keyExtractor={(item, index) => uuid()}
           renderItem={({item}) => <TransactionTab {...item} />}
           ListFooterComponent={_renderFooter}
-          ItemSeparatorComponent={() => (
-            <Divider style={{marginHorizontal: 18}} />
-          )}
-          onEndReached={_handleLoadMore}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          // onEndReached={_handleLoadMore}
           onEndReachedThreshold={0.1}
         />
       )}
       <Divider style={[styles.bottomDivider, styles.noMarginTop]} />
-      <Text textAlign="center" color="primary" fontSize={12} fontWeight="600">
+      <Text textAlign="center" color="primary" fontSize={11} fontWeight="600">
         CLICK ON TRANSACTION FOR DETAILS
       </Text>
       <Divider style={styles.bottomDivider} />

@@ -88,14 +88,15 @@ export const AddBank = ({
         // bankList.filter(({value}) => value == bankcode)[0]?.label ?? 'none';
         const data = {accountNumber: nuban, bankCode: bankcode};
         const addBankRes = await addBank(data);
-        // try {
-        //   await getUser();
-        // } catch (error) {
-        //   console.log({error});
-        // }
+        try {
+          await getUser();
+        } catch (error) {
+          console.log({error});
+        }
         console.log({addBankRes});
         let message = addBankRes?.message;
         showSuccessSnackBar({text: message});
+        close();
       } catch (error) {
         console.log({error});
         const message = extractErrorMessage(error);
