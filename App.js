@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {StatusBar, Text} from 'react-native';
+import {StatusBar, Platform, Text} from 'react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -48,7 +48,7 @@ const TextProps = {
   style: {
     // color: 'blue',
     fontFamily: 'Hurme Geometric Sans 2',
-    fontSize: 13,
+    fontSize: Platform.OS === 'android' ? 13 : 14,
   },
 };
 SetCustomText(TextProps);

@@ -4,7 +4,7 @@ import {
   Dimensions,
   ScrollView,
   Image,
-  ActivityIndicator,
+  Platform,
   TouchableOpacity,
 } from 'react-native';
 import FormData from 'form-data';
@@ -43,6 +43,8 @@ import {
   extractErrorMessage,
 } from 'shared/utils';
 import {useNavigation} from '@react-navigation/core';
+
+const IS_ANDROID = Platform.OS === 'android';
 
 export const SubUpload = ({
   next,
@@ -215,6 +217,7 @@ export const SubUpload = ({
               CLICK HERE TO UPLOAD CARD
             </Text>
           </TouchableOpacity>
+          <Box marginTop={IS_ANDROID ? 'none' : {bigScreen: 'l', phone: 'l'}} />
           <Box backgroundColor="transparent" style={{marginBottom: 23}}>
             <Input
               onChangeText={handleChange('comment')}
@@ -232,6 +235,9 @@ export const SubUpload = ({
               nospace
             />
           </Box>
+          <Box
+            marginTop={IS_ANDROID ? 'none' : {bigScreen: 'xxl', phone: 'xxl'}}
+          />
           {/* Button */}
           <Box alignItems="center" marginBottom="s">
             <SwipeButton

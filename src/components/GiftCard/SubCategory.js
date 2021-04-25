@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, Platform, Image} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
@@ -23,6 +23,8 @@ import * as Yup from 'yup';
 import {useFormik} from 'formik';
 
 // console.log(Dimensions.get('screen'));
+const IS_ANDROID = Platform.OS === 'android';
+
 const SubSchema = Yup.object().shape({
   // name: Yup.string().required('Required'),
   category: Yup.object()
@@ -98,7 +100,7 @@ export const SubCategory = ({
       <Box
         justifyContent="space-between"
         flexDirection="row"
-        marginVertical="xs"
+        marginVertical="m"
         marginBottom="xs">
         <TouchableOpacity onPress={prev}>
           <Circle size={42} backgroundColor="white">
@@ -131,58 +133,65 @@ export const SubCategory = ({
         />
       </Box>
 
-      <Box
-        flexDirection="row"
-        marginTop={{bigScreen: 'xxxl', phone: 'xxl'}}
-        style={{marginBottom: 7}}>
-        <Box flex={1} alignItems="flex-end">
-          <Image source={images.discount} />
-        </Box>
-        <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
-          <Box
-            // flex={1}
-            backgroundColor="lightSuccess"
-            borderRadius={100}
-            height={52}
-            // maxWidth={150}
-            justifyContent="center"
-            flexDirection="row"
-            alignItems="center">
-            <Text fontSize={14} color="primary" fontWeight="600">
-              Hottest{' '}
-            </Text>
-            <Text fontSize={14} color="buttonColor">
-              Cards
-            </Text>
+      <Box marginTop={IS_ANDROID ? 'none' : {bigScreen: 'xxxl', phone: 'xxl'}}>
+        <Box
+          flexDirection="row"
+          marginTop={{bigScreen: 'xxxl', phone: 'xxl'}}
+          style={{marginBottom: 7}}>
+          <Box flex={1} alignItems="flex-end">
+            <Image source={images.discount} />
           </Box>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
+            <Box
+              // flex={1}
+              backgroundColor="lightSuccess"
+              borderRadius={100}
+              height={52}
+              // maxWidth={150}
+              justifyContent="center"
+              flexDirection="row"
+              alignItems="center">
+              <Text fontSize={14} color="primary" fontWeight="600">
+                Hottest{' '}
+              </Text>
+              <Text fontSize={14} color="buttonColor">
+                Cards
+              </Text>
+            </Box>
+          </TouchableOpacity>
+        </Box>
       </Box>
 
-      {/* Button */}
-      <Box alignItems="center" marginBottom="m" style={{marginHorizontal: 14}}>
-        <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
-      </Box>
       <Box>
-        <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
-        {/* Nosh Wallet */}
-        <TouchableOpacity onPress={toWallet}>
-          <Box
-            backgroundColor="mostBg"
-            borderRadius={100}
-            height={38}
-            padding="m"
-            paddingLeft="xl"
-            paddingRight="l"
-            justifyContent="space-between"
-            flexDirection="row"
-            alignItems="center"
-            style={{marginHorizontal: 20}}>
-            <Text color="primary" fontWeight="600" fontSize={12}>
-              NOSH WALLET
-            </Text>
-            <Icon name="icon-forwardgreen" size={14} />
-          </Box>
-        </TouchableOpacity>
+        {/* Button */}
+        <Box
+          alignItems="center"
+          marginBottom="m"
+          style={{marginHorizontal: 14}}>
+          <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
+        </Box>
+        <Box>
+          <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
+          {/* Nosh Wallet */}
+          <TouchableOpacity onPress={toWallet}>
+            <Box
+              backgroundColor="mostBg"
+              borderRadius={100}
+              height={38}
+              padding="m"
+              paddingLeft="xl"
+              paddingRight="l"
+              justifyContent="space-between"
+              flexDirection="row"
+              alignItems="center"
+              style={{marginHorizontal: 20}}>
+              <Text color="primary" fontWeight="600" fontSize={12}>
+                NOSH WALLET
+              </Text>
+              <Icon name="icon-forwardgreen" size={14} />
+            </Box>
+          </TouchableOpacity>
+        </Box>
       </Box>
     </Box>
   );

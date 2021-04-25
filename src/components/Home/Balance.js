@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-// import {ScrollView, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Platform} from 'react-native';
 
 import {commaFormatter} from 'shared/utils';
 
@@ -16,6 +16,7 @@ export const Balance = ({user, text = 'Available Balance', containerProps}) => {
       marginHorizontal="s"
       backgroundColor="white"
       padding="m"
+      height={Platform.OS === 'ios' ? 93 : 75}
       borderRadius={155}
       justifyContent="center"
       alignItems="center"

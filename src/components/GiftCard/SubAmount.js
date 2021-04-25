@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Platform, TouchableOpacity} from 'react-native';
 
 import PropTypes from 'prop-types';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -39,6 +39,7 @@ export const SubAmount = ({
       `Minimum amount of ${subCategory.minimumAcceptableAmount}`,
     ),
   });
+  const IS_ANDROID = Platform.OS === 'android';
 
   // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
   const imageUri = giftCard.avatar;
@@ -85,7 +86,8 @@ export const SubAmount = ({
         <Box
           justifyContent="space-between"
           flexDirection="row"
-          style={styles.header}>
+          marginVertical="m"
+          marginBottom="xs">
           <TouchableOpacity onPress={prev}>
             <Circle size={42} backgroundColor="white">
               <Icon name="icon-backward" size={14} />
@@ -141,6 +143,9 @@ export const SubAmount = ({
             NGN
           </Text>
         </GiftCardBox>
+        <Box
+          marginTop={IS_ANDROID ? 'none' : {bigScreen: 'xxxl', phone: 'xxl'}}
+        />
         {/* Button */}
         <Box
           alignItems="center"

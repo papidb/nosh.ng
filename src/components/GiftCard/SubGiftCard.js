@@ -76,7 +76,7 @@ export const SubGiftCard = ({
     <Box overflow="hidden">
       <HeaderInfo text="SWIPE THROUGH TO SELECT CATEGORY" />
       <Box
-        height={200}
+        height={IS_ANDROID ? 200 : 250}
         alignItems="center"
         marginVertical={{bigScreen: 'l', phone: 'l'}}>
         <Carousel
@@ -100,7 +100,7 @@ export const SubGiftCard = ({
           }}
         />
       </Box>
-      <Box marginHorizontal="xl">
+      <Box marginHorizontal="xl" marginVertical={IS_ANDROID ? 'none' : 'm'}>
         <Select
           placeholder={data.cardCategory}
           items={cardCategorySelect}

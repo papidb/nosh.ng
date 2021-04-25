@@ -165,7 +165,7 @@ export const BottomTab = () => {
         activeBackgroundColor: palette.darkBlueButton,
         tabStyle: {
           elevation: 10,
-          shadowColor: '#000',
+          shadowColor: '#30bced',
           shadowOffset: {
             width: 0,
             height: 5,
