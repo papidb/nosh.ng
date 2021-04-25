@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "pod": "cd ios && pod install && cd ..",
     "postinstall": "./scripts/postinstall.sh",
+    "build": "./gradlew app:assembleRelease",
     "icon": "react-native set-icon --path ./Icon.jpg"
   },
   "dependencies": {
