@@ -4,7 +4,16 @@ import {StyleSheet, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import {Box, Text, Circle, Input, Button, HeaderInfo, Icon} from 'components';
+import {
+  Box,
+  Text,
+  Circle,
+  Input,
+  Divider,
+  Button,
+  HeaderInfo,
+  Icon,
+} from 'components';
 import {GiftCardBox} from './GiftCardBox';
 
 import {commaFormatter} from 'shared/utils';
@@ -22,6 +31,7 @@ export const SubAmount = ({
   subCategory,
   amount,
   setAmount,
+  toWallet,
 }) => {
   const AmountSchema = Yup.object().shape({
     amount: Yup.number().min(
@@ -87,7 +97,7 @@ export const SubAmount = ({
             style={styles.image}
           />
         </Box>
-        <GiftCardBox style={styles.giftCardBox}>
+        <GiftCardBox height={93} style={styles.giftCardBox}>
           <Text fontSize={16} fontWeight="600">
             {capitalizeFirstLetter(subCategory?.name)}
           </Text>
@@ -108,7 +118,7 @@ export const SubAmount = ({
           value={values.amount}
           nospace
         />
-        <Box marginHorizontal="xl" marginVertical="xs">
+        <Box marginHorizontal="xl" marginVertical="xs" marginTop="m">
           <Text fontSize={12} fontWeight="600" color="success">
             YOU GET PAID
           </Text>
@@ -120,8 +130,10 @@ export const SubAmount = ({
           flexDirection="row"
           backgroundColor="mostBg"
           justifyContent="space-between"
-          height={62}
-          marginBottom="l">
+          // height={62}
+          style={{
+            marginBottom: 33,
+          }}>
           <Text fontSize={24} color="success">
             {commaFormatter(subCategory?.rate * values.amount)}
           </Text>
@@ -130,8 +142,33 @@ export const SubAmount = ({
           </Text>
         </GiftCardBox>
         {/* Button */}
-        <Box alignItems="center" marginBottom="s">
+        <Box
+          alignItems="center"
+          marginBottom="s"
+          style={{marginHorizontal: 14}}>
           <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
+        </Box>
+        <Box>
+          <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
+          {/* Nosh Wallet */}
+          <TouchableOpacity onPress={toWallet}>
+            <Box
+              backgroundColor="mostBg"
+              borderRadius={100}
+              height={38}
+              padding="m"
+              paddingLeft="xl"
+              paddingRight="l"
+              justifyContent="space-between"
+              flexDirection="row"
+              alignItems="center"
+              style={{marginHorizontal: 20}}>
+              <Text color="primary" fontWeight="600" fontSize={14}>
+                NOSH WALLET
+              </Text>
+              <Icon name="icon-forwardgreen" size={14} />
+            </Box>
+          </TouchableOpacity>
         </Box>
       </KeyboardAwareScrollView>
     </Box>
@@ -145,6 +182,6 @@ SubAmount.propTypes = {
 
 const styles = StyleSheet.create({
   image: {width: 120, height: 67.5},
-  header: {marginTop: 6, marginBottom: 6},
+  header: {marginTop: 6, marginBottom: 6.5},
   giftCardBox: {marginBottom: 8},
 });

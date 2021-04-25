@@ -1,10 +1,19 @@
 import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import PropTypes from 'prop-types';
 
-import {Box, Text, Circle, Select, Button, HeaderInfo, Icon} from 'components';
+import {
+  Box,
+  Text,
+  Circle,
+  Select,
+  Divider,
+  Button,
+  HeaderInfo,
+  Icon,
+} from 'components';
 import {GiftCardBox} from './GiftCardBox';
 
 import data from 'constants/data';
@@ -13,6 +22,7 @@ import {capitalizeFirstLetter} from 'shared/utils';
 import * as Yup from 'yup';
 import {useFormik} from 'formik';
 
+// console.log(Dimensions.get('screen'));
 const SubSchema = Yup.object().shape({
   // name: Yup.string().required('Required'),
   category: Yup.object()
@@ -31,6 +41,7 @@ export const SubCategory = ({
   navigation,
   setSwiperHeight,
   setSubCategory,
+  toWallet,
 }) => {
   const toHottestCards = useCallback(
     () => navigation.navigate('HottestCards'),
@@ -88,7 +99,7 @@ export const SubCategory = ({
         justifyContent="space-between"
         flexDirection="row"
         marginVertical="xs"
-        marginBottom="xxs">
+        marginBottom="xs">
         <TouchableOpacity onPress={prev}>
           <Circle size={42} backgroundColor="white">
             <Icon name="icon-backward" size={14} />
@@ -100,7 +111,7 @@ export const SubCategory = ({
           style={styles.image}
         />
       </Box>
-      <GiftCardBox marginVertical="none" marginBottom="xxs">
+      <GiftCardBox height={93} marginVertical="none" marginBottom="xxs">
         <Text fontSize={18} fontWeight="600">
           {capitalizeFirstLetter(giftCard?.name)}
         </Text>
@@ -120,16 +131,20 @@ export const SubCategory = ({
         />
       </Box>
 
-      <Box flexDirection="row" marginVertical="xs" marginTop="xl">
-        <Box flex={1} />
-        <Image source={images.discount} />
+      <Box
+        flexDirection="row"
+        marginTop={{bigScreen: 'xxxl', phone: 'xxl'}}
+        style={{marginBottom: 7}}>
+        <Box flex={1} alignItems="flex-end">
+          <Image source={images.discount} />
+        </Box>
         <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
           <Box
             // flex={1}
             backgroundColor="lightSuccess"
             borderRadius={100}
-            padding="l"
             height={52}
+            // maxWidth={150}
             justifyContent="center"
             flexDirection="row"
             alignItems="center">
@@ -144,15 +159,37 @@ export const SubCategory = ({
       </Box>
 
       {/* Button */}
-      <Box alignItems="center" marginBottom="s">
+      <Box alignItems="center" marginBottom="m" style={{marginHorizontal: 14}}>
         <Button variant="giftcard" text="Continue" onPress={handleSubmit} />
+      </Box>
+      <Box>
+        <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
+        {/* Nosh Wallet */}
+        <TouchableOpacity onPress={toWallet}>
+          <Box
+            backgroundColor="mostBg"
+            borderRadius={100}
+            height={38}
+            padding="m"
+            paddingLeft="xl"
+            paddingRight="l"
+            justifyContent="space-between"
+            flexDirection="row"
+            alignItems="center"
+            style={{marginHorizontal: 20}}>
+            <Text color="primary" fontWeight="600" fontSize={14}>
+              NOSH WALLET
+            </Text>
+            <Icon name="icon-forwardgreen" size={14} />
+          </Box>
+        </TouchableOpacity>
       </Box>
     </Box>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {width: 120, height: 67.5},
+  image: {width: 120, height: 84.38},
 });
 SubCategory.propTypes = {
   prev: PropTypes.func.isRequired,

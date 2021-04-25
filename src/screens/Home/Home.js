@@ -160,7 +160,6 @@ const HomeScreen = ({user, getBanks, getUser}) => {
               backgroundColor="mostBg"
               height={52}
               borderRadius={100}
-              padding="l"
               justifyContent="center"
               flexDirection="row"
               alignItems="center">

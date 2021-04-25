@@ -74,7 +74,9 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
     toSubGiftCard();
   }, [toSubGiftCard]);
 
-  const toWallet = () => navigation.navigate('Wallet');
+  const toWallet = useCallback(() => navigation.navigate('Wallet'), [
+    navigation,
+  ]);
   // Many many
   // Many many
   const [refreshing, setRefreshing] = React.useState(false);
@@ -150,12 +152,13 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
             // prev: goBack,
             next: toSubCategory,
             cardSubCategories,
+            toWallet,
             // selectedGiftCard: selectedGiftCard,
           }}
         />
       </ScrollView>
     );
-  }, [cardSubCategories, setSwiperHeight, toSubCategory]);
+  }, [cardSubCategories, setSwiperHeight, toSubCategory, toWallet]);
 
   const SubCategoryCallBack = useCallback(
     () => (
@@ -168,11 +171,19 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
             data: selectedGiftCard,
             navigation,
             setSubCategory,
+            toWallet,
           }}
         />
       </ScrollView>
     ),
-    [setSwiperHeight, toSubGiftCard, toSubAmount, selectedGiftCard, navigation],
+    [
+      setSwiperHeight,
+      toSubGiftCard,
+      toSubAmount,
+      selectedGiftCard,
+      navigation,
+      toWallet,
+    ],
   );
   const SubAmountCallBack = useCallback(
     () => (
@@ -186,6 +197,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
             setSubCategory,
             subCategory,
             setAmount,
+            toWallet,
           }}
         />
       </ScrollView>
@@ -196,7 +208,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
       toSubUpload,
       selectedGiftCard,
       subCategory,
-      setAmount,
+      toWallet,
     ],
   );
   const SubUploadCallback = useCallback(
@@ -216,6 +228,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
             setAmount,
             tradeCard,
             reset,
+            toWallet,
           }}
         />
       </ScrollView>
@@ -229,15 +242,17 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
       amount,
       tradeCard,
       reset,
+      toWallet,
     ],
   );
 
   return (
     <Box flex={1}>
+      <Divider />
       <Tab.Navigator
         swipeEnabled={false}
         // swipeEnabled={__DEV__}
-        sceneContainerStyle={{backgroundColor: '#EAF8FD'}}
+        sceneContainerStyle={{backgroundColor: '#EAF8FD', paddingTop: 10}}
         tabBarOptions={tabBarOptions}
         tabBar={(props) => <MyTabBar {...props} />}>
         <Tab.Screen name="SubGiftCard" component={TabScreen} />
@@ -245,27 +260,6 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
         <Tab.Screen name="SubAmount" component={SubAmountCallBack} />
         <Tab.Screen name="SubUpload" component={SubUploadCallback} />
       </Tab.Navigator>
-      <Divider marginTop="s" />
-      {/* Nosh Wallet */}
-      <TouchableOpacity onPress={toWallet}>
-        <Box
-          marginTop="s"
-          backgroundColor="mostBg"
-          borderRadius={100}
-          height={38}
-          padding="m"
-          paddingLeft="xl"
-          paddingRight="l"
-          justifyContent="space-between"
-          flexDirection="row"
-          alignItems="center"
-          style={{marginHorizontal: 20}}>
-          <Text color="primary" fontWeight="600" fontSize={14}>
-            NOSH WALLET
-          </Text>
-          <Icon name="icon-forwardgreen" size={14} />
-        </Box>
-      </TouchableOpacity>
 
       <RaiseAndroid height={90} />
     </Box>

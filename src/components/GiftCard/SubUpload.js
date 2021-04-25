@@ -21,6 +21,7 @@ import {
   HeaderInfo,
   Icon,
   Input,
+  Divider,
 } from 'components';
 import {waait, uuid} from 'shared/utils';
 import {GiftCardBox} from './GiftCardBox';
@@ -55,11 +56,16 @@ export const SubUpload = ({
   setAmount,
   tradeCard,
   reset,
+  toWallet,
 }) => {
   const [done, setDone] = useState(false);
   const navigation = useNavigation();
 
+  const onModal = () => {
+    setDone(true);
+  };
   const offModal = () => {
+    reset();
     navigation.navigate('Home');
     setDone(false);
   };
@@ -91,12 +97,12 @@ export const SubUpload = ({
         // const rawData = {};
 
         rawData.append('comment', values.comment);
-        rawData.append('cardTotalAmount', amount);
-        rawData.append('cardSubCategory', subCategory.name);
-        rawData.append('cardCategory', giftCard.name);
+        rawData.append('cardTotalAmount', Number(amount));
+        rawData.append('cardSubCategory', subCategory._id);
+        rawData.append('cardCategory', giftCard._id);
+
         await tradeCard(rawData);
         setDone(true);
-        reset();
         showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
       } catch (error) {
         console.log(error);
@@ -180,8 +186,13 @@ export const SubUpload = ({
               backgroundColor="white"
               borderRadius={155}
               justifyContent="center"
+              overflow="hidden"
               style={{marginBottom: 14}}>
-              <ScrollView horizontal>
+              <ScrollView
+                horizontal
+                contentContainerStyle={{overflow: 'hidden'}}
+                //
+              >
                 {images.map((item) => {
                   return renderItem(item);
                 })}
@@ -228,6 +239,28 @@ export const SubUpload = ({
             {...{loading: isSubmitting}}
             onToggle={handleSubmit}
           />
+        </Box>
+        <Box>
+          <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
+          {/* Nosh Wallet */}
+          <TouchableOpacity onPress={toWallet}>
+            <Box
+              backgroundColor="mostBg"
+              borderRadius={100}
+              height={38}
+              padding="m"
+              paddingLeft="xl"
+              paddingRight="l"
+              justifyContent="space-between"
+              flexDirection="row"
+              alignItems="center"
+              style={{marginHorizontal: 20}}>
+              <Text color="primary" fontWeight="600" fontSize={14}>
+                NOSH WALLET
+              </Text>
+              <Icon name="icon-forwardgreen" size={14} />
+            </Box>
+          </TouchableOpacity>
         </Box>
       </KeyboardAwareScrollView>
     </Box>

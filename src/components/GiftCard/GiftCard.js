@@ -10,7 +10,18 @@ export const GiftCard = ({item, ...props}) => {
     <Box>
       <FastImage
         source={{uri: imageUri, priority: FastImage.priority.high}}
-        style={{width: 300, height: 220, marginLeft: 50}}
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={{
+          width: 300,
+          height: 220,
+          ...(Platform.OS === 'android'
+            ? {
+                marginLeft: 50,
+              }
+            : {
+                // transform: [{scaleX: -1}],
+              }),
+        }}
       />
     </Box>
   );

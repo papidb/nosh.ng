@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {ViewPropTypes, TouchableOpacity} from 'react-native';
+import {
+  ViewPropTypes,
+  Platform,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
 
 import PropTypes from 'prop-types';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -16,7 +21,9 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
   // const {user} = useStore().getState();
   const user = useSelector((state) => state.user);
 
-  const {top} = useSafeAreaInsets();
+  // const {top} = useSafeAreaInsets();
+  const {top, bottom: bottomHeight} = useSafeAreaInsets();
+  const headerHeight = Platform.OS === 'ios' ? top : 0; // top / 4 + 10; // StatusBar.currentHeight;
   let realTop = top / 4 + 10;
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -28,12 +35,10 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       flexDirection="row"
       // backgroundColor="mostBg"
       paddingHorizontal="l"
-      style={
-        {
-          // paddingTop: realTop,
-          // backgroundColor: palette.mostBgPure
-        }
-      }
+      style={{
+        paddingTop: headerHeight,
+        // backgroundColor: palette.mostBgPure
+      }}
       //
     >
       <Modal

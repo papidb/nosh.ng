@@ -86,7 +86,8 @@ const theme = createTheme({
   },
   breakpoints: {
     phone: 0,
-    bigScreen: 400,
+    bigScreen: 412,
+    tablet: 768,
   },
   textVariants: {
     defaults: {

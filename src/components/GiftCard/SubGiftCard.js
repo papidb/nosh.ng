@@ -1,21 +1,23 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {
   ScrollView,
-  Image,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
 
-import Carousel from 'react-native-snap-carousel';
+// import Carousel from 'react-native-snap-carousel';
 
-import {Box, Text, Divider, Button, HeaderInfo} from 'components';
+import {Box, Text, Icon, Divider, Button, HeaderInfo} from 'components';
 import data from 'constants/data';
 import {capitalizeFirstLetter} from 'shared/utils';
+import Carousel, {getInputRangeFromIndexes} from 'react-native-snap-carousel';
 
 import {GiftCard} from './GiftCard';
 
 const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
+const IS_ANDROID = Platform.OS === 'android';
 
 export const SubGiftCard = ({
   onSnapToItem,
@@ -23,6 +25,7 @@ export const SubGiftCard = ({
   next,
   setSwiperHeight,
   cardSubCategories = [],
+  toWallet,
 }) => {
   const [index, setIndex] = useState(0);
   const [giftCard, setSelected] = useState(null);
@@ -30,6 +33,102 @@ export const SubGiftCard = ({
     cardSubCategories,
     index,
   ]);
+  const _scrollInterpolator = (index, carouselProps) => {
+    const range = [3, 2, 1, 0, -1];
+    const inputRange = getInputRangeFromIndexes(range, index, carouselProps);
+    const outputRange = range;
+
+    return {inputRange, outputRange};
+  };
+
+  const _animatedStyles = (index, animatedValue, carouselProps, cardOffset) => {
+    const sizeRef = carouselProps.vertical
+      ? carouselProps.itemHeight
+      : carouselProps.itemWidth;
+    const translateProp = carouselProps.vertical ? 'translateY' : 'translateX';
+
+    const card1Scale = 0.9;
+    const card2Scale = 0.8;
+
+    cardOffset = !cardOffset && cardOffset !== 0 ? 18 : cardOffset;
+
+    const getTranslateFromScale = (cardIndex, scale) => {
+      const centerFactor = (1 / scale) * cardIndex;
+      const centeredPosition = -Math.round(sizeRef * centerFactor);
+      const edgeAlignment = Math.round((sizeRef - sizeRef * scale) / 2);
+      const offset = Math.round((cardOffset * Math.abs(cardIndex)) / scale);
+
+      return IS_ANDROID
+        ? centeredPosition - edgeAlignment - offset
+        : centeredPosition + edgeAlignment + offset;
+    };
+
+    const opacityOutputRange =
+      carouselProps.inactiveSlideOpacity === 1
+        ? [1, 1, 1, 0]
+        : [1, 0.75, 0.5, 0];
+    return IS_ANDROID
+      ? {
+          // elevation: carouselProps.data.length - index, // fix zIndex bug visually, but not from a logic point of view
+          opacity: animatedValue.interpolate({
+            inputRange: [-3, -2, -1, 0],
+            outputRange: opacityOutputRange.reverse(),
+            extrapolate: 'clamp',
+          }),
+          transform: [
+            {
+              scale: animatedValue.interpolate({
+                inputRange: [-2, -1, 0, 1],
+                outputRange: [card2Scale, card1Scale, 1, card1Scale],
+                extrapolate: 'clamp',
+              }),
+            },
+            {
+              [translateProp]: animatedValue.interpolate({
+                inputRange: [-3, -2, -1, 0, 1],
+                outputRange: [
+                  getTranslateFromScale(-3, card2Scale),
+                  getTranslateFromScale(-2, card2Scale),
+                  getTranslateFromScale(-1, card1Scale),
+                  0,
+                  sizeRef * 0.5,
+                ],
+                extrapolate: 'clamp',
+              }),
+            },
+          ],
+        }
+      : {
+          zIndex: carouselProps.data.length - index,
+          opacity: animatedValue.interpolate({
+            inputRange: [0, 1, 2, 3],
+            outputRange: opacityOutputRange,
+            extrapolate: 'clamp',
+          }),
+          transform: [
+            {
+              scale: animatedValue.interpolate({
+                inputRange: [-1, 0, 1, 2],
+                outputRange: [card1Scale, 1, card1Scale, card2Scale],
+                extrapolate: 'clamp',
+              }),
+            },
+            {
+              [translateProp]: animatedValue.interpolate({
+                inputRange: [-1, 0, 1, 2, 3],
+                outputRange: [
+                  -sizeRef * 0.5,
+                  0,
+                  getTranslateFromScale(1, card1Scale),
+                  getTranslateFromScale(2, card2Scale),
+                  getTranslateFromScale(3, card2Scale),
+                ],
+                extrapolate: 'clamp',
+              }),
+            },
+          ],
+        };
+  };
   // console.log({selectedGiftCard});
   return (
     <Box overflow="hidden">
@@ -40,11 +139,13 @@ export const SubGiftCard = ({
         marginVertical={{bigScreen: 'xl', phone: 'l'}}>
         <Carousel
           data={cardSubCategories}
-          layout="stack"
+          // layout="stack"
           // removeClippedSubviews={false}
           useScrollView={true}
-          layoutCardOffset={18}
+          layoutCardOffset={'9'}
           loop
+          scrollInterpolator={_scrollInterpolator}
+          slideInterpolatedStyle={_animatedStyles}
           renderItem={GiftCard}
           sliderWidth={CAROUSEL_WIDTH}
           itemWidth={CAROUSEL_WIDTH}
@@ -62,16 +163,38 @@ export const SubGiftCard = ({
         fontWeight="600"
         textAlign="center"
         fontSize={12}
-        marginBottom="m">
+        style={styles.clickHere}>
         CLICK HERE TO BEGIN
       </Text>
 
-      <Box alignItems="center" marginBottom="s">
+      <Box alignItems="center" marginBottom="m" style={{marginHorizontal: 15}}>
         <Button
           variant="giftcard"
           text={capitalizeFirstLetter(selectedGiftCard?.name ?? 'Card')}
           onPress={next}
         />
+      </Box>
+      <Box>
+        <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
+        {/* Nosh Wallet */}
+        <TouchableOpacity onPress={toWallet}>
+          <Box
+            backgroundColor="mostBg"
+            borderRadius={100}
+            height={38}
+            padding="m"
+            paddingLeft="xl"
+            paddingRight="l"
+            justifyContent="space-between"
+            flexDirection="row"
+            alignItems="center"
+            style={{marginHorizontal: 20}}>
+            <Text color="primary" fontWeight="600" fontSize={14}>
+              NOSH WALLET
+            </Text>
+            <Icon name="icon-forwardgreen" size={14} />
+          </Box>
+        </TouchableOpacity>
       </Box>
     </Box>
   );
@@ -80,6 +203,9 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     // backgroundColor: colors.black,
+  },
+  clickHere: {
+    marginBottom: 12,
   },
   container: {
     flex: 1,

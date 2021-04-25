@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, ActivityIndicator} from 'react-native';
+import {StyleSheet, Platform, ActivityIndicator} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import Animated, {
@@ -169,7 +169,14 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     zIndex: 2,
     // fontFamily: 'Hurme Geometric Sans 2',
-    fontFamily: 'Hurme Geometric Sans 2 Bold',
+    ...(Platform.OS == 'android'
+      ? {
+          fontFamily: 'Hurme Geometric Sans 2 Bold',
+        }
+      : {
+          fontFamily: 'Hurme Geometric Sans 2',
+          fontWeight: '600',
+        }),
   },
   colorWave: {
     justifyContent: 'center',
@@ -197,6 +204,13 @@ const styles = StyleSheet.create({
     // fontWeight: '600',
     zIndex: 2,
     color: '#3DAA9D',
-    fontFamily: 'Hurme Geometric Sans 2 Bold',
+    ...(Platform.OS == 'android'
+      ? {
+          fontFamily: 'Hurme Geometric Sans 2 Bold',
+        }
+      : {
+          fontFamily: 'Hurme Geometric Sans 2',
+          fontWeight: '600',
+        }),
   },
 });
