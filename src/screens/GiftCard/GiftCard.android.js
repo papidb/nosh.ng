@@ -1,10 +1,5 @@
 import React, {useMemo, useCallback, useRef, useState, useEffect} from 'react';
-import {
-  ScrollView,
-  RefreshControl,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {ScrollView, RefreshControl, StyleSheet, Keyboard} from 'react-native';
 
 import {useNavigation} from '@react-navigation/core';
 import Swiper from 'react-native-swiper';
@@ -52,6 +47,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
   const [height, setHeight] = useState(550);
   const [images, setImages] = useState([]);
   const [amount, setAmount] = useState(0);
+  const [text, setText] = useState('');
 
   const navigation = useNavigation();
   const toSubGiftCard = useCallback(() => navigation.jumpTo('SubGiftCard'), [
@@ -72,6 +68,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
     setImages([]);
     setAmount(0);
     toSubGiftCard();
+    setText('');
   }, [toSubGiftCard]);
 
   const toWallet = useCallback(() => navigation.navigate('Wallet'), [
@@ -84,7 +81,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
   // get more data to use in app
   const getInfo = React.useCallback(async () => {
     return Promise.all([getCards()]);
-  }, []);
+  }, [getCards]);
 
   const onRefresh = React.useCallback(async () => {
     try {
@@ -125,21 +122,34 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
       showErrorSnackBar({text});
     }
   }, [getInfo, init, navigation]);
-  const setSwiperHeight = React.useCallback(
-    (newHeight) => {
-      // console.log({newHeight, height});
-      setHeight(Math.max(newHeight, height));
-    },
-    [setHeight, height],
-  );
   const selectedGiftCard = useMemo(() => cardSubCategories[index] || {}, [
     cardSubCategories,
     index,
   ]);
 
   // console.log({selectedGiftCard});
+  const CommentInput = useCallback(() => {
+    return (
+      <Input
+        placeholder="+ Add Optional comments"
+        LeftIcon={<Icon name="icon-edit_colored" size={25} />}
+        variant="profile"
+        textAlign="right"
+        placeholderTextColor={palette.green}
+        inputStyle={{fontSize: 13, color: palette.green}}
+        innerContainerProps={{height: 40, padding: 'm'}}
+        nospace
+        onEndEditing={(event) => {
+          Keyboard.dismiss();
+          setText(event?.nativeEvent?.text ?? '');
+        }}
+        // onChangeText={(e) => setText(e)}
+        defaultValue={text}
+      />
+    );
+  }, [text]);
 
-  const TabScreen = useCallback(() => {
+  const SubGiftCardCallBack = useCallback(() => {
     return (
       <ScrollView style={giftcardStyles.scrollView}>
         <SubGiftCard
@@ -148,7 +158,6 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
             setSelected(cardSubCategories[slideIndex]);
           }}
           {...{
-            setSwiperHeight,
             // prev: goBack,
             next: toSubCategory,
             cardSubCategories,
@@ -158,14 +167,13 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
         />
       </ScrollView>
     );
-  }, [cardSubCategories, setSwiperHeight, toSubCategory, toWallet]);
+  }, [cardSubCategories, toSubCategory, toWallet]);
 
   const SubCategoryCallBack = useCallback(
     () => (
       <ScrollView style={giftcardStyles.scrollView}>
         <SubCategory
           {...{
-            setSwiperHeight,
             prev: toSubGiftCard,
             next: toSubAmount,
             data: selectedGiftCard,
@@ -176,21 +184,13 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
         />
       </ScrollView>
     ),
-    [
-      setSwiperHeight,
-      toSubGiftCard,
-      toSubAmount,
-      selectedGiftCard,
-      navigation,
-      toWallet,
-    ],
+    [toSubGiftCard, toSubAmount, selectedGiftCard, navigation, toWallet],
   );
   const SubAmountCallBack = useCallback(
     () => (
       <ScrollView style={giftcardStyles.scrollView}>
         <SubAmount
           {...{
-            setSwiperHeight,
             prev: toSubCategory,
             next: toSubUpload,
             data: selectedGiftCard,
@@ -202,21 +202,13 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
         />
       </ScrollView>
     ),
-    [
-      setSwiperHeight,
-      toSubCategory,
-      toSubUpload,
-      selectedGiftCard,
-      subCategory,
-      toWallet,
-    ],
+    [toSubCategory, toSubUpload, selectedGiftCard, subCategory, toWallet],
   );
   const SubUploadCallback = useCallback(
     () => (
       <ScrollView style={giftcardStyles.scrollView}>
         <SubUpload
           {...{
-            setSwiperHeight,
             prev: toSubAmount,
             // next: goToNextSlide,
             data: selectedGiftCard,
@@ -229,12 +221,14 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
             tradeCard,
             reset,
             toWallet,
+            setText,
+            text,
+            CommentInput,
           }}
         />
       </ScrollView>
     ),
     [
-      setSwiperHeight,
       toSubAmount,
       selectedGiftCard,
       subCategory,
@@ -243,6 +237,8 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
       tradeCard,
       reset,
       toWallet,
+      text,
+      CommentInput,
     ],
   );
 
@@ -255,7 +251,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
         sceneContainerStyle={{backgroundColor: '#EAF8FD', paddingTop: 10}}
         tabBarOptions={tabBarOptions}
         tabBar={(props) => <MyTabBar {...props} />}>
-        <Tab.Screen name="SubGiftCard" component={TabScreen} />
+        <Tab.Screen name="SubGiftCard" component={SubGiftCardCallBack} />
         <Tab.Screen name="SubCategory" component={SubCategoryCallBack} />
         <Tab.Screen name="SubAmount" component={SubAmountCallBack} />
         <Tab.Screen name="SubUpload" component={SubUploadCallback} />
