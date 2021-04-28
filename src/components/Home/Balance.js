@@ -4,8 +4,15 @@ import {Platform} from 'react-native';
 import {commaFormatter} from 'shared/utils';
 
 import {Box, Text} from 'components';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {selectPureUser} from 'selectors';
 
-export const Balance = ({user, text = 'Available Balance', containerProps}) => {
+const BalanceComponent = ({
+  user,
+  text = 'Available Balance',
+  containerProps,
+}) => {
   const balance = user?.wallet?.balance ?? 0;
   const [balanceWhole, balanceFraction] = String(
     commaFormatter(balance, 2),
@@ -51,3 +58,9 @@ export const Balance = ({user, text = 'Available Balance', containerProps}) => {
     </Box>
   );
 };
+
+const mapStateToProps = createStructuredSelector({
+  user: selectPureUser,
+});
+
+export const Balance = connect(mapStateToProps)(BalanceComponent);

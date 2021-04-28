@@ -6,11 +6,11 @@ import {NoshModalize} from 'components';
 export const useModalize = () => {
   const modalizeRef = useRef(null);
   const openModal = () => {
-    modalizeRef.current?.open();
+    modalizeRef.current?.open?.();
   };
   const closeModal = () => {
     modalizeRef.current?.close();
   };
   const Component = (props) => <NoshModalize ref={modalizeRef} {...props} />;
-  return {openModal, closeModal, Component};
+  return {openModal, closeModal, Component, modalizeRef};
 };

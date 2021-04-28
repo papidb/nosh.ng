@@ -16,7 +16,7 @@ import {palette} from 'constants/theme';
 import images from 'constants/images';
 import HomeHand from 'assets/icons/home_hand.svg';
 import FastImage from 'react-native-fast-image';
-import {getBanks, getUser} from 'action';
+import {getBanks, getUser, logout} from 'action';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {
@@ -25,13 +25,16 @@ import {
   getRandomInt,
 } from 'shared/utils';
 import Layout from 'constants/Layout';
+import {createStructuredSelector} from 'reselect';
+import {selectHasUsername, selectPureUser} from 'selectors';
 
-const HomeScreen = ({user, getBanks, getUser}) => {
+const HomeScreen = ({getBanks, getUser, logout, hasUsername}) => {
   const navigation = useNavigation();
   const {
     openModal: openSetupUsername,
     closeModal: closeSetupUsername,
     Component: UserNameSetupModalize,
+    modalizeRef,
   } = useModalize();
 
   const toNoshWallet = () => {
@@ -91,11 +94,14 @@ const HomeScreen = ({user, getBanks, getUser}) => {
     })();
   }, [getBanks, getInfo]);
   useEffect(() => {
-    // check if user has username
-    const hasUsername = !!user.username;
     console.log({hasUsername});
-    !hasUsername && openSetupUsername();
-  }, [user, openSetupUsername]);
+    if (hasUsername) return;
+    setTimeout(() => {
+      modalizeRef.current?.open();
+    }, 2000);
+    // console.log(modalizeRef.current?.open);
+    // modalizeRef.current?.open?.();
+  }, [hasUsername, modalizeRef]);
   useEffect(() => {
     console.log('running init');
     try {
@@ -119,8 +125,10 @@ const HomeScreen = ({user, getBanks, getUser}) => {
       <Portal>
         <UserNameSetupModalize
           childrenStyle={styles.childrenStyle}
-          closeOnOverlayTap={false}>
-          <UserNameSetup close={closeSetupUsername} />
+          closeOnOverlayTap={false}
+          panGestureEnabled={false}
+          disableScrollIfPossible>
+          <UserNameSetup pureClose={closeSetupUsername} close={logout} />
         </UserNameSetupModalize>
       </Portal>
       <Box style={{paddingTop: 15}}>
@@ -134,7 +142,7 @@ const HomeScreen = ({user, getBanks, getUser}) => {
         }
         style={styles.scrollView}>
         {/* Header */}
-        <Balance {...{user, containerProps: {style: {marginTop: 17}}}} />
+        <Balance {...{containerProps: {style: {marginTop: 17}}}} />
         {/* Image */}
         <Box
           // alignItems="center"
@@ -228,10 +236,13 @@ const HomeScreen = ({user, getBanks, getUser}) => {
   );
 };
 
-const mapStateToProps = ({user}) => {
-  return {user};
-};
-export const Home = connect(mapStateToProps, {getBanks, getUser})(HomeScreen);
+const mapStateToProps = createStructuredSelector({
+  hasUsername: selectHasUsername,
+});
+
+export const Home = connect(mapStateToProps, {getBanks, getUser, logout})(
+  HomeScreen,
+);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   childrenStyle: {

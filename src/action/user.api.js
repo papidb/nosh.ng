@@ -122,6 +122,21 @@ export const updateProfilePic = (state) => (dispatch, getState) => {
   );
 };
 
+export const updateUsername = (state) => (dispatch, getState) => {
+  const store = getState();
+  const {accessToken} = store?.auth;
+  const {_id} = store?.user;
+  return HijackError(
+    axios
+      .put(`${BASE_URL}username/${_id}`, state, {
+        headers: {Authorization: `Bearer ${accessToken}`},
+      })
+      .then(({data}) => data),
+    dispatch,
+    getState,
+  );
+};
+
 export const tradeCard = (state) => (dispatch, getState) => {
   const store = getState();
   const {accessToken} = store?.auth;
