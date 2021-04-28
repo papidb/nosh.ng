@@ -25,8 +25,7 @@ import {palette} from 'constants/theme';
 const HeaderComponent = () => {
   return (
     <Box marginBottom="m" marginHorizontal="l">
-      <Divider />
-      <Box marginTop="l" style={styles.header}>
+      <Box marginTop="m" style={styles.header}>
         <HeaderInfo text="GIFTCARD TRANSACTION HISTORY" />
       </Box>
       <Text
@@ -36,7 +35,8 @@ const HeaderComponent = () => {
         fontSize={12}
         lineHeight={15.26}
         style={styles.ngn}>
-        NGN
+        {/* NGN */}
+        USD
       </Text>
       <Divider />
     </Box>
@@ -178,19 +178,24 @@ const TransactionScreen = ({getTrades}) => {
           </Text>
         </Box>
       ) : (
-        <FlatList
-          // refreshControl={
-          //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          // }
-          ListHeaderComponent={HeaderComponent}
-          data={data}
-          keyExtractor={(item, index) => uuid()}
-          renderItem={({item}) => <TransactionTab {...item} />}
-          ListFooterComponent={_renderFooter}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          // onEndReached={_handleLoadMore}
-          onEndReachedThreshold={0.1}
-        />
+        <Box flex={1}>
+          <Box style={{paddingTop: 15}}>
+            <Divider style={{marginHorizontal: 53}} />
+          </Box>
+          <FlatList
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            ListHeaderComponent={HeaderComponent}
+            data={data}
+            keyExtractor={(item, index) => uuid()}
+            renderItem={({item}) => <TransactionTab {...item} />}
+            ListFooterComponent={_renderFooter}
+            ItemSeparatorComponent={ItemSeparatorComponent}
+            onEndReached={_handleLoadMore}
+            onEndReachedThreshold={0.1}
+          />
+        </Box>
       )}
       <Divider style={[styles.bottomDivider, styles.noMarginTop]} />
       <Text textAlign="center" color="primary" fontSize={11} fontWeight="600">

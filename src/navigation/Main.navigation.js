@@ -8,9 +8,10 @@ import {connect, useSelector} from 'react-redux';
 import {AuthNav} from './Auth.navigation';
 import {AppNav} from './App.navigation';
 import {BottomTab} from './Bottom.navigation';
+import {createStructuredSelector} from 'reselect';
+import {selectAuthenticated} from 'selectors';
 
-const MainNavigation = ({}) => {
-  const authenticated = useSelector((user) => user?.auth?.authenticated);
+const MainNavigation = ({authenticated}) => {
   return (
     <NavigationContainer>
       <Host>{authenticated ? <BottomTab /> : <AuthNav />}</Host>
@@ -18,7 +19,10 @@ const MainNavigation = ({}) => {
   );
 };
 
-const mapStateToProps = (state) => state;
+// selectAuthenticated
+const mapStateToProps = createStructuredSelector({
+  authenticated: selectAuthenticated,
+});
 
 export const Main = connect(mapStateToProps)(MainNavigation);
 

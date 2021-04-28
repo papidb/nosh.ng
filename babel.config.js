@@ -17,6 +17,7 @@ module.exports = {
           services: './src/services',
           styles: './src/styles',
           utils: './src/utils',
+          selectors: './src/selectors',
         },
       },
     ],

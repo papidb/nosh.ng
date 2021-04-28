@@ -37,8 +37,8 @@ const Item = (props) => {
 export const NotificationModalList = ({closeModal, getNotifications}) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [pure, setPure] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  // const [pure, setPure] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
   const [max, setMax] = useState(false);
 
@@ -52,6 +52,7 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
   }, [loadingMore]);
 
   const _handleLoadMore = useCallback(async () => {
+    // console.log(`[_handleLoadMore]:${max}, page: ${currentPage}`);
     try {
       if (max) return;
       setLoadingMore(true);
@@ -59,49 +60,51 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
       await getNotifications(currentPage).then((data) => {
         const {
           // eslint-disable-next-line no-shadow
-          currentPage,
+          currentPage: pureCurrentPage,
           notifications,
           // totalNotifications,
           totalPages,
         } = data;
-        setMax(currentPage == totalPages);
-        setCurrentPage(Number(currentPage) + 1);
+        setMax(pureCurrentPage == totalPages);
+        setCurrentPage(Number(pureCurrentPage) + 1);
+        if (!notifications || notifications.length === 0) return;
         setData([...data, ...purgeData(notifications)]);
-        setPure([...pure, ...notifications]);
+        // setPure([...pure, ...notifications]);
       });
     } catch (error) {
       console.log({error});
     } finally {
       setLoadingMore(false);
     }
-  }, [currentPage, getNotifications, max, pure]);
-
-  const getData = useCallback(async () => {
-    // console.log({getNotifications});
-    try {
-      await getNotifications(currentPage).then((data) => {
-        const {
-          // eslint-disable-next-line no-shadow
-          currentPage,
-          notifications,
-          // totalNotifications,
-          totalPages,
-        } = data;
-        setMax(currentPage == totalPages);
-        setCurrentPage(Number(currentPage) + 1);
-        setData(purgeData(notifications));
-        setPure(notifications);
-      });
-    } catch (error) {
-      console.log({error});
-    } finally {
-      setLoading(false);
-    }
-  }, [currentPage, getNotifications]);
+  }, [currentPage, getNotifications, max]);
 
   useEffect(() => {
-    getData();
-  }, [getData]);
+    console.log('na you be the bastard');
+    const initPage = 1;
+    (async () => {
+      try {
+        await getNotifications(initPage).then((data) => {
+          const {
+            // eslint-disable-next-line no-shadow
+            currentPage,
+            notifications,
+            // totalNotifications,
+            totalPages,
+          } = data;
+          console.log({totalPages});
+          setMax(currentPage == totalPages);
+          setCurrentPage(Number(currentPage) + 1);
+          setData(purgeData(notifications));
+          // setPure(notifications);
+        });
+      } catch (error) {
+        console.log({error});
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [getNotifications]);
+  console.log('omo');
 
   return (
     <Box

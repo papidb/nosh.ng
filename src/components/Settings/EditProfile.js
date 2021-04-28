@@ -38,6 +38,7 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
     setLoading(true);
     try {
       const res = await updateProfilePic(createFormData(photo));
+      console.log({res});
       const text = res?.message ?? 'Successful';
       showSuccessSnackBar({text});
       let {avatar: newAvatar} = await getUser();

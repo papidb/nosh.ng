@@ -39,10 +39,9 @@ export const TransactionModal = ({
   tradeFiles = [],
   tradeStatus,
 }) => {
-  // const rejectionReason = tradeStatus?.rejectionReason;
-  const rejectionReason = 'Omo we don tire for your matter';
-
-  console.log({rejectionReason});
+  // console.log({cardCategory});
+  const rejectionReason = tradeStatus?.rejectionReason;
+  // const rejectionReason = 'Omo we don tire for your matter';
 
   return (
     <Box flex={1} paddingBottom="l">

@@ -50,7 +50,7 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       <Box marginRight="m">
         <AuthAvatar
           size={81}
-          // avatar={user.avatar}
+          avatar={user.avatar}
           containerProps={{marginTop: 's', style: {marginBottom: 6}}}
           imageProps={{
             style: {

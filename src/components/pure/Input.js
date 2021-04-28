@@ -92,7 +92,8 @@ export const Input = ({
         <Box
           flexDirection="row"
           alignItems="center"
-          padding="l"
+          // removed this as it will auto center
+          // padding="l"
           paddingHorizontal="xl"
           borderRadius={30}
           {...{borderWidth, borderColor, height, backgroundColor}}

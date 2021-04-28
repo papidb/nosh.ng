@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StyleSheet, Platform, TouchableOpacity} from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -33,11 +33,18 @@ export const SubAmount = ({
   setAmount,
   toWallet,
 }) => {
+  // const AmountSchema = useCallback(
+  //   Yup.object().shape({
+  //     amount: Yup.number().min(
+  //       subCategory.minimumAcceptableAmount,
+  //       `Minimum amount of ${subCategory.minimumAcceptableAmount}`,
+  //     ),
+  //   }),
+  //   [],
+  // );
+
   const AmountSchema = Yup.object().shape({
-    amount: Yup.number().min(
-      subCategory.minimumAcceptableAmount,
-      `Minimum amount of ${subCategory.minimumAcceptableAmount}`,
-    ),
+    amount: Yup.number().min(200, `Minimum amount of ${200}`),
   });
   const IS_ANDROID = Platform.OS === 'android';
 
@@ -52,7 +59,7 @@ export const SubAmount = ({
     touched,
     handleSubmit,
     isSubmitting,
-    // validateForm,
+    validateForm,
     // resetForm,
     setFieldValue,
     // setValues,
@@ -63,6 +70,8 @@ export const SubAmount = ({
     initialValues: {amount: ''},
     onSubmit: async (values) => {
       try {
+        const omo = await validateForm();
+        console.log({omo});
         setAmount(values.amount);
         next();
       } catch (error) {
@@ -73,14 +82,7 @@ export const SubAmount = ({
   });
   // console.log({subCategory});
   return (
-    <Box
-      onLayout={({
-        nativeEvent: {
-          layout: {height},
-        },
-      }) => {
-        setSwiperHeight(height);
-      }}>
+    <Box>
       <KeyboardAwareScrollView>
         <HeaderInfo text="ENTER TRADE AMOUNT" />
         <Box
@@ -100,7 +102,7 @@ export const SubAmount = ({
           />
         </Box>
         <GiftCardBox height={93} style={styles.giftCardBox}>
-          <Text fontSize={16} fontWeight="600">
+          <Text fontSize={16} fontWeight="600" textAlign="center">
             {capitalizeFirstLetter(subCategory?.name)}
           </Text>
         </GiftCardBox>

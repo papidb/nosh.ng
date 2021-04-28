@@ -109,7 +109,10 @@ export const Screen = ({
   ];
   return (
     <Box flex={1}>
-      <Divider style={[styles.bottomDivider, styles.noMarginTop]} />
+      {/* <Divider style={[styles.bottomDivider, styles.noMarginTop]} /> */}
+      <Box style={{paddingTop: 15}}>
+        <Divider style={{marginHorizontal: 53}} />
+      </Box>
       <ScrollView style={styles.scrollView}>
         <Box marginBottom="xl">
           <HeaderInfo text="NOSH SETTINGS" />
@@ -167,7 +170,7 @@ export const SettingsHome = connect(mapStateToProps, {
   verifyAccount,
 })(Screen);
 const styles = StyleSheet.create({
-  scrollView: {flex: 1, paddingHorizontal: 20},
+  scrollView: {flex: 1, paddingHorizontal: 20, paddingTop: 20},
   header: {
     marginBottom: 15,
   },

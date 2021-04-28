@@ -128,6 +128,7 @@ export const isYesterday = (someDate) => {
 };
 
 export function purgeData(arr) {
+  if (!arr || arr.length === 0) return [];
   // this gives an object with dates as keys
   const groups = arr.reduce((groups, transaction) => {
     let time;

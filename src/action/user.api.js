@@ -27,15 +27,16 @@ export const getUser = () => {
     );
   };
 };
-export const getNotifications = (state) => {
+export const getNotifications = (page) => {
   return (dispatch, getState) => {
     const store = getState();
     const {accessToken} = store?.auth;
     const {_id} = store?.user;
     // console.log(`${BASE_URL}notifications/${_id} ${accessToken}`);
+    console.log({page});
     return HijackError(
       axios
-        .get(`${BASE_URL}notifications/${_id}`, {
+        .get(`${BASE_URL}notifications/${_id}?currentPage=${page}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -85,14 +86,14 @@ export const getAllSubCategories = (state) => {
   };
 };
 
-export const getTrades = (state) => {
+export const getTrades = (page) => {
   return (dispatch, getState) => {
     const store = getState();
     const {accessToken} = store?.auth;
     const {_id} = store?.user;
     return HijackError(
       axios
-        .get(`${BASE_URL}trades/${_id}`, {
+        .get(`${BASE_URL}trades/${_id}?currentPage=${page}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

@@ -38,6 +38,7 @@ export const SubGiftCard = ({
     cardSubCategories,
     index,
   ]);
+  // console.log({selectedGiftCard});
   const {
     errors,
     values,
@@ -69,6 +70,9 @@ export const SubGiftCard = ({
     console.log(str);
     setIndex(str);
     // setFieldTouched('category', true);
+    onSnapToItem(str);
+    setIndex(str);
+    setSelected(cardSubCategories[str]);
     setFieldValue('category', str);
   };
   // console.log({selectedGiftCard});
@@ -128,7 +132,9 @@ export const SubGiftCard = ({
       <Box alignItems="center" marginBottom="m" style={{marginHorizontal: 15}}>
         <Button
           variant="giftcard"
-          text={capitalizeFirstLetter(selectedGiftCard?.name ?? 'Card')}
+          text={capitalizeFirstLetter(
+            selectedGiftCard?.name ?? 'Choose giftcard',
+          )}
           onPress={next}
         />
       </Box>

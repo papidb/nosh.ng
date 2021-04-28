@@ -37,14 +37,23 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSPhotoLibraryUsageDescription</key>
+	<key>NSCameraUsageDescription</key>
 	<string>Needed to upload giftcards and update profile picture</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>$(EXECUTABLE_NAME) needs to access your FaceID for authentication</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Needed to upload giftcards and update profile picture</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Needed to upload giftcards and update profile picture</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>HurmeGeometricSans.otf</string>
+		<string>HurmeGeometricSansOblique.otf</string>
+		<string>HurmeGeometricSansBold.otf</string>
+		<string>HurmeGeometricSans2 Bold.otf</string>
+		<string>HurmeGeometricSans2 SemiBold.otf</string>
+		<string>HurmeGeometricSans2.otf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -59,14 +68,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIAppFonts</key>
-	<array>
-		<string>HurmeGeometricSans.otf</string>
-		<string>HurmeGeometricSansOblique.otf</string>
-		<string>HurmeGeometricSansBold.otf</string>
-		<string>HurmeGeometricSans2 Bold.otf</string>
-		<string>HurmeGeometricSans2 SemiBold.otf</string>
-		<string>HurmeGeometricSans2.otf</string>
-	</array>
 </dict>
 </plist>

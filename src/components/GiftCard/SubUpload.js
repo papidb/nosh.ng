@@ -59,8 +59,17 @@ export const SubUpload = ({
   tradeCard,
   reset,
   toWallet,
+  text,
+  setText,
+  CommentInput,
 }) => {
   const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [comment, setComment] = useState('');
+  const handleChange = (e) => {
+    setComment(e);
+  };
+
   const navigation = useNavigation();
 
   const onModal = () => {
@@ -72,66 +81,56 @@ export const SubUpload = ({
     setDone(false);
   };
 
+  console.log('omo');
+
   // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
   // console.log({subCategory});
   const imageUri = giftCard.avatar;
-  const {
-    errors,
-    values,
-    handleBlur,
-    handleChange,
-    touched,
-    handleSubmit,
-    isSubmitting,
-    // validateForm,
-    // resetForm,
-    setFieldValue,
-    // setValues,
-    setFieldTouched,
-    // isValid,
-    // dirty,
-  } = useFormik({
-    initialValues: {comment: ''},
-    onSubmit: async (values) => {
-      try {
-        const rawData = createFormArrayData(images);
-        // const rawData = new FormData();
-        // const rawData = {};
-
-        rawData.append('comment', values.comment);
-        rawData.append('cardTotalAmount', Number(amount));
-        rawData.append('cardSubCategory', subCategory._id);
-        rawData.append('cardCategory', giftCard._id);
-
-        await tradeCard(rawData);
-        setDone(true);
-        // showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
-      } catch (error) {
-        console.log(error);
-        console.log(extractErrorMessage(error));
-      }
-    },
-    // validationSchema: AmountSchema,
-  });
-  const openPicker = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
-      const maxImages = 30;
+      setLoading(true);
+      const rawData = createFormArrayData(images);
+      // const rawData = new FormData();
+      // const rawData = {};
+
+      rawData.append('comment', text);
+      rawData.append('cardTotalAmount', Number(amount));
+      rawData.append('cardSubCategory', subCategory._id);
+      rawData.append('cardCategory', giftCard._id);
+
+      await tradeCard(rawData);
+      setDone(true);
+      // showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
+    } catch (error) {
+      console.log(error);
+      console.log(extractErrorMessage(error));
+    } finally {
+      setLoading(false);
+    }
+  }, [amount, giftCard._id, images, subCategory._id, text, tradeCard]);
+
+  const openPicker = useCallback(async () => {
+    try {
+      // comment;
+      // setComment;
+      const maxFiles = 30;
       const options = {
         multiple: true,
         mediaType: 'photo',
         cropping: false,
-        maxFiles: 30,
+        maxFiles,
       };
       const response = await ImagePicker.openPicker(options);
       setImages(response);
-      console.log({response});
+      // console.log({response});
     } catch (error) {
       console.log(error);
     }
-  };
-  const renderItem = ({path}) => {
+  }, [setImages]);
+
+  const renderItem = useCallback(({path}) => {
     return (
-      <Circle size={75} key={uuid()}>
+      <Circle size={75} key={uuid()} marginRight="xs">
         <Image
           style={{
             width: 75,
@@ -143,7 +142,7 @@ export const SubUpload = ({
         />
       </Circle>
     );
-  };
+  }, []);
   const imagesSize = images.length;
   return (
     <>
@@ -219,21 +218,7 @@ export const SubUpload = ({
           </TouchableOpacity>
           <Box marginTop={IS_ANDROID ? 'none' : {bigScreen: 'l', phone: 'l'}} />
           <Box backgroundColor="transparent" style={{marginBottom: 23}}>
-            <Input
-              onChangeText={handleChange('comment')}
-              onBlur={handleBlur('comment')}
-              error={errors.comment}
-              touched={touched.comment}
-              value={values.comment}
-              placeholder="+ Add Optional comments"
-              LeftIcon={<Icon name="icon-edit_colored" size={25} />}
-              variant="profile"
-              textAlign="right"
-              placeholderTextColor={palette.green}
-              inputStyle={{fontSize: 13, color: palette.green}}
-              innerContainerProps={{height: 40, padding: 'm'}}
-              nospace
-            />
+            <CommentInput />
           </Box>
           <Box
             marginTop={IS_ANDROID ? 'none' : {bigScreen: 'xxl', phone: 'xxl'}}
@@ -243,7 +228,7 @@ export const SubUpload = ({
             <SwipeButton
               title="SWIPE TO SELL"
               // thumbIcon={thumbIcon}
-              {...{loading: isSubmitting}}
+              {...{loading}}
               onToggle={handleSubmit}
             />
           </Box>
