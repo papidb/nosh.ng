@@ -68,7 +68,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
         // console.log({deets});
         const userData = await getUser();
         await requestFaceId();
-        console.log({userData});
+        console.log(userData?.user?.wallet);
         // console.log(me);
       } catch (error) {
         const text = extractErrorMessage(error);

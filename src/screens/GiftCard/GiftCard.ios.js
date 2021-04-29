@@ -6,7 +6,15 @@ import Swiper from 'react-native-swiper';
 import Carousel from 'react-native-snap-carousel';
 import {palette} from 'constants/theme';
 
-import {Box, Input, Divider, Button, RaiseAndroid, Icon} from 'components';
+import {
+  Loading,
+  Box,
+  Input,
+  Divider,
+  Button,
+  RaiseAndroid,
+  Icon,
+} from 'components';
 import {
   SubGiftCard,
   SubCategory,
@@ -46,7 +54,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
   const [index, setIndex] = useState(0);
   const [giftCard, setSelected] = useState(null);
   const [subCategory, setSubCategory] = useState({});
-  const [height, setHeight] = useState(550);
+  const [loading, setLoading] = useState(true);
   const [images, setImages] = useState([]);
   const [amount, setAmount] = useState(0);
   const [text, setText] = useState('');
@@ -107,7 +115,6 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
   useEffect(() => {
     console.log('running init');
     try {
-      init();
       const unsubscribe = navigation.addListener('focus', async () => {
         try {
           console.log(
@@ -124,6 +131,18 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
       showErrorSnackBar({text});
     }
   }, [getInfo, init, navigation]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        await getCards();
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [getCards]);
   const selectedGiftCard = useMemo(() => cardSubCategories[index] || {}, [
     cardSubCategories,
     index,
@@ -243,6 +262,8 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
       CommentInput,
     ],
   );
+
+  if (loading) return <Loading />;
 
   return (
     <Box flex={1}>

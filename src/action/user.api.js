@@ -50,6 +50,29 @@ export const getNotifications = (page) => {
   };
 };
 
+export const getTransactions = (page) => {
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    const {_id} = store?.user;
+    // console.log(`${BASE_URL}notifications/${_id} ${accessToken}`);
+    console.log({page});
+    return HijackError(
+      axios
+        .get(`${BASE_URL}transactions/${_id}?currentPage=${page}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => {
+          return data;
+        }),
+      dispatch,
+      getState,
+    );
+  };
+};
+
 export const getAllSubCategories = (state) => {
   return (dispatch, getState) => {
     const store = getState();

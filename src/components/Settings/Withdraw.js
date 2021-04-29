@@ -67,6 +67,7 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
       } catch (error) {
         const message = extractErrorMessage(error);
         showErrorSnackBar({text: message});
+      } finally {
         close();
       }
     },

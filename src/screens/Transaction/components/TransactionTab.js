@@ -28,7 +28,7 @@ export const TransactionTab = ({
 }) => {
   // console.log({tradeStatus});
   const modalizeRef = useRef(null);
-  // console.log(props);
+  console.log(props);
   const openModal = () => {
     modalizeRef.current?.open();
   };
