@@ -10,6 +10,8 @@ target 'Nosh' do
 
   pod 'TouchID', :path => '../node_modules/react-native-touch-id'
 
+  pod 'react-native-intercom', :path => '../node_modules/react-native-intercom'
+
   target 'NoshTests' do
     inherit! :complete
     # Pods for testing

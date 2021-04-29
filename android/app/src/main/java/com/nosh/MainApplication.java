@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.intercom.android.sdk.Intercom;
+import com.robinpowered.react.Intercom.IntercomPackage;
 // import com.rnfingerprint.FingerprintAuthPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -53,6 +55,7 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     // initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    Intercom.initialize(this, "android_sdk-3962e4cb562a0109435b4178f8c2c213c7374a73", "nzgzwacb");
   }
 
   /**

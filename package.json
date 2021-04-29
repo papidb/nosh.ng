@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "pod": "cd ios && pod install && cd ..",
     "postinstall": "./scripts/postinstall.sh",
-    "build": "cd android && ./gradlew app:assembleRelease && cd ..",
+    "build:android": "cd android && ./gradlew app:assembleRelease && cd ..",
     "icon": "react-native set-icon --path ./Icon.jpg"
   },
   "dependencies": {
@@ -52,6 +52,7 @@
     "react-native-image-crop-picker": "^0.36.0",
     "react-native-image-picker": "^3.3.2",
     "react-native-image-sequence": "https://github.com/benjamin-daniel/react-native-image-sequence",
+    "react-native-intercom": "^19.0.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-keychain": "^7.0.0",
     "react-native-linear-gradient": "^2.5.6",

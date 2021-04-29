@@ -4,6 +4,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 import Share from 'react-native-share';
 import {connect} from 'react-redux';
+import Intercom from 'react-native-intercom';
 
 import {Box, Divider, HeaderInfo, RaiseAndroid} from 'components';
 import {
@@ -92,7 +93,15 @@ export const Screen = ({
       onPress: openSecurity,
     },
     {text: 'Privacy policy', icon: 'icon-bookmark'},
-    {text: 'Live chat', icon: 'icon-chat'},
+    {
+      text: 'Live chat',
+      icon: 'icon-chat',
+      onPress: () => {
+        // Intercom.displayMessageComposerWithInitialMessage();
+        // Intercom.displayHelpCenter();
+        Intercom.displayConversationsList();
+      },
+    },
     {text: 'Share App', icon: 'icon-share', onPress: onShare},
     {
       text: 'LogOut',

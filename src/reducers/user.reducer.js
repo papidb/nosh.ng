@@ -1,5 +1,5 @@
 import {LOGIN, UPDATE_USER, LOGOUT} from '../action/type';
-// import Intercom from 'react-native-intercom';
+import Intercom from 'react-native-intercom';
 // import crashlytics from '@react-native-firebase/crashlytics';
 // import messaging from '@react-native-firebase/messaging';
 
@@ -31,13 +31,14 @@ export default function userReducer(state = initialState, action) {
   const payload = action.payload;
   switch (action.type) {
     case UPDATE_USER:
-      //   Intercom.updateUser({
-      //     // Pre-defined user attributes
-      //     email: payload.email,
-      //     user_id: payload.email,
-      //     name: payload.name,
-      //     unsubscribed_from_emails: true,
-      //   });
+      Intercom.registerIdentifiedUser({userId: payload?.user?.name});
+      Intercom.updateUser({
+        // Pre-defined user attributes
+        email: payload?.user?.email,
+        user_id: payload?.user?.userId,
+        name: payload?.user?.name,
+        // unsubscribed_from_emails: true,
+      });
       // console.log(payload?.user?.wallet?.banks == null);
 
       let banks = payload?.user?.wallet?.banks;
@@ -83,7 +84,7 @@ export default function userReducer(state = initialState, action) {
         ...user,
       };
     case LOGOUT:
-      //   Intercom.logout();
+      Intercom.logout();
       //   try {
       //     messaging()
       //       .unsubscribeFromTopic('nosh')

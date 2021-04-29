@@ -3,6 +3,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "Intercom/intercom.h"
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -43,6 +44,12 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+
+  // Intercom
+  [Intercom setApiKey:@"ios_sdk-1cf005953c21521432db262b6e4f04e3ea1a6ca2" forAppId:@"nzgzwacb"];
+    // [Intercom setApiKey:@"ios_sdk-72abee02a51de675a47f8f75a852f3a3f9414d07" forAppId:@"h865yeb7"];
+
   return YES;
 }
 
