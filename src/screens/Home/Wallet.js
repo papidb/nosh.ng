@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import {useSelector, useStore} from 'react-redux';
 
@@ -20,6 +21,7 @@ import {uuid, purifyStatus, commaFormatter} from 'shared/utils';
 import {
   Box,
   Text,
+  BankMapIcon,
   Divider,
   HeaderInfo,
   Loading,
@@ -72,8 +74,9 @@ const DATA = [
 ];
 const Item = (props) => {
   // console.log(props);
-  const {title, createdAt, status, amount} = props;
+  const {title, bankCode, createdAt, status, amount} = props;
   const color = purifyStatus(status);
+  let Img = BankMapIcon[bankCode]?.default ?? BankMapIcon['50746']?.default;
   return (
     <Box flexDirection="row" alignItems="center" marginBottom="s">
       {/* Icon */}
@@ -87,7 +90,8 @@ const Item = (props) => {
         style={styles.circle}
         justifyContent="center"
         alignItems="center">
-        <Image source={images.kuda} width={27} style={styles.iamge} />
+        {/* <Image source={images.kuda} width={27} style={styles.iamge} /> */}
+        <Img style={{width: 30, height: 30}} />
       </Box>
       {/* Text */}
       <Box flex={1}>
@@ -202,44 +206,6 @@ export const WalletScreen = ({
       setRefreshing(false);
     }
   }, [getInfo]);
-  const init = React.useCallback(async () => {
-    getBanks().catch((error) => {
-      console.log(error);
-    });
-    (async () => {
-      try {
-        await getInfo();
-      } catch (error) {
-        console.log({error});
-      }
-      // try {
-      //   await messaging().subscribeToTopic('nosh');
-      //   if (__DEV__) {
-      //     await messaging().subscribeToTopic('test');
-      //   }
-      // } catch (error) {
-      //   console.log({error});
-      // }
-    })();
-  }, [getBanks, getInfo]);
-  useEffect(() => {
-    console.log('running inits');
-    try {
-      init();
-      const unsubscribe = navigation.addListener('focus', async () => {
-        try {
-          console.log('running these cause this screen was focused on');
-          await getInfo();
-          await init();
-        } catch (error) {}
-      });
-      // Return the function to unsubscribe from the event so it gets removed on unmount
-      return unsubscribe;
-    } catch (error) {
-      // const text = extractErrorMessage(error);
-      // showErrorSnackBar({text});
-    }
-  }, [getBanks, getInfo, init, navigation]);
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -343,11 +309,14 @@ export const WalletScreen = ({
         <FlatList
           data={data}
           ListHeaderComponent={ScreenHeader}
-          renderItem={renderItem}
+          renderItem={({item}) => <Item {...item} />}
           keyExtractor={() => uuid()}
           ItemSeparatorComponent={() => (
             <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
           )}
+          ListFooterComponent={_renderFooter}
+          onEndReached={_handleLoadMore}
+          onEndReachedThreshold={0.1}
         />
       )}
 
