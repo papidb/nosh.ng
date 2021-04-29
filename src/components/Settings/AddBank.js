@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 
 import PropTypes from 'prop-types';
 
@@ -21,10 +22,14 @@ import {
   showErrorSnackBar,
   showSuccessSnackBar,
   extractErrorMessage,
+  uuid,
 } from 'shared/utils';
 import {ModalContainer} from './ModalContainer';
-import {useStore} from 'react-redux';
+import {connect, useStore} from 'react-redux';
 import {useVerifyBankAccount} from 'hooks';
+import {BankTab} from './BankTab';
+import {createStructuredSelector} from 'reselect';
+import {selectPureUser} from 'selectors';
 
 const BankSchema = Yup.object({
   bankcode: Yup.string().required('Required!').notOneOf(['Bank'], 'Required'),
@@ -37,23 +42,23 @@ const initailValues = __DEV__
       bankcode: '058',
     }
   : {nuban: '', bankcode: ''};
-export const AddBank = ({
+const AddBankComponent = ({
   close,
   getUser,
   addBank,
   user,
   getBanks,
   verifyAccount,
+  deleteBank,
 }) => {
   const {
     misc: {banks: reduxBanks = [], bankMap: reduxBankMap = {}},
   } = useStore().getState();
-  // console.log({reduxBanks});
-
+  const [loading, setLoading] = useState(false);
   const [bankList, setBanks] = useState(reduxBanks);
   const [bankMap, setBankMap] = useState(reduxBankMap);
-  // console.log({bankList, bankMap});
-
+  const banks = user?.wallet?.banks ?? [];
+  const thereIsBank = banks.length > 0;
   useEffect(() => {
     (async () => {
       console.log('getting banks');
@@ -116,6 +121,40 @@ export const AddBank = ({
     setFieldTouched('bankcode', true);
     setFieldValue('bankcode', str);
   };
+
+  const confirmDeletion = (bank) => {
+    console.log({bank});
+    Alert.alert(
+      `Delete Bank`,
+      `${bank.accountName} ${bank.bankName}`,
+      [
+        {
+          text: 'OK',
+          onPress: async () => {
+            setLoading(true);
+            try {
+              const res = await deleteBank(bank);
+              await getUser();
+              const text = res?.message ?? 'Successful';
+              showSuccessSnackBar({text});
+            } catch (error) {
+              const text = extractErrorMessage(error);
+              showErrorSnackBar({text});
+            } finally {
+              setLoading(false);
+            }
+          },
+          style: 'destructive',
+        },
+        {
+          text: 'Cancel',
+          // onPress: () => console.log('Ask me later pressed'),
+          style: 'cancel',
+        },
+      ],
+      {cancelable: false},
+    );
+  };
   return (
     <ModalContainer>
       <Box marginBottom="xxxl">
@@ -169,19 +208,42 @@ export const AddBank = ({
           {account}
         </Text>
       </Box>
+      {thereIsBank && (
+        <Box>
+          <Text fontWeight="600" textAlign="right" marginVertical="xs">
+            Available Bank Accounts
+          </Text>
+          {banks.map((bank) => {
+            const deleteFn = () => confirmDeletion(bank);
+            return (
+              <BankTab
+                key={uuid()}
+                {...bank}
+                {...{deletable: true, deleteFn}}
+              />
+            );
+          })}
+        </Box>
+      )}
       <Box height={65} />
       <Box>
         <Button
           text="Save"
-          loading={isSubmitting}
+          loading={isSubmitting || loading}
           onPress={handleSubmit}
-          disabled={isSubmitting}
+          disabled={isSubmitting || loading}
         />
       </Box>
     </ModalContainer>
   );
 };
 
-AddBank.propTypes = {
+AddBankComponent.propTypes = {
   close: PropTypes.func,
 };
+
+const mapStateToProps = createStructuredSelector({
+  user: selectPureUser,
+});
+
+export const AddBank = connect(mapStateToProps)(AddBankComponent);

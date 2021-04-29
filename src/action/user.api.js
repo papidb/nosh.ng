@@ -27,6 +27,26 @@ export const getUser = () => {
     );
   };
 };
+
+export const deleteBank = ({id}) => {
+  console.log({id});
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    return HijackError(
+      axios
+        .delete(`${BASE_URL}delete-bank/${id}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => data),
+      dispatch,
+      getState,
+    );
+  };
+};
+
 export const getNotifications = (page) => {
   return (dispatch, getState) => {
     const store = getState();

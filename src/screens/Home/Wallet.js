@@ -38,6 +38,7 @@ import {
   verifyAccount,
   getTransactions,
   withdraw,
+  deleteBank,
 } from 'action';
 import {useNavigation} from '@react-navigation/core';
 const DATA = [
@@ -90,7 +91,6 @@ const Item = (props) => {
         style={styles.circle}
         justifyContent="center"
         alignItems="center">
-        {/* <Image source={images.kuda} width={27} style={styles.iamge} /> */}
         <Img style={{width: 30, height: 30}} />
       </Box>
       {/* Text */}
@@ -152,13 +152,13 @@ export const WalletScreen = ({
   getBanks,
   verifyAccount,
   getUser,
+  deleteBank,
   withdraw,
   getTransactions,
 }) => {
   const navigation = useNavigation();
   const user = useSelector((state) => state.user);
   const banks = user?.wallet?.banks ?? [];
-  // console.log({banks});
   const thereIsBank = banks.length > 0;
   const {
     openModal: openAddBank,
@@ -174,10 +174,10 @@ export const WalletScreen = ({
     () => (
       <AddBank
         close={closeAddBankModal}
-        {...{user, addBank, getUser, getBanks, verifyAccount}}
+        {...{addBank, getUser, deleteBank, getBanks, verifyAccount}}
       />
     ),
-    [addBank, closeAddBankModal, getBanks, getUser, user, verifyAccount],
+    [addBank, closeAddBankModal, getBanks, getUser, deleteBank, verifyAccount],
   );
 
   const renderItem = ({item, index}) => (
@@ -370,6 +370,7 @@ export const Wallet = connect(null, {
   withdraw,
   verifyAccount,
   getTransactions,
+  deleteBank,
 })(WalletScreen);
 
 const styles = StyleSheet.create({
