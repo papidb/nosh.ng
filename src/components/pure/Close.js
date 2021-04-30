@@ -5,7 +5,33 @@ import {TouchableOpacity} from 'react-native';
 
 import {SvgIcon, Circle} from 'components';
 
-export const Close = ({onPress, containerProps, circleProps, closeProps}) => {
+export const Close = ({
+  onPress,
+  containerProps,
+  circleProps,
+  closeProps,
+  Icon = SvgIcon.CloseIcon,
+}) => {
+  return (
+    <TouchableOpacity onPress={onPress} {...containerProps}>
+      <Circle
+        size={41}
+        borderWidth={4}
+        borderColor="primary"
+        alignSelf="flex-end"
+        {...circleProps}>
+        <Icon {...closeProps} />
+      </Circle>
+    </TouchableOpacity>
+  );
+};
+
+export const CloseLight = ({
+  onPress,
+  containerProps,
+  circleProps,
+  closeProps,
+}) => {
   return (
     <TouchableOpacity onPress={onPress} {...containerProps}>
       <Circle

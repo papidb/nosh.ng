@@ -21,6 +21,7 @@ import {uuid} from 'shared/utils';
 import {connect} from 'react-redux';
 import {getTrades} from 'action';
 import {palette} from 'constants/theme';
+import {useNavigation} from '@react-navigation/core';
 
 const HeaderComponent = () => {
   return (
@@ -52,6 +53,7 @@ const ItemSeparatorComponent = () => (
 const TransactionScreen = ({getTrades}) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
+  const navigation = useNavigation();
   const closeModal = () => setModalVisible(false);
   const openModal = () => setModalVisible(true);
   const [loading, setLoading] = useState(true);
@@ -189,7 +191,9 @@ const TransactionScreen = ({getTrades}) => {
             ListHeaderComponent={HeaderComponent}
             data={data}
             keyExtractor={(item, index) => uuid()}
-            renderItem={({item}) => <TransactionTab {...item} />}
+            renderItem={({item}) => (
+              <TransactionTab {...item} {...{navigation}} />
+            )}
             ListFooterComponent={_renderFooter}
             ItemSeparatorComponent={ItemSeparatorComponent}
             onEndReached={_handleLoadMore}

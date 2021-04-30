@@ -16,19 +16,18 @@ import {Portal} from 'react-native-portalize';
 
 let {height, width} = Dimensions.get('window');
 
-export const TransactionTab = ({
-  onPress = () => {},
-  cardTotalAmount,
-  createdAt,
-  tradeStatus,
-  cardCategory,
-  comment,
-  tradeFiles,
-  ...props
-}) => {
+export const TransactionTab = ({onPress = () => {}, navigation, ...props}) => {
+  const {
+    cardTotalAmount,
+    createdAt,
+    tradeStatus,
+    cardCategory,
+    comment,
+    tradeFiles,
+  } = props;
   // console.log({tradeStatus});
   const modalizeRef = useRef(null);
-  console.log(props);
+  const toDetails = () => navigation.navigate('TransactionDetails', props);
   const openModal = () => {
     modalizeRef.current?.open();
   };
@@ -128,7 +127,7 @@ export const TransactionTab = ({
         <TransactionModalC />
       </Portal>
 
-      <TouchableOpacity onPress={() => openModal()}>
+      <TouchableOpacity onPress={toDetails}>
         <Box
           flexDirection="row"
           alignItems="center"
