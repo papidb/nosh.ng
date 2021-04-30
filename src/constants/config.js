@@ -8,3 +8,5 @@ export const URL = 'https://api.nosh.ng';
 //     : 'http://localhost:3434/'
 //   : `${URL}/`;
 export const BASE_URL = `${URL}/`;
+
+export const reactNativeDisableYellowBox = true;

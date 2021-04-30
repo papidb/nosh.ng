@@ -7,7 +7,8 @@
  */
 
 import React from 'react';
-import {StatusBar, Platform, Text} from 'react-native';
+import {StatusBar, LogBox, Platform, Text} from 'react-native';
+import * as Sentry from '@sentry/react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -18,10 +19,46 @@ import {Main} from 'navigation';
 import {Splash} from 'screens/Splash';
 import configureStore from './store';
 import theme from 'constants/theme/default';
-import {SafeAreaView} from 'react-native-safe-area-context';
-// import SwipeButton from 'rn-swipe-button';
-// import FontManager from 'react-native-font-weight';
-// import SwipeButton from './SwipeButton';
+// import {SafeAreaView} from 'react-native-safe-area-context';
+import VersionNumber from 'react-native-version-number';
+
+import {
+  reactNativeDisableYellowBox,
+  showNetworkRequests,
+  showNetworkResponses,
+} from 'constants/config';
+import {
+  SENTRY_ENDPOINT,
+  // SENTRY_ENVIRONMENT,
+} from '@env';
+import glb from './globalVariables';
+import monitorNetwork from 'shared/network';
+const {android} = glb;
+
+if (__DEV__) {
+  reactNativeDisableYellowBox && LogBox.ignoreAllLogs();
+  (showNetworkRequests || showNetworkResponses) &&
+    monitorNetwork(showNetworkRequests, showNetworkResponses);
+} else {
+  let sentryOptions = {
+    dsn: SENTRY_ENDPOINT,
+    enableAutoSessionTracking: true,
+    // environment: SENTRY_ENVIRONMENT,
+    release: `ng.nosh-${VersionNumber.appVersion}`,
+  };
+
+  if (android) {
+    const dist = VersionNumber.buildVersion;
+    // In order for sourcemaps to work on android,
+    // the release needs to be named with the following format
+    // ng.nosh@1.0+4
+    const releaseName = `ng.nosh@${VersionNumber.appVersion}+${dist}`;
+    sentryOptions.release = releaseName;
+    // and we also need to manually set the dist to the versionCode value
+    sentryOptions.dist = dist.toString();
+  }
+  Sentry.init(sentryOptions);
+}
 
 enableScreens();
 

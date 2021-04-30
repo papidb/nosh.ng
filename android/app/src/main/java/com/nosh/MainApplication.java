@@ -7,6 +7,7 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import io.intercom.android.sdk.Intercom;
 import com.robinpowered.react.Intercom.IntercomPackage;
+import com.apsl.versionnumber.RNVersionNumberPackage;
 // import com.rnfingerprint.FingerprintAuthPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+          packages.add(new RNVersionNumberPackage());
           return packages;
         }
 
