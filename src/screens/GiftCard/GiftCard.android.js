@@ -6,7 +6,7 @@ import Swiper from 'react-native-swiper';
 import Carousel from 'react-native-snap-carousel';
 import {palette} from 'constants/theme';
 
-import {Box, Text, Divider, Button, RaiseAndroid, Icon} from 'components';
+import {Box,Input, Text, Divider, Button, RaiseAndroid, Icon} from 'components';
 import {
   SubGiftCard,
   SubCategory,

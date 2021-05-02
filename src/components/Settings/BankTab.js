@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {Box, Close, BankMapIcon, Text, Circle} from 'components';
 import images from 'constants/images';
 import {palette} from 'constants/theme';
+import {truncateString} from 'shared/utils';
 
 export const BankTab = ({
   accountName = '',
@@ -43,7 +44,8 @@ export const BankTab = ({
       </Box>
       <Box>
         <Text color="primary" fontWeight="600" fontSize={12}>
-          {accountName} - {accountNumber}
+          {truncateString(accountName, 15)} - {accountNumber}
+          {/* {truncateString(`${accountName} - ${accountNumber}`, 20)} */}
         </Text>
       </Box>
       {deletable && (

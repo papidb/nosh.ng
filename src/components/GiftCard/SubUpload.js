@@ -102,8 +102,8 @@ export const SubUpload = ({
       setDone(true);
       // showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
     } catch (error) {
-      console.log(error);
-      console.log(extractErrorMessage(error));
+      const errorText = extractErrorMessage(error);
+      showErrorSnackBar({text: errorText});
     } finally {
       setLoading(false);
     }

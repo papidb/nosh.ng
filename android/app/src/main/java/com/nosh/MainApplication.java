@@ -5,8 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import io.intercom.android.sdk.Intercom;
 import com.robinpowered.react.Intercom.IntercomPackage;
+import io.intercom.android.sdk.Intercom;
 import com.apsl.versionnumber.RNVersionNumberPackage;
 // import com.rnfingerprint.FingerprintAuthPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
@@ -32,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
-          packages.add(new RNVersionNumberPackage());
+          // packages.add(new RNVersionNumberPackage());
+          packages.add(new IntercomPackage());
           return packages;
         }
 
@@ -56,7 +57,7 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    // initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     Intercom.initialize(this, "android_sdk-3962e4cb562a0109435b4178f8c2c213c7374a73", "nzgzwacb");
   }
 

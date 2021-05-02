@@ -197,7 +197,7 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     compile project(':react-native-version-number')
-
+    implementation 'io.intercom.android:intercom-sdk-base:6.+'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     // resolve crash on load

@@ -5,6 +5,7 @@ import {StatusBar, Platform} from 'react-native';
 
 console.log('statusBarHeight: ', StatusBar.currentHeight);
 import {Box, Text, Icon} from './pure';
+import {hp} from 'shared/scale';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export const AuthHeader = ({header = null, ...containerProps}) => {
@@ -35,7 +36,8 @@ AuthHeader.propTypes = {
 export const AuthContainer = ({header = null, bottom, children}) => {
   // const headerHeight = 0;
   const {top, bottom: bottomHeight} = useSafeAreaInsets();
-  const headerHeight = Platform.OS === 'ios' ? top : StatusBar.currentHeight;
+  // console.log(hp(72));
+  const headerHeight = Platform.OS === 'ios' ? hp(72) : StatusBar.currentHeight;
 
   return (
     <Box flex={1} style={{marginBottom: bottomHeight}}>
@@ -44,7 +46,7 @@ export const AuthContainer = ({header = null, bottom, children}) => {
         // marginBottom="m"
         // backgroundColor="success"
         style={{marginTop: headerHeight}}>
-        <Icon name="icon-auth_logo" size={55} />
+        <Icon name="icon-auth_logo" size={hp(60)} />
       </Box>
 
       {/* Header */}

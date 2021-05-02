@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, ActivityIndicator} from 'react-native';
+import {Platform, ActivityIndicator} from 'react-native';
 import LottieView from 'lottie-react-native';
 import Layout from 'constants/Layout';
 import {Box} from './Box';
@@ -7,6 +7,10 @@ import {Text} from './Text';
 import {Close} from 'components';
 import {palette} from 'constants/theme';
 import ExtraDimensions from 'react-native-extra-dimensions-android';
+import {hp, wp} from 'shared/scale';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+const IS_ANDROID = Platform.OS === 'android';
 
 const height = ExtraDimensions.getRealWindowHeight();
 export const Loading = (props) => {
@@ -52,6 +56,8 @@ const OkayLottie = (props) => (
 );
 
 export const Okay = ({offModal = () => {}, text, ...props}) => {
+  const {top} = useSafeAreaInsets();
+  const CLOSE_SPACING = top + 16;
   return (
     <Box
       // flex={1}
@@ -63,7 +69,7 @@ export const Okay = ({offModal = () => {}, text, ...props}) => {
       <Box position="absolute" top={-25} right={0}>
         <Close
           onPress={offModal}
-          circleProps={{style: {marginTop: 16, marginRight: 16}}}
+          circleProps={{style: {marginTop: CLOSE_SPACING, marginRight: 16}}}
         />
       </Box>
 
@@ -74,7 +80,11 @@ export const Okay = ({offModal = () => {}, text, ...props}) => {
       <Box
         position="absolute"
         alignSelf="center"
-        bottom={250 * Layout.aspectRatio}>
+        bottom={
+          IS_ANDROID
+            ? 250 * Layout.aspectRatio
+            : -Layout.window.height + hp(100)
+        }>
         <Text textAlign="center" color="primary" fontSize={12} fontWeight="600">
           {text
             ? text

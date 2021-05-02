@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import * as Yup from 'yup';
 import {connect} from 'react-redux';
 import TouchID from 'react-native-touch-id';
+import {wp, hp} from 'shared/scale';
 
 import {
   Box,
@@ -158,6 +159,8 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
       <RaiseAndroid height={20} />
     </Box>
   );
+  const AVATAR_HEIGHT = wp(167);
+  const AVATAR_INACTIVE = 147;
   return (
     <AuthContainer>
       <KeyboardAwareScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -165,20 +168,20 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
           {/* Image */}
           <AuthAvatar
             avatar={user.avatar}
-            size={160}
+            size={AVATAR_HEIGHT}
             imageProps={{
               style: {
-                height: 147,
-                width: 147,
-                borderRadius: 147,
+                height: AVATAR_INACTIVE,
+                width: AVATAR_INACTIVE,
+                borderRadius: AVATAR_INACTIVE,
                 resizeMode: 'contain',
               },
             }}
             imagePropsActive={{
               style: {
-                height: 160,
-                width: 160,
-                borderRadius: 160,
+                height: AVATAR_HEIGHT,
+                width: AVATAR_HEIGHT,
+                borderRadius: AVATAR_HEIGHT,
                 resizeMode: 'contain',
               },
             }}

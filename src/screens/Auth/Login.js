@@ -24,6 +24,7 @@ import {
   requestFaceId,
 } from 'shared/utils';
 import * as Keychain from 'react-native-keychain';
+import {hp, wp} from 'shared/scale';
 
 // import {} from 'shared/utils';
 
@@ -129,18 +130,26 @@ const LoginScreen = ({login, getUser}) => {
       <RaiseAndroid height={20} />
     </Box>
   );
+  const AVATAR_HEIGHT = wp(120);
+  const AVATAR_INACTIVE = 110;
   return (
     <AuthContainer>
       <KeyboardAwareScrollView contentContainerStyle={{flexGrow: 1}}>
-        <Box flex={1} margin="s" style={styles.container}>
+        <Box
+          flex={1}
+          margin="s"
+          style={[
+            styles.container,
+            // {paddingTop: hp(40)}
+          ]}>
           {/* Image */}
           <AuthAvatar
-            size={120}
+            size={AVATAR_HEIGHT}
             imageProps={{
               style: {
-                height: 110,
-                width: 110,
-                borderRadius: 110,
+                height: AVATAR_INACTIVE,
+                width: AVATAR_INACTIVE,
+                borderRadius: AVATAR_INACTIVE,
                 resizeMode: 'contain',
               },
             }}

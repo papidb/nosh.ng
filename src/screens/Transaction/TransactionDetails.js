@@ -3,11 +3,12 @@ import {
   FlatList,
   RefreshControl,
   ActivityIndicator,
+  TouchableOpacity,
   ScrollView,
   StyleSheet,
 } from 'react-native';
 
-import Modal from 'react-native-modal';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 import {
   Box,
@@ -89,8 +90,11 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
     comment,
     tradeFiles = [],
     tradeRef,
+    cardSubCategory,
     ...props
   } = params;
+
+  const copyTransactionRef = () => Clipboard.setString(tradeRef);
   // console.log({props});
   const status = tradeStatus?.status ?? 'pending';
   const color = purifyStatus(status);
@@ -145,9 +149,11 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
               <Text fontSize={14} color="white" fontWeight="600">
                 Transaction ID:
               </Text>
-              <Text color="success" fontWeight="600">
-                {tradeRef}
-              </Text>
+              <TouchableOpacity onPress={copyTransactionRef}>
+                <Text color="success" fontWeight="600">
+                  {tradeRef}
+                </Text>
+              </TouchableOpacity>
             </Box>
 
             <Divider
@@ -180,17 +186,22 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
               style={styles.headerDivider}
             />
             <Box
-              flexDirection="row"
+              // flexDirection="row"
               justifyContent="space-between"
               marginBottom="s"
               marginHorizontal="l"
-              alignItems="center">
-              <Text color="white" fontSize={14} fontWeight="600">
+              // alignItems="center"
+            >
+              <Text
+                color="white"
+                fontSize={13}
+                fontWeight="600"
+                marginBottom="xs">
                 {cardCategory?.name}
               </Text>
-              {/* <Text color="success" fontSize={16} fontWeight="600">
-                x 4cards
-              </Text> */}
+              <Text color="primary" fontSize={14} fontWeight="600">
+                {cardSubCategory?.name}
+              </Text>
             </Box>
 
             <Divider marginTop="m" style={styles.headerDivider} />
