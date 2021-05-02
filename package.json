@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "build:android": "cd android && ./gradlew app:assembleRelease && cd ..",
+    "setup:android": "adb reverse tcp:8081 tcp:8081",
+    "/** setup:android specific **/": "adb -s <android id> reverse tcp:8081 tcp:8081",
+    "check:android": "adb devices",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "link": "react-native link react-native-touch-id",
@@ -11,7 +15,6 @@
     "lint": "eslint .",
     "pod": "cd ios && pod install && cd ..",
     "postinstall": "./scripts/postinstall.sh",
-    "build:android": "cd android && ./gradlew app:assembleRelease && cd ..",
     "icon": "react-native set-icon --path ./Icon.jpg"
   },
   "dependencies": {
