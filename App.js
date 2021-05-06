@@ -20,6 +20,8 @@ import {Splash} from 'screens/Splash';
 import configureStore from './store';
 import theme from 'constants/theme/default';
 // import {SafeAreaView} from 'react-native-safe-area-context';
+// import {SwipeButton} from 'components';
+// import {waait} from 'shared/utils';
 import VersionNumber from 'react-native-version-number';
 
 import {
@@ -92,16 +94,18 @@ const TextProps = {
 SetCustomText(TextProps);
 const App = () => {
   const [done, setDone] = React.useState(false);
-  const [toggleState, setToggleState] = React.useState(false);
-  const handleToggle = (value) => setToggleState(value);
+  // const [loading, setLoading] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   FontManager.init();
-  //   FontManager.override({
-  //     fontFamily: 'Hurme Geometric Sans 2',
-  //   });
-  // }, []);
-  console.log({toggleState});
+  // const title = 'omo';
+  // const [toggleState, setToggleState] = React.useState(false);
+  // const handleToggle = async () => {
+  //   console.log('toogled');
+  //   setLoading(true);
+  //   await waait(2000);
+  //   setLoading(false);
+  // };
+
+  // console.log({toggleState});
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -113,7 +117,7 @@ const App = () => {
           />
           {__DEV__ ? <Main /> : done ? <Main /> : <Splash {...{setDone}} />}
           {/* <SafeAreaView>
-            <SwipeButton onToggle={handleToggle} />
+            <SwipeButton onToggle={handleToggle} {...{loading, title}} />
           </SafeAreaView> */}
         </ThemeProvider>
       </PersistGate>

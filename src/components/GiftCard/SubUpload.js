@@ -1,4 +1,5 @@
-import React, {useState, useCallback} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState, useCallback, useRef} from 'react';
 import {
   StyleSheet,
   Dimensions,
@@ -22,10 +23,13 @@ import {
   Icon,
   Input,
   Divider,
+  Button,
+  Close,
 } from 'components';
 import {waait, uuid} from 'shared/utils';
 import {GiftCardBox} from './GiftCardBox';
 import Modal from 'react-native-modal';
+import {ModalContainer} from 'components/Settings';
 
 // import images from 'constants/images';
 import {capitalizeFirstLetter} from 'shared/utils';
@@ -43,6 +47,9 @@ import {
   extractErrorMessage,
 } from 'shared/utils';
 import {useNavigation} from '@react-navigation/core';
+import {Modalize} from 'react-native-modalize';
+import {Portal} from 'react-native-portalize';
+import {NoshModalize} from 'components/pure';
 
 const IS_ANDROID = Platform.OS === 'android';
 
@@ -66,6 +73,14 @@ export const SubUpload = ({
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState('');
+  const modalizeRef = useRef(null);
+  const openModal = () => {
+    modalizeRef.current?.open();
+  };
+  const closeModal = () => {
+    modalizeRef.current?.close();
+  };
+
   const handleChange = (e) => {
     setComment(e);
   };
@@ -81,10 +96,6 @@ export const SubUpload = ({
     setDone(false);
   };
 
-  console.log('omo');
-
-  // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
-  // console.log({subCategory});
   const imageUri = giftCard.avatar;
   const handleSubmit = useCallback(async () => {
     try {
@@ -128,6 +139,72 @@ export const SubUpload = ({
     }
   }, [setImages]);
 
+  const ConfirmModal = useCallback(
+    ({handleSubmit}) => {
+      return (
+        <NoshModalize
+          ref={modalizeRef}
+          // modalHeight={height}
+          // disableScrollIfPossible={false}
+          // scrollViewProps={{
+          //   showsVerticalScrollIndicator: true,
+          //   // nestedScrollEnabled: true,
+          //   stickyHeaderIndices: [0],
+
+          //   // contentContainerStyle: {flex: 1},
+          // }}
+          withHandle={false}
+          adjustToContentHeight
+          childrenStyle={styles.childrenStyle}
+          //
+        >
+          <ModalContainer>
+            <Close
+              onPress={closeModal}
+              circleProps={{borderColor: 'fadedDarkBlueButton'}}
+              closeProps={{
+                fill: palette.white,
+              }}
+            />
+            <Box marginTop="l" marginBottom="xl">
+              <Text
+                color="error"
+                textAlign="center"
+                fontSize={16}
+                fontWeight="600">
+                IMPORTANT NOTICE
+              </Text>
+            </Box>
+            <Divider />
+
+            <Box marginTop="l" style={{marginHorizontal: 41}}>
+              <Text color="success" textAlign="center">
+                {subCategory?.termsOfTransaction ?? ''}
+              </Text>
+            </Box>
+            <Box marginBottom="xl" marginTop="xl" />
+
+            <Box marginVertical="l">
+              <Button
+                text="COMPLETE TRADE"
+                color="primary"
+                textVariant="darkButton"
+                // loading={isSubmitting}
+                // disabled={isSubmitting}
+                onPress={() => {
+                  // prev();
+                  closeModal();
+                  handleSubmit();
+                }}
+              />
+            </Box>
+          </ModalContainer>
+        </NoshModalize>
+      );
+    },
+    [closeModal, subCategory.termsOfTransaction],
+  );
+
   const renderItem = useCallback(({path}) => {
     return (
       <Circle size={75} key={uuid()} marginRight="xs">
@@ -152,6 +229,9 @@ export const SubUpload = ({
         </Box>
       </Modal>
       <Box>
+        <Portal>
+          <ConfirmModal {...{handleSubmit}} />
+        </Portal>
         <KeyboardAwareScrollView>
           <HeaderInfo
             text={`UPLOAD GIFTCARD ${
@@ -229,8 +309,14 @@ export const SubUpload = ({
               title="SWIPE TO SELL"
               // thumbIcon={thumbIcon}
               {...{loading}}
-              onToggle={handleSubmit}
+              onToggle={openModal}
             />
+            {/* <Button
+              variant="giftcard"
+              text="Sell"
+              onPress={openModal}
+              {...{loading}}
+            /> */}
           </Box>
           <Box>
             <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
@@ -261,6 +347,11 @@ export const SubUpload = ({
 };
 const styles = StyleSheet.create({
   image: {width: 120, height: 67.5},
+  childrenStyle: {
+    backgroundColor: palette.darkBlueButton,
+    borderTopLeftRadius: 38,
+    borderTopRightRadius: 38,
+  },
 });
 
 SubUpload.propTypes = {

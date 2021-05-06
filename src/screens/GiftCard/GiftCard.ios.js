@@ -231,7 +231,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
         <SubUpload
           {...{
             prev: toSubAmount,
-            // next: goToNextSlide,
+            next: toSubUpload,
             data: selectedGiftCard,
             setSubCategory,
             subCategory,
@@ -251,6 +251,7 @@ const GiftCardScreen = ({getCards, cardSubCategories, tradeCard}) => {
     ),
     [
       toSubAmount,
+      toSubUpload,
       selectedGiftCard,
       subCategory,
       images,
