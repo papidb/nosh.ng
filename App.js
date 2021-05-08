@@ -23,6 +23,7 @@ import theme from 'constants/theme/default';
 // import {SwipeButton} from 'components';
 // import {waait} from 'shared/utils';
 import VersionNumber from 'react-native-version-number';
+import {QueryClient, QueryClientProvider, useQuery} from 'react-query';
 
 import {
   reactNativeDisableYellowBox,
@@ -92,6 +93,9 @@ const TextProps = {
   },
 };
 SetCustomText(TextProps);
+
+const queryClient = new QueryClient();
+
 const App = () => {
   const [done, setDone] = React.useState(false);
   // const [loading, setLoading] = React.useState(false);
@@ -115,10 +119,12 @@ const App = () => {
             // theme background of app
             backgroundColor="rgba(48,188,237,0.1)"
           />
-          {__DEV__ ? <Main /> : done ? <Main /> : <Splash {...{setDone}} />}
-          {/* <SafeAreaView>
+          <QueryClientProvider client={queryClient}>
+            {__DEV__ ? <Main /> : done ? <Main /> : <Splash {...{setDone}} />}
+            {/* <SafeAreaView>
             <SwipeButton onToggle={handleToggle} {...{loading, title}} />
           </SafeAreaView> */}
+          </QueryClientProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>

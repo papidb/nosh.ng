@@ -4,7 +4,7 @@ import LottieView from 'lottie-react-native';
 import Layout from 'constants/Layout';
 import {Box} from './Box';
 import {Text} from './Text';
-import {Close} from 'components';
+import {Close} from './Close';
 import {palette} from 'constants/theme';
 import ExtraDimensions from 'react-native-extra-dimensions-android';
 import {hp, wp} from 'shared/scale';

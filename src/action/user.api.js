@@ -47,7 +47,8 @@ export const deleteBank = ({id}) => {
   };
 };
 
-export const getNotifications = (page) => {
+export const getNotifications = (page = 0) => {
+  page = page + 1;
   return (dispatch, getState) => {
     const store = getState();
     const {accessToken} = store?.auth;

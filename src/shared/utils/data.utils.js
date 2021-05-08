@@ -161,3 +161,20 @@ export function purgeData(arr) {
     };
   });
 }
+
+/**
+ * formate number by international standard
+ * @param {array} pages specified string
+ * @param {string} key key used to specified needed data
+ * @return {array} data
+ */
+export function getDataFromPagesPure(pages = [], key = 'trades') {
+  const container = [];
+  pages.forEach((page = {}) => {
+    console.log(page);
+    const trades = page[key] || [];
+    container.push(...trades);
+  });
+  // console.log({ container });
+  return container;
+}

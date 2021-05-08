@@ -3,7 +3,8 @@ import {TouchableOpacity} from 'react-native';
 
 // import PropTypes from 'prop-types';
 
-import {SvgIcon, Circle} from 'components';
+import {Circle} from './Circle';
+import SvgIcon from '../svgs';
 
 export const Close = ({
   onPress,
