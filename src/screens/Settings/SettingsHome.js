@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, Linking, StyleSheet} from 'react-native';
 
 import PropTypes from 'prop-types';
 import Share from 'react-native-share';
@@ -94,7 +94,17 @@ export const Screen = ({
       icon: 'icon-not_visible',
       onPress: openSecurity,
     },
-    {text: 'Privacy policy', icon: 'icon-bookmark'},
+    {
+      text: 'Privacy policy',
+      icon: 'icon-bookmark',
+      onPress: () => {
+        try {
+          Linking.openURL('https://nosh.ng/privacy-policy');
+        } catch (error) {
+          console.log({error});
+        }
+      },
+    },
     {
       text: 'Live chat',
       icon: 'icon-chat',
