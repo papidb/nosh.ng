@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>260255146923-htflunh1n4f3ri9fgvu455g76sp3ika6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.260255146923-htflunh1n4f3ri9fgvu455g76sp3ika6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCFN4xT_10FSPmxWUjg7bFSnbj0U_tuqZE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>260255146923</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ng.nosh.ios</string>
+	<key>PROJECT_ID</key>
+	<string>nosh-d8155</string>
+	<key>STORAGE_BUCKET</key>
+	<string>nosh-d8155.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:260255146923:ios:e1917c0b24265e405468ee</string>
+</dict>
+</plist>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "260255146923",
+    "project_id": "nosh-d8155",
+    "storage_bucket": "nosh-d8155.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260255146923:android:c5f14aff8362b8765468ee",
+        "android_client_info": {
+          "package_name": "com.nosh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260255146923-p5vn6q9e3f56asvj4ghkcoifdj8u47nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQDRONr47j0Ly0b1wP0cl6upFWTiHwDpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260255146923-p5vn6q9e3f56asvj4ghkcoifdj8u47nr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "260255146923-htflunh1n4f3ri9fgvu455g76sp3ika6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ng.nosh.ios",
+                "app_store_id": "1566144970"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
