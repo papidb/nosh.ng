@@ -1,4 +1,4 @@
-// import {captureException, captureMessage} from '@sentry/react-native';
+import {captureException, captureMessage} from '@sentry/react-native';
 import {forEach, isNil} from 'lodash';
 // import DeviceInfo from 'react-native-device-info';
 import {
@@ -19,8 +19,8 @@ import {
 // import {delay} from '../helpers/utilities';
 import {request, PERMISSIONS} from 'react-native-permissions';
 
-const captureException = (err) => {};
-const captureMessage = () => {};
+// const captureException = (err) => {};
+// const captureMessage = () => {};
 
 const delay = (amount = 0) =>
   new Promise((resolve) => setTimeout(resolve, amount));

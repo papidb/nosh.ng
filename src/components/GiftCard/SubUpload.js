@@ -50,6 +50,7 @@ import {useNavigation} from '@react-navigation/core';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {NoshModalize} from 'components/pure';
+import {captureException, captureMessage} from '@sentry/react-native';
 
 const IS_ANDROID = Platform.OS === 'android';
 
@@ -105,7 +106,10 @@ export const SubUpload = ({
       // const rawData = {};
 
       rawData.append('comment', text);
-      rawData.append('cardTotalAmount', Number(amount));
+      rawData.append(
+        'cardTotalAmount',
+        Number(amount) * Number(subCategory?.rate ?? 0),
+      );
       rawData.append('cardSubCategory', subCategory._id);
       rawData.append('cardCategory', giftCard._id);
 
@@ -113,12 +117,23 @@ export const SubUpload = ({
       setDone(true);
       // showSuccessSnackBar({text: 'Trade Succeded, we will get back to you!'});
     } catch (error) {
+      captureException(error);
+      captureMessage(`tried selling ${subCategory?.name}!`);
       const errorText = extractErrorMessage(error);
       showErrorSnackBar({text: errorText});
     } finally {
       setLoading(false);
     }
-  }, [amount, giftCard._id, images, subCategory._id, text, tradeCard]);
+  }, [
+    amount,
+    giftCard._id,
+    images,
+    subCategory._id,
+    subCategory.name,
+    subCategory.rate,
+    text,
+    tradeCard,
+  ]);
 
   const openPicker = useCallback(async () => {
     try {
@@ -135,6 +150,8 @@ export const SubUpload = ({
       setImages(response);
       // console.log({response});
     } catch (error) {
+      captureException(error);
+      captureMessage('tried opening picker!');
       console.log(error);
     }
   }, [setImages]);
@@ -305,18 +322,21 @@ export const SubUpload = ({
           />
           {/* Button */}
           <Box alignItems="center" marginBottom="s">
-            <SwipeButton
-              title="SWIPE TO SELL"
-              // thumbIcon={thumbIcon}
-              {...{loading}}
-              onToggle={openModal}
-            />
-            {/* <Button
-              variant="giftcard"
-              text="Sell"
-              onPress={openModal}
-              {...{loading}}
-            /> */}
+            {!__DEV__ ? (
+              <SwipeButton
+                title="SWIPE TO SELL"
+                // thumbIcon={thumbIcon}
+                {...{loading}}
+                onToggle={openModal}
+              />
+            ) : (
+              <Button
+                variant="giftcard"
+                text="Sell"
+                onPress={openModal}
+                {...{loading}}
+              />
+            )}
           </Box>
           <Box>
             <Divider style={{marginBottom: 7, marginHorizontal: 31}} />

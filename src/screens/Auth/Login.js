@@ -161,6 +161,7 @@ const LoginScreen = ({login, getUser}) => {
             error={errors.email}
             touched={touched.email}
             value={values.email}
+            textContentType={'username'}
           />
           <Input
             placeholder="Password"
@@ -170,6 +171,7 @@ const LoginScreen = ({login, getUser}) => {
             touched={touched.password}
             value={values.password}
             passwordIcon
+            textContentType={'password'}
           />
           {/* Agreement */}
           <Box marginBottom={{bigScreen: 'xl', phone: 'l'}} marginTop="xs">

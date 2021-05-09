@@ -206,6 +206,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
             touched={touched.password}
             value={values.password}
             passwordIcon
+            textContentType={'password'}
           />
           <Box
             flexGrow={1}
