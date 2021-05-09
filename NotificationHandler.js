@@ -1,4 +1,5 @@
 import PushNotification from 'react-native-push-notification';
+import logger from 'logger';
 
 class NotificationHandler {
   onNotification(notification) {
@@ -30,6 +31,7 @@ class NotificationHandler {
   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
   onRegistrationError(err) {
     console.log(err);
+    logger.sentry(`error registering push notification`, err);
   }
 
   attachRegister(handler) {

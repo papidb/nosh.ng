@@ -6,8 +6,20 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar, LogBox, Platform, Text} from 'react-native';
+import {
+  TextInput,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import NotifService from './NotifService';
+import messaging from '@react-native-firebase/messaging';
+import {localNotificationService} from './LocalNotification';
+import {fcmService} from './FCMService';
+
 import * as Sentry from '@sentry/react-native';
 import {ThemeProvider} from '@shopify/restyle';
 import {Provider} from 'react-redux';
@@ -95,9 +107,88 @@ const TextProps = {
 SetCustomText(TextProps);
 
 const queryClient = new QueryClient();
+async function saveTokenToDatabase(token) {
+  console.log({token});
+  // Assume user is already signed in
+  // Add the token to the users datastore
+  // console.log({token});
+}
+async function requestUserPermission() {
+  const authStatus = await messaging().requestPermission();
+  return (
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL
+  );
+}
 
 const App = () => {
+  const onRegister1 = (token) => {
+    // this.setState({registerToken: token.token, fcmRegistered: true});
+    console.log({token});
+  };
+
+  const onNotif = (notification) => {
+    // console.log({notif: notification});
+    // Alert.alert(notification.title, notification.message);
+  };
+
+  const handlePerm = (perms) => {
+    Alert.alert('Permissions', JSON.stringify(perms));
+  };
+
   const [done, setDone] = React.useState(false);
+  function onRegister(token) {
+    return saveTokenToDatabase(token);
+  }
+  function onNotification(notify) {
+    const {notification} = notify;
+    const notification_payload = Platform.OS === 'ios' ? notify : notify.data;
+    console.log({notification_payload});
+
+    const options = {
+      soundName: 'default',
+      playSound: true,
+    };
+    localNotificationService.showNotification(
+      0,
+      notification.title,
+      notification.body,
+      notification,
+      options,
+    );
+  }
+  function onOpenNotification(payload) {
+    console.log({payload});
+  }
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const enabled = await requestUserPermission();
+
+        if (!enabled) return;
+        fcmService.registerAppWithFCM();
+        fcmService.register(onRegister, onNotification, onOpenNotification);
+
+        localNotificationService.configure(onOpenNotification);
+        return fcmService.unRegister;
+      } catch (error) {
+        Sentry.captureException(error);
+      }
+      try {
+        await messaging().subscribeToTopic('nosh');
+        if (__DEV__) {
+          await messaging().subscribeToTopic('testiOS');
+          await messaging().subscribeToTopic('testAndroid');
+        }
+        await messaging().subscribeToTopic('ios.nosh.ng');
+        await messaging().subscribeToTopic('android.nosh.ng');
+      } catch (error) {
+        console.log({error});
+      }
+    })();
+  }, []);
+
   // const [loading, setLoading] = React.useState(false);
 
   // const title = 'omo';
@@ -132,3 +223,184 @@ const App = () => {
 };
 
 export default App;
+
+// export default class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {};
+
+//     this.notif = new NotifService(
+//       this.onRegister.bind(this),
+//       this.onNotif.bind(this),
+//     );
+//   }
+
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Text style={styles.title}>
+//           Example app react-native-push-notification
+//         </Text>
+//         <View style={styles.spacer}></View>
+//         <TextInput
+//           style={styles.textField}
+//           value={this.state.registerToken}
+//           placeholder="Register token"
+//         />
+//         <View style={styles.spacer}></View>
+
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.localNotif();
+//           }}>
+//           <Text>Local Notification (now)</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.localNotif('sample.mp3');
+//           }}>
+//           <Text>Local Notification with sound (now)</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.scheduleNotif();
+//           }}>
+//           <Text>Schedule Notification in 30s</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.scheduleNotif('sample.mp3');
+//           }}>
+//           <Text>Schedule Notification with sound in 30s</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.cancelNotif();
+//           }}>
+//           <Text>Cancel last notification (if any)</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.cancelAll();
+//           }}>
+//           <Text>Cancel all notifications</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.checkPermission(this.handlePerm.bind(this));
+//           }}>
+//           <Text>Check Permission</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.requestPermissions();
+//           }}>
+//           <Text>Request Permissions</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.abandonPermissions();
+//           }}>
+//           <Text>Abandon Permissions</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.getScheduledLocalNotifications((notifs) =>
+//               console.log(notifs),
+//             );
+//           }}>
+//           <Text>Console.Log Scheduled Local Notifications</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.getDeliveredNotifications((notifs) =>
+//               console.log(notifs),
+//             );
+//           }}>
+//           <Text>Console.Log Delivered Notifications</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.createOrUpdateChannel();
+//           }}>
+//           <Text>Create or update a channel</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity
+//           style={styles.button}
+//           onPress={() => {
+//             this.notif.popInitialNotification();
+//           }}>
+//           <Text>popInitialNotification</Text>
+//         </TouchableOpacity>
+
+//         <View style={styles.spacer}></View>
+
+//         {this.state.fcmRegistered && <Text>FCM Configured !</Text>}
+
+//         <View style={styles.spacer}></View>
+//       </View>
+//     );
+//   }
+
+//   onRegister(token) {
+//     this.setState({registerToken: token.token, fcmRegistered: true});
+//   }
+
+//   onNotif(notif) {
+//     Alert.alert(notif.title, notif.message);
+//   }
+
+//   handlePerm(perms) {
+//     Alert.alert('Permissions', JSON.stringify(perms));
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F5FCFF',
+//   },
+//   welcome: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   },
+//   button: {
+//     borderWidth: 1,
+//     borderColor: '#000000',
+//     margin: 5,
+//     padding: 5,
+//     width: '70%',
+//     backgroundColor: '#DDDDDD',
+//     borderRadius: 5,
+//   },
+//   textField: {
+//     borderWidth: 1,
+//     borderColor: '#AAAAAA',
+//     margin: 5,
+//     padding: 5,
+//     width: '70%',
+//   },
+//   spacer: {
+//     height: 10,
+//   },
+//   title: {
+//     fontWeight: 'bold',
+//     fontSize: 20,
+//     textAlign: 'center',
+//   },
+// });
