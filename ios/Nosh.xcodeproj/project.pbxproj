@@ -61,6 +61,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Nosh/main.m; sourceTree = "<group>"; };
 		1C60644A1AF140989B42746E /* HurmeGeometricSans2 SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "HurmeGeometricSans2 SemiBold.otf"; path = "../src/assets/fonts/HurmeGeometricSans2 SemiBold.otf"; sourceTree = "<group>"; };
 		260981DE2647D3D400F6B7A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		269139BA2647E59000ED4888 /* Nosh.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Nosh.entitlements; path = Nosh/Nosh.entitlements; sourceTree = "<group>"; };
 		26E8B8D726277083007BA215 /* Nosh-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Nosh-Bridging-Header.h"; sourceTree = "<group>"; };
 		26E8B8D826277084007BA215 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		26E8B8E2262771CD007BA215 /* Bridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
@@ -144,6 +145,7 @@
 		13B07FAE1A68108700A75B9A /* Nosh */ = {
 			isa = PBXGroup;
 			children = (
+				269139BA2647E59000ED4888 /* Nosh.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -748,6 +750,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Nosh/Nosh.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DAYA5SC7FP;
 				ENABLE_BITCODE = NO;
@@ -773,6 +776,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Nosh/Nosh.entitlements;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DAYA5SC7FP;
 				INFOPLIST_FILE = Nosh/Info.plist;
