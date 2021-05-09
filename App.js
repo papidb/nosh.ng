@@ -153,12 +153,16 @@ const App = () => {
       0,
       notification.title,
       notification.body,
-      notification,
+      {...notification, ...notification_payload},
+      // notification_payload,
       options,
     );
   }
-  function onOpenNotification(payload) {
-    console.log({payload});
+  function onOpenNotification(onOpenPayload) {
+    console.log({onOpenPayload});
+  }
+  function onOpenNotificationPure(onOpenPayloadPure) {
+    console.log({onOpenPayloadPure});
   }
 
   useEffect(() => {
@@ -170,7 +174,7 @@ const App = () => {
         fcmService.registerAppWithFCM();
         fcmService.register(onRegister, onNotification, onOpenNotification);
 
-        localNotificationService.configure(onOpenNotification);
+        localNotificationService.configure(onOpenNotificationPure);
         return fcmService.unRegister;
       } catch (error) {
         Sentry.captureException(error);
