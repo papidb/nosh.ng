@@ -281,7 +281,7 @@ export const WalletScreen = ({
             )}
             ListFooterComponent={_renderFooter}
             onEndReached={_handleLoadMore}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.3}
           />
         ))}
 

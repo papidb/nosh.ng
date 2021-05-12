@@ -17,11 +17,12 @@ import {
   HeaderInfo,
 } from 'components';
 import {TransactionTab, TransactionModal} from './components';
-import {uuid} from 'shared/utils';
+import {getDataFromPagesPure, purgeData, uuid} from 'shared/utils';
 import {connect} from 'react-redux';
 import {getTrades} from 'action';
 import {palette} from 'constants/theme';
 import {useNavigation} from '@react-navigation/core';
+import {useInfiniteQuery} from 'react-query';
 
 const HeaderComponent = () => {
   return (
@@ -51,115 +52,47 @@ const ItemSeparatorComponent = () => (
 );
 
 const TransactionScreen = ({getTrades}) => {
-  const [isModalVisible, setModalVisible] = useState(false);
-
   const navigation = useNavigation();
-  const closeModal = () => setModalVisible(false);
-  const openModal = () => setModalVisible(true);
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [pure, setPure] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [max, setMax] = useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const getData = ({pageParam = 0}) => getTrades(pageParam);
+  const {
+    error,
+    data: pureData,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery('notificationData', getData, {
+    getNextPageParam: (lastPage, pages) => {
+      // eslint-disable-next-line eqeqeq
+      if (lastPage?.currentPage == lastPage?.totalPages) {
+        return undefined;
+      }
+      return lastPage?.currentPage;
+    },
+    staleTime: 0,
+    cacheTime: 0,
+  });
+  const getDataFromPages = useCallback((pages = [], key = 'trades') => {
+    return getDataFromPagesPure(pages, key);
+  }, []);
+  const {pages} = pureData || {};
+  const data = getDataFromPages(pages);
 
   const _renderFooter = useCallback(() => {
-    if (!loadingMore) return null;
+    if (!isFetchingNextPage) return null;
     return (
       <Box marginVertical="m">
         <ActivityIndicator color={palette.blue} />
       </Box>
     );
-  }, [loadingMore]);
+  }, [isFetchingNextPage]);
 
-  const _handleLoadMore = useCallback(async () => {
-    try {
-      if (max) return;
-      setLoadingMore(true);
-
-      await getTrades(currentPage).then((data) => {
-        const {
-          // eslint-disable-next-line no-shadow
-          currentPage,
-          trades,
-          // totaltrades,
-          totalPages,
-        } = data;
-        setMax(currentPage == totalPages);
-        setCurrentPage(Number(currentPage) + 1);
-        setData([...data, ...trades]);
-      });
-    } catch (error) {
-      console.log({error});
-    } finally {
-      setLoadingMore(false);
-    }
-  }, [currentPage, getTrades, max]);
-
-  const getData = useCallback(
-    async (initPage = currentPage) => {
-      // console.log({getTrades});
-      try {
-        console.log('na you be the bastard');
-        await getTrades(initPage).then((data) => {
-          const {
-            // eslint-disable-next-line no-shadow
-            page,
-            trades,
-            // totalNotifications,
-            totalPages,
-          } = data;
-          // console.log({data, totalPages});
-          setMax(initPage == totalPages);
-          setCurrentPage(Number(initPage) + 1);
-          setData(trades);
-        });
-      } catch (error) {
-        console.log({error});
-      } finally {
-        setLoading(false);
-      }
-    },
-    [currentPage, getTrades],
-  );
-  const onRefresh = React.useCallback(async () => {
-    try {
-      setRefreshing(true);
-      await getData(1);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setRefreshing(false);
-    }
-  }, [getData]);
-
-  useEffect(() => {
-    console.log('na you be the bastard');
-    const initPage = 1;
-    (async () => {
-      try {
-        await getTrades(initPage).then((data) => {
-          const {
-            // eslint-disable-next-line no-shadow
-            page,
-            trades,
-            // totalNotifications,
-            totalPages,
-          } = data;
-          // console.log({data, totalPages});
-          setMax(initPage == totalPages);
-          setCurrentPage(Number(initPage) + 1);
-          setData(trades);
-        });
-      } catch (error) {
-        console.log({error});
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [getTrades]);
-  console.log('omo');
+  const _handleLoadMore = useCallback(() => {
+    if (isFetchingNextPage) return;
+    fetchNextPage();
+  }, [fetchNextPage, isFetchingNextPage]);
 
   return (
     <Box flex={1}>
@@ -167,7 +100,7 @@ const TransactionScreen = ({getTrades}) => {
         <TransactionModal {...{closeModal}} />
       </Modal> */}
       {/* Header */}
-      {loading ? (
+      {status === 'loading' ? (
         <Loading />
       ) : data.length == 0 ? (
         <Box flex={1} alignItems="center" justifyContent="center">
@@ -185,9 +118,9 @@ const TransactionScreen = ({getTrades}) => {
             <Divider style={{marginHorizontal: 53}} />
           </Box>
           <FlatList
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
+            // refreshControl={
+            //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            // }
             ListHeaderComponent={HeaderComponent}
             data={data}
             keyExtractor={(item, index) => uuid()}
@@ -197,7 +130,7 @@ const TransactionScreen = ({getTrades}) => {
             ListFooterComponent={_renderFooter}
             ItemSeparatorComponent={ItemSeparatorComponent}
             onEndReached={_handleLoadMore}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.3}
           />
         </Box>
       )}

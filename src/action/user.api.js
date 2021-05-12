@@ -132,10 +132,12 @@ export const getAllSubCategories = (state) => {
 };
 
 export const getTrades = (page) => {
+  page = page + 1;
   return (dispatch, getState) => {
     const store = getState();
     const {accessToken} = store?.auth;
     const {_id} = store?.user;
+    // console.log({page});
     return HijackError(
       axios
         .get(`${BASE_URL}trades/${_id}?currentPage=${page}`, {
