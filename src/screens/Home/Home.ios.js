@@ -16,7 +16,7 @@ import {palette} from 'constants/theme';
 import images from 'constants/images';
 import HomeHand from 'assets/icons/home_hand.svg';
 import FastImage from 'react-native-fast-image';
-import {getBanks, getUser, logout} from 'action';
+import {getBanks, getUser, logout, updatePushNotificationToken} from 'action';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {
@@ -27,8 +27,15 @@ import {
 import Layout from 'constants/Layout';
 import {createStructuredSelector} from 'reselect';
 import {selectHasUsername, selectPureUser} from 'selectors';
+import {fcmService} from '../../../FCMService';
 
-const HomeScreen = ({getBanks, getUser, logout, hasUsername}) => {
+const HomeScreen = ({
+  getBanks,
+  getUser,
+  logout,
+  updatePushNotificationToken,
+  hasUsername,
+}) => {
   const navigation = useNavigation();
   const {
     openModal: openSetupUsername,
@@ -106,6 +113,12 @@ const HomeScreen = ({getBanks, getUser, logout, hasUsername}) => {
     console.log('running init');
     try {
       init();
+      try {
+        fcmService.justGetToken().then(console.log);
+        fcmService.justGetToken().then(updatePushNotificationToken);
+      } catch (error) {
+        console.log({error});
+      }
       const unsubscribe = navigation.addListener('focus', async () => {
         try {
           console.log('running these cause this screen was focused on');
@@ -119,7 +132,7 @@ const HomeScreen = ({getBanks, getUser, logout, hasUsername}) => {
       const text = extractErrorMessage(error);
       showErrorSnackBar({text});
     }
-  }, [getBanks, getInfo, init, navigation]);
+  }, [getBanks, getInfo, init, navigation, updatePushNotificationToken]);
   return (
     <Box flex={1}>
       <Portal>
@@ -240,9 +253,12 @@ const mapStateToProps = createStructuredSelector({
   hasUsername: selectHasUsername,
 });
 
-export const Home = connect(mapStateToProps, {getBanks, getUser, logout})(
-  HomeScreen,
-);
+export const Home = connect(mapStateToProps, {
+  getBanks,
+  getUser,
+  logout,
+  updatePushNotificationToken,
+})(HomeScreen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   childrenStyle: {

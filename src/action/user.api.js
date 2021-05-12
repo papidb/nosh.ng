@@ -223,3 +223,26 @@ export const getCards = (state) => (dispatch, getState) => {
     getState,
   );
 };
+
+export const updatePushNotificationToken = (fcmToken = '') => (
+  dispatch,
+  getState,
+) => {
+  const store = getState();
+  const {accessToken} = store?.auth;
+  const {_id} = store?.user;
+  return HijackError(
+    axios
+      .post(
+        `${BASE_URL}fcm-token/${_id}`,
+        {fcmToken},
+        {
+          headers: {Authorization: `Bearer ${accessToken}`},
+        },
+      )
+      .then(({data}) => {
+        return data;
+      }),
+    dispatch,
+  );
+};
