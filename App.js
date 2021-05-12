@@ -51,6 +51,7 @@ import monitorNetwork from 'shared/network';
 const {android} = glb;
 
 if (__DEV__) {
+  LogBox.ignoreLogs(['Setting a timer']);
   reactNativeDisableYellowBox && LogBox.ignoreAllLogs();
   (showNetworkRequests || showNetworkResponses) &&
     monitorNetwork(showNetworkRequests, showNetworkResponses);

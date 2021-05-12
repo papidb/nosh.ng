@@ -42,7 +42,8 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
       }
       return lastPage?.currentPage;
     },
-    // staleTime: 60 * 60 * 60,
+    staleTime: 0,
+    cacheTime: 0,
   });
   const getDataFromPages = useCallback((pages = [], key = 'notifications') => {
     const dataFromPure = getDataFromPagesPure(pages, key);
@@ -62,8 +63,9 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
   }, [isFetchingNextPage]);
 
   const _handleLoadMore = useCallback(() => {
+    if (isFetchingNextPage) return;
     fetchNextPage();
-  }, [fetchNextPage]);
+  }, [fetchNextPage, isFetchingNextPage]);
 
   return (
     <Box
@@ -92,7 +94,7 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
       ) : (
         <SectionList
           sections={data}
-          keyExtractor={(item, index) => uuid()}
+          keyExtractor={(item, index) => item.id}
           renderItem={({item}) => <NotificationItem {...item} />}
           renderSectionHeader={Header}
           ListFooterComponent={_renderFooter}
@@ -100,7 +102,7 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
             <Divider style={{marginHorizontal: 18}} />
           )}
           onEndReached={_handleLoadMore}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.5}
         />
       )}
     </Box>

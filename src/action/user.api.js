@@ -73,6 +73,7 @@ export const getNotifications = (page = 0) => {
 
 export const getTransactions = (page) => {
   return (dispatch, getState) => {
+    page = page + 1;
     const store = getState();
     const {accessToken} = store?.auth;
     const {_id} = store?.user;

@@ -171,7 +171,7 @@ export function purgeData(arr) {
 export function getDataFromPagesPure(pages = [], key = 'trades') {
   const container = [];
   pages.forEach((page = {}) => {
-    console.log(page);
+    // console.log(page);
     const trades = page[key] || [];
     container.push(...trades);
   });

@@ -17,7 +17,12 @@ import FastImage from 'react-native-fast-image';
 import {format} from 'date-fns';
 
 import {Withdraw, AddBank} from 'components/Settings';
-import {uuid, purifyStatus, commaFormatter} from 'shared/utils';
+import {
+  uuid,
+  purifyStatus,
+  commaFormatter,
+  getDataFromPagesPure,
+} from 'shared/utils';
 import {
   Box,
   Text,
@@ -27,6 +32,7 @@ import {
   Loading,
   Icon,
   Header,
+  Button,
 } from 'components';
 import {UserNameSetup, Balance} from 'components/Home';
 import {palette} from 'constants/theme';
@@ -41,6 +47,7 @@ import {
   deleteBank,
 } from 'action';
 import {useNavigation} from '@react-navigation/core';
+import {useInfiniteQuery} from 'react-query';
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -179,106 +186,48 @@ export const WalletScreen = ({
     ),
     [addBank, closeAddBankModal, getBanks, getUser, deleteBank, verifyAccount],
   );
+  const getData = ({pageParam = 0}) => getTransactions(pageParam);
+  const {
+    error,
+    data: pureData,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery('transactionData', getData, {
+    getNextPageParam: (lastPage, pages) => {
+      // eslint-disable-next-line eqeqeq
+      if (lastPage?.currentPage == lastPage?.totalPages) {
+        return undefined;
+      }
+      return lastPage?.currentPage;
+    },
+    staleTime: 0,
+    cacheTime: 0,
+  });
+  const goToFirst = () => fetchNextPage({pageParam: 0});
 
-  const renderItem = ({item, index}) => (
-    <Item
-      {...item}
-      {...{index}}
-      // {...props}
-    />
-  );
-
-  // Many many
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  // get more data to use in app
-  const getInfo = React.useCallback(async () => {
-    return Promise.all([getBanks(), getUser()]);
-  }, [getBanks, getUser]);
-
-  const onRefresh = React.useCallback(async () => {
-    try {
-      setRefreshing(true);
-      await getInfo();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setRefreshing(false);
-    }
-  }, [getInfo]);
-
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  // const [pure, setPure] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [max, setMax] = useState(false);
+  const getDataFromPages = useCallback((pages = [], key = 'transactions') => {
+    return getDataFromPagesPure(pages, key);
+  }, []);
+  const {pages} = pureData || {};
+  const data = getDataFromPages(pages);
 
   const _renderFooter = useCallback(() => {
-    if (!loadingMore) return null;
+    if (!isFetchingNextPage) return null;
     return (
       <Box marginVertical="m">
         <ActivityIndicator color={palette.blue} />
       </Box>
     );
-  }, [loadingMore]);
+  }, [isFetchingNextPage]);
 
-  const _handleLoadMore = useCallback(async () => {
-    // console.log(`[_handleLoadMore]:${max}, page: ${currentPage}`);
-    try {
-      if (max) return;
-      setLoadingMore(true);
+  const _handleLoadMore = useCallback(() => {
+    fetchNextPage();
+  }, [fetchNextPage]);
 
-      await getTransactions(currentPage).then((data) => {
-        const {
-          // eslint-disable-next-line no-shadow
-          currentPage: pureCurrentPage,
-          transactions,
-          // totaltransactions,
-          totalPages,
-        } = data;
-        setMax(pureCurrentPage == totalPages);
-        setCurrentPage(Number(pureCurrentPage) + 1);
-        if (!transactions || transactions.length === 0) return;
-        setData([...data, ...transactions]);
-        // setPure([...pure, ...transactions]);
-      });
-    } catch (error) {
-      console.log({error});
-    } finally {
-      setLoadingMore(false);
-    }
-  }, [currentPage, getTransactions, max]);
-
-  useEffect(() => {
-    console.log('na you be the bastard');
-    const initPage = 1;
-    (async () => {
-      try {
-        await getTransactions(initPage).then((data) => {
-          const {
-            // eslint-disable-next-line no-shadow
-            currentPage,
-            transactions,
-            // totaltransactions,
-            totalPages,
-          } = data;
-          // console.log({data});
-
-          console.log({totalPages});
-          setMax(currentPage == totalPages);
-          setCurrentPage(Number(currentPage) + 1);
-          setData(transactions);
-          // setPure(transactions);
-        });
-      } catch (error) {
-        console.log({error});
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [getTransactions]);
-
+  console.log({status});
   return (
     <Box flex={1} paddingHorizontal="l">
       <Portal>
@@ -293,32 +242,48 @@ export const WalletScreen = ({
           />
         </WithdrawModalize>
       </Portal>
-      {loading ? (
-        <Loading />
-      ) : data.length == 0 ? (
-        <Box flex={1} alignItems="center" justifyContent="center">
-          <Text
-            textAlign="center"
-            color="primary"
-            fontSize={14}
-            fontWeight="600">
-            {'There are no transactions. Use our services more\n😭😭😭'}
+      {status === 'loading' && <Loading />}
+      {status === 'error' && (
+        <Box flex={1} justifyContent="center" alignItems="center">
+          <Text textAlign="center" color="white" fontWeight="600">
+            Something went wrong!!!
           </Text>
+          <Box marginVertical="l" alignSelf="stretch">
+            <Button
+              color="error"
+              onPress={goToFirst}
+              text="Retry"
+              // loading={status == 'loading'}
+              loading={isFetching}
+            />
+          </Box>
         </Box>
-      ) : (
-        <FlatList
-          data={data}
-          ListHeaderComponent={ScreenHeader}
-          renderItem={({item}) => <Item {...item} />}
-          keyExtractor={() => uuid()}
-          ItemSeparatorComponent={() => (
-            <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
-          )}
-          ListFooterComponent={_renderFooter}
-          onEndReached={_handleLoadMore}
-          onEndReachedThreshold={0.1}
-        />
       )}
+      {status === 'success' &&
+        (data.length === 0 ? (
+          <Box flex={1} alignItems="center" justifyContent="center">
+            <Text
+              textAlign="center"
+              color="primary"
+              fontSize={14}
+              fontWeight="600">
+              {'There are no transactions. Use our services more\n😭😭😭'}
+            </Text>
+          </Box>
+        ) : (
+          <FlatList
+            data={data}
+            ListHeaderComponent={ScreenHeader}
+            renderItem={({item}) => <Item {...item} />}
+            keyExtractor={() => uuid()}
+            ItemSeparatorComponent={() => (
+              <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
+            )}
+            ListFooterComponent={_renderFooter}
+            onEndReached={_handleLoadMore}
+            onEndReachedThreshold={0.1}
+          />
+        ))}
 
       <Box flexDirection="row">
         <TouchableOpacity
