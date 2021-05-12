@@ -37,8 +37,8 @@ const HeaderComponent = () => {
         fontSize={12}
         lineHeight={15.26}
         style={styles.ngn}>
-        {/* NGN */}
-        USD
+        NGN
+        {/* USD */}
       </Text>
       <Divider />
     </Box>

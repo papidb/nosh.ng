@@ -1,7 +1,7 @@
 import axios from './axios';
 import FormData from 'form-data';
 
-import {UPDATE_USER, SET_CARDS} from './type';
+import {UPDATE_USER, SET_CARDS, UPDATE_SETTINGS} from './type';
 import {BASE_URL} from 'constants/config';
 import {HijackError} from 'shared/utils';
 
@@ -245,4 +245,27 @@ export const updatePushNotificationToken = (fcmToken = '') => (
       }),
     dispatch,
   );
+};
+
+export const getSettings = () => {
+  return (dispatch, getState) => {
+    const store = getState();
+    const {accessToken} = store?.auth;
+    const {_id} = store?.user;
+    return HijackError(
+      axios
+        .get(`${BASE_URL}settings`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(({data}) => {
+          console.log({data});
+          dispatch({type: UPDATE_SETTINGS, payload: data});
+          return data;
+        }),
+      dispatch,
+      getState,
+    );
+  };
 };

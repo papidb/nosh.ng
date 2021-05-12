@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ViewPropTypes,
   Platform,
@@ -9,16 +9,28 @@ import {
 import PropTypes from 'prop-types';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {Box, Text, Icon} from 'components';
+import {Box, Text, Icon, SvgIcon} from 'components';
 import {AuthAvatar} from './auth';
 import {getMessage} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
 import {useSelector, useStore} from 'react-redux';
 import {palette} from 'constants/theme';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const HeaderComponent = ({onPress, bright, ...props}) => {
   // const {user} = useStore().getState();
+  const [badge, setBadge] = useState(false);
+
+  useEffect(() => {
+    try {
+      PushNotificationIOS.getApplicationIconBadgeNumber((badgeNumber) =>
+        setBadge(!!badgeNumber),
+      );
+    } catch (error) {}
+    // (async () => {
+    // })();
+  }, []);
   const user = useSelector((state) => state.user);
 
   // const {top} = useSafeAreaInsets();
@@ -88,7 +100,8 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
       </Box>
       <Box alignSelf="flex-start" top={1.5 * realTop}>
         <TouchableOpacity {...{onPress: openModal}}>
-          <Icon name="icon-notification" size={40} />
+          {/* <Icon name="icon-notification" size={40} /> */}
+          <SvgIcon.NotificationIcon {...{badge}} />
         </TouchableOpacity>
       </Box>
     </Box>

@@ -16,7 +16,13 @@ import {palette} from 'constants/theme';
 import images from 'constants/images';
 import HomeHand from 'assets/icons/home_hand.svg';
 import FastImage from 'react-native-fast-image';
-import {getBanks, getUser, logout, updatePushNotificationToken} from 'action';
+import {
+  getBanks,
+  getUser,
+  logout,
+  updatePushNotificationToken,
+  getSettings,
+} from 'action';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {
@@ -32,6 +38,7 @@ import {fcmService} from '../../../FCMService';
 const HomeScreen = ({
   getBanks,
   getUser,
+  getSettings,
   logout,
   updatePushNotificationToken,
   hasUsername,
@@ -67,8 +74,8 @@ const HomeScreen = ({
 
   // get more data to use in app
   const getInfo = React.useCallback(async () => {
-    return Promise.all([getBanks(), getUser()]);
-  }, [getBanks, getUser]);
+    return Promise.all([getBanks(), getUser(), getSettings]);
+  }, [getBanks, getUser, getSettings]);
 
   const onRefresh = React.useCallback(async () => {
     try {
@@ -114,7 +121,6 @@ const HomeScreen = ({
     try {
       init();
       try {
-        fcmService.justGetToken().then(console.log);
         fcmService.justGetToken().then(updatePushNotificationToken);
       } catch (error) {
         console.log({error});
@@ -256,6 +262,7 @@ const mapStateToProps = createStructuredSelector({
 export const Home = connect(mapStateToProps, {
   getBanks,
   getUser,
+  getSettings,
   logout,
   updatePushNotificationToken,
 })(HomeScreen);

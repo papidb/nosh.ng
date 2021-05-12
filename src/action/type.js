@@ -14,3 +14,5 @@ export const UPDATE_BANKS = 'UPDATE_BANKS';
 export const UPDATE_BANK_MAP = 'UPDATE_BANK_MAP';
 
 export const SET_CARDS = 'SET_CARDS';
+
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';

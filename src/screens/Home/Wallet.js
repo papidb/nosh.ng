@@ -41,6 +41,7 @@ import {
   addBank,
   getBanks,
   getUser,
+  getSettings,
   verifyAccount,
   getTransactions,
   withdraw,
@@ -48,80 +49,7 @@ import {
 } from 'action';
 import {useNavigation} from '@react-navigation/core';
 import {useInfiniteQuery} from 'react-query';
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Itunes',
-    amount: 353,
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Google Pay',
-    amount: 353,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Nordstrom',
-    amount: 353,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Nordstrom',
-    amount: 353,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Nordstrom',
-    amount: 353,
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Nordstrom',
-    amount: 353,
-  },
-];
-const Item = (props) => {
-  // console.log(props);
-  const {title, bankCode, createdAt, status, amount} = props;
-  const color = purifyStatus(status);
-  let Img = BankMapIcon[bankCode]?.default ?? BankMapIcon['50746']?.default;
-  return (
-    <Box flexDirection="row" alignItems="center" marginBottom="s">
-      {/* Icon */}
-      <Box
-        backgroundColor="white"
-        height={52}
-        width={52}
-        borderRadius={52}
-        marginRight="m"
-        borderWidth={3}
-        style={styles.circle}
-        justifyContent="center"
-        alignItems="center">
-        <Img style={{width: 30, height: 30}} />
-      </Box>
-      {/* Text */}
-      <Box flex={1}>
-        <Text fontSize={14} fontWeight="600" color="white" lineHeight={20.35}>
-          Bank withdrawal
-        </Text>
-        <Text fontSize={11} fontWeight="600" color="success" lineHeight={15.26}>
-          {/* April 5 - 2021 */}
-          {format(new Date(createdAt), 'MMMM d - yyyy')}
-        </Text>
-      </Box>
-      {/* Amount */}
-      <Text
-        fontWeight="600"
-        fontSize={16}
-        lineHeight={22.9}
-        marginRight="l"
-        {...{color}}>
-        {commaFormatter(amount)}
-      </Text>
-    </Box>
-  );
-};
+import {WithdrawalItem} from './WithdrawalItem';
 
 const ScreenHeader = () => {
   return (
@@ -162,6 +90,7 @@ export const WalletScreen = ({
   deleteBank,
   withdraw,
   getTransactions,
+  getSettings,
 }) => {
   const navigation = useNavigation();
   const user = useSelector((state) => state.user);
@@ -238,7 +167,7 @@ export const WalletScreen = ({
         <WithdrawModalize>
           <Withdraw
             close={closeWithdrawModal}
-            {...{withdraw, banks, thereIsBank}}
+            {...{withdraw, banks, thereIsBank, getSettings}}
           />
         </WithdrawModalize>
       </Portal>
@@ -274,7 +203,7 @@ export const WalletScreen = ({
           <FlatList
             data={data}
             ListHeaderComponent={ScreenHeader}
-            renderItem={({item}) => <Item {...item} />}
+            renderItem={({item}) => <WithdrawalItem {...item} />}
             keyExtractor={() => uuid()}
             ItemSeparatorComponent={() => (
               <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
@@ -332,6 +261,7 @@ export const Wallet = connect(null, {
   addBank,
   getBanks,
   getUser,
+  getSettings,
   withdraw,
   verifyAccount,
   getTransactions,

@@ -35,6 +35,7 @@ const HomeScreen = ({
   getBanks,
   getUser,
   logout,
+  getSettings,
   updatePushNotificationToken,
 }) => {
   const navigation = useNavigation();
@@ -68,8 +69,8 @@ const HomeScreen = ({
 
   // get more data to use in app
   const getInfo = React.useCallback(async () => {
-    return Promise.all([getBanks(), getUser()]);
-  }, [getBanks, getUser]);
+    return Promise.all([getBanks(), getUser(), getSettings()]);
+  }, [getBanks, getUser, getSettings]);
 
   const onRefresh = React.useCallback(async () => {
     try {
@@ -113,7 +114,6 @@ const HomeScreen = ({
   useEffect(() => {
     console.log('running init');
     try {
-      fcmService.justGetToken().then(console.log);
       fcmService.justGetToken().then(updatePushNotificationToken);
     } catch (error) {
       console.log({error});
@@ -254,6 +254,7 @@ export const Home = connect(mapStateToProps, {
   getBanks,
   getUser,
   logout,
+  getSettings,
   updatePushNotificationToken,
 })(HomeScreen);
 const styles = StyleSheet.create({

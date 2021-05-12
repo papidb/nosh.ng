@@ -19,6 +19,7 @@ import {
   toggleBio,
   logout,
   getUser,
+  getSettings,
   addBank,
   getBanks,
   verifyAccount,
@@ -35,6 +36,7 @@ export const Screen = ({
   changePassword,
   updateProfilePic,
   getUser,
+  getSettings,
   deleteBank,
   getBanks,
   verifyAccount,
@@ -158,7 +160,7 @@ export const Screen = ({
           <AddBankC />
         </AddBankModalize>
         <WithdrawModalize>
-          <Withdraw close={closeWithdrawModal} />
+          <Withdraw close={closeWithdrawModal} {...{getSettings}} />
         </WithdrawModalize>
         <SecurityModalize>
           <Security
@@ -190,6 +192,7 @@ export const SettingsHome = connect(mapStateToProps, {
   getBanks,
   verifyAccount,
   deleteBank,
+  getSettings,
 })(Screen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20, paddingTop: 20},

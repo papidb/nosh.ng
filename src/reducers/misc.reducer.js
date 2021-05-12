@@ -4,6 +4,7 @@ import {
   UPDATE_BANKS,
   UPDATE_BANK_MAP,
   SET_CARDS,
+  UPDATE_SETTINGS,
 } from 'action/type';
 import data from 'constants/data';
 
@@ -15,6 +16,7 @@ const initialState = {
   balanceHidden: false,
   cardSubCategories: [],
   onboarded: false,
+  serverState: {},
 };
 
 export default function miscReducer(state = initialState, action) {
@@ -42,6 +44,12 @@ export default function miscReducer(state = initialState, action) {
         ...state,
         cardSubCategories: payload,
       };
+    case UPDATE_SETTINGS: {
+      return {
+        ...state,
+        serverState: payload,
+      };
+    }
 
     default:
       return state;

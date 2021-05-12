@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ActivityIndicator} from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -29,15 +29,54 @@ import {
 } from 'shared/utils';
 import * as Yup from 'yup';
 
-const minimumAcceptableAmount = 2000;
-const AmountSchema = Yup.object().shape({
-  amount: Yup.number().min(
-    minimumAcceptableAmount,
-    `Minimum amount of ${minimumAcceptableAmount}`,
-  ),
-});
-export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
+export const Withdraw = ({
+  close,
+  withdraw,
+  getSettings,
+  banks = [],
+  thereIsBank,
+  minimumAcceptableAmount = 2002,
+}) => {
+  useEffect(() => {
+    console.log({getSettings});
+    const d = getSettings();
+    console.log({d});
+  }, [getSettings]);
   const [selected, setSelected] = useState(null);
+
+  const Banks = useCallback(() => {
+    return (
+      <>
+        {thereIsBank ? (
+          <Box>
+            {banks.map((bank) => (
+              <BankTab key={uuid()} {...bank} {...{selected, setSelected}} />
+            ))}
+          </Box>
+        ) : (
+          <Box>
+            <Text textAlign="center" color="primary" fontWeight="600">
+              Add banks to be able to withdraw
+            </Text>
+          </Box>
+        )}
+      </>
+    );
+  }, [banks, selected, thereIsBank]);
+  const validate = (
+    values,
+    props /* only available when using withFormik */,
+  ) => {
+    const errors = {};
+
+    if (!values.amount) {
+      errors.amount = 'Required';
+    } else if (values.amount < minimumAcceptableAmount) {
+      errors.amount = `Minimum amount of ${minimumAcceptableAmount}`;
+    }
+
+    return errors;
+  };
   const {
     errors,
     values,
@@ -54,6 +93,7 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
     // isValid,
     // dirty,
   } = useFormik({
+    validate,
     initialValues: {amount: ''},
     onSubmit: async (values) => {
       try {
@@ -71,19 +111,8 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
         close();
       }
     },
-    validationSchema: AmountSchema,
+    // validationSchema: AmountSchema,
   });
-  const thumbIcon = useCallback(() => {
-    return (
-      <Box backgroundColor="mostBg">
-        {isSubmitting ? (
-          <ActivityIndicator color="white" />
-        ) : (
-          <Icon name="icon-forward" size={14} />
-        )}
-      </Box>
-    );
-  }, [isSubmitting]);
   return (
     <ModalContainer>
       <Box marginBottom="xl">
@@ -115,19 +144,7 @@ export const Withdraw = ({close, withdraw, banks, thereIsBank}) => {
           placeholderTextColor={palette.green}
         />
       </Box>
-      {thereIsBank ? (
-        <Box>
-          {banks.map((bank) => (
-            <BankTab key={uuid()} {...bank} {...{selected, setSelected}} />
-          ))}
-        </Box>
-      ) : (
-        <Box>
-          <Text textAlign="center" color="primary" fontWeight="600">
-            Add banks to be able to withdraw
-          </Text>
-        </Box>
-      )}
+      <Banks />
       <Box height={25} />
       <Divider />
       <Box height={25} />
