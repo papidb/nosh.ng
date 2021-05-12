@@ -101,9 +101,6 @@ export const SubUpload = ({
     try {
       setLoading(true);
       const rawData = createFormArrayData(images);
-      // const rawData = new FormData();
-      // const rawData = {};
-
       rawData.append('comment', text);
       rawData.append('cardTotalAmount', Number(amount));
       rawData.append('cardSubCategory', subCategory._id);

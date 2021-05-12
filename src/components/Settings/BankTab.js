@@ -15,10 +15,17 @@ export const BankTab = ({
   _id,
   setSelected,
   bankCode,
+  bankCodes,
   deletable,
   deleteFn = () => {},
 }) => {
   let Img = BankMapIcon[bankCode]?.default ?? BankMapIcon['50746']?.default;
+
+  if (bankCodes) {
+    Img =
+      BankMapIcon[bankCodes?.paystack]?.default ??
+      BankMapIcon['50746']?.default;
+  }
 
   // const isSelected = setSelected(_id);
   const touchable = !!setSelected && typeof setSelected === 'function';

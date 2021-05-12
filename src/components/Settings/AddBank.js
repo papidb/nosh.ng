@@ -214,6 +214,7 @@ const AddBankComponent = ({
             Available Bank Accounts
           </Text>
           {banks.map((bank) => {
+            console.log({bank});
             const deleteFn = () => confirmDeletion(bank);
             return (
               <BankTab
