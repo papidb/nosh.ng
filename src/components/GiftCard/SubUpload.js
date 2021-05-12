@@ -144,15 +144,8 @@ export const SubUpload = ({
       return (
         <NoshModalize
           ref={modalizeRef}
-          // modalHeight={height}
-          // disableScrollIfPossible={false}
-          // scrollViewProps={{
-          //   showsVerticalScrollIndicator: true,
-          //   // nestedScrollEnabled: true,
-          //   stickyHeaderIndices: [0],
-
-          //   // contentContainerStyle: {flex: 1},
-          // }}
+          disableScrollIfPossible
+          panGestureEnabled={false}
           withHandle={false}
           adjustToContentHeight
           childrenStyle={styles.childrenStyle}
@@ -163,7 +156,7 @@ export const SubUpload = ({
               onPress={closeModal}
               circleProps={{borderColor: 'fadedDarkBlueButton'}}
               closeProps={{
-                fill: palette.white,
+                fill: palette.fadedDarkBlueButton,
               }}
             />
             <Box marginTop="l" marginBottom="xl">
@@ -185,7 +178,20 @@ export const SubUpload = ({
             <Box marginBottom="xl" marginTop="xl" />
 
             <Box marginVertical="l">
-              <Button
+              <SwipeButton
+                title="COMPLETE TRADE"
+                // thumbIcon={thumbIcon}
+                {...{loading}}
+                onToggle={() => {
+                  setTimeout(() => {
+                    handleSubmit();
+                  }, 400);
+                  setTimeout(() => {
+                    closeModal();
+                  }, 1000);
+                }}
+              />
+              {/* <Button
                 text="COMPLETE TRADE"
                 color="primary"
                 textVariant="darkButton"
@@ -196,13 +202,13 @@ export const SubUpload = ({
                   closeModal();
                   handleSubmit();
                 }}
-              />
+              /> */}
             </Box>
           </ModalContainer>
         </NoshModalize>
       );
     },
-    [closeModal, subCategory.termsOfTransaction],
+    [loading, subCategory.termsOfTransaction],
   );
 
   const renderItem = useCallback(({path}) => {
@@ -305,18 +311,18 @@ export const SubUpload = ({
           />
           {/* Button */}
           <Box alignItems="center" marginBottom="s">
-            <SwipeButton
+            {/* <SwipeButton
               title="SWIPE TO SELL"
               // thumbIcon={thumbIcon}
               {...{loading}}
               onToggle={openModal}
-            />
-            {/* <Button
+            /> */}
+            <Button
               variant="giftcard"
               text="Sell"
               onPress={openModal}
               {...{loading}}
-            /> */}
+            />
           </Box>
           <Box>
             <Divider style={{marginBottom: 7, marginHorizontal: 31}} />
@@ -348,7 +354,7 @@ export const SubUpload = ({
 const styles = StyleSheet.create({
   image: {width: 120, height: 67.5},
   childrenStyle: {
-    backgroundColor: palette.darkBlueButton,
+    // backgroundColor: palette.darkBlueButton,
     borderTopLeftRadius: 38,
     borderTopRightRadius: 38,
   },
