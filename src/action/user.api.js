@@ -261,7 +261,7 @@ export const getSettings = () => {
         })
         .then(({data}) => {
           console.log({data});
-          dispatch({type: UPDATE_SETTINGS, payload: data});
+          dispatch({type: UPDATE_SETTINGS, payload: data?.settings ?? {}});
           return data;
         }),
       dispatch,

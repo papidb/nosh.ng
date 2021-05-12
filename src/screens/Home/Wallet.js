@@ -5,14 +5,14 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  Dimensions,
+  RefreshControl,
   ActivityIndicator,
 } from 'react-native';
 import {useSelector, useStore} from 'react-redux';
 
 import {connect} from 'react-redux';
 import {Portal} from 'react-native-portalize';
-import {useModalize} from 'hooks';
+import {useModalize, useNoshScroller} from 'hooks';
 import FastImage from 'react-native-fast-image';
 import {format} from 'date-fns';
 
@@ -115,33 +115,14 @@ export const WalletScreen = ({
     ),
     [addBank, closeAddBankModal, getBanks, getUser, deleteBank, verifyAccount],
   );
-  const getData = ({pageParam = 0}) => getTransactions(pageParam);
   const {
-    error,
-    data: pureData,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
+    data,
+    onRefresh,
     status,
-  } = useInfiniteQuery('transactionData', getData, {
-    getNextPageParam: (lastPage, pages) => {
-      // eslint-disable-next-line eqeqeq
-      if (lastPage?.currentPage == lastPage?.totalPages) {
-        return undefined;
-      }
-      return lastPage?.currentPage;
-    },
-    staleTime: 0,
-    cacheTime: 0,
-  });
-  const goToFirst = () => fetchNextPage({pageParam: 0});
-
-  const getDataFromPages = useCallback((pages = [], key = 'transactions') => {
-    return getDataFromPurePages(pages, key);
-  }, []);
-  const {pages} = pureData || {};
-  const data = getDataFromPages(pages);
+    isFetchingNextPage,
+    fetchNextPage,
+    refreshing,
+  } = useNoshScroller(getTransactions, 'transactionData', 'transactions');
 
   const _renderFooter = useCallback(() => {
     if (!isFetchingNextPage) return null;
@@ -202,6 +183,9 @@ export const WalletScreen = ({
         ) : (
           <FlatList
             data={data}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             ListHeaderComponent={ScreenHeader}
             renderItem={({item}) => <WithdrawalItem {...item} />}
             keyExtractor={() => uuid()}

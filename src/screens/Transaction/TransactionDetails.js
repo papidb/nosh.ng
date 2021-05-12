@@ -215,9 +215,9 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
               marginHorizontal="l"
               alignItems="center">
               <Text color="primary" fontSize={24}>
-                {cardTotalAmount}
+                {/* {cardTotalAmount} */}
               </Text>
-              <Text color="success" fontSize={24}>
+              <Text color="success" fontSize={24} textAlign="right">
                 {commaFormatter(cardTotalAmount)}
               </Text>
             </Box>

@@ -23,6 +23,7 @@ import {getTrades} from 'action';
 import {palette} from 'constants/theme';
 import {useNavigation} from '@react-navigation/core';
 import {useInfiniteQuery} from 'react-query';
+import {useNoshScroller} from 'hooks';
 
 const HeaderComponent = () => {
   return (
@@ -53,32 +54,14 @@ const ItemSeparatorComponent = () => (
 
 const TransactionScreen = ({getTrades}) => {
   const navigation = useNavigation();
-  const [isModalVisible, setModalVisible] = useState(false);
-  const getData = ({pageParam = 0}) => getTrades(pageParam);
   const {
-    error,
-    data: pureData,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
+    data,
+    onRefresh,
     status,
-  } = useInfiniteQuery('notificationData', getData, {
-    getNextPageParam: (lastPage, pages) => {
-      // eslint-disable-next-line eqeqeq
-      if (lastPage?.currentPage == lastPage?.totalPages) {
-        return undefined;
-      }
-      return lastPage?.currentPage;
-    },
-    staleTime: 0,
-    cacheTime: 0,
-  });
-  const getDataFromPages = useCallback((pages = [], key = 'trades') => {
-    return getDataFromPurePages(pages, key);
-  }, []);
-  const {pages} = pureData || {};
-  const data = getDataFromPages(pages);
+    isFetchingNextPage,
+    fetchNextPage,
+    refreshing,
+  } = useNoshScroller(getTrades, 'notificationData', 'trades');
 
   const _renderFooter = useCallback(() => {
     if (!isFetchingNextPage) return null;
@@ -118,9 +101,9 @@ const TransactionScreen = ({getTrades}) => {
             <Divider style={{marginHorizontal: 53}} />
           </Box>
           <FlatList
-            // refreshControl={
-            //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            // }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             ListHeaderComponent={HeaderComponent}
             data={data}
             keyExtractor={(item, index) => uuid()}

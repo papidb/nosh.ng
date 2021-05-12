@@ -28,6 +28,7 @@ import {
   uuid,
 } from 'shared/utils';
 import * as Yup from 'yup';
+import {useSelector, useStore} from 'react-redux';
 
 export const Withdraw = ({
   close,
@@ -35,12 +36,14 @@ export const Withdraw = ({
   getSettings,
   banks = [],
   thereIsBank,
-  minimumAcceptableAmount = 2002,
+  // minimumAcceptableAmount = 2002,
 }) => {
+  const minimumAcceptableAmount = useSelector(
+    (state) => state.misc?.serverState?.minimumAmountWithdrawable,
+  );
+  console.log({minimumAcceptableAmount});
   useEffect(() => {
-    console.log({getSettings});
-    const d = getSettings();
-    console.log({d});
+    getSettings();
   }, [getSettings]);
   const [selected, setSelected] = useState(null);
 
@@ -200,3 +203,6 @@ export const Withdraw = ({
 Withdraw.propTypes = {
   close: PropTypes.func,
 };
+
+// // selectMinimumWithdrawalableAmount
+// export const withdraw =connect(, {})(WithdrawComponent)

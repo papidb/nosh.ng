@@ -6,3 +6,8 @@ export const selectCardSubCategories = createSelector(
   selectMisc,
   (misc) => misc.cardSubCategories,
 );
+
+export const selectMinimumWithdrawalableAmount = createSelector(
+  selectMisc,
+  (misc) => misc.serverState,
+);

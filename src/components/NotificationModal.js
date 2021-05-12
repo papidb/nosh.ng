@@ -1,6 +1,11 @@
 /* eslint-disable eqeqeq */
 import React, {useState, useCallback, useEffect} from 'react';
-import {SectionList, ActivityIndicator, RefreshControl} from 'react-native';
+import {
+  SectionList,
+  ActivityIndicator,
+  RefreshControl,
+  Platform,
+} from 'react-native';
 
 import {Box, Text, Loading, Close, Divider, HeaderInfo} from 'components';
 import {useInfiniteQuery} from 'react-query';
@@ -16,6 +21,7 @@ import {getNotifications} from 'action';
 import {palette} from 'constants/theme';
 import {connect} from 'react-redux';
 import {NoNotification, NotificationItem} from 'components/Notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const Header = ({section: {title}}) => (
   <HeaderInfo
@@ -75,6 +81,11 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
     if (isFetchingNextPage) return;
     fetchNextPage();
   }, [fetchNextPage, isFetchingNextPage]);
+
+  useEffect(() => {
+    if (Platform.OS === 'ios')
+      PushNotificationIOS.setApplicationIconBadgeNumber(0);
+  }, []);
 
   return (
     <Box
