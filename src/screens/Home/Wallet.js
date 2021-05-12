@@ -21,7 +21,7 @@ import {
   uuid,
   purifyStatus,
   commaFormatter,
-  getDataFromPagesPure,
+  getDataFromPurePages,
 } from 'shared/utils';
 import {
   Box,
@@ -209,7 +209,7 @@ export const WalletScreen = ({
   const goToFirst = () => fetchNextPage({pageParam: 0});
 
   const getDataFromPages = useCallback((pages = [], key = 'transactions') => {
-    return getDataFromPagesPure(pages, key);
+    return getDataFromPurePages(pages, key);
   }, []);
   const {pages} = pureData || {};
   const data = getDataFromPages(pages);

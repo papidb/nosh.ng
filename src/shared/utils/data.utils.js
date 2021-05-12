@@ -168,7 +168,7 @@ export function purgeData(arr) {
  * @param {string} key key used to specified needed data
  * @return {array} data
  */
-export function getDataFromPagesPure(pages = [], key = 'trades') {
+export function getDataFromPurePages(pages = [], key = 'trades') {
   const container = [];
   pages.forEach((page = {}) => {
     // console.log(page);

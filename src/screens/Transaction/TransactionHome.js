@@ -17,7 +17,7 @@ import {
   HeaderInfo,
 } from 'components';
 import {TransactionTab, TransactionModal} from './components';
-import {getDataFromPagesPure, purgeData, uuid} from 'shared/utils';
+import {getDataFromPurePages, purgeData, uuid} from 'shared/utils';
 import {connect} from 'react-redux';
 import {getTrades} from 'action';
 import {palette} from 'constants/theme';
@@ -75,7 +75,7 @@ const TransactionScreen = ({getTrades}) => {
     cacheTime: 0,
   });
   const getDataFromPages = useCallback((pages = [], key = 'trades') => {
-    return getDataFromPagesPure(pages, key);
+    return getDataFromPurePages(pages, key);
   }, []);
   const {pages} = pureData || {};
   const data = getDataFromPages(pages);

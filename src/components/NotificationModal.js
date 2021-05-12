@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import React, {useState, useCallback, useEffect} from 'react';
-import {SectionList, ActivityIndicator} from 'react-native';
+import {SectionList, ActivityIndicator, RefreshControl} from 'react-native';
 
 import {Box, Text, Loading, Close, Divider, HeaderInfo} from 'components';
 import {useInfiniteQuery} from 'react-query';
@@ -9,7 +9,7 @@ import {
   commaFormatter,
   uuid,
   purgeData,
-  getDataFromPagesPure,
+  getDataFromPurePages,
 } from 'shared/utils';
 
 import {getNotifications} from 'action';
@@ -25,6 +25,8 @@ const Header = ({section: {title}}) => (
 );
 
 export const NotificationModalList = ({closeModal, getNotifications}) => {
+  const [refreshing, setRefreshing] = useState(false);
+  const dateSorter = (a, b) => new Date(b.createdAt) - new Date(a.createdAt);
   const getData = ({pageParam = 0}) => getNotifications(pageParam);
   const {
     error,
@@ -33,6 +35,7 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
+    refetch,
     status,
   } = useInfiniteQuery('notificationData', getData, {
     getNextPageParam: (lastPage, pages) => {
@@ -46,12 +49,18 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
     cacheTime: 0,
   });
   const getDataFromPages = useCallback((pages = [], key = 'notifications') => {
-    const dataFromPure = getDataFromPagesPure(pages, key);
-    dataFromPure.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    return purgeData(dataFromPure);
+    const dataFromPurePages = getDataFromPurePages(pages, key);
+    dataFromPurePages.sort(dateSorter);
+    return purgeData(dataFromPurePages);
   }, []);
   const {pages} = pureData || {};
   const data = getDataFromPages(pages);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   const _renderFooter = useCallback(() => {
     if (!isFetchingNextPage) return null;
@@ -93,6 +102,9 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
         <NoNotification />
       ) : (
         <SectionList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           sections={data}
           keyExtractor={(item, index) => item.id}
           renderItem={({item}) => <NotificationItem {...item} />}
