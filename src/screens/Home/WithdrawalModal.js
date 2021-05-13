@@ -36,10 +36,11 @@ export const WithdrawalModal = ({closeModal = () => {}, ...props}) => {
     createdAt,
     status,
     amount,
-    rejectionReason,
+    reason: rejectionReason,
     color,
+    bank = {},
   } = props;
-  console.log({props});
+  // console.log({props});
   return (
     <Box flex={1} paddingBottom="l">
       {/* <Box flex={1} /> */}
@@ -57,6 +58,7 @@ export const WithdrawalModal = ({closeModal = () => {}, ...props}) => {
           flexDirection="row"
           alignItems="center"
           marginBottom="s"
+          marginHorizontal="m"
           marginTop="xxxl">
           {/* <FastImage
             source={{
@@ -79,35 +81,34 @@ export const WithdrawalModal = ({closeModal = () => {}, ...props}) => {
 
         <Box>
           <Box>
-            <Divider
-              marginBottom="l"
-              marginTop="m"
-              style={styles.headerDivider}
-            />
+            <Divider style={styles.headerDivider} />
             <Box
               flexDirection="row"
               justifyContent="space-between"
-              marginHorizontal="l"
+              marginBottom="l"
+              marginTop="l"
+              marginHorizontal="m"
               alignItems="center">
               <Text fontSize={16} fontWeight="600" color="text">
-                {amount}
+                {commaFormatter(amount, 0)}
               </Text>
               <Text color="success" fontSize={14}>
                 NGN
               </Text>
             </Box>
-            <Divider marginTop="m" style={styles.headerDivider} />
+            <Divider style={styles.headerDivider} />
           </Box>
-          <Box marginVertical="m">
-            <BankTab />
+          <Box marginVertical="m" marginHorizontal="m">
+            <BankTab {...bank} />
           </Box>
           <Box>
+            <Divider style={styles.headerDivider} />
             <Box
               marginTop="l"
               flexDirection="row"
               justifyContent="space-between"
-              marginBottom="s"
-              marginHorizontal="l"
+              marginBottom="l"
+              marginHorizontal="m"
               alignItems="center">
               <Text color="success" fontSize={12} fontWeight="600">
                 {format(new Date(createdAt), 'MMMM d - yyyy')}
@@ -123,7 +124,7 @@ export const WithdrawalModal = ({closeModal = () => {}, ...props}) => {
               marginTop="l"
               justifyContent="flex-end"
               marginBottom="s"
-              marginHorizontal="l"
+              marginHorizontal="m"
               //
             >
               <Text

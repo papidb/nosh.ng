@@ -24,10 +24,12 @@ const HeaderComponent = ({onPress, bright, ...props}) => {
 
   useEffect(() => {
     try {
-      PushNotificationIOS.getApplicationIconBadgeNumber((badgeNumber) =>
-        setBadge(!!badgeNumber),
+      PushNotificationIOS.getApplicationIconBadgeNumber(
+        (badgeNumber) => console.log({badgeNumber}) || setBadge(!!badgeNumber),
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log('error', error);
+    }
     // (async () => {
     // })();
   }, []);

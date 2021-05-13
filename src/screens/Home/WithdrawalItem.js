@@ -125,7 +125,7 @@ export const WithdrawalItem = (props = {}) => {
         adjustToContentHeight
         //
       >
-        <WithdrawalModal {...props} {...{closeModal}} />
+        <WithdrawalModal {...props} {...{closeModal, color}} />
       </Modalize>
     );
   }, [props]);
