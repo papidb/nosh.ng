@@ -16,7 +16,13 @@ import {palette} from 'constants/theme';
 import images from 'constants/images';
 import HomeHand from 'assets/icons/home_hand.svg';
 import FastImage from 'react-native-fast-image';
-import {getBanks, getUser, logout, updatePushNotificationToken} from 'action';
+import {
+  getBanks,
+  getUser,
+  logout,
+  updatePushNotificationToken,
+  getSettings,
+} from 'action';
 import {useNavigation} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {

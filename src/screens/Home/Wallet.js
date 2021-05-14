@@ -122,6 +122,7 @@ export const WalletScreen = ({
     isFetchingNextPage,
     fetchNextPage,
     refreshing,
+    goToFirst,
   } = useNoshScroller(getTransactions, 'transactionData', 'transactions');
 
   const _renderFooter = useCallback(() => {
@@ -137,7 +138,7 @@ export const WalletScreen = ({
     fetchNextPage();
   }, [fetchNextPage]);
 
-  console.log({status});
+  // console.log({status});
   return (
     <Box flex={1} paddingHorizontal="l">
       <Portal>

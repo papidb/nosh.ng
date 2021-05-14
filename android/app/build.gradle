@@ -176,6 +176,10 @@ android {
         }
     }
 
+    // packagingOptions {
+    //     pickFirst '**/libjsc.so'
+    //     pickFirst '**/libc++_shared.so'
+    // }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -193,6 +197,10 @@ android {
 }
 
 dependencies {
+    // Make sure to put android-jsc at the top
+    // implementation "org.webkit:android-jsc:+"
+
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

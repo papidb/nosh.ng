@@ -51,9 +51,10 @@ export const WithdrawalModal = ({closeModal = () => {}, ...props}) => {
         position="relative"
         paddingTop="none">
         {/* Content */}
-        <Box top={20} right={15}>
+        <Box position="absolute" zIndex={20390} top={20} right={15}>
           <Close onPress={closeModal} />
         </Box>
+        <Box marginVertical="m" />
         <Box
           flexDirection="row"
           alignItems="center"
