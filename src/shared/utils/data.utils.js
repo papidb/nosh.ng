@@ -81,10 +81,12 @@ export const createFormData = ({uri, type}) => {
 };
 export const createFormArrayData = (arr = []) => {
   const data = new FormData();
-  arr.forEach((avatar) => {
-    console.log({avatar});
-    return data.append('tradeFiles', createFileForm(avatar));
-  });
+  Array.isArray(arr) &&
+    (arr?.length ?? 0) > 0 &&
+    arr.forEach((avatar) => {
+      // console.log({avatar});
+      return data.append('tradeFiles', createFileForm(avatar));
+    });
   return data;
 };
 

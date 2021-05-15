@@ -10,7 +10,7 @@ export const URL = 'https://api.nosh.ng';
 export const BASE_URL = `${URL}/`;
 
 export const reactNativeDisableYellowBox = true;
-export const showNetworkRequests = true;
+export const showNetworkRequests = false;
 export const showNetworkResponses = false;
 export const IS_ANDROID = Platform.OS === 'android';
 export const IS_IOS = Platform.OS === 'ios';

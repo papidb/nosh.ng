@@ -1,6 +1,8 @@
 import shortid from 'shortid';
 import Snackbar from 'react-native-snackbar';
 import {Keyboard} from 'react-native';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+
 import {palette} from 'constants/theme';
 
 export * from './currency.utils';
@@ -53,11 +55,13 @@ export const showErrorSnackBar = async (options) => {
     };
 
     Keyboard.dismiss();
-    // await ReactNativeHapticFeedback.trigger(
-    //   'notificationError',
-    //   vibrationOption,
-    // );
-  } catch (error) {}
+    await ReactNativeHapticFeedback.trigger(
+      'notificationError',
+      vibrationOption,
+    );
+  } catch (error) {
+    console.log({error});
+  }
   return Snackbar.show({
     duration: Snackbar.LENGTH_LONG,
     fontFamily: 'Hurme Geometric Sans 2',

@@ -12,6 +12,8 @@ target 'Nosh' do
 
   pod 'react-native-intercom', :path => '../node_modules/react-native-intercom'
 
+  pod 'RNReactNativeHapticFeedback', :path => '../node_modules/react-native-haptic-feedback'
+
   target 'NoshTests' do
     inherit! :complete
     # Pods for testing

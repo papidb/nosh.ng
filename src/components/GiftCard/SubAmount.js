@@ -33,19 +33,25 @@ export const SubAmount = ({
   setAmount,
   toWallet,
 }) => {
-  // const AmountSchema = useCallback(
-  //   Yup.object().shape({
-  //     amount: Yup.number().min(
-  //       subCategory.minimumAcceptableAmount,
-  //       `Minimum amount of ${subCategory.minimumAcceptableAmount}`,
-  //     ),
-  //   }),
-  //   [],
-  // );
+  const minimumAcceptableAmount = subCategory?.minimumAcceptableAmount ?? 200;
+  const validate = (
+    values,
+    props /* only available when using withFormik */,
+  ) => {
+    const errors = {};
 
-  const AmountSchema = Yup.object().shape({
-    amount: Yup.number().min(200, `Minimum amount of ${200}`),
-  });
+    if (!values.amount) {
+      errors.amount = 'Required';
+    } else if (values.amount < minimumAcceptableAmount) {
+      errors.amount = `Minimum amount of ${minimumAcceptableAmount}`;
+    }
+
+    return errors;
+  };
+
+  // const AmountSchema = Yup.object().shape({
+  //   amount: Yup.number().min(200, `Minimum amount of ${200}`),
+  // });
   const IS_ANDROID = Platform.OS === 'android';
 
   // const imageUri = `https://api.nosh.ng/uploads/images/cards/${giftCard.title}.png`;
@@ -78,7 +84,8 @@ export const SubAmount = ({
         console.log({error});
       }
     },
-    validationSchema: AmountSchema,
+    validate,
+    // validationSchema: AmountSchema,
   });
   // console.log({subCategory});
   return (

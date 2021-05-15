@@ -65,8 +65,6 @@ export const Security = ({close = () => {}, changePassword, toggleBio}) => {
   } = useFormik({
     initialValues,
     onSubmit: async (submitValues) => {
-      console.log({isValid});
-      return;
       try {
         let response = await changePassword(submitValues);
         if (response && response?.message)
