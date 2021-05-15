@@ -17,8 +17,8 @@ import Carousel, {getInputRangeFromIndexes} from 'react-native-snap-carousel';
 import {GiftCard} from './GiftCard';
 import {useFormik} from 'formik';
 
+import {IS_ANDROID, IS_IOS} from 'constants/config';
 const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 30;
-const IS_ANDROID = Platform.OS === 'android';
 
 export const SubGiftCard = ({
   onSnapToItem,
@@ -28,6 +28,7 @@ export const SubGiftCard = ({
   cardSubCategories = [],
   toWallet,
 }) => {
+  const carouselRef = useRef(null);
   const [index, setIndex] = useState(0);
   const [giftCard, setSelected] = useState(null);
   const cardCategorySelect = cardSubCategories.map((cardCategory, index) => ({
@@ -66,13 +67,18 @@ export const SubGiftCard = ({
     },
     // validationSchema: SubSchema,
   });
+  // console.log('category: ', values.category);
   const setcategoryValue = (str) => {
-    console.log(str);
+    if (isNaN(Number(str))) return;
+    if (carouselRef?.current) {
+      carouselRef?.current?.snapToItem(str, true, true);
+      // console.log(carouselRef.current);
+    }
     setIndex(str);
     // setFieldTouched('category', true);
     onSnapToItem(str);
-    setIndex(str);
-    setSelected(cardSubCategories[str]);
+    // setIndex(str);
+    // setSelected(cardSubCategories[str]);
     setFieldValue('category', str);
   };
   // console.log({selectedGiftCard});
@@ -84,6 +90,7 @@ export const SubGiftCard = ({
         alignItems="center"
         marginVertical={{bigScreen: 'l', phone: 'l'}}>
         <Carousel
+          ref={carouselRef}
           data={cardSubCategories}
           layout="stack"
           // removeClippedSubviews={false}
@@ -101,6 +108,7 @@ export const SubGiftCard = ({
             onSnapToItem(slideIndex);
             setIndex(slideIndex);
             setSelected(cardSubCategories[slideIndex]);
+            // if (IS_IOS) setFieldValue('category', slideIndex);
           }}
         />
       </Box>
