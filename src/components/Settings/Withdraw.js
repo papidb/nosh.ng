@@ -127,6 +127,7 @@ export const Withdraw = ({
         <Input
           variant="giftcard"
           placeholder="0.00"
+          autoFocus
           keyboardType="number-pad"
           RightIcon={
             <Text fontSize={12} fontWeight="600" color="success">

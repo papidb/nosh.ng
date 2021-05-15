@@ -42,7 +42,6 @@ export const Screen = ({
   verifyAccount,
   bankList,
   bankMap,
-  user,
   addBank,
 }) => {
   const {
@@ -185,7 +184,7 @@ const mapStateToProps = ({user}) => ({
   // bankList,
   // bankMap,
 });
-export const SettingsHome = connect(mapStateToProps, {
+export const SettingsHome = connect(null, {
   logout,
   changePassword,
   toggleBio,
