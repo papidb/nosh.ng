@@ -64,7 +64,7 @@
     "react-native-image-sequence": "https://github.com/benjamin-daniel/react-native-image-sequence",
     "react-native-intercom": "^19.0.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
-    "react-native-keychain": "^7.0.0",
+    "react-native-keychain": "6.2.0",
     "react-native-lightbox": "^0.8.1",
     "react-native-lightbox-v2": "^0.8.7",
     "react-native-linear-gradient": "^2.5.6",

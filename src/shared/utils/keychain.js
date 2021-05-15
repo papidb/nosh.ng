@@ -197,13 +197,15 @@ export async function getPrivateAccessControlOptions() {
   return res;
 }
 
-export const saveToKeyChain = async (username, password, option) => {
-  try {
-    await setGenericPassword(username, password, option);
-  } catch (err) {
-    console.log({err});
-  }
-};
+// export const saveToKeyChain = async (username, password, option) => {
+//   try {
+//     await setGenericPassword(username, password, option);
+//   } catch (err) {
+//     console.log({err});
+//   }
+// };
+export const saveToKeyChain = async (username, password, option) =>
+  setGenericPassword(username, password, option);
 
 export async function requestFaceId() {
   return request(PERMISSIONS.IOS.FACE_ID);

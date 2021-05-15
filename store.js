@@ -26,7 +26,7 @@ const composeEnhancers =
 
 // const middleware = [thunk, __DEV__ && logger].filter(Boolean);
 const middleware = [thunk];
-if (__DEV__) middleware.push(logger);
+// if (__DEV__) middleware.push(logger);
 
 const configureStore = () => {
   const enhancer = composeEnhancers(applyMiddleware(...middleware));

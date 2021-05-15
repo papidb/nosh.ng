@@ -26,6 +26,7 @@ import {
 } from 'shared/utils';
 import {useStore, useDispatch} from 'react-redux';
 import {LOGOUT} from 'action/type';
+import Snackbar from 'react-native-snackbar';
 
 const ChangePassordSchema = Yup.object().shape({
   newPassword: Yup.string().required('Password is required'),
@@ -114,6 +115,10 @@ export const Security = ({close = () => {}, changePassword, toggleBio}) => {
           onToggle={(isOn) => {
             toggleBio();
             setBio(isOn);
+            showSuccessSnackBar({
+              text: `Toggled biometrics ${isOn ? 'on' : 'off'}`,
+              duration: Snackbar.LENGTH_SHORT,
+            });
             console.log('changed to : ', isOn);
           }}
         />

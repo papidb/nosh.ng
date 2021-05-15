@@ -39,7 +39,7 @@ const SECURITY_STORAGE_MAP = [
   Keychain.STORAGE_TYPE.RSA,
 ];
 
-export class PersonalLogin extends Component {
+export default class App extends Component {
   state = {
     username: '',
     password: '',
