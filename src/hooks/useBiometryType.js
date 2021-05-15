@@ -17,10 +17,12 @@ export function useBiometryType() {
   const isMounted = useIsMounted();
   const [biometryType, setBiometryType] = useState(null);
   const prevBiometricType = usePrevious(biometryType);
+  console.log({justBecameActive});
 
   useEffect(() => {
     const getSupportedBiometryType = async () => {
       let type = await Keychain.getSupportedBiometryType();
+      console.log({type});
 
       // omo no time for many many
       // you no get bio you non go see anything my guy
@@ -34,7 +36,7 @@ export function useBiometryType() {
         type = await isPinOrFingerprintSet().then((isPinOrFingerprintSet) =>
           isPinOrFingerprintSet ? BiometryTypes.passcode : BiometryTypes.none,
         );
-        console.log({type});
+        // console.log({type});
       }
 
       if (isMounted.current && type !== prevBiometricType) {

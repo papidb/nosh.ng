@@ -18,14 +18,14 @@ let {height, width} = Dimensions.get('window');
 
 export const TransactionTab = ({onPress = () => {}, navigation, ...props}) => {
   const {
-    cardTotalAmount,
+    amountPayable,
     createdAt,
     tradeStatus,
     cardCategory,
     comment,
     tradeFiles,
   } = props;
-  // console.log({tradeStatus});
+  // console.log({props});
   const modalizeRef = useRef(null);
   const toDetails = () => navigation.navigate('TransactionDetails', props);
   const openModal = () => {
@@ -102,7 +102,7 @@ export const TransactionTab = ({onPress = () => {}, navigation, ...props}) => {
             cardCategory,
             status,
             color,
-            cardTotalAmount,
+            amountPayable,
             createdAt,
             comment,
             tradeFiles,
@@ -113,7 +113,7 @@ export const TransactionTab = ({onPress = () => {}, navigation, ...props}) => {
     );
   }, [
     cardCategory,
-    cardTotalAmount,
+    amountPayable,
     color,
     comment,
     createdAt,
@@ -181,7 +181,7 @@ export const TransactionTab = ({onPress = () => {}, navigation, ...props}) => {
             color={color}
             lineHeight={22.9}
             marginRight="l">
-            {commaFormatter(cardTotalAmount)}
+            {commaFormatter(amountPayable)}
           </Text>
         </Box>
         {/* <Divider marginBottom="s" /> */}

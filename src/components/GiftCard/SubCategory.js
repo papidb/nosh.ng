@@ -138,10 +138,10 @@ export const SubCategory = ({
           flexDirection="row"
           marginTop={{bigScreen: 'xxxl', phone: 'xxl'}}
           style={{marginBottom: 7}}>
-          <Box flex={1} alignItems="flex-end">
+          {/* <Box flex={1} alignItems="flex-end">
             <Image source={images.discount} />
-          </Box>
-          <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
+          </Box> 
+           <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
             <Box
               // flex={1}
               backgroundColor="lightSuccess"
@@ -158,7 +158,7 @@ export const SubCategory = ({
                 Cards
               </Text>
             </Box>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </Box>
       </Box>
 

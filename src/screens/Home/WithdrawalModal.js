@@ -61,17 +61,6 @@ export const WithdrawalModal = ({closeModal = () => {}, ...props}) => {
           marginBottom="s"
           marginHorizontal="m"
           marginTop="xxxl">
-          {/* <FastImage
-            source={{
-              uri: cardCategory.avatar,
-              priority: FastImage.priority.high,
-            }}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              width: 97,
-              height: 55,
-            }}
-          /> */}
           <Text color="primary" fontSize={13} fontWeight="600">
             Withdrawal Status:{' '}
           </Text>
@@ -120,29 +109,30 @@ export const WithdrawalModal = ({closeModal = () => {}, ...props}) => {
             </Box>
             <Divider style={styles.headerDivider} />
           </Box>
-          <Box>
-            <Box
-              marginTop="l"
-              justifyContent="flex-end"
-              marginBottom="s"
-              marginHorizontal="m"
-              //
-            >
-              <Text
-                fontSize={14}
-                textAlign="left"
-                marginBottom="m"
-                fontWeight="600"
-                style={{color: !!rejectionReason ? '#525C6B' : '#D3D3D3'}}>
-                {/* {!!comment ? comment : 'No Optional comments'} */}
-                Rejection Reason
-              </Text>
-              <Text fontSize={12} textAlign="left" style={{color: '#D3D3D3'}}>
-                {/* {!!comment ? comment : 'No Optional comments'} */}
-                {rejectionReason}
-              </Text>
+          {!!rejectionReason && (
+            <Box>
+              <Box
+                marginTop="l"
+                justifyContent="flex-end"
+                marginBottom="s"
+                marginHorizontal="m"
+                //
+              >
+                <Text
+                  fontSize={14}
+                  textAlign="left"
+                  marginBottom="m"
+                  fontWeight="600"
+                  style={{color: '#525C6B'}}>
+                  {/* {!!comment ? comment : 'No Optional comments'} */}
+                  Rejection Reason
+                </Text>
+                <Text fontSize={12} textAlign="left" style={{color: '#D3D3D3'}}>
+                  {rejectionReason}
+                </Text>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
       {/* <Box flex={1} /> */}

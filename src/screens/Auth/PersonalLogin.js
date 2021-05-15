@@ -50,6 +50,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
   const toLogin = () => navigation.navigate('Login');
   const toResetPassword = () => navigation.navigate('ResetPassword');
   let bio = useBiometryType();
+  console.log({bio});
 
   const {
     handleChange,
@@ -215,7 +216,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
           >
             <Box flex={2} />
             <Box flex={1}>
-              {bio !== BiometryTypes.none && BIOAPP && (
+              { BIOAPP && (
                 // {bio && (
                 <Box alignItems="center">
                   <TouchableOpacity

@@ -73,7 +73,13 @@ export const Screen = ({
         {...{addBank, getUser, deleteBank, getBanks, verifyAccount}}
       />
     ),
-    [addBank, closeAddBankModal, getBanks, deleteBank, verifyAccount, getUser],
+    [addBank, closeAddBankModal, deleteBank, getBanks, getUser, verifyAccount],
+  );
+  const SecurityC = useCallback(
+    () => (
+      <Security close={closeSecurityModal} {...{changePassword, toggleBio}} />
+    ),
+    [changePassword, closeSecurityModal, toggleBio],
   );
   const onShare = async () => {
     try {
@@ -163,10 +169,7 @@ export const Screen = ({
           <Withdraw close={closeWithdrawModal} {...{getSettings}} />
         </WithdrawModalize>
         <SecurityModalize>
-          <Security
-            close={closeSecurityModal}
-            {...{changePassword, toggleBio}}
-          />
+          <SecurityC />
         </SecurityModalize>
       </Portal>
     </Box>

@@ -33,6 +33,8 @@ import {
   Icon,
   Header,
   Button,
+  SWW,
+  EmptyScreen,
 } from 'components';
 import {UserNameSetup, Balance} from 'components/Home';
 import {palette} from 'constants/theme';
@@ -123,6 +125,7 @@ export const WalletScreen = ({
     fetchNextPage,
     refreshing,
     goToFirst,
+    isFetching,
   } = useNoshScroller(getTransactions, 'transactionData', 'transactions');
 
   const _renderFooter = useCallback(() => {
@@ -154,33 +157,12 @@ export const WalletScreen = ({
         </WithdrawModalize>
       </Portal>
       {status === 'loading' && <Loading />}
-      {status === 'error' && (
-        <Box flex={1} justifyContent="center" alignItems="center">
-          <Text textAlign="center" color="white" fontWeight="600">
-            Something went wrong!!!
-          </Text>
-          <Box marginVertical="l" alignSelf="stretch">
-            <Button
-              color="error"
-              onPress={goToFirst}
-              text="Retry"
-              // loading={status == 'loading'}
-              loading={isFetching}
-            />
-          </Box>
-        </Box>
-      )}
+      {status === 'error' && <SWW {...{goToFirst, isFetching}} />}
       {status === 'success' &&
         (data.length === 0 ? (
-          <Box flex={1} alignItems="center" justifyContent="center">
-            <Text
-              textAlign="center"
-              color="primary"
-              fontSize={14}
-              fontWeight="600">
-              {'There are no transactions. Use our services more\n😭😭😭'}
-            </Text>
-          </Box>
+          <EmptyScreen
+            text={'There are no transactions. Use our services more\n😭😭😭'}
+          />
         ) : (
           <FlatList
             data={data}

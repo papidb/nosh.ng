@@ -83,6 +83,7 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
   const navigation = useNavigation();
   const goBack = () => navigation?.goBack();
   const {
+    amountPayable,
     cardTotalAmount,
     createdAt,
     tradeStatus,
@@ -94,6 +95,7 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
     ...props
   } = params;
 
+  // console.log({props})
   const copyTransactionRef = () => Clipboard.setString(tradeRef);
   // console.log({props});
   const status = tradeStatus?.status ?? 'pending';
@@ -215,10 +217,10 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
               marginHorizontal="l"
               alignItems="center">
               <Text color="primary" fontSize={24}>
-                {/* {cardTotalAmount} */}
+                {commaFormatter(cardTotalAmount)}
               </Text>
               <Text color="success" fontSize={24} textAlign="right">
-                {commaFormatter(cardTotalAmount)}
+                {commaFormatter(amountPayable)}
               </Text>
             </Box>
             <Box marginHorizontal="l">
@@ -232,50 +234,50 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
             </Box>
             <Divider marginTop="m" style={styles.headerDivider} />
           </Box>
-          <Box>
-            <Box
-              marginTop="l"
-              justifyContent="flex-end"
-              marginBottom="s"
-              marginHorizontal="l"
-              //
-            >
-              <Text
-                fontSize={14}
-                textAlign="left"
-                marginBottom="m"
-                fontWeight="600"
-                style={{color: !!rejectionReason ? '#525C6B' : '#D3D3D3'}}>
-                Optional comments
-              </Text>
-              {!!comment && (
+          {!!comment && (
+            <Box>
+              <Box
+                marginTop="l"
+                justifyContent="flex-end"
+                marginBottom="s"
+                marginHorizontal="l"
+                //
+              >
+                <Text
+                  fontSize={14}
+                  textAlign="left"
+                  marginBottom="m"
+                  fontWeight="600"
+                  style={{color: '#D3D3D3'}}>
+                  Optional comments
+                </Text>
                 <Text fontSize={12} textAlign="left" style={{color: '#D3D3D3'}}>
                   {comment}
                 </Text>
-              )}
+              </Box>
+              <Divider style={styles.headerDivider} />
             </Box>
-            <Divider style={styles.headerDivider} />
-          </Box>
+          )}
           <Box>
-            <Box
-              marginTop="l"
-              justifyContent="flex-end"
-              marginBottom="s"
-              marginHorizontal="l">
-              <Text
-                fontSize={14}
-                textAlign="left"
-                marginBottom="m"
-                fontWeight="600"
-                style={{color: !!rejectionReason ? '#525C6B' : '#D3D3D3'}}>
-                Rejection Reason
-              </Text>
-              {!!rejectionReason && (
+            {!!rejectionReason && (
+              <Box
+                marginTop="l"
+                justifyContent="flex-end"
+                marginBottom="s"
+                marginHorizontal="l">
+                <Text
+                  fontSize={14}
+                  textAlign="left"
+                  marginBottom="m"
+                  fontWeight="600"
+                  style={{color: '#525C6B'}}>
+                  Rejection Reason
+                </Text>
                 <Text fontSize={12} textAlign="left" style={{color: '#D3D3D3'}}>
                   {rejectionReason}
                 </Text>
-              )}
-            </Box>
+              </Box>
+            )}
           </Box>
         </Box>
         <RaiseAndroid height={100} />

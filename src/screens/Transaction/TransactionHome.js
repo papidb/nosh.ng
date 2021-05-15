@@ -15,6 +15,8 @@ import {
   Divider,
   RaiseAndroid,
   HeaderInfo,
+  SWW,
+  EmptyScreen,
 } from 'components';
 import {TransactionTab, TransactionModal} from './components';
 import {getDataFromPurePages, purgeData, uuid} from 'shared/utils';
@@ -38,7 +40,7 @@ const HeaderComponent = () => {
         fontSize={12}
         lineHeight={15.26}
         style={styles.ngn}>
-        NGN
+        AMOUNT
         {/* USD */}
       </Text>
       <Divider />
@@ -61,6 +63,8 @@ const TransactionScreen = ({getTrades}) => {
     isFetchingNextPage,
     fetchNextPage,
     refreshing,
+    goToFirst,
+    isFetching,
   } = useNoshScroller(getTrades, 'notificationData', 'trades');
 
   const _renderFooter = useCallback(() => {
@@ -83,40 +87,35 @@ const TransactionScreen = ({getTrades}) => {
         <TransactionModal {...{closeModal}} />
       </Modal> */}
       {/* Header */}
-      {status === 'loading' ? (
-        <Loading />
-      ) : data.length == 0 ? (
-        <Box flex={1} alignItems="center" justifyContent="center">
-          <Text
-            textAlign="center"
-            color="primary"
-            fontSize={14}
-            fontWeight="600">
-            {"There's no trades. Use our services more\n😭😭😭"}
-          </Text>
-        </Box>
-      ) : (
-        <Box flex={1}>
-          <Box style={{paddingTop: 15}}>
-            <Divider style={{marginHorizontal: 53}} />
-          </Box>
-          <FlatList
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            ListHeaderComponent={HeaderComponent}
-            data={data}
-            keyExtractor={(item, index) => uuid()}
-            renderItem={({item}) => (
-              <TransactionTab {...item} {...{navigation}} />
-            )}
-            ListFooterComponent={_renderFooter}
-            ItemSeparatorComponent={ItemSeparatorComponent}
-            onEndReached={_handleLoadMore}
-            onEndReachedThreshold={0.3}
+      {status === 'loading' && <Loading />}
+      {status === 'error' && <SWW {...{goToFirst, isFetching}} />}
+      {status === 'success' &&
+        (data.length === 0 ? (
+          <EmptyScreen
+            text={"There's no trades. Use our services more\n😭😭😭"}
           />
-        </Box>
-      )}
+        ) : (
+          <Box flex={1}>
+            <Box style={{paddingTop: 15}}>
+              <Divider style={{marginHorizontal: 53}} />
+            </Box>
+            <FlatList
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+              ListHeaderComponent={HeaderComponent}
+              data={data}
+              keyExtractor={(item, index) => uuid()}
+              renderItem={({item}) => (
+                <TransactionTab {...item} {...{navigation}} />
+              )}
+              ListFooterComponent={_renderFooter}
+              ItemSeparatorComponent={ItemSeparatorComponent}
+              onEndReached={_handleLoadMore}
+              onEndReachedThreshold={0.3}
+            />
+          </Box>
+        ))}
       <Divider style={[styles.bottomDivider, styles.noMarginTop]} />
       <Text textAlign="center" color="primary" fontSize={11} fontWeight="600">
         CLICK ON TRANSACTION FOR DETAILS

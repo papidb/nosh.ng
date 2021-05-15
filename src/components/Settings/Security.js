@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {Keyboard} from 'react-native';
 
 import {useFormik} from 'formik';
 import PropTypes from 'prop-types';
@@ -24,13 +24,29 @@ import {
   showSuccessSnackBar,
   extractErrorMessage,
 } from 'shared/utils';
-import {useStore} from 'react-redux';
+import {useStore, useDispatch} from 'react-redux';
+import {LOGOUT} from 'action/type';
 
 const ChangePassordSchema = Yup.object().shape({
-  password: Yup.string().required('Required').min(4, 'Minimun length of 4'),
+  newPassword: Yup.string().required('Password is required'),
+  confirmNewPassword: Yup.string().oneOf(
+    [Yup.ref('newPassword'), null],
+    'Passwords must match',
+  ),
 });
 
-export const Security = ({close, changePassword, toggleBio}) => {
+const outer = {marginVertical: 'xxs'};
+const initialValues = __DEV__
+  ? {
+      oldPassword: 'Silver1@',
+      newPassword: 'Silver1@',
+      confirmNewPassword: 'Silver1@',
+    }
+  : {oldPassword: '', newPassword: '', confirmNewPassword: ''};
+
+export const Security = ({close = () => {}, changePassword, toggleBio}) => {
+  const dispatch = useDispatch();
+  const logout = () => dispatch({type: LOGOUT});
   const {
     misc: {bio: reduxBio},
   } = useStore().getState();
@@ -46,12 +62,16 @@ export const Security = ({close, changePassword, toggleBio}) => {
     isSubmitting,
     isValid,
   } = useFormik({
-    initialValues: {password: '', confirmPassword: ''},
+    initialValues,
     onSubmit: async (submitValues) => {
+      console.log({isValid});
+      return;
       try {
         let response = await changePassword(submitValues);
         if (response && response?.message)
           showSuccessSnackBar({text: response?.message});
+        close();
+        logout();
         // toEmailVerification();
       } catch (error) {
         const text = extractErrorMessage(error);
@@ -112,30 +132,49 @@ export const Security = ({close, changePassword, toggleBio}) => {
       {/* Form */}
       <Box marginBottom="xs">
         <Input
-          onChangeText={handleChange('password')}
-          onBlur={handleBlur('password')}
-          error={errors.password}
-          touched={touched.password}
-          value={values.password}
+          onChangeText={handleChange('oldPassword')}
+          onBlur={handleBlur('oldPassword')}
+          error={errors.oldPassword}
+          touched={touched.oldPassword}
+          value={values.oldPassword}
+          placeholder="Enter Old Password"
+          variant="profilePrimary"
+          placeholderTextColor={palette.blue}
+          passwordIcon={!__DEV__}
+          outer={outer}
+          blurOnSubmit={false}
+          onSubmitEditing={() => Keyboard.dismiss()}
+        />
+        <Input
+          onChangeText={handleChange('newPassword')}
+          onBlur={handleBlur('newPassword')}
+          error={errors.newPassword}
+          touched={touched.newPassword}
+          value={values.newPassword}
           placeholder="Enter New Password"
           variant="profilePrimary"
           placeholderTextColor={palette.blue}
-          nospace
+          passwordIcon={!__DEV__}
+          outer={outer}
+          blurOnSubmit={false}
+          onSubmitEditing={() => Keyboard.dismiss()}
         />
-      </Box>
-      <Box marginBottom="xs">
         <Input
-          onChangeText={handleChange('confirmPassword')}
-          onBlur={handleBlur('confirmPassword')}
-          error={errors.confirmPassword}
-          touched={touched.confirmPassword}
-          value={values.confirmPassword}
-          placeholder="Confirm Password"
+          onChangeText={handleChange('confirmNewPassword')}
+          onBlur={handleBlur('confirmNewPassword')}
+          error={errors.confirmNewPassword}
+          touched={touched.confirmNewPassword}
+          value={values.confirmNewPassword}
+          placeholder="Enter New Password"
           variant="profilePrimary"
           placeholderTextColor={palette.blue}
-          nospace
+          passwordIcon={!__DEV__}
+          outer={outer}
+          blurOnSubmit={false}
+          onSubmitEditing={() => Keyboard.dismiss()}
         />
       </Box>
+      <Box marginBottom="xs"></Box>
       <Box>
         <Button text="Save" loading={isSubmitting} onPress={handleSubmit} />
       </Box>

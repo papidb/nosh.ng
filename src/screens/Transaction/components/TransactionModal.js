@@ -31,7 +31,7 @@ const renderItem = (path) => {
 export const TransactionModal = ({
   closeModal = () => {},
   cardCategory,
-  cardTotalAmount,
+  amountPayable,
   status,
   color,
   createdAt,
@@ -124,10 +124,10 @@ export const TransactionModal = ({
               marginHorizontal="l"
               alignItems="center">
               <Text color="primary" fontSize={24}>
-                {cardTotalAmount}
+                {amountPayable}
               </Text>
               <Text color="success" fontSize={24}>
-                {commaFormatter(cardTotalAmount)}
+                {commaFormatter(amountPayable)}
               </Text>
             </Box>
             <Box marginHorizontal="l">
@@ -158,29 +158,31 @@ export const TransactionModal = ({
             </Box>
             <Divider style={styles.headerDivider} />
           </Box>
-          <Box>
-            <Box
-              marginTop="l"
-              justifyContent="flex-end"
-              marginBottom="s"
-              marginHorizontal="l"
-              //
-            >
-              <Text
-                fontSize={14}
-                textAlign="left"
-                marginBottom="m"
-                fontWeight="600"
-                style={{color: !!rejectionReason ? '#525C6B' : '#D3D3D3'}}>
-                {/* {!!comment ? comment : 'No Optional comments'} */}
-                Rejection Reason
-              </Text>
-              <Text fontSize={12} textAlign="left" style={{color: '#D3D3D3'}}>
-                {/* {!!comment ? comment : 'No Optional comments'} */}
-                {rejectionReason}
-              </Text>
+          {!!rejectionReason && (
+            <Box>
+              <Box
+                marginTop="l"
+                justifyContent="flex-end"
+                marginBottom="s"
+                marginHorizontal="l"
+                //
+              >
+                <Text
+                  fontSize={14}
+                  textAlign="left"
+                  marginBottom="m"
+                  fontWeight="600"
+                  style={{color: '#525C6B'}}>
+                  {/* {!!comment ? comment : 'No Optional comments'} */}
+                  Rejection Reason
+                </Text>
+                <Text fontSize={12} textAlign="left" style={{color: '#D3D3D3'}}>
+                  {/* {!!comment ? comment : 'No Optional comments'} */}
+                  {rejectionReason}
+                </Text>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Box>
       </Box>
       {/* <Box flex={1} /> */}
