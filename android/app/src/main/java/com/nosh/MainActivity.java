@@ -1,4 +1,4 @@
-package com.nosh;
+package ng.nosh;
 import android.os.Bundle; // required for onCreate parameter
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
