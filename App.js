@@ -108,7 +108,7 @@ SetCustomText(TextProps);
 
 const queryClient = new QueryClient();
 async function saveTokenToDatabase(token) {
-  console.log({token});
+  // console.log({token});
   // Assume user is already signed in
   // Add the token to the users datastore
   // console.log({token});
