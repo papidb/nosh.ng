@@ -19,8 +19,10 @@ export const getUser = () => {
         })
         .then(({data}) => {
           // console.log({data});
-          dispatch({type: UPDATE_USER, payload: data});
-          return data;
+          let user = data?.user ?? {};
+          dispatch({type: UPDATE_USER, payload: user});
+          // delete user.fcmTokens;
+          return user;
         }),
       dispatch,
       getState,
@@ -54,7 +56,7 @@ export const getNotifications = (page = 0) => {
     const {accessToken} = store?.auth;
     const {_id} = store?.user;
     // console.log(`${BASE_URL}notifications/${_id} ${accessToken}`);
-    console.log({page});
+    // console.log({page});
     return HijackError(
       axios
         .get(`${BASE_URL}notifications/${_id}?currentPage=${page}`, {
@@ -78,7 +80,7 @@ export const getTransactions = (page) => {
     const {accessToken} = store?.auth;
     const {_id} = store?.user;
     // console.log(`${BASE_URL}notifications/${_id} ${accessToken}`);
-    console.log({page});
+    // console.log({page});
     return HijackError(
       axios
         .get(`${BASE_URL}transactions/${_id}?currentPage=${page}`, {
@@ -260,7 +262,7 @@ export const getSettings = () => {
           },
         })
         .then(({data}) => {
-          console.log({data});
+          // console.log({data});
           dispatch({type: UPDATE_SETTINGS, payload: data?.settings ?? {}});
           return data;
         }),

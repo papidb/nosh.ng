@@ -7,3 +7,7 @@ export const selectHasUsername = createSelector(selectUser, (user) =>
 );
 
 export const selectPureUser = createSelector(selectUser, (user) => user);
+export const selectBanks = createSelector(
+  selectUser,
+  (user) => user?.wallet?.banks ?? [],
+);

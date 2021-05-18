@@ -29,6 +29,7 @@ import {
 } from 'shared/utils';
 import * as Yup from 'yup';
 import {useSelector, useStore} from 'react-redux';
+import {selectMinimumWithdrawalableAmount} from 'selectors';
 
 export const Withdraw = ({
   close,
@@ -39,7 +40,7 @@ export const Withdraw = ({
   // minimumAcceptableAmount = 2002,
 }) => {
   const minimumAcceptableAmount = useSelector(
-    (state) => state.misc?.serverState?.minimumAmountWithdrawable,
+    selectMinimumWithdrawalableAmount,
   );
   console.log({minimumAcceptableAmount});
   useEffect(() => {

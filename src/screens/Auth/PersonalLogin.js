@@ -216,7 +216,7 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
           >
             <Box flex={2} />
             <Box flex={1}>
-              { BIOAPP && (
+              {bio !== BiometryTypes.none && BIOAPP && (
                 // {bio && (
                 <Box alignItems="center">
                   <TouchableOpacity

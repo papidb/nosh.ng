@@ -28,7 +28,7 @@ export const useVerifyBankAccount = (
           (await verifyAccountFn(bankData))?.accountData?.accountName ?? null;
         setValid(true);
         setLoading(false);
-        console.log({accountName});
+        // console.log({accountName});
         setAccountName(accountName);
       })();
     } catch (error) {

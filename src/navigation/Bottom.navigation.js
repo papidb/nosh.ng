@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 export const BottomTab = () => {
   return (
     <Tab.Navigator
-      initialRouteName={__DEV__ ? 'Settings' : 'Home'}
+      // initialRouteName={__DEV__ ? 'Settings' : 'Home'}
       appearance={{floating: true}}
       tabBarOptions={{
         labelStyle: {

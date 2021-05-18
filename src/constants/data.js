@@ -7,9 +7,34 @@ const BiometryTypes = {
   passcode: 'passcode',
   TouchID: 'TouchID',
 };
+const userInitialState = {
+  wallet: {
+    balance: 0,
+    transactions: [],
+    trades: [],
+    banks: [],
+  },
+  avatar: '',
+  notifications: [],
+  BVN: '',
+  role: 'user',
+  suspended: false,
+  userId: '',
+  _id: '',
+  name: '',
+  email: '',
+  phoneNumber: '',
+  lastLogin: '',
+  createdAt: '',
+  updatedAt: '',
+  accessToken: '',
+  refreshToken: '',
+  username: null,
+};
 
 export default {
   BiometryTypes,
+  userInitialState,
   giftCards: [
     {title: 'Amazon', displayName: 'Amazon'},
     {title: 'American exp', displayName: 'American Express'},

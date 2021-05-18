@@ -96,9 +96,9 @@ const AddBankComponent = ({
         try {
           await getUser();
         } catch (error) {
-          console.log({error});
+          // console.log({error});
         }
-        console.log({addBankRes});
+        // console.log({addBankRes});
         let message = addBankRes?.message;
         showSuccessSnackBar({text: message});
         close();
@@ -116,7 +116,7 @@ const AddBankComponent = ({
     values,
     verifyAccount,
   );
-  console.log({valid, getNameLoading});
+  // console.log({valid, getNameLoading});
   const setBankCodeValue = (str) => {
     setFieldTouched('bankcode', true);
     setFieldValue('bankcode', str);

@@ -9,5 +9,5 @@ export const selectCardSubCategories = createSelector(
 
 export const selectMinimumWithdrawalableAmount = createSelector(
   selectMisc,
-  (misc) => misc.serverState,
+  (misc) => misc?.serverState?.minimumAmountWithdrawable ?? 200,
 );

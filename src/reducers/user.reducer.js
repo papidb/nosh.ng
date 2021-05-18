@@ -1,59 +1,36 @@
 import {LOGIN, UPDATE_USER, LOGOUT} from '../action/type';
 import Intercom from 'react-native-intercom';
+import data from 'constants/data';
 // import crashlytics from '@react-native-firebase/crashlytics';
 // import messaging from '@react-native-firebase/messaging';
 
-const initialState = {
-  wallet: {
-    balance: 0,
-    transactions: [],
-    trades: [],
-    banks: [],
-  },
-  avatar: '',
-  notifications: [],
-  BVN: '',
-  role: 'user',
-  suspended: false,
-  userId: '',
-  _id: '',
-  name: '',
-  email: '',
-  phoneNumber: '',
-  lastLogin: '',
-  createdAt: '',
-  updatedAt: '',
-  accessToken: '',
-  refreshToken: '',
-};
-
-export default function userReducer(state = initialState, action) {
+export default function userReducer(state = data.userInitialState, action) {
   const payload = action.payload;
   switch (action.type) {
     case UPDATE_USER:
-      Intercom.registerIdentifiedUser({userId: payload?.user?.name});
+      Intercom.registerIdentifiedUser({userId: payload?.name});
       Intercom.updateUser({
         // Pre-defined user attributes
-        email: payload?.user?.email,
-        user_id: payload?.user?.userId,
-        name: payload?.user?.name,
+        email: payload?.email,
+        user_id: payload?.userId,
+        name: payload?.name,
         // unsubscribed_from_emails: true,
       });
-      // console.log(payload?.user?.wallet?.banks == null);
+      // console.log(payload?.wallet?.banks == null);
 
-      let banks = payload?.user?.wallet?.banks;
+      let banks = payload?.wallet?.banks;
       if (banks == null || banks?.length == 0) {
         return {
           ...state,
-          ...(payload?.user ?? {}),
+          ...(payload ?? {}),
           wallet: {
-            ...payload?.user?.wallet,
+            ...payload?.wallet,
             banks: [],
           },
         };
       }
       return {
-        ...(payload?.user ?? {}),
+        ...(payload ?? {}),
       };
     case LOGIN:
       const {user} = payload;
@@ -98,7 +75,7 @@ export default function userReducer(state = initialState, action) {
       //     console.log({error});
       //   }
       return {
-        ...initialState,
+        ...data.userInitialState,
         email: state.email,
         name: state.name,
         userId: state.userId,

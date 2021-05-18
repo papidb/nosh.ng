@@ -52,6 +52,7 @@ import {
 import {useNavigation} from '@react-navigation/core';
 import {useInfiniteQuery} from 'react-query';
 import {WithdrawalItem} from './WithdrawalItem';
+import {selectBanks} from 'selectors';
 
 const ScreenHeader = () => {
   return (
@@ -95,8 +96,7 @@ export const WalletScreen = ({
   getSettings,
 }) => {
   const navigation = useNavigation();
-  const user = useSelector((state) => state.user);
-  const banks = user?.wallet?.banks ?? [];
+  const banks = useSelector(selectBanks);
   const thereIsBank = banks.length > 0;
   const {
     openModal: openAddBank,

@@ -6,4 +6,4 @@ export * from './useAppState';
 // export {default as magicMemo} from './magicMemo';
 // export * from './useRealm';
 export * from './useVerifyBankAccount';
-export * from './useNoshScroller';
+export * from './queries';

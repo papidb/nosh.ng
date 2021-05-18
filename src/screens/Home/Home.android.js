@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -35,6 +35,8 @@ import Layout from 'constants/Layout';
 import {createStructuredSelector} from 'reselect';
 import {selectHasUsername} from 'selectors';
 import {fcmService} from '../../../FCMService';
+import {useQueries} from 'react-query';
+import data from 'constants/data';
 
 const HomeScreen = ({
   hasUsername,
@@ -73,41 +75,30 @@ const HomeScreen = ({
     getRandomInt(0, coreImages.length - 1),
   );
 
-  // get more data to use in app
-  const getInfo = React.useCallback(async () => {
-    return Promise.all([getBanks(), getUser(), getSettings()]);
-  }, [getBanks, getUser, getSettings]);
+  const qOptions = {
+    staleTime: 5 * 60 * 60,
+  };
 
-  const onRefresh = React.useCallback(async () => {
-    try {
-      setRefreshing(true);
-      await getInfo();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setRefreshing(false);
-    }
-  }, [getInfo]);
-  const init = React.useCallback(async () => {
-    getBanks().catch((error) => {
-      console.log(error);
-    });
-    (async () => {
-      try {
-        await getInfo();
-      } catch (error) {
-        console.log({error});
-      }
-      // try {
-      //   await messaging().subscribeToTopic('nosh');
-      //   if (__DEV__) {
-      //     await messaging().subscribeToTopic('test');
-      //   }
-      // } catch (error) {
-      //   console.log({error});
-      // }
-    })();
-  }, [getBanks, getInfo]);
+  const [
+    {refetch},
+    {refetch: refetchBankData},
+    {refetch: refetchAppSettings},
+  ] = useQueries([
+    {
+      queryKey: 'user',
+      queryFn: getUser,
+      initialData: data.userInitialState,
+      ...qOptions,
+    },
+    {queryKey: 'bankData', queryFn: getBanks, ...qOptions},
+    {queryKey: 'appSettings', queryFn: getSettings, ...qOptions},
+  ]);
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await Promise.all([refetch(), refetchBankData(), refetchAppSettings()]);
+    setRefreshing(false);
+  }, [refetch, refetchBankData, refetchAppSettings]);
+
   useEffect(() => {
     console.log({hasUsername});
     if (hasUsername) return;
@@ -117,29 +108,35 @@ const HomeScreen = ({
     // console.log(modalizeRef.current?.open);
     // modalizeRef.current?.open?.();
   }, [hasUsername, modalizeRef]);
+
   useEffect(() => {
     console.log('running init');
+    fcmService
+      .justGetToken()
+      .then(updatePushNotificationToken)
+      .catch(() => {});
     try {
-      fcmService.justGetToken().then(updatePushNotificationToken);
-    } catch (error) {
-      console.log({error});
-    }
-    try {
-      init();
       const unsubscribe = navigation.addListener('focus', async () => {
         try {
           console.log('running these cause this screen was focused on');
-          await getInfo();
-          await init();
+          await Promise.all([
+            refetch(),
+            refetchBankData(),
+            refetchAppSettings(),
+          ]);
         } catch (error) {}
       });
       // Return the function to unsubscribe from the event so it gets removed on unmount
       return unsubscribe;
-    } catch (error) {
-      const text = extractErrorMessage(error);
-      showErrorSnackBar({text});
-    }
-  }, [getBanks, getInfo, init, navigation, updatePushNotificationToken]);
+    } catch (error) {}
+  }, [
+    getBanks,
+    navigation,
+    refetch,
+    refetchAppSettings,
+    refetchBankData,
+    updatePushNotificationToken,
+  ]);
   return (
     <Box flex={1}>
       <Portal>
