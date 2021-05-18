@@ -16,7 +16,7 @@
     "lint": "eslint .",
     "pod": "cd ios && pod install && cd ..",
     "postinstall": "./scripts/postinstall.sh",
-    "icon": "react-native set-icon --path ./Icon.jpg"
+    "icon": "react-native set-icon --platform android  --path ./icon.png"
   },
   "dependencies": {
     "@gorhom/animated-tabbar": "^2.1.1",
