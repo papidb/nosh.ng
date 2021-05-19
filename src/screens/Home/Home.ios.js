@@ -82,6 +82,7 @@ const HomeScreen = ({
     {refetch},
     {refetch: refetchBankData},
     {refetch: refetchAppSettings},
+    {refetch: refetchBank},
   ] = useQueries([
     {
       queryKey: 'user',
@@ -91,12 +92,18 @@ const HomeScreen = ({
     },
     {queryKey: 'bankData', queryFn: getBanks, ...qOptions},
     {queryKey: 'appSettings', queryFn: getSettings, ...qOptions},
+    {queryKey: 'bankData', queryFn: getBanks, ...qOptions},
   ]);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await Promise.all([refetch(), refetchBankData(), refetchAppSettings()]);
+    await Promise.all([
+      refetch(),
+      refetchBankData(),
+      refetchAppSettings(),
+      refetchBank(),
+    ]);
     setRefreshing(false);
-  }, [refetch, refetchBankData, refetchAppSettings]);
+  }, [refetch, refetchBankData, refetchAppSettings, refetchBank]);
 
   useEffect(() => {
     console.log({hasUsername});
@@ -262,6 +269,7 @@ export const Home = connect(mapStateToProps, {
   getSettings,
   logout,
   updatePushNotificationToken,
+  getBanks,
 })(HomeScreen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},

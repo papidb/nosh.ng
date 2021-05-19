@@ -39,20 +39,53 @@ import {
 import {UserNameSetup, Balance} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
-import {
-  addBank,
-  getBanks,
-  getUser,
-  getSettings,
-  verifyAccount,
-  getTransactions,
-  withdraw,
-  deleteBank,
-} from 'action';
+import {getTransactions} from 'action';
 import {useNavigation} from '@react-navigation/core';
 import {useInfiniteQuery} from 'react-query';
 import {WithdrawalItem} from './WithdrawalItem';
 import {selectBanks} from 'selectors';
+
+const WalletAction = ({openWithdraw, openAddBank}) => (
+  <Box flexDirection="row">
+    <TouchableOpacity
+      onPress={openWithdraw}
+      style={{
+        flex: 3,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(48,188,237,0.1)',
+        borderRadius: 100,
+        flexDirection: 'row',
+        marginRight: 10,
+      }}>
+      <Icon name="icon-send" size={25} style={{left: 0}} />
+      <Text
+        color="primary"
+        fontWeight="600"
+        fontSize={11}
+        style={{marginLeft: 19}}>
+        WITHDRAW FUNDS
+      </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+      onPress={openAddBank}
+      style={{
+        flex: 2,
+        height: 52,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(61,170,157,0.1)',
+        borderRadius: 100,
+        flexDirection: 'row',
+        marginRight: 10,
+      }}>
+      <Text color="white" fontWeight="600" fontSize={11}>
+        + ADD BANK
+      </Text>
+    </TouchableOpacity>
+  </Box>
+);
 
 const ScreenHeader = () => {
   return (
@@ -85,19 +118,7 @@ const ScreenHeader = () => {
   );
 };
 
-export const WalletScreen = ({
-  addBank,
-  getBanks,
-  verifyAccount,
-  getUser,
-  deleteBank,
-  withdraw,
-  getTransactions,
-  getSettings,
-}) => {
-  const navigation = useNavigation();
-  const banks = useSelector(selectBanks);
-  const thereIsBank = banks.length > 0;
+export const WalletScreen = ({getTransactions}) => {
   const {
     openModal: openAddBank,
     closeModal: closeAddBankModal,
@@ -108,15 +129,12 @@ export const WalletScreen = ({
     closeModal: closeWithdrawModal,
     Component: WithdrawModalize,
   } = useModalize();
-  const AddBankC = useCallback(
-    () => (
-      <AddBank
-        close={closeAddBankModal}
-        {...{addBank, getUser, deleteBank, getBanks, verifyAccount}}
-      />
-    ),
-    [addBank, closeAddBankModal, getBanks, getUser, deleteBank, verifyAccount],
-  );
+  const AddBankC = useCallback(() => <AddBank close={closeAddBankModal} />, [
+    closeAddBankModal,
+  ]);
+  const WithdrawC = useCallback(() => <Withdraw close={closeWithdrawModal} />, [
+    closeWithdrawModal,
+  ]);
   const {
     data,
     onRefresh,
@@ -145,94 +163,53 @@ export const WalletScreen = ({
   return (
     <Box flex={1} paddingHorizontal="l">
       <Portal>
-        <AddBankModalize>
+        <AddBankModalize
+          scrollViewProps={{keyboardShouldPersistTaps: 'always'}}>
           {/* <AddBankC /> */}
           <AddBankC />
         </AddBankModalize>
-        <WithdrawModalize>
-          <Withdraw
-            close={closeWithdrawModal}
-            {...{withdraw, banks, thereIsBank, getSettings}}
-          />
+        <WithdrawModalize
+          scrollViewProps={{keyboardShouldPersistTaps: 'always'}}>
+          <WithdrawC />
         </WithdrawModalize>
       </Portal>
       {status === 'loading' && <Loading />}
       {status === 'error' && <SWW {...{goToFirst, isFetching}} />}
       {status === 'success' &&
         (data.length === 0 ? (
-          <EmptyScreen
-            text={'There are no transactions. Use our services more\n😭😭😭'}
-          />
+          <>
+            <EmptyScreen
+              text={'There are no transactions. Use our services more\n😭😭😭'}
+            />
+            <WalletAction {...{openWithdraw, openAddBank}} />
+          </>
         ) : (
-          <FlatList
-            data={data}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            ListHeaderComponent={ScreenHeader}
-            renderItem={({item}) => <WithdrawalItem {...item} />}
-            keyExtractor={() => uuid()}
-            ItemSeparatorComponent={() => (
-              <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
-            )}
-            ListFooterComponent={_renderFooter}
-            onEndReached={_handleLoadMore}
-            onEndReachedThreshold={0.3}
-          />
+          <>
+            <FlatList
+              data={data}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+              ListHeaderComponent={ScreenHeader}
+              renderItem={({item}) => <WithdrawalItem {...item} />}
+              keyExtractor={() => uuid()}
+              ItemSeparatorComponent={() => (
+                <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
+              )}
+              ListFooterComponent={_renderFooter}
+              onEndReached={_handleLoadMore}
+              onEndReachedThreshold={0.3}
+            />
+            <WalletAction {...{openWithdraw, openAddBank}} />
+          </>
         ))}
 
-      <Box flexDirection="row">
-        <TouchableOpacity
-          onPress={openWithdraw}
-          style={{
-            flex: 3,
-            height: 52,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(48,188,237,0.1)',
-            borderRadius: 100,
-            flexDirection: 'row',
-            marginRight: 10,
-          }}>
-          <Icon name="icon-send" size={25} style={{left: 0}} />
-          <Text
-            color="primary"
-            fontWeight="600"
-            fontSize={11}
-            style={{marginLeft: 19}}>
-            WITHDRAW FUNDS
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={openAddBank}
-          style={{
-            flex: 2,
-            height: 52,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(61,170,157,0.1)',
-            borderRadius: 100,
-            flexDirection: 'row',
-            marginRight: 10,
-          }}>
-          <Text color="white" fontWeight="600" fontSize={11}>
-            + ADD BANK
-          </Text>
-        </TouchableOpacity>
-      </Box>
       <Box height={100} />
     </Box>
   );
 };
 export const Wallet = connect(null, {
-  addBank,
-  getBanks,
-  getUser,
-  getSettings,
-  withdraw,
-  verifyAccount,
   getTransactions,
-  deleteBank,
 })(WalletScreen);
 
 const styles = StyleSheet.create({

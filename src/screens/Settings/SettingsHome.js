@@ -65,15 +65,13 @@ export const Screen = ({
     Component: SecurityModalize,
   } = useModalize();
 
-  const AddBankC = useCallback(
-    () => (
-      <AddBank
-        close={closeAddBankModal}
-        {...{addBank, getUser, deleteBank, getBanks, verifyAccount}}
-      />
-    ),
-    [addBank, closeAddBankModal, deleteBank, getBanks, getUser, verifyAccount],
-  );
+  const AddBankC = useCallback(() => <AddBank close={closeAddBankModal} />, [
+    closeAddBankModal,
+  ]);
+
+  const WithdrawC = useCallback(() => <Withdraw close={closeWithdrawModal} />, [
+    closeWithdrawModal,
+  ]);
   const SecurityC = useCallback(
     () => (
       <Security close={closeSecurityModal} {...{changePassword, toggleBio}} />
@@ -165,7 +163,7 @@ export const Screen = ({
           <AddBankC />
         </AddBankModalize>
         <WithdrawModalize>
-          <Withdraw close={closeWithdrawModal} {...{getSettings}} />
+          <WithdrawC />
         </WithdrawModalize>
         <SecurityModalize>
           <SecurityC />

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, {useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, ActivityIndicator} from 'react-native';
 
 import PropTypes from 'prop-types';
 
@@ -25,11 +25,13 @@ import {
   uuid,
 } from 'shared/utils';
 import {ModalContainer} from './ModalContainer';
-import {connect, useStore} from 'react-redux';
+import {connect, useStore, useSelector} from 'react-redux';
 import {useVerifyBankAccount} from 'hooks';
 import {BankTab} from './BankTab';
 import {createStructuredSelector} from 'reselect';
 import {selectPureUser} from 'selectors';
+import {addBank, getBanks, getUser, deleteBank, verifyAccount} from 'action';
+import {selectBanks, bankDeets} from 'selectors';
 
 const BankSchema = Yup.object({
   bankcode: Yup.string().required('Required!').notOneOf(['Bank'], 'Required'),
@@ -38,8 +40,10 @@ const BankSchema = Yup.object({
 
 const initailValues = __DEV__
   ? {
-      nuban: '0214956707',
-      bankcode: '058',
+      nuban: '',
+      bankcode: '',
+      // nuban: '0214956707',
+      // bankcode: '058',
     }
   : {nuban: '', bankcode: ''};
 const AddBankComponent = ({
@@ -47,27 +51,13 @@ const AddBankComponent = ({
   getUser,
   addBank,
   user,
-  getBanks,
   verifyAccount,
   deleteBank,
 }) => {
-  const {
-    misc: {banks: reduxBanks = [], bankMap: reduxBankMap = {}},
-  } = useStore().getState();
   const [loading, setLoading] = useState(false);
-  const [bankList, setBanks] = useState(reduxBanks);
-  const [bankMap, setBankMap] = useState(reduxBankMap);
-  const banks = user?.wallet?.banks ?? [];
+  const banks = useSelector(selectBanks);
+  const {bankList, bankMap} = useSelector(bankDeets);
   const thereIsBank = banks.length > 0;
-  useEffect(() => {
-    (async () => {
-      console.log('getting banks');
-      const {banks: rawBanks, bankMap: rawBankMap} = await getBanks();
-      setBanks(rawBanks);
-      setBankMap(rawBankMap);
-      console.log('done getting banks');
-    })();
-  }, [getBanks]);
   const {
     errors,
     values,
@@ -111,11 +101,12 @@ const AddBankComponent = ({
     validationSchema: BankSchema,
   });
   // console.log({verifyAccount});
-  const {account, loading: getNameLoading, valid} = useVerifyBankAccount(
+  const [accountName, isVerifyingBankLoading] = useVerifyBankAccount(
     true,
     values,
     verifyAccount,
   );
+  console.log({isVerifyingBankLoading});
   // console.log({valid, getNameLoading});
   const setBankCodeValue = (str) => {
     setFieldTouched('bankcode', true);
@@ -193,20 +184,18 @@ const AddBankComponent = ({
         padding="l"
         borderRadius={100}
         paddingHorizontal="xl">
-        {/* {getNameLoading ? (
-          <Loading />
-        ) : valid == false ? (
-          <Text color="error" fontSize={15} style={{color: '#0732A2'}}>
-            Couldn't verify account number
+        {isVerifyingBankLoading === 'true' ? (
+          // <ActivityIndicator color="white" />
+          <Text>Loading...</Text>
+        ) : isVerifyingBankLoading === 'null' ? (
+          <Text fontSize={15} color="error">
+            Couldn't verify account
           </Text>
         ) : (
           <Text color="primary" fontSize={15} style={{color: '#0732A2'}}>
-            {account}
+            {accountName}
           </Text>
-        )} */}
-        <Text color="primary" fontSize={15} style={{color: '#0732A2'}}>
-          {account}
-        </Text>
+        )}
       </Box>
       {thereIsBank && (
         <Box>
@@ -214,8 +203,7 @@ const AddBankComponent = ({
             Available Bank Accounts
           </Text>
           {banks.map((bank) => {
-            console.log({bank});
-            const deleteFn = () => confirmDeletion(bank);
+            let deleteFn = () => confirmDeletion(bank);
             return (
               <BankTab
                 key={uuid()}
@@ -247,4 +235,9 @@ const mapStateToProps = createStructuredSelector({
   user: selectPureUser,
 });
 
-export const AddBank = connect(mapStateToProps)(AddBankComponent);
+export const AddBank = connect(mapStateToProps, {
+  addBank,
+  getUser,
+  deleteBank,
+  verifyAccount,
+})(AddBankComponent);

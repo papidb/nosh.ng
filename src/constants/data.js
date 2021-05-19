@@ -29,7 +29,7 @@ const userInitialState = {
   updatedAt: '',
   accessToken: '',
   refreshToken: '',
-  username: null,
+  username: '',
 };
 
 export default {

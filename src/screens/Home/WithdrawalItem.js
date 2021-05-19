@@ -128,7 +128,7 @@ export const WithdrawalItem = (props = {}) => {
         <WithdrawalModal {...props} {...{closeModal, color}} />
       </Modalize>
     );
-  }, [props]);
+  }, [color, props]);
 
   return (
     <Box>

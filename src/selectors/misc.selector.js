@@ -11,3 +11,7 @@ export const selectMinimumWithdrawalableAmount = createSelector(
   selectMisc,
   (misc) => misc?.serverState?.minimumAmountWithdrawable ?? 200,
 );
+export const bankDeets = createSelector(selectMisc, (misc) => ({
+  bankList: misc?.banks ?? [],
+  bankMap: misc?.bankMap ?? {},
+}));

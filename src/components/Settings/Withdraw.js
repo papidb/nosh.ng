@@ -28,24 +28,21 @@ import {
   uuid,
 } from 'shared/utils';
 import * as Yup from 'yup';
-import {useSelector, useStore} from 'react-redux';
-import {selectMinimumWithdrawalableAmount} from 'selectors';
+import {useSelector, connect} from 'react-redux';
+import {selectBanks, selectMinimumWithdrawalableAmount} from 'selectors';
+import {withdraw} from 'action';
 
-export const Withdraw = ({
+export const WithdrawComponent = ({
   close,
   withdraw,
-  getSettings,
-  banks = [],
-  thereIsBank,
   // minimumAcceptableAmount = 2002,
 }) => {
+  const banks = useSelector(selectBanks);
   const minimumAcceptableAmount = useSelector(
     selectMinimumWithdrawalableAmount,
   );
+  const thereIsBank = banks.length > 0;
   console.log({minimumAcceptableAmount});
-  useEffect(() => {
-    getSettings();
-  }, [getSettings]);
   const [selected, setSelected] = useState(null);
 
   const Banks = useCallback(() => {
@@ -163,48 +160,18 @@ export const Withdraw = ({
         <Box alignItems="center" marginBottom="s">
           <SwipeButton
             title="SWIPE TO WITHDRAW"
-            // thumbIcon={thumbIcon}
             {...{loading: isSubmitting}}
             onToggle={handleSubmit}
           />
         </Box>
-        {/* <Box alignItems="center">
-          <SwipeButton
-            // disabled={isSubmitting}
-            //disable the button by doing true (Optional)
-            swipeSuccessThreshold={70}
-            height={58}
-            containerStyles={{borderWidth: 5}}
-            //height of the button (Optional)
-            width={'95%'}
-            //width of the button (Optional)
-            title="SWIPE T0 WITHDRAW"
-            //Text inside the button (Optional)
-            thumbIconComponent={thumbIcon}
-            //You can also set your own icon for the button (Optional)
-            onSwipeSuccess={handleSubmit}
-            successTitle="loading"
-            //After the completion of swipe (Optional)
-            railFillBackgroundColor="#3DAA9D" //(Optional)
-            railFillBorderColor="#3DAA9D" //(Optional)
-            thumbIconBackgroundColor="rgba(61,170,157, 0.1)" //(Optional)
-            shouldResetAfterSuccess
-            // thumbIconBorderColor="#ed9aff" //(Optional)
-            railBackgroundColor="#023248" //(Optional)
-            railBorderColor="transparent" //(Optional)
-            titleColor="#3DAA9D"
-            titleStyles={{color: '#3DAA9D', textAlign: 'right', fontSize: 12}}
-          />
-        </Box>
-        */}
       </Box>
     </ModalContainer>
   );
 };
 
-Withdraw.propTypes = {
+WithdrawComponent.propTypes = {
   close: PropTypes.func,
 };
 
 // // selectMinimumWithdrawalableAmount
-// export const withdraw =connect(, {})(WithdrawComponent)
+export const Withdraw = connect(null, {withdraw})(WithdrawComponent);

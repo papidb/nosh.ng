@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Keyboard} from 'react-native';
+import {useQuery} from 'react-query';
 
 export const useVerifyBankAccount = (
   isValid,
@@ -7,36 +8,36 @@ export const useVerifyBankAccount = (
   verifyAccountFn = () => {},
   //   setLoading = () => {},
 ) => {
-  const [account, setAccountName] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [valid, setValid] = useState(false);
+  // const [result, setResult] = React.useState([]);
+  const [loading, setLoading] = React.useState('false');
+  const [accountName, setAccountName] = useState(null);
 
   useEffect(() => {
-    try {
-      (async () => {
-        let {nuban, bankcode} = values;
-        // console.log({nuban, bankcode});
-        if (nuban && nuban.trim() == '') {
-          nuban = null;
-        }
-        if (!isValid) return;
-        if (!nuban || nuban.length !== 10) return;
-        setLoading(true);
-        Keyboard.dismiss();
-        let bankData = {bankCode: bankcode, accountNumber: nuban.trim()};
-        let accountName =
-          (await verifyAccountFn(bankData))?.accountData?.accountName ?? null;
-        setValid(true);
-        setLoading(false);
-        // console.log({accountName});
-        setAccountName(accountName);
-      })();
-    } catch (error) {
-      setValid(false);
-      setLoading(false);
-      // console.log({error});
-    }
-  }, [values, isValid, setLoading, verifyAccountFn]);
+    async function validate(bankData) {
+      try {
+        setLoading('true');
 
-  return {account, loading, valid};
+        let accountNameResult =
+          (await verifyAccountFn(bankData))?.accountData?.accountName ?? null;
+        setAccountName(accountNameResult);
+        setLoading('false');
+      } catch (error) {
+        setLoading('null');
+      }
+    }
+    let {nuban, bankcode} = values;
+    // console.log({nuban, bankcode});
+    if (nuban && nuban.trim() === '') {
+      nuban = null;
+    }
+    // if (!isValid) return;
+    if (!nuban || nuban.length !== 10) return;
+    // Keyboard.dismiss();
+    let bankData = {bankCode: bankcode, accountNumber: nuban.trim()};
+    validate(bankData);
+    // setValid(true);
+    // console.log({accountName});
+  }, [values, verifyAccountFn]);
+
+  return [accountName, loading];
 };

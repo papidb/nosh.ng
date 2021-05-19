@@ -99,7 +99,9 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
   const copyTransactionRef = () => Clipboard.setString(tradeRef);
   // console.log({props});
   const status = tradeStatus?.status ?? 'pending';
+  const avatar = tradeStatus?.avatar ?? null;
   const color = purifyStatus(status);
+  console.log({tradeRef});
   const rejectionReason = tradeStatus?.rejectionReason;
   return (
     <Box flex={1} style={{paddingTop: top}}>
@@ -157,30 +159,32 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
                 </Text>
               </TouchableOpacity>
             </Box>
-
-            <Divider
-              marginTop="m"
-              marginBottom="m"
-              style={styles.headerDivider}
-            />
           </Box>
           {tradeFiles.length > 0 && (
-            <Box marginLeft="m">
-              <ScrollView
-                nestedScrollEnabled
-                horizontal
-                // contentContainerStyle={{overflow: 'hidden'}}
-                //
-              >
-                {tradeFiles.map((item) => {
-                  return renderItem({path: item, top});
-                })}
-              </ScrollView>
-              <Text fontSize={13} color="success" marginTop="m">
-                Click image to expand
-              </Text>
-            </Box>
+            <>
+              <Divider
+                marginTop="m"
+                marginBottom="m"
+                style={styles.headerDivider}
+              />
+              <Box marginLeft="m">
+                <ScrollView
+                  nestedScrollEnabled
+                  horizontal
+                  // contentContainerStyle={{overflow: 'hidden'}}
+                  //
+                >
+                  {tradeFiles.map((item) => {
+                    return renderItem({path: item, top});
+                  })}
+                </ScrollView>
+                <Text fontSize={13} color="success" marginTop="m">
+                  Click image to expand
+                </Text>
+              </Box>
+            </>
           )}
+
           <Box>
             <Divider
               marginBottom="l"
@@ -257,6 +261,21 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
               </Box>
               <Divider style={styles.headerDivider} />
             </Box>
+          )}
+          {!!avatar && (
+            <>
+              <Box marginLeft="m">
+                {renderItem({path: avatar, top})}
+                <Text fontSize={13} color="success" marginTop="m">
+                  Click rejection image to expand
+                </Text>
+              </Box>
+              <Divider
+                marginTop="m"
+                marginBottom="m"
+                style={styles.headerDivider}
+              />
+            </>
           )}
           <Box>
             {!!rejectionReason && (

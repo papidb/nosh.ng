@@ -47,9 +47,7 @@ export const verifyAccount = (state) => (dispatch, getState) => {
       .post(`${BASE_URL}verify-bank-account`, state, {
         headers: {Authorization: `Bearer ${accessToken}`},
       })
-      .then(({data}) => {
-        return data;
-      }),
+      .then(({data}) => data),
     dispatch,
   );
 };
