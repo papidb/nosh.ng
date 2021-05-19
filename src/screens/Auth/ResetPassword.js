@@ -95,6 +95,7 @@ export const ResetPasswordScreen = ({forgotPassword}) => {
             </Text>
           </Box>
           <Input
+            keyboardType="email-address"
             placeholder="Email"
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}

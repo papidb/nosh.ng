@@ -89,6 +89,7 @@ const RegisterScreen = ({register}) => {
             outer={{marginVertical: 'none', marginBottom: 'xs'}}
           />
           <Input
+            keyboardType="email-address"
             placeholder="Email"
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
@@ -99,6 +100,7 @@ const RegisterScreen = ({register}) => {
           />
           <Input
             placeholder="Phone"
+            keyboardType="phone-pad"
             onChangeText={handleChange('phoneNumber')}
             onBlur={handleBlur('phoneNumber')}
             error={errors.phoneNumber}

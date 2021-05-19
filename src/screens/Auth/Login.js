@@ -155,6 +155,7 @@ const LoginScreen = ({login, getUser}) => {
             }}
           />
           <Input
+            keyboardType="email-address"
             placeholder="Email"
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}

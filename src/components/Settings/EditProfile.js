@@ -148,6 +148,7 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
       </Box>
       <Box marginBottom="xs">
         <Input
+          keyboardType="number-pad"
           placeholder="Number"
           variant="profile"
           value={user.phoneNumber}
@@ -157,6 +158,7 @@ export const EditProfile = ({close, updateProfilePic, getUser}) => {
       </Box>
       <Box marginBottom="xs">
         <Input
+          keyboardType="email-address"
           placeholder="Email"
           variant="profile"
           value={user.email}

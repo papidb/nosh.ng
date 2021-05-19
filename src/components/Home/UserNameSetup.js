@@ -78,6 +78,7 @@ const UserNameSetupComponent = ({
         <Divider />
       </Box>
       <Input
+        keyboardType="default"
         placeholderTextColor={palette.blue}
         placeholder="Username"
         innerContainerProps={{borderWidth: 0, backgroundColor: 'mostBg'}}
