@@ -5,6 +5,8 @@ import {Platform} from 'react-native';
 class LocalNotificationService {
   configure = (onOpenNotification) => {
     PushNotification.configure({
+      largeIcon: 'ic_launcher',
+      smallIcon: 'ic_notification',
       onRegister: function (token) {
         // console.log("[LocalNotificationService] onRegister:", token);
       },
