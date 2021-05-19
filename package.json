@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "build:android": "cd android && ./gradlew app:assembleRelease && cd ..",
     "setup": "yarn check:android && yarn setup:android",
     "setup:android": "adb reverse tcp:8081 tcp:8081",
@@ -16,7 +17,7 @@
     "lint": "eslint .",
     "pod": "cd ios && pod install && cd ..",
     "postinstall": "./scripts/postinstall.sh",
-    "icon": "react-native set-icon --platform android  --path ./icon.png"
+    "icon": "react-native set-icon --platform android  --path ./Icon.jpg"
   },
   "dependencies": {
     "@gorhom/animated-tabbar": "^2.1.1",
@@ -75,7 +76,7 @@
     "react-native-picker-select": "^8.0.4",
     "react-native-portalize": "^1.0.7",
     "react-native-push-notification": "^7.3.0",
-    "react-native-reanimated": "^2.0.0",
+    "react-native-reanimated": "/Users/benjamindaniel/Downloads/package",
     "react-native-redash": "^16.0.8",
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "^3.1.9",
