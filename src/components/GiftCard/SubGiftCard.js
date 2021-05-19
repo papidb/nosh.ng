@@ -18,7 +18,7 @@ import {GiftCard} from './GiftCard';
 import {useFormik} from 'formik';
 
 import {IS_ANDROID, IS_IOS} from 'constants/config';
-const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 30;
+const CAROUSEL_WIDTH = Dimensions.get('screen').width - 2 * 20;
 
 export const SubGiftCard = ({
   onSnapToItem,

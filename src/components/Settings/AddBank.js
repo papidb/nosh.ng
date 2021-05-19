@@ -167,8 +167,10 @@ const AddBankComponent = ({
       </Box>
       <Box marginBottom="xs">
         <Input
+          autoFocus={true}
           placeholder="Enter Account Number"
           variant="profilePrimary"
+          keyboardType="number-pad"
           placeholderTextColor={palette.fadedBrown}
           onChangeText={handleChange('nuban')}
           onBlur={handleBlur('nuban')}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Keyboard} from 'react-native';
 
 import {Modalize} from 'react-native-modalize';
 
@@ -10,6 +10,11 @@ const BaseModalize = (props, ref) => (
     modalStyle={styles.modalStyle}
     childrenStyle={styles.childrenStyle}
     adjustToContentHeight
+    onClose={() => {
+      try {
+        Keyboard.dismiss();
+      } catch (error) {}
+    }}
     {...props}
   />
 );
