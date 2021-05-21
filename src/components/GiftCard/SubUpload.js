@@ -160,7 +160,7 @@ export const SubUpload = ({
               <Text
                 color="error"
                 textAlign="center"
-                fontSize={16}
+                fontSize={14}
                 fontWeight="600">
                 IMPORTANT NOTICE
               </Text>
@@ -168,7 +168,7 @@ export const SubUpload = ({
             <Divider />
 
             <Box marginTop="l" style={{marginHorizontal: 41}}>
-              <Text color="success" textAlign="center">
+              <Text color="success" textAlign="center" fontSize={13}>
                 {subCategory?.termsOfTransaction ?? ''}
               </Text>
             </Box>

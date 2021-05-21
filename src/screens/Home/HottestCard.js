@@ -99,6 +99,21 @@ const Item = (props) => {
   );
 };
 
+const HottestCardHeader = ({first = {}}) => {
+  return (
+    <Box paddingHorizontal="l" paddingTop="l" justifyContent="center">
+      <FastImage
+        source={{
+          uri: first?.cardCategory?.avatar,
+          priority: FastImage.priority.high,
+        }}
+        style={{width: 216, height: 123, alignSelf: 'center'}}
+      />
+      <HeaderInfo text="HOTTEST CARDS" />
+    </Box>
+  );
+};
+
 const HottestCardScreen = ({getAllSubCategories}) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -106,7 +121,6 @@ const HottestCardScreen = ({getAllSubCategories}) => {
   const getData = React.useCallback(async () => {
     try {
       const raw = await getAllSubCategories();
-      // console.log(setData);
       // setData([...raw, ...raw, ...raw]);
       setData(raw);
     } catch (error) {
@@ -150,35 +164,7 @@ const HottestCardScreen = ({getAllSubCategories}) => {
           ItemSeparatorComponent={() => (
             <Divider style={{marginHorizontal: 45, marginBottom: 6}} />
           )}
-          ListHeaderComponent={() => {
-            return (
-              <Box paddingHorizontal="l" paddingTop="l" justifyContent="center">
-                <FastImage
-                  source={{
-                    uri: data[0]?.cardCategory?.avatar,
-                    priority: FastImage.priority.high,
-                  }}
-                  style={{width: 216, height: 123, alignSelf: 'center'}}
-                />
-                {/* <Box position="relative">
-                 
-                  <Image
-                    source={images.fire}
-                    // eslint-disable-next-line react-native/no-inline-styles
-                    style={{
-                      width: 67,
-                      height: 67,
-                      top: -35,
-                      position: 'absolute',
-                      right: Dimensions.get('screen').width / 2 + 13,
-                    }}
-                  />
-                </Box> */}
-
-                <HeaderInfo text="HOTTEST CARDS" />
-              </Box>
-            );
-          }}
+          ListHeaderComponent={<HottestCardHeader first={data[0]} />}
           ListFooterComponent={() => <RaiseAndroid height={100} />}
         />
       )}

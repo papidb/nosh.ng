@@ -19,7 +19,11 @@ import {
   RaiseAndroid,
   Circle,
 } from 'components';
-import {purifyStatus} from 'shared/utils';
+import {
+  purifyStatus,
+  showErrorSnackBar,
+  showSuccessSnackBar,
+} from 'shared/utils';
 import {connect} from 'react-redux';
 import {getTrades} from 'action';
 import {palette} from 'constants/theme';
@@ -30,6 +34,7 @@ import FastImage from 'react-native-fast-image';
 import Lightbox from 'react-native-lightbox-v2';
 
 import {format} from 'date-fns';
+import Snackbar from 'react-native-snackbar';
 
 const renderItem = ({path, top}) => {
   const renderContent = React.useCallback(() => {
@@ -92,11 +97,26 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
     tradeFiles = [],
     tradeRef,
     cardSubCategory,
-    ...props
+    // ...props
   } = params;
 
   // console.log({props})
-  const copyTransactionRef = () => Clipboard.setString(tradeRef);
+  const copyTransactionRef = useCallback(async () => {
+    try {
+      await Clipboard.setString(tradeRef);
+
+      showSuccessSnackBar({
+        text: `Copied transaction ref ${tradeRef}`,
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    } catch (error) {
+      showErrorSnackBar({
+        text: `Couldn't copy transaction ref ${tradeRef}`,
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    }
+  }, [tradeRef]);
+
   // console.log({props});
   const status = tradeStatus?.status ?? 'pending';
   const avatar = tradeStatus?.avatar ?? null;

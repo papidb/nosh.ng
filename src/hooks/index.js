@@ -7,3 +7,4 @@ export * from './useAppState';
 // export * from './useRealm';
 export * from './useVerifyBankAccount';
 export * from './queries';
+export * from './useAppVersion';

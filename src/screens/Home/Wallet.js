@@ -118,6 +118,14 @@ const ScreenHeader = () => {
   );
 };
 
+const NoData = () => {
+  return (
+    <EmptyScreen
+      text={'There are no transactions. Use our services more\n😭😭😭'}
+    />
+  );
+};
+
 export const WalletScreen = ({getTransactions}) => {
   const {
     openModal: openAddBank,
@@ -145,7 +153,7 @@ export const WalletScreen = ({getTransactions}) => {
     goToFirst,
     isFetching,
   } = useNoshScroller(getTransactions, 'transactionData', 'transactions');
-
+  // const data = [];
   const _renderFooter = useCallback(() => {
     if (!isFetchingNextPage) return null;
     return (
@@ -175,34 +183,28 @@ export const WalletScreen = ({getTransactions}) => {
       </Portal>
       {status === 'loading' && <Loading />}
       {status === 'error' && <SWW {...{goToFirst, isFetching}} />}
-      {status === 'success' &&
-        (data.length === 0 ? (
-          <>
-            <EmptyScreen
-              text={'There are no transactions. Use our services more\n😭😭😭'}
-            />
-            <WalletAction {...{openWithdraw, openAddBank}} />
-          </>
-        ) : (
-          <>
-            <FlatList
-              data={data}
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-              ListHeaderComponent={ScreenHeader}
-              renderItem={({item}) => <WithdrawalItem {...item} />}
-              keyExtractor={() => uuid()}
-              ItemSeparatorComponent={() => (
-                <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
-              )}
-              ListFooterComponent={_renderFooter}
-              onEndReached={_handleLoadMore}
-              onEndReachedThreshold={0.3}
-            />
-            <WalletAction {...{openWithdraw, openAddBank}} />
-          </>
-        ))}
+      {status === 'success' && (
+        <Box flex={1}>
+          <FlatList
+            data={data}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={data.length === 0 && styles.centerEmptySet}
+            ListEmptyComponent={NoData}
+            ListHeaderComponent={ScreenHeader}
+            renderItem={({item}) => <WithdrawalItem {...item} />}
+            keyExtractor={() => uuid()}
+            ItemSeparatorComponent={() => (
+              <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
+            )}
+            ListFooterComponent={_renderFooter}
+            onEndReached={_handleLoadMore}
+            onEndReachedThreshold={0.3}
+          />
+          <WalletAction {...{openWithdraw, openAddBank}} />
+        </Box>
+      )}
 
       <Box height={100} />
     </Box>
@@ -213,6 +215,10 @@ export const Wallet = connect(null, {
 })(WalletScreen);
 
 const styles = StyleSheet.create({
+  centerEmptySet: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   scrollView: {flex: 1, paddingHorizontal: 20},
   header: {
     marginBottom: 15,

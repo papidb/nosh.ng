@@ -54,6 +54,15 @@ const ItemSeparatorComponent = () => (
   </Box>
 );
 
+const NoData = () => {
+  return (
+    <Box flex={1} alignItems="center" justifyContent="center">
+      <EmptyScreen
+        text={'There are no trades. Use our services more\n😭😭😭'}
+      />
+    </Box>
+  );
+};
 const TransactionScreen = ({getTrades}) => {
   const navigation = useNavigation();
   const {
@@ -67,6 +76,7 @@ const TransactionScreen = ({getTrades}) => {
     isFetching,
   } = useNoshScroller(getTrades, 'notificationData', 'trades');
 
+  // const data = [];
   const _renderFooter = useCallback(() => {
     if (!isFetchingNextPage) return null;
     return (
@@ -89,33 +99,30 @@ const TransactionScreen = ({getTrades}) => {
       {/* Header */}
       {status === 'loading' && <Loading />}
       {status === 'error' && <SWW {...{goToFirst, isFetching}} />}
-      {status === 'success' &&
-        (data.length === 0 ? (
-          <EmptyScreen
-            text={"There's no trades. Use our services more\n😭😭😭"}
-          />
-        ) : (
-          <Box flex={1}>
-            <Box style={{paddingTop: 15}}>
-              <Divider style={{marginHorizontal: 53}} />
-            </Box>
-            <FlatList
-              refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-              }
-              ListHeaderComponent={HeaderComponent}
-              data={data}
-              keyExtractor={(item, index) => uuid()}
-              renderItem={({item}) => (
-                <TransactionTab {...item} {...{navigation}} />
-              )}
-              ListFooterComponent={_renderFooter}
-              ItemSeparatorComponent={ItemSeparatorComponent}
-              onEndReached={_handleLoadMore}
-              onEndReachedThreshold={0.3}
-            />
+      {status === 'success' && (
+        <Box flex={1}>
+          <Box style={{paddingTop: 15}}>
+            <Divider style={{marginHorizontal: 53}} />
           </Box>
-        ))}
+          <FlatList
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={data.length === 0 && styles.centerEmptySet}
+            ListEmptyComponent={NoData}
+            ListHeaderComponent={HeaderComponent}
+            data={data}
+            keyExtractor={(item, index) => uuid()}
+            renderItem={({item}) => (
+              <TransactionTab {...item} {...{navigation}} />
+            )}
+            ListFooterComponent={_renderFooter}
+            ItemSeparatorComponent={ItemSeparatorComponent}
+            onEndReached={_handleLoadMore}
+            onEndReachedThreshold={0.3}
+          />
+        </Box>
+      )}
       <Divider style={[styles.bottomDivider, styles.noMarginTop]} />
       <Text textAlign="center" color="primary" fontSize={11} fontWeight="600">
         CLICK ON TRANSACTION FOR DETAILS
@@ -129,6 +136,11 @@ const TransactionScreen = ({getTrades}) => {
 export const TransactionHome = connect(null, {getTrades})(TransactionScreen);
 
 const styles = StyleSheet.create({
+  centerEmptySet: {
+    flex: 1,
+    justifyContent: 'center',
+    // alignItems: 'center',
+  },
   scrollView: {flex: 1, paddingHorizontal: 20},
   header: {
     marginBottom: 15,

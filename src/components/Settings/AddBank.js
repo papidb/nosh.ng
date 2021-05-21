@@ -167,7 +167,7 @@ const AddBankComponent = ({
       </Box>
       <Box marginBottom="xs">
         <Input
-          autoFocus={true}
+          // autoFocus={true}
           placeholder="Enter Account Number"
           variant="profilePrimary"
           keyboardType="number-pad"

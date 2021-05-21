@@ -20,19 +20,19 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const HeaderComponent = ({onPress, bright, ...props}) => {
   // const {user} = useStore().getState();
-  const [badge, setBadge] = useState(false);
+  const [badge, setBadge] = useState(true);
 
-  useEffect(() => {
-    try {
-      PushNotificationIOS.getApplicationIconBadgeNumber(
-        (badgeNumber) => console.log({badgeNumber}) || setBadge(!!badgeNumber),
-      );
-    } catch (error) {
-      console.log('error', error);
-    }
-    // (async () => {
-    // })();
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     PushNotificationIOS.getApplicationIconBadgeNumber(
+  //       (badgeNumber) => console.log({badgeNumber}) || setBadge(!!badgeNumber),
+  //     );
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  //   // (async () => {
+  //   // })();
+  // }, []);
   const user = useSelector((state) => state.user);
 
   // const {top} = useSafeAreaInsets();
