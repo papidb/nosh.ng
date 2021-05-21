@@ -2,12 +2,13 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {
   FlatList,
   RefreshControl,
-  ActivityIndicator,
+  Dimensions,
+  Image,
   TouchableOpacity,
   ScrollView,
   StyleSheet,
 } from 'react-native';
-
+import {Alert, Pressable, View} from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import {
@@ -36,40 +37,17 @@ import Lightbox from 'react-native-lightbox-v2';
 import {format} from 'date-fns';
 import Snackbar from 'react-native-snackbar';
 
-const renderItem = ({path, top}) => {
-  const renderContent = React.useCallback(() => {
-    return (
-      <FastImage
-        source={{
-          uri: path,
-          priority: FastImage.priority.high,
-        }}
-        style={{
-          // width: '75',
-          height: '75%',
-          // borderRadius: 75,
-          // resizeMode: 'contain',
-        }}
-      />
-    );
-  }, [path]);
+import ImageZoom from 'react-native-image-pan-zoom';
+import Modal from 'react-native-modal';
+import Layout from 'constants/Layout';
+
+const renderLightBox = ({imageUrl, openModal}) => {
   return (
     <Circle size={75} key={uuid()} marginRight="xs">
-      <Lightbox
-        underlayColor="transparent"
-        renderContent={renderContent}
-        renderHeader={(close) => (
-          <Box style={{marginTop: top * 0.75}}>
-            <Close
-              onPress={close}
-              circleProps={{style: {marginTop: 16, marginRight: 16}}}
-              Icon={SvgIcon.CloseIconLight}
-            />
-          </Box>
-        )}>
+      <TouchableOpacity onPress={() => openModal(imageUrl)}>
         <FastImage
           source={{
-            uri: path,
+            uri: imageUrl,
             priority: FastImage.priority.high,
           }}
           style={{
@@ -79,13 +57,16 @@ const renderItem = ({path, top}) => {
             // resizeMode: 'contain',
           }}
         />
-      </Lightbox>
+      </TouchableOpacity>
     </Circle>
   );
 };
 const TransactionScreen = ({getTrades, route: {params}}) => {
   const {top} = useSafeAreaInsets();
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const initialImage = 'https://www.nosh.ng/noshlogo.png';
+  const [image, setImage] = useState(initialImage);
   const goBack = () => navigation?.goBack();
   const {
     amountPayable,
@@ -123,6 +104,32 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
   const color = purifyStatus(status);
   console.log({tradeRef});
   const rejectionReason = tradeStatus?.rejectionReason;
+  const openModal = (imageUrl) => {
+    setImage(imageUrl);
+    setModalVisible(true);
+  };
+  const closeModal = () => {
+    setModalVisible(!modalVisible);
+    // setImage(initialImage);
+  };
+  const marginTop = top;
+  const IMAGE_PADDING = 20;
+  const height = Layout.window.height;
+  const width = Layout.window.width;
+  const IMAGE_ZOOM_HEIGHT = height - marginTop - IMAGE_PADDING;
+  const IMAGE_ZOOM_WIDTH = width;
+  // return (
+  //   <Box flex={1}>
+  //     <Box marginTop="xxxl">
+  //       <Pressable
+  //         style={[styles.button, styles.buttonOpen]}
+  //         onPress={() => setModalVisible(true)}>
+  //         <Text style={styles.textStyle}>Show Modal</Text>
+  //       </Pressable>
+  //     </Box>
+
+  //   </Box>
+  // );
   return (
     <Box flex={1} style={{paddingTop: top}}>
       <Close
@@ -130,9 +137,62 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
         circleProps={{style: {marginTop: 16, marginRight: 16}}}
         Icon={SvgIcon.CloseIconLight}
       />
-      {/* <Modal isVisible={isModalVisible} onBackdropPress={() => closeModal()}>
-        <TransactionModal {...{closeModal}} />
-      </Modal> */}
+      <Modal
+        // animationType="slide"
+        style={{margin: 0}}
+        onModalHide={() => {
+          setImage(initialImage);
+        }}
+        // transparent={false}
+        isVisible={modalVisible}
+        // onRequestClose={() => {
+        //   Alert.alert('Modal has been closed.');
+        //   setModalVisible(!modalVisible);
+        // }}
+      >
+        <Box
+          flex={1}
+          //  backgroundColor="success"
+        >
+          <Box
+            zIndex={200000}
+            position="absolute"
+            right={0}
+            style={{marginTop}}>
+            <Close
+              onPress={closeModal}
+              circleProps={{style: {marginTop: 16, marginRight: 16}}}
+              Icon={SvgIcon.CloseIconLight}
+            />
+          </Box>
+          <ImageZoom
+            cropWidth={IMAGE_ZOOM_WIDTH}
+            cropHeight={height}
+            imageWidth={IMAGE_ZOOM_WIDTH}
+            imageHeight={IMAGE_ZOOM_HEIGHT - IMAGE_PADDING}
+            enableSwipeDown={true}
+            onSwipeDown={closeModal}>
+            <Image
+              enableHorizontalBounce={true}
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                width: IMAGE_ZOOM_WIDTH - IMAGE_PADDING,
+                height: IMAGE_ZOOM_HEIGHT,
+                resizeMode: 'contain',
+                alignSelf: 'center',
+                justifyContent: 'center',
+              }}
+              source={{
+                uri: image,
+                cache: 'force-cache',
+              }}
+              // resizeMode="cover"
+              resizeMethod="resize" // <-------  this helped a lot as OP said
+              progressiveRenderingEnabled={true} // <---- as well as this
+            />
+          </ImageZoom>
+        </Box>
+      </Modal>
       {/* Header */}
       <ScrollView style={styles.scrollView}>
         <Box
@@ -195,7 +255,7 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
                   //
                 >
                   {tradeFiles.map((item) => {
-                    return renderItem({path: item, top});
+                    return renderLightBox({imageUrl: item, openModal});
                   })}
                 </ScrollView>
                 <Text fontSize={13} color="success" marginTop="m">
@@ -285,7 +345,7 @@ const TransactionScreen = ({getTrades, route: {params}}) => {
           {!!avatar && (
             <>
               <Box marginLeft="m">
-                {renderItem({path: avatar, top})}
+                {renderLightBox({imageUrl: avatar, openModal})}
                 <Text fontSize={13} color="success" marginTop="m">
                   Click rejection image to expand
                 </Text>
@@ -329,18 +389,54 @@ export const TransactionDetails = connect(null, {getTrades})(TransactionScreen);
 
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
-  header: {
-    marginBottom: 15,
-  },
-  ngn: {marginRight: 35, marginBottom: 9},
-  noMarginTop: {
-    marginTop: 0,
-  },
   headerDivider: {
     marginHorizontal: 14,
   },
   bottomDivider: {
     marginVertical: 16,
     marginHorizontal: 35,
+  },
+
+  // modal
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
   },
 });
