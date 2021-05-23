@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "build": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "build:android": "cd android && ./gradlew app:assembleRelease && cd ..",
+    "build:aab": "cd android && ./gradlew bundleRelease && cd ..",
     "setup": "yarn check:android && yarn setup:android",
     "setup:android": "adb reverse tcp:8081 tcp:8081",
     "/** setup:android specific **/": "adb -s <android id> reverse tcp:8081 tcp:8081",
