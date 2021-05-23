@@ -38,8 +38,7 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
     error,
     data: pureData,
     fetchNextPage,
-    hasNextPage,
-    isFetching,
+    isLoading,
     isFetchingNextPage,
     refetch,
     status,
@@ -51,8 +50,7 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
       }
       return lastPage?.currentPage;
     },
-    staleTime: 0,
-    cacheTime: 0,
+    refetchOnMount: 'always',
   });
   const getDataFromPages = useCallback((pages = [], key = 'notifications') => {
     const dataFromPurePages = getDataFromPurePages(pages, key);
@@ -103,8 +101,8 @@ export const NotificationModalList = ({closeModal, getNotifications}) => {
         marginBottom="l">
         Notifications
       </Text>
-      {status === 'loading' && <Loading />}
-      {status === 'error' && (
+      {isLoading && <Loading />}
+      {error && (
         <Box>
           <Text>Something went wrong!!!</Text>
         </Box>

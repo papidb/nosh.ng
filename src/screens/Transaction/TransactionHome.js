@@ -69,12 +69,16 @@ const TransactionScreen = ({getTrades}) => {
     data,
     onRefresh,
     status,
+    isLoading,
+    error,
     isFetchingNextPage,
     fetchNextPage,
     refreshing,
     goToFirst,
     isFetching,
-  } = useNoshScroller(getTrades, 'notificationData', 'trades');
+  } = useNoshScroller(getTrades, 'tradesData', 'trades', {
+    refetchOnMount: 'always',
+  });
 
   // const data = [];
   const _renderFooter = useCallback(() => {
@@ -97,8 +101,8 @@ const TransactionScreen = ({getTrades}) => {
         <TransactionModal {...{closeModal}} />
       </Modal> */}
       {/* Header */}
-      {status === 'loading' && <Loading />}
-      {status === 'error' && <SWW {...{goToFirst, isFetching}} />}
+      {isLoading && <Loading />}
+      {error && <SWW {...{goToFirst, isFetching}} />}
       {status === 'success' && (
         <Box flex={1}>
           <Box style={{paddingTop: 15}}>

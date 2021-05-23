@@ -194,7 +194,7 @@ export const WalletScreen = ({getTransactions}) => {
             ListEmptyComponent={NoData}
             ListHeaderComponent={ScreenHeader}
             renderItem={({item}) => <WithdrawalItem {...item} />}
-            keyExtractor={() => uuid()}
+            keyExtractor={(item) => item._id}
             ItemSeparatorComponent={() => (
               <Divider style={{marginHorizontal: 35, marginBottom: 8}} />
             )}
