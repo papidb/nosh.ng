@@ -1,12 +1,12 @@
-import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {StyleSheet, Pressable, TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import phone from 'phone';
 import * as Yup from 'yup';
 
-import {Box, Button, Text, Input, AuthContainer} from 'components';
+import {Box, Circle, Button, Text, Input, AuthContainer} from 'components';
 
 import {connect} from 'react-redux';
 import {register} from 'action';
@@ -15,6 +15,7 @@ import {
   showSuccessSnackBar,
   extractErrorMessage,
 } from 'shared/utils';
+import {IS_ANDROID} from 'constants/config';
 
 Yup.addMethod(Yup.string, 'validatePhone', function () {
   return this.test({
@@ -36,6 +37,11 @@ const RegisterSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Required').validatePhone(),
 });
 
+const outer = {
+  marginVertical: 'none',
+  marginBottom: IS_ANDROID ? 'xs' : {phone: 's', bigScreen: 'm'},
+};
+
 const initailValues = __DEV__
   ? {
       name: 'Daniel Sikal',
@@ -50,6 +56,9 @@ const RegisterScreen = ({register}) => {
   const navigation = useNavigation();
   const toLogin = () => navigation.navigate('Login');
   const toEmailVerification = () => navigation.navigate('EmailVerification');
+  const [accepted, setAccepted] = useState(false);
+
+  const toggleAccepted = useCallback(() => setAccepted(!accepted), [accepted]);
 
   const {
     handleChange,
@@ -86,7 +95,7 @@ const RegisterScreen = ({register}) => {
             error={errors.name}
             touched={touched.name}
             value={values.name}
-            outer={{marginVertical: 'none', marginBottom: 'xs'}}
+            outer={outer}
           />
           <Input
             keyboardType="email-address"
@@ -96,7 +105,7 @@ const RegisterScreen = ({register}) => {
             error={errors.email}
             touched={touched.email}
             value={values.email}
-            outer={{marginVertical: 'none', marginBottom: 'xs'}}
+            outer={outer}
           />
           <Input
             placeholder="Phone"
@@ -106,7 +115,7 @@ const RegisterScreen = ({register}) => {
             error={errors.phoneNumber}
             touched={touched.phoneNumber}
             value={values.phoneNumber}
-            outer={{marginVertical: 'none', marginBottom: 'xs'}}
+            outer={outer}
           />
           <Input
             placeholder="Password"
@@ -116,6 +125,7 @@ const RegisterScreen = ({register}) => {
             touched={touched.password}
             value={values.password}
             passwordIcon
+            outer={outer}
           />
           <Input
             placeholder="Confirm Password"
@@ -125,20 +135,32 @@ const RegisterScreen = ({register}) => {
             touched={touched.confirmPassword}
             value={values.confirmPassword}
             passwordIcon
-            outer={{marginVertical: 'none', marginBottom: 'xs'}}
+            outer={outer}
           />
           {/* Agreement */}
-          <Box marginBottom="l" marginTop="m">
-            <Text fontSize={13} style={styles.tandc}>
-              This means you agree to all our Terms and Conditions
-            </Text>
-          </Box>
+          <Pressable onPress={toggleAccepted}>
+            <Box marginBottom="l" marginTop="m" flexDirection="row">
+              <Circle
+                size={32}
+                backgroundColor="inactiveInputBorder"
+                marginRight="m">
+                <Circle
+                  size={20}
+                  backgroundColor={accepted ? 'primary' : 'white'}
+                />
+              </Circle>
+              <Text fontSize={13} style={styles.tandc}>
+                This means you agree to all our Terms and Conditions
+              </Text>
+            </Box>
+          </Pressable>
+
           {/* Button */}
           <Box marginBottom="m">
             <Button
               text="Get Started"
               loading={isSubmitting}
-              disabled={isSubmitting || !isValid}
+              disabled={!accepted || isSubmitting || !isValid}
               onPress={handleSubmit}
             />
           </Box>
