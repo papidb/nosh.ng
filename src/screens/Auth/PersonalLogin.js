@@ -27,6 +27,7 @@ import {
   // showSuccessSnackBar,
   extractErrorMessage,
   requestFaceId,
+  saveToKeyChain,
 } from 'shared/utils';
 import * as Keychain from 'react-native-keychain';
 import data from 'constants/data';
@@ -41,7 +42,7 @@ const LoginSchema = Yup.object().shape({
 const initailValues = __DEV__
   ? {
       email: '',
-      password: 'Silver1@',
+      password: 'Password123@',
     }
   : {email: '', password: ''};
 
@@ -110,7 +111,19 @@ export const PersonalLoginScreen = ({login, getUser, user, bio: BIOAPP}) => {
           password: credentials.password,
         };
 
-        const deets = await login(data);
+        const deets = await login(data).then(async () => {
+          try {
+            console.log('here');
+            await saveToKeyChain(values.email, values.password, {
+              accessControl: Keychain.ACCESS_CONTROL.BIOMETRY_CURRENT_SET,
+            });
+            console.log('there');
+
+            await getUser();
+          } catch (error) {
+            console.log({error});
+          }
+        });
         console.log({deets});
       } catch (error) {
         console.log({error});
