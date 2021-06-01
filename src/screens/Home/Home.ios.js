@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -36,6 +36,7 @@ import {selectHasUsername, selectPureUser} from 'selectors';
 import {fcmService} from '../../../FCMService';
 import {useQueries} from 'react-query';
 import data from 'constants/data';
+import Modal from 'react-native-modal';
 
 const HomeScreen = ({
   getBanks,
@@ -46,12 +47,8 @@ const HomeScreen = ({
   hasUsername,
 }) => {
   const navigation = useNavigation();
-  const {
-    openModal: openSetupUsername,
-    closeModal: closeSetupUsername,
-    Component: UserNameSetupModalize,
-    modalizeRef,
-  } = useModalize();
+  const [usernameVisible, setUsernameVisible] = useState(!hasUsername);
+  const closeSetupUsername = () => setUsernameVisible(false);
 
   const toNoshWallet = () => {
     // openSetupUsername();
@@ -104,16 +101,16 @@ const HomeScreen = ({
     ]);
     setRefreshing(false);
   }, [refetch, refetchBankData, refetchAppSettings, refetchBank]);
+  console.log({usernameVisible});
 
-  useEffect(() => {
-    console.log({hasUsername});
-    if (hasUsername) return;
-    setTimeout(() => {
-      modalizeRef.current?.open();
-    }, 2000);
-    // console.log(modalizeRef.current?.open);
-    // modalizeRef.current?.open?.();
-  }, [hasUsername, modalizeRef]);
+  // useEffect(() => {
+  //   if (hasUsername) return;
+  //   setTimeout(() => {
+  //     modalizeRef.current?.open();
+  //   }, 2000);
+  //   // console.log(modalizeRef.current?.open);
+  //   // modalizeRef.current?.open?.();
+  // }, [hasUsername, modalizeRef]);
 
   useEffect(() => {
     console.log('running init');
@@ -145,15 +142,9 @@ const HomeScreen = ({
   ]);
   return (
     <Box flex={1}>
-      <Portal>
-        <UserNameSetupModalize
-          childrenStyle={styles.childrenStyle}
-          closeOnOverlayTap={false}
-          panGestureEnabled={false}
-          disableScrollIfPossible>
-          <UserNameSetup pureClose={closeSetupUsername} close={logout} />
-        </UserNameSetupModalize>
-      </Portal>
+      <Modal isVisible={usernameVisible} style={styles.childrenStyle}>
+        <UserNameSetup pureClose={closeSetupUsername} close={logout} />
+      </Modal>
       <Box style={{paddingTop: 15}}>
         <Divider style={{marginHorizontal: 53}} />
       </Box>
@@ -269,14 +260,14 @@ export const Home = connect(mapStateToProps, {
   getSettings,
   logout,
   updatePushNotificationToken,
-  getBanks,
 })(HomeScreen);
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   childrenStyle: {
-    backgroundColor: palette.darkBlueButton,
-    borderTopLeftRadius: 38,
-    borderTopRightRadius: 38,
+    // backgroundColor: palette.darkBlueButton,
+    justifyContent: 'flex-end',
+    margin: 0,
+    // flexGrow: 0,
   },
   coreImage: {
     marginTop: 20,

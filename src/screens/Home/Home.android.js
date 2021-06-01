@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -31,7 +31,7 @@ import {
   getRandomInt,
 } from 'shared/utils';
 import Layout from 'constants/Layout';
-
+import Modal from 'react-native-modal';
 import {createStructuredSelector} from 'reselect';
 import {selectHasUsername} from 'selectors';
 import {fcmService} from '../../../FCMService';
@@ -47,12 +47,9 @@ const HomeScreen = ({
   updatePushNotificationToken,
 }) => {
   const navigation = useNavigation();
-  const {
-    openModal: openSetupUsername,
-    closeModal: closeSetupUsername,
-    Component: UserNameSetupModalize,
-    modalizeRef,
-  } = useModalize();
+  const [usernameVisible, setUsernameVisible] = useState(!hasUsername);
+
+  const closeSetupUsername = () => setUsernameVisible(false);
 
   const toNoshWallet = () => {
     // openSetupUsername();
@@ -100,16 +97,6 @@ const HomeScreen = ({
   }, [refetch, refetchBankData, refetchAppSettings]);
 
   useEffect(() => {
-    console.log({hasUsername});
-    if (hasUsername) return;
-    setTimeout(() => {
-      modalizeRef.current?.open();
-    }, 2000);
-    // console.log(modalizeRef.current?.open);
-    // modalizeRef.current?.open?.();
-  }, [hasUsername, modalizeRef]);
-
-  useEffect(() => {
     console.log('running init');
     fcmService
       .justGetToken()
@@ -139,15 +126,9 @@ const HomeScreen = ({
   ]);
   return (
     <Box flex={1}>
-      <Portal>
-        <UserNameSetupModalize
-          childrenStyle={styles.childrenStyle}
-          closeOnOverlayTap={false}
-          panGestureEnabled={false}
-          disableScrollIfPossible>
-          <UserNameSetup pureClose={closeSetupUsername} close={logout} />
-        </UserNameSetupModalize>
-      </Portal>
+      <Modal isVisible={usernameVisible} style={styles.childrenStyle}>
+        <UserNameSetup pureClose={closeSetupUsername} close={logout} />
+      </Modal>
       <Divider />
       {/* <Header /> */}
       <ScrollView
@@ -263,9 +244,10 @@ export const Home = connect(mapStateToProps, {
 const styles = StyleSheet.create({
   scrollView: {flex: 1, paddingHorizontal: 20},
   childrenStyle: {
-    backgroundColor: palette.darkBlueButton,
-    borderTopLeftRadius: 38,
-    borderTopRightRadius: 38,
+    // backgroundColor: palette.darkBlueButton,
+    justifyContent: 'flex-end',
+    margin: 0,
+    // flexGrow: 0,
   },
   coreImage: {
     marginTop: 8,

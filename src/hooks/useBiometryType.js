@@ -17,7 +17,7 @@ export function useBiometryType() {
   const isMounted = useIsMounted();
   const [biometryType, setBiometryType] = useState(null);
   const prevBiometricType = usePrevious(biometryType);
-  console.log({justBecameActive});
+  // console.log({justBecameActive});
 
   useEffect(() => {
     const getSupportedBiometryType = async () => {
