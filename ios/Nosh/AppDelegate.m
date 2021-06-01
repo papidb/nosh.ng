@@ -56,7 +56,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 
   // Intercom
-  [Intercom setApiKey:@"ios_sdk-1cf005953c21521432db262b6e4f04e3ea1a6ca2" forAppId:@"nzgzwacb"];
+  [Intercom setApiKey:@"ios_sdk-f7639b7346617701866e676aef23cc32fe89ee28" forAppId:@"g94omxmq"];
     // [Intercom setApiKey:@"ios_sdk-72abee02a51de675a47f8f75a852f3a3f9414d07" forAppId:@"h865yeb7"];
 
 // Define UNUserNotificationCenter 
