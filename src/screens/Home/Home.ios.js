@@ -101,7 +101,7 @@ const HomeScreen = ({
     ]);
     setRefreshing(false);
   }, [refetch, refetchBankData, refetchAppSettings, refetchBank]);
-  console.log({usernameVisible});
+  // console.log({usernameVisible});
 
   // useEffect(() => {
   //   if (hasUsername) return;

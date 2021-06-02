@@ -4,7 +4,7 @@ export const selectUser = (state) => state.user;
 
 export const selectHasUsername = createSelector(
   selectUser,
-  (user) => console.log({user}) || !!user.username,
+  (user) => !!user.username,
 );
 
 export const selectPureUser = createSelector(selectUser, (user) => user);
