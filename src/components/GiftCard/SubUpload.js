@@ -176,7 +176,7 @@ export const SubUpload = ({
 
             <Box marginVertical="l">
               <SwipeButton
-                title="COMPLETE TRADE"
+                title="SWIPE RIGHT TO COMPLETE"
                 // thumbIcon={thumbIcon}
                 {...{loading}}
                 onToggle={() => {

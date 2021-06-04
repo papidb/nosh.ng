@@ -225,7 +225,7 @@ const OnBoardingScreen = ({onBoardUser}) => {
         routes: [{name: 'Login'}],
       });
     }
-  }, [index, phase]);
+  }, [index, navigation, onBoardUser]);
   const framesPerSecond = 24;
   const images = {
     0: onboardingImages.slice(49, 50),

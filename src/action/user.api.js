@@ -219,7 +219,7 @@ export const getCards = (state) => (dispatch, getState) => {
         //   console.log(card?.cardSubCategories);
         // });
         dispatch({type: SET_CARDS, payload: cardCategories});
-        return data;
+        return cardCategories;
       }),
     dispatch,
     getState,

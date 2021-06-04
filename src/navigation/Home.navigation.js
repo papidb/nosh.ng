@@ -2,10 +2,10 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Home, Wallet, HottestCard} from 'screens/Home';
+import {Home, Wallet, HottestCard, RatesCalculator} from 'screens/Home';
 import {palette} from 'constants/theme';
 
-import {Header} from 'components';
+import {Header, RatesHeader} from 'components';
 const HomeStack = createStackNavigator();
 
 // const ScreenWrapper = (props) => <Box>{...props}</Box>;
@@ -45,6 +45,15 @@ export const HomeNav = () => {
         }}
         name="Wallet"
         component={Wallet}
+      />
+      <HomeStack.Screen
+        options={{
+          cardStyle: {backgroundColor: palette.darkBlueButton},
+          headerTitle: '',
+          header: (props) => <RatesHeader {...props} />,
+        }}
+        name="RatesCalculator"
+        component={RatesCalculator}
       />
     </HomeStack.Navigator>
   );

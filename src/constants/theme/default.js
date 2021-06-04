@@ -27,6 +27,7 @@ export const palette = {
 
   // red
   red: '#FF4000',
+  warning: 'rgba(255,64,0,0.1)',
   greyish: '#C9C9C9',
 
   // confused
@@ -45,6 +46,7 @@ const theme = createTheme({
     white: palette.white,
     whiteFaded: palette.whiteFaded,
     transparent: palette.transparent,
+    green: palette.green,
     success: palette.green,
     approved: palette.green,
     lightSuccess: palette.lightGreen,
@@ -63,6 +65,7 @@ const theme = createTheme({
     buttonColor: palette.darkBlueButton,
 
     accent: '#ff4000',
+    warning: palette.warning,
     inactiveInputBorder: palette.greyBlue,
     error: palette.red,
     rejected: palette.red,

@@ -50,17 +50,20 @@ const HomeScreen = ({
   const [usernameVisible, setUsernameVisible] = useState(!hasUsername);
   const closeSetupUsername = () => setUsernameVisible(false);
 
-  const toNoshWallet = () => {
-    // openSetupUsername();
-    navigation.navigate('Wallet');
-    // openSetupUsername();
-  };
-  const toHottestCards = () => {
-    navigation.navigate('HottestCards');
-  };
-  const toGiftCards = () => {
-    navigation.navigate('Giftcard');
-  };
+  const toHottestCards = useCallback(
+    () => navigation.navigate('HottestCards'),
+    [navigation],
+  );
+  const toGiftCards = useCallback(() => navigation.navigate('Giftcard'), [
+    navigation,
+  ]);
+  const toNoshWallet = useCallback(() => navigation.navigate('Wallet'), [
+    navigation,
+  ]);
+  const toRatesCalculator = useCallback(
+    () => navigation.navigate('RatesCalculator'),
+    [navigation],
+  );
 
   const coreImages = ['HomeCard', 'HomeCard2'];
   // const imageIndex = getRandomInt(0, coreImages.length - 1);
@@ -179,7 +182,7 @@ const HomeScreen = ({
         </Box>
         {/* Rest */}
         <Box flex={1} flexDirection="row" marginBottom="s">
-          <TouchableOpacity onPress={toHottestCards} style={{flex: 1}}>
+          <TouchableOpacity onPress={toRatesCalculator} style={{flex: 1}}>
             <Box
               flex={1}
               backgroundColor="mostBg"
@@ -188,11 +191,11 @@ const HomeScreen = ({
               justifyContent="center"
               flexDirection="row"
               alignItems="center">
-              <Text fontSize={14} color="buttonColor" fontWeight="600">
-                Hottest{' '}
+              <Text fontSize={14} color="green" fontWeight="600">
+                Check{' '}
               </Text>
-              <Text fontSize={14} color="buttonColor">
-                Cards
+              <Text fontSize={14} color="green">
+                Rates
               </Text>
             </Box>
           </TouchableOpacity>
@@ -224,7 +227,6 @@ const HomeScreen = ({
           </TouchableOpacity>
         </Box>
         <Divider />
-        {/* Nosh Wallet */}
         <TouchableOpacity onPress={toNoshWallet}>
           <Box
             marginTop="s"
@@ -242,6 +244,25 @@ const HomeScreen = ({
               NOSH WALLET
             </Text>
             <Icon name="icon-forwardgreen" size={14} />
+          </Box>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toHottestCards}>
+          <Box
+            marginTop="s"
+            flex={1}
+            backgroundColor="warning"
+            borderRadius={100}
+            height={38}
+            padding="m"
+            paddingLeft="xl"
+            paddingRight="l"
+            justifyContent="space-between"
+            flexDirection="row"
+            alignItems="center">
+            <Text color="accent" fontWeight="600" fontSize={12}>
+              HOTTEST CARDS
+            </Text>
+            <Icon name="icon-forwardwarning" size={14} />
           </Box>
         </TouchableOpacity>
         <RaiseAndroid />

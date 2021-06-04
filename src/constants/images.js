@@ -9,6 +9,7 @@ const images = {
   HomeCard2: require('assets/images/Cards2.png'),
   kuda: require('assets/images/Kuda.png'),
   fire: require('assets/images/fire.gif'),
+  calculator: require('assets/images/Calc.png'),
 };
 const toArray = () => {
   let keys = Object.keys(images);

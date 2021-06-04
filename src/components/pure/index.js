@@ -14,3 +14,4 @@ export * from './SwipeButton';
 export * from './BankIcon';
 export * from './SWW';
 export * from './EmptyScreen';
+export * from './ErrorText';

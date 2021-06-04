@@ -17,6 +17,32 @@ import {NotificationModal} from './NotificationModal';
 import {useSelector, useStore} from 'react-redux';
 import {palette} from 'constants/theme';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {Close} from './pure';
+import {hp} from 'shared/scale';
+
+export const RatesHeader = ({navigation: {goBack}, ...props}) => {
+  const {top} = useSafeAreaInsets();
+  const headerHeight = Platform.OS === 'ios' ? top : 0; // top / 4 + 10; // StatusBar.currentHeight;
+  return (
+    <Box
+      flexDirection="row"
+      justifyContent="space-between"
+      // backgroundColor="mostBg"
+      paddingHorizontal="l"
+      style={{
+        paddingTop: headerHeight,
+        // backgroundColor: palette.mostBgPure
+        marginBottom: hp(25),
+      }}>
+      <Text />
+      <Close
+        onPress={goBack}
+        // circleProps={{style: {marginTop: 16, marginRight: 16}}}
+        Icon={SvgIcon.CloseIconLight}
+      />
+    </Box>
+  );
+};
 
 const HeaderComponent = ({onPress, bright, ...props}) => {
   // const {user} = useStore().getState();

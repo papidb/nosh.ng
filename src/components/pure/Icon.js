@@ -21,6 +21,8 @@ import home from 'assets/icons/home.svg';
 import forward from 'assets/icons/forward.svg';
 import forward_settings from 'assets/icons/forward_settings.svg';
 import forwardgreen from 'assets/icons/forwardgreen.svg';
+import forwardwarning from 'assets/icons/forwardwarning.svg';
+import calculator from 'assets/icons/calculator.svg';
 import settings from 'assets/icons/settings.svg';
 import add from 'assets/icons/add.svg';
 import bookmark from 'assets/icons/bookmark.svg';
@@ -50,6 +52,8 @@ const ICONS = {
   'icon-forward': forward,
   'icon-forward_settings': forward_settings,
   'icon-forwardgreen': forwardgreen,
+  'icon-forwardwarning': forwardwarning,
+  'icon-calculator': calculator,
   'icon-settings': settings,
   'icon-add': add,
   'icon-bookmark': bookmark,

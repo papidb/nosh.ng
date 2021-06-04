@@ -57,6 +57,10 @@ export default {
     {title: 'Vanilla', displayName: 'Vanilla'},
     {title: 'visa', displayName: 'visa'},
   ],
+  cardCategoryRates: {
+    label: 'Select Category',
+    value: 'Select Category',
+  },
   cardSub: {
     label: 'Select Sub-Category',
     value: 'Select Card Sub Category',

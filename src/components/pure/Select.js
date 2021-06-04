@@ -9,6 +9,7 @@ import {Box} from './Box';
 import {Text} from './Text';
 import {ErrorText} from './ErrorText';
 import {useTheme} from '@shopify/restyle';
+import {IS_ANDROID} from 'constants/config';
 
 const CIRCLE_SIZE = 24;
 
@@ -110,7 +111,10 @@ export const Select = ({
                   viewContainer,
                   inputIOS,
                   inputAndroid,
-                  iconContainer,
+                  iconContainer: [
+                    iconContainer,
+                    {top: ((IS_ANDROID ? 40 : 36) - CIRCLE_SIZE) / 2},
+                  ],
                 }}
                 Icon={() => {
                   return (

@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
     // fontWeight: '600',
     zIndex: 2,
     color: '#3DAA9D',
+    textAlign: 'right',
     ...(Platform.OS == 'android'
       ? {
           fontFamily: 'Hurme Geometric Sans 2 Bold',

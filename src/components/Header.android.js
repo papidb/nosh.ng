@@ -9,13 +9,38 @@ import {
 import PropTypes from 'prop-types';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {Box, Text, Icon} from 'components';
+import {Box, Text, Icon, SvgIcon} from 'components';
 import {AuthAvatar} from './auth';
 import {getMessage} from 'shared/utils';
 import Modal from 'react-native-modal';
 import {NotificationModal} from './NotificationModal';
 import {useSelector, useStore} from 'react-redux';
 import {palette} from 'constants/theme';
+import {Close} from './pure';
+import {hp} from 'shared/scale';
+
+export const RatesHeader = ({navigation: {goBack}, ...props}) => {
+  const headerHeight = StatusBar.currentHeight / 2 || 10; // top / 4 + 10; // StatusBar.currentHeight;
+  return (
+    <Box
+      flexDirection="row"
+      justifyContent="space-between"
+      // backgroundColor="mostBg"
+      paddingHorizontal="l"
+      style={{
+        paddingTop: headerHeight,
+        // backgroundColor: palette.mostBgPure
+        marginBottom: hp(25),
+      }}>
+      <Text />
+      <Close
+        onPress={goBack}
+        // circleProps={{style: {marginTop: 16, marginRight: 16}}}
+        Icon={SvgIcon.CloseIconLight}
+      />
+    </Box>
+  );
+};
 
 const HeaderComponent = ({onPress, bright, ...props}) => {
   // const {user} = useStore().getState();
