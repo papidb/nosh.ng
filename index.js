@@ -15,7 +15,7 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
   try {
     logger.sentry('Message handled in the background!', remoteMessage);
   } catch (error) {
-    logger.sentry(`error setting backgroundMessagehandler`);
+    logger.sentry('error setting backgroundMessagehandler');
     captureException(error);
   }
 });

@@ -14,6 +14,8 @@ import {Box, Text, Divider, Circle, Icon, RaiseAndroid} from 'components';
 import {UserNameSetup, Balance} from 'components/Home';
 import {palette} from 'constants/theme';
 import images from 'constants/images';
+import messaging from '@react-native-firebase/messaging';
+
 import HomeHand from 'assets/icons/home_hand.svg';
 import FastImage from 'react-native-fast-image';
 import {
@@ -37,6 +39,7 @@ import {fcmService} from '../../../FCMService';
 import {useQueries} from 'react-query';
 import data from 'constants/data';
 import Modal from 'react-native-modal';
+import Logger from 'shared/logger';
 
 const HomeScreen = ({
   getBanks,
@@ -106,21 +109,26 @@ const HomeScreen = ({
   }, [refetch, refetchBankData, refetchAppSettings, refetchBank]);
   // console.log({usernameVisible});
 
-  // useEffect(() => {
-  //   if (hasUsername) return;
-  //   setTimeout(() => {
-  //     modalizeRef.current?.open();
-  //   }, 2000);
-  //   // console.log(modalizeRef.current?.open);
-  //   // modalizeRef.current?.open?.();
-  // }, [hasUsername, modalizeRef]);
-
   useEffect(() => {
-    console.log('running init');
+    Logger.log('running init');
     fcmService
       .justGetToken()
       .then(updatePushNotificationToken)
-      .catch(() => {});
+      .catch((error) => {
+        Logger.log(error);
+      });
+    (async () => {
+      try {
+        await messaging().subscribeToTopic('nosh_ng');
+        await messaging().subscribeToTopic('ios.nosh_ng.ng');
+
+        if (__DEV__) {
+          await messaging().subscribeToTopic('test.ios.nosh_ng');
+        }
+      } catch (error) {
+        Logger.log({error});
+      }
+    })();
     try {
       const unsubscribe = navigation.addListener('focus', async () => {
         try {

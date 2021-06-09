@@ -35,6 +35,7 @@ import theme from 'constants/theme/default';
 // import {SwipeButton} from 'components';
 // import {waait} from 'shared/utils';
 import VersionNumber from 'react-native-version-number';
+import {IS_ANDROID, IS_IOS} from 'constants/config';
 import {QueryClient, QueryClientProvider, useQuery} from 'react-query';
 
 import {
@@ -122,28 +123,12 @@ async function requestUserPermission() {
 }
 
 const App = () => {
-  const onRegister1 = (token) => {
-    // this.setState({registerToken: token.token, fcmRegistered: true});
-    console.log({token});
-  };
-
-  const onNotif = (notification) => {
-    // console.log({notif: notification});
-    // Alert.alert(notification.title, notification.message);
-  };
-
-  const handlePerm = (perms) => {
-    Alert.alert('Permissions', JSON.stringify(perms));
-  };
-
-  const [done, setDone] = React.useState(false);
   function onRegister(token) {
     return saveTokenToDatabase(token);
   }
   function onNotification(notify) {
     const {notification} = notify;
     const notification_payload = Platform.OS === 'ios' ? notify : notify.data;
-    console.log({notification_payload});
 
     const options = {
       soundName: 'default',
@@ -158,12 +143,7 @@ const App = () => {
       options,
     );
   }
-  function onOpenNotification(onOpenPayload) {
-    console.log({onOpenPayload});
-  }
-  function onOpenNotificationPure(onOpenPayloadPure) {
-    console.log({onOpenPayloadPure});
-  }
+  function onOpenNotification(payload) {}
 
   useEffect(() => {
     (async () => {
@@ -174,37 +154,14 @@ const App = () => {
         fcmService.registerAppWithFCM();
         fcmService.register(onRegister, onNotification, onOpenNotification);
 
-        localNotificationService.configure(onOpenNotificationPure);
+        localNotificationService.configure(onOpenNotification);
         return fcmService.unRegister;
       } catch (error) {
         Sentry.captureException(error);
       }
-      try {
-        await messaging().subscribeToTopic('nosh');
-        if (__DEV__) {
-          await messaging().subscribeToTopic('testiOS');
-          await messaging().subscribeToTopic('testAndroid');
-        }
-        await messaging().subscribeToTopic('ios.nosh.ng');
-        await messaging().subscribeToTopic('android.nosh.ng');
-      } catch (error) {
-        console.log({error});
-      }
     })();
   }, []);
 
-  // const [loading, setLoading] = React.useState(false);
-
-  // const title = 'omo';
-  // const [toggleState, setToggleState] = React.useState(false);
-  // const handleToggle = async () => {
-  //   console.log('toogled');
-  //   setLoading(true);
-  //   await waait(2000);
-  //   setLoading(false);
-  // };
-
-  // console.log({toggleState});
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

@@ -37,6 +37,8 @@ import {selectHasUsername} from 'selectors';
 import {fcmService} from '../../../FCMService';
 import {useQueries} from 'react-query';
 import data from 'constants/data';
+import Logger from 'shared/logger';
+import messaging from '@react-native-firebase/messaging';
 
 const HomeScreen = ({
   hasUsername,
@@ -83,6 +85,7 @@ const HomeScreen = ({
     {refetch},
     {refetch: refetchBankData},
     {refetch: refetchAppSettings},
+    {refetch: refetchBank},
   ] = useQueries([
     {
       queryKey: 'user',
@@ -92,19 +95,40 @@ const HomeScreen = ({
     },
     {queryKey: 'bankData', queryFn: getBanks, ...qOptions},
     {queryKey: 'appSettings', queryFn: getSettings, ...qOptions},
+    {queryKey: 'bankData', queryFn: getBanks, ...qOptions},
   ]);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await Promise.all([refetch(), refetchBankData(), refetchAppSettings()]);
+    await Promise.all([
+      refetch(),
+      refetchBankData(),
+      refetchAppSettings(),
+      refetchBank(),
+    ]);
     setRefreshing(false);
-  }, [refetch, refetchBankData, refetchAppSettings]);
+  }, [refetch, refetchBankData, refetchAppSettings, refetchBank]);
+  // console.log({usernameVisible});
 
   useEffect(() => {
-    console.log('running init');
+    Logger.log('running init');
     fcmService
       .justGetToken()
       .then(updatePushNotificationToken)
-      .catch(() => {});
+      .catch((error) => {
+        Logger.log(error);
+      });
+    (async () => {
+      try {
+        await messaging().subscribeToTopic('nosh_ng');
+        await messaging().subscribeToTopic('ios.nosh_ng.ng');
+
+        if (__DEV__) {
+          await messaging().subscribeToTopic('test.ios.nosh_ng');
+        }
+      } catch (error) {
+        Logger.log({error});
+      }
+    })();
     try {
       const unsubscribe = navigation.addListener('focus', async () => {
         try {
